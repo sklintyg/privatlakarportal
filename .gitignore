@@ -7,4 +7,4 @@ build/
 bin
 
 web/node_modules
-web/bower_components
+web/src/main/webapp/bower_components/
