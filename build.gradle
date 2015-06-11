@@ -1,0 +1,20 @@
+allprojects {
+    group = 'se.inera.privatlakarportal'
+    version = '1.0.0-SNAPSHOT'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://repository-callistasoftware.forge.cloudbees.com/release/" }
+        maven { url "https://repository-callistasoftware.forge.cloudbees.com/snapshot/" }
+        maven { url "https://repository-callistasoftware.forge.cloudbees.com/3rdparty/" }
+        maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = "1.7"
+    targetCompatibility = "1.7"
+}

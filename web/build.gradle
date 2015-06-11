@@ -1,0 +1,66 @@
+import org.gradle.api.tasks.Exec
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:1.2.0'
+        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.9'
+    }
+}
+
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.akhikhl.gretty'
+apply plugin: 'com.moowork.grunt'
+
+dependencies {
+    compile 'org.springframework:spring-webmvc:4.1.4.RELEASE'
+    compile 'org.springframework.data:spring-data-jpa:1.7.1.RELEASE'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
+    compile 'com.h2database:h2:1.4.183'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    compile 'joda-time:joda-time:2.5'
+    compile 'org.hibernate:hibernate-entitymanager:4.3.7.Final'
+    compile 'com.zaxxer:HikariCP-java6:2.3.5'
+    compile 'org.slf4j:slf4j-api:1.7.10'
+    compile 'ch.qos.logback:logback-classic:1.0.13'
+    compile 'wsdl4j:wsdl4j:1.6.3'
+    compile 'se.riv.itintegration.monitoring:itintegration-monitoring-interactions:0-SNAPSHOT'
+
+    compile 'org.apache.cxf:cxf-rt-frontend-jaxws:3.0.4'
+    compile 'org.apache.cxf:cxf-rt-transports-http:3.0.4'
+    compile 'org.codehaus.woodstox:woodstox-core-asl:4.2.0'
+
+    compile 'junit:junit:4.12'
+    compile 'org.mockito:mockito-all:1.10.19'
+
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+}
+
+//task copydeps(type: Copy) {
+//    from 'bower_components'
+//    into 'src/main/webapp/vendor'
+//    include '**/*.js'
+//    include '**/*.css'
+//    include '**/*.js.map'
+//    include '**/fonts/*'
+//}
+/*task bower(type: Exec){
+    commandLine 'bower', 'install'
+    }*/
+
+/*copydeps.dependsOn bower
+grunt_build.dependsOn copydeps
+build.dependsOn grunt_build
+*/
+
+gretty {
+    httpPort = 8080
+    contextPath = '/'
+    logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
+    jvmArgs = [
+        '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/application-dev.properties'
+     ]
+}

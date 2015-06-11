@@ -1,0 +1,10 @@
+.gradle/
+build/
+.settings/
+.project
+.classpath
+
+bin
+
+web/node_modules
+web/bower_components
