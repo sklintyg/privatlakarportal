@@ -17,4 +17,5 @@ include 'services:webservice'
 */
 
 rootProject.name = 'privatlakarportal'
-include 'web'
+include ':web'
+project(':web').name = 'privatlakarportal-web'
