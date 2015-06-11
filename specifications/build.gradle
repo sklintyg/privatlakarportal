@@ -1,0 +1,51 @@
+buildscript {
+    dependencies {
+	classpath 'org.akhikhl.gretty:gretty:1.2.0'
+	classpath 'se.inera.intyg:gradle-fitnesse-plugin:1.0-SNAPSHOT'
+    }
+}
+
+description = 'Inera Privatläkarportal Fitnesse specifications'
+
+apply plugin: 'groovy'
+apply plugin: 'inera-fitnesse'
+
+fitnesse {
+    port = 9125
+    root = "FitNesseRoot"
+    workingDir = "src/test/fitnesse"
+}
+
+if (project.hasProperty('runFitnesse')) {
+    apply plugin: 'org.akhikhl.gretty'
+    gretty {
+	contextPath = '/'
+	contextConfigFile = project(":privatlakarportal-web").projectDir.path + "/src/main/webapp/WEB-INF/jetty-context.xml"
+	logbackConfigFile = "${projectDir}/src/main/resources/logback-test.xml"
+	jvmArgs = ['-Dspring.profiles.active=dev,embedded,hsa-stub,security-fake,db-resetter', '-XX:MaxPermSize=256M']
+	jvmArgs = ['-Dspring.profiles.active=dev,embedded,hsa-stub,security-fake,db-resetter', '-Dstatistics.test.max.intyg=1', '-XX:MaxPermSize=256M']
+    }
+
+    farm {
+	webapp ":privatlakarportal-web"
+	webapp project
+	integrationTestTask = 'fitnesseTest'
+    }
+
+    dependencies {
+	gretty "com.h2database:h2:1.3.171"
+	gretty "mysql:mysql-connector-java:5.1.29"
+	gretty "org.apache.activemq:activemq-broker:5.8.0"
+	gretty "org.apache.tomcat:tomcat-catalina:7.0.20"
+    }
+}
+
+dependencies {
+    compile project(":privatlakarportal-web")
+
+    compile "org.fitnesse:fitnesse:20140901"
+    compile "org.codehaus.groovy:groovy-all:2.4.0"
+    compile "org.codehaus.groovy.modules.http-builder:http-builder:0.7"
+    compile "org.apache.httpcomponents:httpmime:4.4.1"
+    compile "org.apache.httpcomponents:httpcore:4.4.1"
+}

@@ -9,6 +9,13 @@ allprojects {
         maven { url "https://repository-callistasoftware.forge.cloudbees.com/snapshot/" }
         maven { url "https://repository-callistasoftware.forge.cloudbees.com/3rdparty/" }
         maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+
+    }
+    buildscript {
+        repositories {
+            maven { url "https://repository-callistasoftware.forge.cloudbees.com/snapshot/" }
+            jcenter()
+        }
     }
 }
 
