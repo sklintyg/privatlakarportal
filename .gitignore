@@ -8,3 +8,6 @@ bin
 
 web/node_modules
 web/src/main/webapp/bower_components/
+
+.idea/
+*.iml
