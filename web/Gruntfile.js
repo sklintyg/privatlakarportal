@@ -9,7 +9,7 @@ module.exports = function (grunt) {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     protractor: 'grunt-protractor-runner',
-    injector: 'grunt-asset-injector',
+    injector: 'grunt-asset-injector'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -27,28 +27,28 @@ module.exports = function (grunt) {
       tmp: 'build/.tmp'
     },
     connect: {
-      server: {
+        dev: {
         options: {
-          port: 9000,
-          hostname: 'localhost',
+          port: 9091,
+          hostname: '*',
           middleware: function(connect, options) {
             return [
               require('connect-livereload')(),
-              mountFolder(connect, 'client'),
+              connect.static('src/main/webapp'),
               require('grunt-connect-proxy/lib/utils').proxyRequest
             ];
           },
           proxies: [{
             context: '/',
             host: 'localhost',
-            port: 9088
+            port: 9090
           }]
         }
       }
     },
     open: {
-      server: {
-        url: 'http://localhost:9000'
+        dev: {
+        url: 'http://localhost:9091'
       }
     },
     watch: {
@@ -89,7 +89,7 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
-      express: {
+      connect: {
         files: [
           'server/**/*.{js,json}'
         ],
@@ -117,6 +117,19 @@ module.exports = function (grunt) {
           '<%= config.client %>/{app,components}/**/*.spec.js',
           '<%= config.client %>/{app,components}/**/*.mock.js'
         ]
+      }
+    },
+
+    // Empties folders to start fresh
+    clean: {
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= config.dist %>/*',
+            '<%= config.tmp %>/*'
+          ]
+        }]
       }
     },
 
@@ -239,7 +252,6 @@ module.exports = function (grunt) {
           dest: '<%= config.dist %>/public',
           src: [
             '*.{ico,png,txt}',
-            '.htaccess',
             'bower_components/**/*',
             'assets/images/{,*/}*.{webp}',
             'assets/fonts/**/*',
@@ -250,13 +262,6 @@ module.exports = function (grunt) {
           cwd: '<%= config.tmp %>/images',
           dest: '<%= config.dist %>/public/assets/images',
           src: ['generated/*']
-        }, {
-          expand: true,
-          dest: '<%= config.dist %>',
-          src: [
-            'package.json',
-            'server/**/*'
-          ]
         }]
       },
       styles: {
@@ -350,26 +355,12 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('serve', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'express:prod', 'wait', 'open', 'connect-keepalive']);
-    }
-
-    if (target === 'debug') {
-      return grunt.task.run([
-        'concurrent:server',
-        'injector',
-        'wiredep',
-        'autoprefixer',
-        'concurrent:debug'
-      ]);
-    }
 
     grunt.task.run([
-      'concurrent:server',
       'injector',
       'wiredep',
       'autoprefixer',
-      'express:dev',
+      'connect:dev',
       'wait',
       'open',
       'watch'
@@ -406,6 +397,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', [
+    'clean:dist',
     'injector',
     'wiredep',
     'useminPrepare',
