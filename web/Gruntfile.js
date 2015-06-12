@@ -162,10 +162,10 @@ module.exports = function (grunt) {
       dist: {
         files: {
           src: [
-            '<%= config.dist %>/public/{,*/}*.js',
-            '<%= config.dist %>/public/{,*/}*.css',
-            '<%= config.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= config.dist %>/public/assets/fonts/*'
+            '<%= config.dist %>/{,*/}*.js',
+            '<%= config.dist %>/{,*/}*.css',
+            '<%= config.dist %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= config.dist %>/assets/fonts/*'
           ]
         }
       }
@@ -177,20 +177,20 @@ module.exports = function (grunt) {
     useminPrepare: {
       html: ['<%= config.client %>/index.html'],
       options: {
-        dest: '<%= config.dist %>/public',
+        dest: '<%= config.dist %>',
         staging: '<%= config.tmp %>'
       }
     },
 
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
-      html: ['<%= config.dist %>/public/{,*/}*.html'],
-      css: ['<%= config.dist %>/public/{,*/}*.css'],
-      js: ['<%= config.dist %>/public/{,*/}*.js'],
+      html: ['<%= config.dist %>/{,*/}*.html'],
+      css: ['<%= config.dist %>/{,*/}*.css'],
+      js: ['<%= config.dist %>/{,*/}*.js'],
       options: {
         assetsDirs: [
-          '<%= config.dist %>/public',
-          '<%= config.dist %>/public/assets/images'
+          '<%= config.dist %>',
+          '<%= config.dist %>/assets/images'
         ],
         // This is so we update image references in our ng-templates
         patterns: {
@@ -249,18 +249,19 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= config.client %>',
-          dest: '<%= config.dist %>/public',
+          dest: '<%= config.dist %>',
           src: [
             '*.{ico,png,txt}',
-            'bower_components/**/*',
-            'assets/images/{,*/}*.{webp}',
+//            'bower_components/**/*',
+//            'assets/images/{,*/}*.{webp}',
+            'assets/images/**/*',
             'assets/fonts/**/*',
             'index.html'
           ]
         }, {
           expand: true,
           cwd: '<%= config.tmp %>/images',
-          dest: '<%= config.dist %>/public/assets/images',
+          dest: '<%= config.dist %>/assets/images',
           src: ['generated/*']
         }]
       },
@@ -335,7 +336,7 @@ module.exports = function (grunt) {
           ]
         }
       }
-    },
+    }
   });
 
   // Used for delaying livereload until after server has restarted
@@ -397,6 +398,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', [
+    'karma',
     'clean:dist',
     'injector',
     'wiredep',

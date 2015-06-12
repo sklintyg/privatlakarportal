@@ -35,41 +35,21 @@ dependencies {
 }
 
 grunt {
-/*    workDir = file("${project.projectDir}/src/main/webapp")*/
     colors = true
     bufferOutput = true
 }
 
 node {
-    version = '0.12.2'
-    npmVersion = '2.7.5'
+    version = '0.12.4'
+    npmVersion = '2.10.1'
     download = true
 }
 
-//task copydeps(type: Copy) {
-//    from 'bower_components'
-//    into 'src/main/webapp/vendor'
-//    include '**/*.js'
-//    include '**/*.css'
-//    include '**/*.js.map'
-//    include '**/fonts/*'
-//}
-
-task npmCacheConfig(type: NpmTask) {
-    description = "Configure the NPM cache"
-    def npmCacheDir = "${gradle.getGradleUserHomeDir()}/caches/npm"
-    outputs.files file(npmCacheDir)
-    args = [ 'config', 'set', 'cache', npmCacheDir ]
+war {
+    webAppDirName = 'build/webapp'
 }
 
-task npmPackages(type: NpmTask, dependsOn: npmCacheConfig) {
-    description = "Install Node.js packages"
-    args = [ 'install' ]
-    inputs.files file('package.json')
-    outputs.files file('node_modules')
-}
-
-task bowerInstall(type: NodeTask, dependsOn:npmPackages) {
+task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
     script = file('node_modules/bower/bin/bower')
     args = ["--config.storage.cache=${gradle.getGradleUserHomeDir()}/caches/bower/cache",
             "--config.storage.packages=${gradle.getGradleUserHomeDir()}/caches/bower/packages",
@@ -79,7 +59,6 @@ task bowerInstall(type: NodeTask, dependsOn:npmPackages) {
     outputs.files file('src/main/webapp/bower_components')
 }
 
-/*copydeps.dependsOn bower*/
 grunt_build.dependsOn bowerInstall
 build.dependsOn grunt_build
 
