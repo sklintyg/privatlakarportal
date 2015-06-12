@@ -85,7 +85,7 @@ build.dependsOn grunt_build
 
 
 gretty {
-    httpPort = 8080
+    httpPort = 9090
     contextPath = '/'
     logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
     jvmArgs = [
