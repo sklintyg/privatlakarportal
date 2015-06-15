@@ -161,3 +161,23 @@ h5.inline-heading {
 .buttonbar .btn-info, .buttonbar .btn-inverse {
     padding: 7px 15px;
 }
+
+/* Printable modal */
+@media print {
+  body.modalprinter * {
+    visibility: hidden;
+  }
+
+  body.modalprinter .modal-dialog {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    top: 0;
+  }
+  
+  body.modalprinter .modal-header *,
+  body.modalprinter .modal-body {
+    visibility: visible;
+  }
+}

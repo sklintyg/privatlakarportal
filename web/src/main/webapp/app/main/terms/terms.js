@@ -8,11 +8,15 @@ angular.module('privatlakareApp')
                 onEnter: ['$stateParams', '$state', '$modal', '$resource', 'Modal',
                     function($stateParams, $state, $modal, $resource, modalService) {
 
+                        $('body').addClass('modalprinter');
+
                         $modal.open({
                             templateUrl: 'app/main/terms/terms.html',
                             controller: 'MainTermsCtrl',
                             size: 'lg'
                         }).result.finally(function() {
+                            $('body').removeClass('modalprinter');
+
                             $state.go('^');
                         });
 
