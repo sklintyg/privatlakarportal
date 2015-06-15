@@ -8,6 +8,9 @@ bin
 
 web/node_modules
 web/src/main/webapp/bower_components/
+web/src/main/webapp/app/app.css
+web/.sass-cache/
+*.map
 
 .idea/
 *.iml

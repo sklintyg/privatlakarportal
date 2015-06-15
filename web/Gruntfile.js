@@ -73,12 +73,23 @@ module.exports = function (grunt) {
         ],
         tasks: ['newer:jshint:all', 'karma']
       },
+      injectSass: {
+        files: [
+          '<%= config.client %>/{app,components}/**/*.{scss,sass}'],
+        tasks: ['injector:sass']
+      },
+      sass: {
+        files: [
+          '<%= config.client %>/{app,components}/**/*.{scss,sass}'],
+        tasks: ['sass', 'autoprefixer']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
       livereload: {
         files: [
           '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.css',
+          '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.scss',
           '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.html',
           '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.js',
           '!{<%= config.tmp %>,<%= config.client %>}{app,components}/**/*.spec.js',
@@ -294,6 +305,23 @@ module.exports = function (grunt) {
       }
     },
 
+    // Compiles Sass to CSS
+    sass: {
+      server: {
+        options: {
+          loadPath: [
+            '<%= config.client %>/bower_components',
+            '<%= config.client %>/app',
+            '<%= config.client %>/components'
+          ],
+          compass: false
+        },
+        files: {
+          '<%= config.client %>/app/app.css': '<%= config.client %>/app/app.scss'
+        }
+      }
+    },
+
     injector: {
       options: {
 
@@ -316,6 +344,25 @@ module.exports = function (grunt) {
                '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.spec.js',
                '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.mock.js']
             ]
+        }
+      },
+
+      // Inject component scss into app.scss
+      sass: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/src/main/webapp/app/', '');
+            filePath = filePath.replace('/src/main/webapp/components/', '');
+            return '@import \'' + filePath + '\';';
+          },
+          starttag: '// injector',
+          endtag: '// endinjector'
+        },
+        files: {
+          '<%= config.client %>/app/app.scss': [
+            '<%= config.client %>/{app,components}/**/*.{scss,sass}',
+            '!<%= config.client %>/app/app.{scss,sass}'
+          ]
         }
       },
 
@@ -358,6 +405,8 @@ module.exports = function (grunt) {
   grunt.registerTask('serve', function (target) {
 
     grunt.task.run([
+      'injector:sass',
+      'sass',
       'injector',
       'wiredep',
       'autoprefixer',
@@ -376,6 +425,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', function(target) {
     if (target === 'client') {
       return grunt.task.run([
+        'injector:sass',
+        'sass',
         'injector',
         'autoprefixer',
         'karma'
@@ -384,6 +435,7 @@ module.exports = function (grunt) {
 
     else if (target === 'e2e') {
       return grunt.task.run([
+        'injector:sass',
         'injector',
         'wiredep',
         'autoprefixer',
@@ -400,6 +452,8 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'karma',
     'clean:dist',
+    'injector:sass',
+    'sass',
     'injector',
     'wiredep',
     'useminPrepare',
