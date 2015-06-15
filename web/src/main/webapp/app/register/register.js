@@ -4,7 +4,7 @@ angular.module('privatlakareApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('app.register', {
-        url: '/register',
+        url: '/registrera',
         views: {
             'content@': {
                 templateUrl: 'app/register/register.html',

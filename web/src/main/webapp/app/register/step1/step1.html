@@ -1,0 +1,77 @@
+<div class="box">
+  <div class="form-group">
+    <label class="control-label">Personnummer</label> <span pp-tooltip field-help-text="label.help.personnummer"></span>
+    <div class="controls">
+      {{user.personnummer}}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Namn</label> <span pp-tooltip field-help-text="label.help.namn"></span>
+    <div class="controls">
+      {{user.name}}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Befattning</label> <span pp-tooltip field-help-text="label.help.befattning"></span>
+    <div class="controls">
+      <select id="befattning" class="form-control" ng-model="registerModel.befattning"
+              ng-options="s.label for s in viewState.befattningList"></select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Verksamhetens namn</label> <span pp-tooltip field-help-text="label.help.verksamhetensnamn"></span>
+    <div class="controls">
+      <input type="text"
+             id="verksamhetensNamn"
+             name="verksamhetensNamn"
+             ng-model="registerModel.verksamhetensNamn"
+             class='form-control'
+             value=""
+             ng-change="viewState.limitOtherField('verksamhetensNamn')">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Ägarform</label> <span pp-tooltip field-help-text="label.help.agarform"></span>
+    <div class="controls">
+      Privat
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Vårdform</label> <span pp-tooltip field-help-text="label.help.vardform"></span>
+    <div class="controls">
+      <select id="vardform" class="form-control" ng-model="registerModel.vardform"
+              ng-options="s.label for s in viewState.vardformList"></select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Verksamhetstyp</label> <span pp-tooltip field-help-text="label.help.verksamhetstyp"></span>
+    <div class="controls">
+      <select id="verksamhetstyp" class="form-control" ng-model="registerModel.verksamhetstyp"
+              ng-options="s.label for s in viewState.verksamhetstypList"></select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Arbetsplatskod <i>(valfritt)</i></label> <span pp-tooltip field-help-text="label.help.arbetsplatskod"></span>
+    <div class="controls">
+      <input type="text"
+             id="arbetsplatskod"
+             name="arbetsplatskod"
+             ng-model="registerModel.arbetsplatskod"
+             class='form-control'
+             value=""
+             ng-change="viewState.limitOtherField('arbetsplatskod')">
+    </div>
+  </div>
+
+</div>
+
+<div class="buttonbar">
+  <button class="btn btn-success" ui-sref="app.register.step2">Fortsätt</button><button class="btn btn-secondary">Avbryt</button>
+</div>
