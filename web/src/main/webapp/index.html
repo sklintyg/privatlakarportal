@@ -23,6 +23,7 @@
       <link rel="stylesheet" href="app/header/header.css">
       <link rel="stylesheet" href="app/navbar/navbar.css">
       <link rel="stylesheet" href="app/vendor-override.css">
+      <link rel="stylesheet" href="components/fishbone/fishbone.css">
       <link rel="stylesheet" href="components/modal/modal.css">
       <link rel="stylesheet" href="components/ppTooltip/ppTooltip.css">
       <!-- endinjector -->
@@ -58,6 +59,7 @@
         <!-- build:js({build/.tmp,src/main/webapp}) app/app.js -->
         <script src="app/app.js"></script>
           <!-- injector:js -->
+          <script src="app/messages.js"></script>
           <script src="app/header/header.controller.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
@@ -66,11 +68,13 @@
           <script src="app/navbar/navbar.controller.js"></script>
           <script src="app/register/register.controller.js"></script>
           <script src="app/register/register.js"></script>
+          <script src="app/register/register.model.js"></script>
+          <script src="app/register/registerViewstate.service.js"></script>
           <script src="app/router.js"></script>
-          <script src="components/message/message.directive.js"></script>
-          <script src="components/message/message.service.js"></script>
+          <script src="components/message.directive.js"></script>
+          <script src="components/message.service.js"></script>
           <script src="components/modal/modal.service.js"></script>
-          <script src="components/ppTooltip/ppTooltip.directive.js"></script>
+          <script src="components/ppTooltip.directive.js"></script>
           <script src="components/user/user.model.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
