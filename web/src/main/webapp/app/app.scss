@@ -43,3 +43,119 @@
 @import 'main/main.scss';
 @import 'register/register.scss';
 // endinjector
+
+
+html, body, .container-fluid {
+    font-size: 14px;
+    font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+    text-align: left;
+    /*  overflow-x: hidden;  disable horizontal scroll to prevent user from peeking outside of intended view in case something is too long. fix such things in another way! */
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-weight: bold;
+}
+
+input, textarea, .uneditable-input {
+    max-width: 206px;
+}
+
+select {
+    max-width: 220px;
+}
+
+.form-control {
+    padding: 4px 6px;
+}
+
+p {
+    margin: 0;
+    padding: 0 0 10px;
+}
+
+a {
+    color: #28b4c4;
+    cursor: pointer;
+}
+
+a.backlink {
+    display: inline-block;
+    line-height: 18px;
+    padding-left: 15px;
+    background: transparent url(/img/back-link-icon.gif) center left no-repeat;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+h1 {
+    font-size: 24px;
+    color: #008391;
+}
+
+h1.backlink-heading {
+    display: inline-block;
+    margin-right: 20px;
+    line-height: 29px;
+}
+
+h2 {
+    font-size: 16px;
+    line-height: 20px;
+    padding-top: 30px;
+}
+
+h2.less-top-padding {
+    /* useful if h2 is placed immediately after h1 */
+    padding-top: 10px;
+}
+
+.col-head {
+    font-size: 20px;
+    color: #008391;
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+h5.inline-heading {
+    padding: 20px 0 5px 0;
+}
+
+.multiline {
+    white-space: pre-line;
+}
+
+.bluebox {
+    background-color: #008391;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    border-radius: 8px 8px 8px 8px;
+    color: #fff;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.box {
+    display: block;
+    padding: 20px 40px 15px 40px;
+    background-color: #e5e5e5;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+
+.buttonbar .btn {
+    margin: 5px 5px 0 0;
+}
+
+.buttonbar .btn-info, .buttonbar .btn-inverse {
+    padding: 7px 15px;
+}

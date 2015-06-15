@@ -3,9 +3,13 @@
 angular.module('privatlakareApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('register', {
+      .state('app.register', {
         url: '/register',
-        templateUrl: 'app/register/register.html',
-        controller: 'RegisterCtrl'
+        views: {
+            'content@': {
+                templateUrl: 'app/register/register.html',
+                controller: 'RegisterCtrl'
+            }
+        }
       });
   });
