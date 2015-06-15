@@ -1,0 +1,21 @@
+<div>
+  <div class="header clearfix">
+    <div class="headerbox">
+      <span class="headerbox-logo pull-left">
+        <img alt="Till startsidan" src="/assets/images/logo.png" /></span>
+      <span class="headerbox-date pull-left">
+        <span id="location" class="location">{{today | date:"shortDate"}}</span><br>
+      </span>
+    </div>
+    <div class="headerbox-user pull-right">
+      <div class="headerbox-user-profile headerbox-avatar">
+        <span id="logged-in-role" ng-switch="user.state">
+                  <strong ng-switch-when="true">Läkare</strong>
+                  <strong ng-switch-default>Ej registrerad användare</strong>
+                  </span>
+        - <span class="logged-in">{{user.name}}</span><br>
+        <a id="logoutLink" class="pull-right" ng-click="logout()">Logga ut</a>
+      </div>
+    </div>
+  </div>
+</div>
