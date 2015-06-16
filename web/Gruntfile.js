@@ -279,7 +279,7 @@ module.exports = function (grunt) {
           dest: '<%= config.dist %>',
           src: [
             '*.{ico,png,txt}',
-//            'bower_components/**/*',
+            'bower_components/**/*',
 //            'assets/images/{,*/}*.{webp}',
             'assets/images/**/*',
             'assets/fonts/**/*',
