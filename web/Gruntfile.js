@@ -9,7 +9,7 @@ module.exports = function (grunt) {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     protractor: 'grunt-protractor-runner',
-    injector: 'grunt-asset-injector'
+    injector: 'grunt-injector'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -340,7 +340,7 @@ module.exports = function (grunt) {
 
     injector: {
       options: {
-
+          lineEnding: grunt.util.linefeed
       },
       // Inject application script files into index.html (doesn't include bower)
       scripts: {
@@ -468,16 +468,17 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'karma',
     'clean:dist',
+    'copy:dist',
     'injector:sass',
     'sass',
-    'injector',
+    'injector:scripts',
+    'injector:css',
     'wiredep',
     'useminPrepare',
     'autoprefixer',
     'ngtemplates',
     'concat',
     'ngAnnotate',
-    'copy:dist',
     'cssmin',
     'uglify',
     'filerev',
