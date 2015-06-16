@@ -1,3 +1,0 @@
-!contents -R3
-
-* AllTests

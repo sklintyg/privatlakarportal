@@ -1,0 +1,6 @@
+!3 Testar att GEB och selenium fungerar, och att rootsidan visas 
+
+!| root sida |
+| test? |
+| true  |
+

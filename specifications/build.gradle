@@ -34,7 +34,6 @@ if (project.hasProperty('runFitnesse')) {
         jvmArgs = [
             '-Dspring.profiles.active=local',
             '-XX:MaxPermSize=256M',
-            '-Dgeb.env=${gebEnv}'
         ]
     }
 
