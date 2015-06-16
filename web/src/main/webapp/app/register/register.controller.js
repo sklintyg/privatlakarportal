@@ -3,7 +3,7 @@
 angular.module('privatlakareApp')
     .controller('RegisterCtrl', function ($scope, $state, UserModel, RegisterModel, RegisterViewStateService) {
         $scope.user = UserModel;
-        $scope.registerModel = RegisterModel;
+        $scope.registerModel = RegisterModel.reset();
         $scope.viewState = RegisterViewStateService;
 
         $scope.$on('$stateChangeStart',

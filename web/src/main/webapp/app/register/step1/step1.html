@@ -17,7 +17,7 @@
     <label class="control-label">Befattning</label> <span pp-tooltip field-help-text="label.help.befattning"></span>
     <div class="controls">
       <select id="befattning" class="form-control" ng-model="registerModel.befattning"
-              ng-options="s.label for s in viewState.befattningList"></select>
+              ng-options="s.label for s in viewState.befattningList track by s.id"></select>
     </div>
   </div>
 
@@ -45,7 +45,7 @@
     <label class="control-label">Vårdform</label> <span pp-tooltip field-help-text="label.help.vardform"></span>
     <div class="controls">
       <select id="vardform" class="form-control" ng-model="registerModel.vardform"
-              ng-options="s.label for s in viewState.vardformList"></select>
+              ng-options="s.label for s in viewState.vardformList track by s.id"></select>
     </div>
   </div>
 
@@ -53,7 +53,7 @@
     <label class="control-label">Verksamhetstyp</label> <span pp-tooltip field-help-text="label.help.verksamhetstyp"></span>
     <div class="controls">
       <select id="verksamhetstyp" class="form-control" ng-model="registerModel.verksamhetstyp"
-              ng-options="s.label for s in viewState.verksamhetstypList"></select>
+              ng-options="s.label for s in viewState.verksamhetstypList track by s.id"></select>
     </div>
   </div>
 

@@ -6,6 +6,7 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             this.step = 1;
 
             this.befattningList = [
+                { id:'0', label: 'Välj befattning' },
                 { id:'201011', label: 'Distriktsläkare/Specialist allmänmedicin' },
                 { id:'201012', label: 'Skolläkare' },
                 { id:'201013', label: 'Företagsläkare' },
@@ -14,11 +15,12 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
                 { id:'203090', label: 'Läkare legitimerad, annan' }
             ];
             this.vardformList = [
-                { id:'01', label: 'Öppenvård' },
+                { id:'01', label: 'Öppenvård (förvald)' },
                 { id:'02', label: 'Slutenvård' },
                 { id:'03', label: 'Hemsjukvård' }
             ];
             this.verksamhetstypList = [
+                { id:'0', label: 'Välj verksamhetstyp' },
                 { id:'10', label: 'Barn- och ungdomsverksamhet' },
                 { id:'11', label: 'Medicinsk verksamhet' },
                 { id:'12', label: 'Laboratorieverksamhet' },

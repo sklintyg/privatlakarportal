@@ -47,6 +47,9 @@
 @import 'register/step3/step3.scss';
 // endinjector
 
+/*****************************
+App-wide special styles
+*******************************/
 
 html, body, .container-fluid {
     font-size: 14px;
@@ -152,7 +155,6 @@ h5.inline-heading {
     -moz-border-radius: 4px 4px 4px 4px;
     border-radius: 4px 4px 4px 4px;
 }
-
 
 .buttonbar .btn {
     margin: 5px 5px 0 0;
