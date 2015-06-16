@@ -5,7 +5,7 @@ angular.module('privatlakareApp')
     $stateProvider
       .state('app', {
         views: {
-            'header@': { templateUrl: '/app/header/header.html', controller: 'HeaderController' }
+            'header@': { templateUrl: 'app/header/header.html', controller: 'HeaderController' }
         }
       });
   });

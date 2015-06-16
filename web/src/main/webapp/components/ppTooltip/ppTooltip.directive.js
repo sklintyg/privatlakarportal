@@ -17,6 +17,6 @@ angular.module('privatlakareApp').directive('ppTooltip',
                         return messageService.getProperty(key);
                     };
                 },
-                templateUrl: '/components/ppTooltip/ppTooltip.directive.html'
+                templateUrl: 'components/ppTooltip/ppTooltip.directive.html'
             };
         }]);
