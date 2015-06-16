@@ -1,493 +1,494 @@
 // Generated on 2015-06-10 using generator-angular-fullstack 2.0.13
 'use strict';
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
-  // Load grunt tasks automatically, when needed
-  require('jit-grunt')(grunt, {
-    connect: 'grunt-contrib-connect',
-    useminPrepare: 'grunt-usemin',
-    ngtemplates: 'grunt-angular-templates',
-    protractor: 'grunt-protractor-runner',
-    injector: 'grunt-injector'
-  });
+    // Load grunt tasks automatically, when needed
+    require('jit-grunt')(grunt, {
+        connect: 'grunt-contrib-connect',
+        useminPrepare: 'grunt-usemin',
+        ngtemplates: 'grunt-angular-templates',
+        protractor: 'grunt-protractor-runner',
+        injector: 'grunt-injector'
+    });
 
-  // Time how long tasks take. Can help when optimizing build times
-  require('time-grunt')(grunt);
+    // Time how long tasks take. Can help when optimizing build times
+    require('time-grunt')(grunt);
 
-  // Define the configuration for all the tasks
-  grunt.initConfig({
+    // Define the configuration for all the tasks
+    grunt.initConfig({
 
-    // Project settings
-    pkg: grunt.file.readJSON('package.json'),
-    config: {
-      // configurable paths
-      client: require('./bower.json').appPath || 'src/main/webapp',
-      dist: 'build/webapp',
-      tmp: 'build/.tmp'
-    },
-    connect: {
-        dev: {
-        options: {
-          port: 9091,
-          hostname: '*',
-          middleware: function(connect, options) {
-            return [
-              require('connect-livereload')(),
-              connect.static('src/main/webapp'),
-              require('grunt-connect-proxy/lib/utils').proxyRequest
-            ];
-          },
-          proxies: [{
-            context: '/',
-            host: 'localhost',
-            port: 9090
-          }]
-        }
-      }
-    },
-    open: {
-        dev: {
-        url: 'http://localhost:9091'
-      }
-    },
-    watch: {
-      injectJS: {
-        files: [
-          '<%= config.client %>/{app,components}/**/*.js',
-          '!<%= config.client %>/{app,components}/**/*.spec.js',
-          '!<%= config.client %>/{app,components}/**/*.mock.js',
-          '!<%= config.client %>/app/app.js'],
-        tasks: ['injector:scripts']
-      },
-      injectCss: {
-        files: [
-          '<%= config.client %>/{app,components}/**/*.css'
-        ],
-        tasks: ['injector:css']
-      },
-      jsTest: {
-        files: [
-          '<%= config.client %>/{app,components}/**/*.spec.js',
-          '<%= config.client %>/{app,components}/**/*.mock.js'
-        ],
-        tasks: ['newer:jshint:all', 'karma']
-      },
-      injectSass: {
-        files: [
-          '<%= config.client %>/{app,components}/**/*.{scss,sass}'],
-        tasks: ['injector:sass']
-      },
-      sass: {
-        files: [
-          '<%= config.client %>/{app,components}/**/*.{scss,sass}'],
-        tasks: ['sass', 'autoprefixer']
-      },
-      gruntfile: {
-        files: ['Gruntfile.js']
-      },
-      livereload: {
-        files: [
-          '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.css',
-          '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.scss',
-          '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.html',
-          '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.js',
-          '!{<%= config.tmp %>,<%= config.client %>}{app,components}/**/*.spec.js',
-          '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.mock.js',
-          '<%= config.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
-        ],
-        options: {
-          livereload: true
-        }
-      },
-      connect: {
-        files: [
-          'server/**/*.{js,json}'
-        ],
-        tasks: ['express:dev', 'wait'],
-        options: {
-          livereload: true,
-          nospawn: true //Without this option specified express won't be reloaded
-        }
-      }
-    },
-
-    // Make sure code styles are up to par and there are no obvious mistakes
-    jshint: {
-      options: {
-        jshintrc: '<%= config.client %>/.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      all: [
-        '<%= config.client %>/{app,components}/**/*.js',
-        '!<%= config.client %>/{app,components}/**/*.spec.js',
-        '!<%= config.client %>/{app,components}/**/*.mock.js'
-      ],
-      test: {
-        src: [
-          '<%= config.client %>/{app,components}/**/*.spec.js',
-          '<%= config.client %>/{app,components}/**/*.mock.js'
-        ]
-      }
-    },
-
-    // Empties folders to start fresh
-    clean: {
-      dist: {
-        files: [{
-          dot: true,
-          src: [
-            '<%= config.dist %>/*',
-            '<%= config.tmp %>/*'
-          ]
-        }]
-      }
-    },
-
-    // Add vendor prefixed styles
-    autoprefixer: {
-      options: {
-        browsers: ['last 1 version']
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.tmp %>/',
-          src: '{,*/}*.css',
-          dest: '<%= config.tmp %>/'
-        }]
-      }
-    },
-
-    // Automatically inject Bower components into the app
-    wiredep: {
-      target: {
-        src: '<%= config.client %>/index.html',
-        ignorePath: '<%= config.client %>/',
-        exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/']
-      }
-    },
-
-    // Renames files for browser caching purposes
-    filerev: {
-      dist: {
-        files:[{
-          src: [
-            '<%= config.dist %>/{,*/}*.js',
-            '<%= config.dist %>/{,*/}*.css',
-            '<%= config.dist %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= config.dist %>/assets/fonts/*'
-          ]
-        }]
-      }
-    },
-
-    concat: {
-        options: {
-            sourceMap: true
-        }
-    },
-
-    uglify: {
-      options: {
-        sourceMap: true,
-        sourceMapIn: function(uglifySource) {
-          return uglifySource + '.map';
+        // Project settings
+        pkg: grunt.file.readJSON('package.json'),
+        config: {
+            // configurable paths
+            client: 'src/main/webapp',
+            dist: 'build/webapp',
+            tmp: 'build/.tmp'
         },
-        sourceMapIncludeSources: true
-      }
-    },
-
-    // Reads HTML for usemin blocks to enable smart builds that automatically
-    // concat, minify and revision files. Creates configurations in memory so
-    // additional tasks can operate on them
-    useminPrepare: {
-      html: ['<%= config.client %>/index.html'],
-      options: {
-        dest: '<%= config.dist %>',
-        staging: '<%= config.tmp %>'
-      }
-    },
-
-    // Performs rewrites based on rev and the useminPrepare configuration
-    usemin: {
-      html: ['<%= config.dist %>/{,*/}*.html'],
-      css: ['<%= config.dist %>/{,*/}*.css'],
-      js: ['<%= config.dist %>/{,*/}*.js'],
-      options: {
-        assetsDirs: [
-          '<%= config.dist %>',
-          '<%= config.dist %>/assets/images'
-        ],
-        // This is so we update image references in our ng-templates
-        patterns: {
-          js: [
-            [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
-          ]
-        }
-      }
-    },
-
-    // Allow the use of non-minsafe AngularJS files. Automatically makes it
-    // minsafe compatible so Uglify does not destroy the ng references
-    ngAnnotate: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.tmp %>/concat',
-          src: '*/**.js',
-          dest: '<%= config.tmp %>/concat'
-        }]
-      }
-    },
-
-    // Package all the html partials into a single javascript payload
-    ngtemplates: {
-      options: {
-        // This should be the name of your apps angular module
-        module: 'privatlakareApp',
-        htmlmin: {
-          collapseBooleanAttributes: true,
-          collapseWhitespace: true,
-          removeAttributeQuotes: true,
-          removeEmptyAttributes: true,
-          removeRedundantAttributes: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true
+        connect: {
+            dev: {
+                options: {
+                    port: 9091,
+                    hostname: '*',
+                    middleware: function(connect, options) {
+                        return [
+                            require('connect-livereload')(),
+                            connect.static('src/main/webapp'),
+                            require('grunt-connect-proxy/lib/utils').proxyRequest
+                        ];
+                    },
+                    proxies: [
+                        {
+                            context: '/',
+                            host: 'localhost',
+                            port: 9090
+                        }
+                    ]
+                }
+            }
         },
-        usemin: 'app/app.js'
-      },
-      main: {
-        cwd: '<%= config.client %>',
-        src: ['{app,components}/**/*.html'],
-        dest: '<%= config.tmp %>/templates.js'
-      },
-      tmp: {
-        cwd: '<%= config.tmp %>',
-        src: ['{app,components}/**/*.html'],
-        dest: '<%= config.tmp %>/tmp-templates.js'
-      }
-    },
-
-    // Copies remaining files to places other tasks can use
-    copy: {
-      dist: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= config.client %>',
-          dest: '<%= config.dist %>',
-          src: [
-            '*.{ico,png,txt}',
-            'bower_components/**/*',
-//            'assets/images/{,*/}*.{webp}',
-            'assets/images/**/*',
-            'assets/fonts/**/*',
-            'index.html'
-          ]
-        }, {
-          expand: true,
-          cwd: '<%= config.tmp %>/images',
-          dest: '<%= config.dist %>/assets/images',
-          src: ['generated/*']
-        }]
-      },
-      styles: {
-        expand: true,
-        cwd: '<%= config.client %>',
-        dest: '<%= config.tmp %>/',
-        src: ['{app,components}/**/*.css']
-      }
-    },
-
-    // Test settings
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
-
-    protractor: {
-      options: {
-        configFile: 'protractor.conf.js'
-      },
-      chrome: {
-        options: {
-          args: {
-            browser: 'chrome'
-          }
-        }
-      }
-    },
-
-    // Compiles Sass to CSS
-    sass: {
-      server: {
-        options: {
-          loadPath: [
-            '<%= config.client %>/bower_components',
-            '<%= config.client %>/app',
-            '<%= config.client %>/components'
-          ],
-          compass: false
+        open: {
+            dev: {
+                url: 'http://localhost:9091'
+            }
         },
-        files: {
-          '<%= config.client %>/app/app.css': '<%= config.client %>/app/app.scss'
-        }
-      }
-    },
-
-    injector: {
-      options: {
-          lineEnding: grunt.util.linefeed
-      },
-      // Inject application script files into index.html (doesn't include bower)
-      scripts: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/src/main/webapp/', '');
-            filePath = filePath.replace('/<%= config.tmp %>/', '');
-            return '<script src="' + filePath + '"></script>';
-          },
-          starttag: '<!-- injector:js -->',
-          endtag: '<!-- endinjector -->'
+        watch: {
+            injectJS: {
+                files: [
+                    '<%= config.client %>/{app,components}/**/*.js',
+                    '!<%= config.client %>/{app,components}/**/*.spec.js',
+                    '!<%= config.client %>/{app,components}/**/*.mock.js',
+                    '!<%= config.client %>/app/app.js'],
+                tasks: ['injector:scripts']
+            },
+            injectCss: {
+                files: [
+                    '<%= config.client %>/{app,components}/**/*.css'
+                ],
+                tasks: ['injector:css']
+            },
+            jsTest: {
+                files: [
+                    '<%= config.client %>/{app,components}/**/*.spec.js',
+                    '<%= config.client %>/{app,components}/**/*.mock.js'
+                ],
+                tasks: ['newer:jshint:all', 'karma']
+            },
+            injectSass: {
+                files: [
+                    '<%= config.client %>/{app,components}/**/*.{scss,sass}'],
+                tasks: ['injector:sass']
+            },
+            sass: {
+                files: [
+                    '<%= config.client %>/{app,components}/**/*.{scss,sass}'],
+                tasks: ['sass', 'autoprefixer']
+            },
+            gruntfile: {
+                files: ['Gruntfile.js']
+            },
+            livereload: {
+                files: [
+                    '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.css',
+                    '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.scss',
+                    '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.html',
+                    '{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.js',
+                    '!{<%= config.tmp %>,<%= config.client %>}{app,components}/**/*.spec.js',
+                    '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.mock.js',
+                    '<%= config.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+                ],
+                options: {
+                    livereload: true
+                }
+            }
         },
-        files: {
-          '<%= config.client %>/index.html': [
-              ['{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.js',
-               '!{<%= config.tmp %>,<%= config.client %>}/app/app.js',
-               '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.spec.js',
-               '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.mock.js']
-            ]
-        }
-      },
 
-      // Inject component scss into app.scss
-      sass: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/src/main/webapp/app/', '');
-            filePath = filePath.replace('/src/main/webapp/components/', '');
-            return '@import \'' + filePath + '\';';
-          },
-          starttag: '// injector',
-          endtag: '// endinjector'
+        // Make sure code styles are up to par and there are no obvious mistakes
+        jshint: {
+            options: {
+                jshintrc: '<%= config.client %>/.jshintrc',
+                reporter: require('jshint-stylish'),
+                force: true
+            },
+            all: [
+                '<%= config.client %>/{app,components}/**/*.js',
+                '!<%= config.client %>/{app,components}/**/*.spec.js',
+                '!<%= config.client %>/{app,components}/**/*.mock.js'
+            ],
+            test: {
+                src: [
+                    '<%= config.client %>/{app,components}/**/*.spec.js',
+                    '<%= config.client %>/{app,components}/**/*.mock.js'
+                ]
+            }
         },
-        files: {
-          '<%= config.client %>/app/app.scss': [
-            '<%= config.client %>/{app,components}/**/*.{scss,sass}',
-            '!<%= config.client %>/app/app.{scss,sass}'
-          ]
-        }
-      },
 
-      // Inject component css into index.html
-      css: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/src/main/webapp/', '');
-            filePath = filePath.replace('/<%= config.tmp %>/', '');
-            return '<link rel="stylesheet" href="' + filePath + '">';
-          },
-          starttag: '<!-- injector:css -->',
-          endtag: '<!-- endinjector -->'
+        // Empties folders to start fresh
+        clean: {
+            dist: {
+                files: [
+                    {
+                        dot: true,
+                        src: [
+                            '<%= config.dist %>/*',
+                            '<%= config.tmp %>/*'
+                        ]
+                    }
+                ]
+            }
         },
-        files: {
-          '<%= config.client %>/index.html': [
-            '<%= config.client %>/{app,components}/**/*.css'
-          ]
+
+        // Add vendor prefixed styles
+        autoprefixer: {
+            options: {
+                browsers: ['last 1 version']
+            },
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.tmp %>/',
+                        src: '{,*/}*.css',
+                        dest: '<%= config.tmp %>/'
+                    }
+                ]
+            }
+        },
+
+        // Automatically inject Bower components into the app
+        wiredep: {
+            target: {
+                src: '<%= config.client %>/index.html',
+                ignorePath: '<%= config.client %>/',
+                exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/']
+            }
+        },
+
+        // Renames files for browser caching purposes
+        filerev: {
+            dist: {
+                files: [
+                    {
+                        src: [
+                            '<%= config.dist %>/{,*/}*.js',
+                            '<%= config.dist %>/{,*/}*.css',
+                            '<%= config.dist %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+                            '<%= config.dist %>/assets/fonts/*'
+                        ]
+                    }
+                ]
+            }
+        },
+
+        concat: {
+            options: {
+                sourceMap: true
+            }
+        },
+
+        uglify: {
+            options: {
+                sourceMap: true,
+                sourceMapIn: function(uglifySource) {
+                    return uglifySource + '.map';
+                },
+                sourceMapIncludeSources: true
+            }
+        },
+
+        // Reads HTML for usemin blocks to enable smart builds that automatically
+        // concat, minify and revision files. Creates configurations in memory so
+        // additional tasks can operate on them
+        useminPrepare: {
+            html: ['<%= config.client %>/index.html'],
+            options: {
+                dest: '<%= config.dist %>',
+                staging: '<%= config.tmp %>'
+            }
+        },
+
+        // Performs rewrites based on rev and the useminPrepare configuration
+        usemin: {
+            html: ['<%= config.dist %>/{,*/}*.html'],
+            css: ['<%= config.dist %>/{,*/}*.css'],
+            js: ['<%= config.dist %>/{,*/}*.js'],
+            options: {
+                assetsDirs: [
+                    '<%= config.dist %>',
+                    '<%= config.dist %>/assets/images'
+                ],
+                // This is so we update image references in our ng-templates
+                patterns: {
+                    js: [
+                        [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm,
+                            'Update the JS to reference our revved images']
+                    ]
+                }
+            }
+        },
+
+        // Allow the use of non-minsafe AngularJS files. Automatically makes it
+        // minsafe compatible so Uglify does not destroy the ng references
+        ngAnnotate: {
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.tmp %>/concat',
+                        src: '*/**.js',
+                        dest: '<%= config.tmp %>/concat'
+                    }
+                ]
+            }
+        },
+
+        // Package all the html partials into a single javascript payload
+        ngtemplates: {
+            options: {
+                // This should be the name of your apps angular module
+                module: 'privatlakareApp',
+                htmlmin: {
+                    collapseBooleanAttributes: true,
+                    collapseWhitespace: true,
+                    removeAttributeQuotes: true,
+                    removeEmptyAttributes: true,
+                    removeRedundantAttributes: true,
+                    removeScriptTypeAttributes: true,
+                    removeStyleLinkTypeAttributes: true
+                },
+                usemin: 'app/app.js'
+            },
+            main: {
+                cwd: '<%= config.client %>',
+                src: ['{app,components}/**/*.html'],
+                dest: '<%= config.tmp %>/templates.js'
+            },
+            tmp: {
+                cwd: '<%= config.tmp %>',
+                src: ['{app,components}/**/*.html'],
+                dest: '<%= config.tmp %>/tmp-templates.js'
+            }
+        },
+
+        // Copies remaining files to places other tasks can use
+        copy: {
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= config.client %>',
+                        dest: '<%= config.dist %>',
+                        src: [
+                            '*.{ico,png,txt}',
+                            'bower_components/**/*',
+                            //            'assets/images/{,*/}*.{webp}',
+                            'assets/images/**/*',
+                            'assets/fonts/**/*',
+                            'index.html'
+                        ]
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.tmp %>/images',
+                        dest: '<%= config.dist %>/assets/images',
+                        src: ['generated/*']
+                    }
+                ]
+            },
+            styles: {
+                expand: true,
+                cwd: '<%= config.client %>',
+                dest: '<%= config.tmp %>/',
+                src: ['{app,components}/**/*.css']
+            }
+        },
+
+        // Test settings
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js',
+                singleRun: true
+            }
+        },
+
+        protractor: {
+            options: {
+                configFile: 'protractor.conf.js'
+            },
+            chrome: {
+                options: {
+                    args: {
+                        browser: 'chrome'
+                    }
+                }
+            }
+        },
+
+        // Compiles Sass to CSS
+        sass: {
+            server: {
+                options: {
+                    loadPath: [
+                        '<%= config.client %>/bower_components',
+                        '<%= config.client %>/app',
+                        '<%= config.client %>/components'
+                    ],
+                    compass: false
+                },
+                files: {
+                    '<%= config.client %>/app/app.css': '<%= config.client %>/app/app.scss'
+                }
+            }
+        },
+
+        injector: {
+            options: {
+                lineEnding: grunt.util.linefeed
+            },
+            // Inject application script files into index.html (doesn't include bower)
+            scripts: {
+                options: {
+                    transform: function(filePath) {
+                        filePath = filePath.replace('/src/main/webapp/', '');
+                        filePath = filePath.replace('/<%= config.tmp %>/', '');
+                        return '<script src="' + filePath + '"></script>';
+                    },
+                    starttag: '<!-- injector:js -->',
+                    endtag: '<!-- endinjector -->'
+                },
+                files: {
+                    '<%= config.client %>/index.html': [
+                        ['{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.js',
+                            '!{<%= config.tmp %>,<%= config.client %>}/app/app.js',
+                            '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.spec.js',
+                            '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.mock.js']
+                    ]
+                }
+            },
+
+            // Inject component scss into app.scss
+            sass: {
+                options: {
+                    transform: function(filePath) {
+                        filePath = filePath.replace('/src/main/webapp/app/', '');
+                        filePath = filePath.replace('/src/main/webapp/components/', '');
+                        return '@import \'' + filePath + '\';';
+                    },
+                    starttag: '// injector',
+                    endtag: '// endinjector'
+                },
+                files: {
+                    '<%= config.client %>/app/app.scss': [
+                        '<%= config.client %>/{app,components}/**/*.{scss,sass}',
+                        '!<%= config.client %>/app/app.{scss,sass}'
+                    ]
+                }
+            },
+
+            // Inject component css into index.html
+            css: {
+                options: {
+                    transform: function(filePath) {
+                        filePath = filePath.replace('/src/main/webapp/', '');
+                        filePath = filePath.replace('/<%= config.tmp %>/', '');
+                        return '<link rel="stylesheet" href="' + filePath + '">';
+                    },
+                    starttag: '<!-- injector:css -->',
+                    endtag: '<!-- endinjector -->'
+                },
+                files: {
+                    '<%= config.client %>/index.html': [
+                        '<%= config.client %>/{app,components}/**/*.css'
+                    ]
+                }
+            }
         }
-      }
-    }
-  });
+    });
 
-  // Used for delaying livereload until after server has restarted
-  grunt.registerTask('wait', function () {
-    grunt.log.ok('Waiting for server reload...');
+    // Used for delaying livereload until after server has restarted
+    grunt.registerTask('wait', function() {
+        grunt.log.ok('Waiting for server reload...');
 
-    var done = this.async();
+        var done = this.async();
 
-    setTimeout(function () {
-      grunt.log.writeln('Done waiting!');
-      done();
-    }, 1500);
-  });
+        setTimeout(function() {
+            grunt.log.writeln('Done waiting!');
+            done();
+        }, 1500);
+    });
 
-  grunt.registerTask('connect-keepalive', 'Keep grunt running', function() {
-    this.async();
-  });
+    grunt.registerTask('connect-keepalive', 'Keep grunt running', function() {
+        this.async();
+    });
 
-  grunt.registerTask('serve', function (target) {
+    grunt.registerTask('serve', function(target) {
 
-    grunt.task.run([
-      'injector:sass',
-      'sass',
-      'injector',
-      'wiredep',
-      'autoprefixer',
-      'connect:dev',
-      'wait',
-      'open',
-      'watch'
-    ]);
-  });
+        grunt.task.run([
+            'injector:sass',
+            'sass',
+            'injector',
+            'wiredep',
+            'autoprefixer',
+            'connect:dev',
+            'wait',
+            'open',
+            'watch'
+        ]);
+    });
 
-  grunt.registerTask('server', function () {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve']);
-  });
+    grunt.registerTask('test', function(target) {
+        if (target === 'client') {
+            return grunt.task.run([
+                'injector:sass',
+                'sass',
+                'injector',
+                'autoprefixer',
+                'karma'
+            ]);
+        }
 
-  grunt.registerTask('test', function(target) {
-    if (target === 'client') {
-      return grunt.task.run([
+        else if (target === 'e2e') {
+            return grunt.task.run([
+                'injector:sass',
+                'injector',
+                'wiredep',
+                'autoprefixer',
+                'express:dev',
+                'protractor'
+            ]);
+        }
+
+        else {
+            grunt.task.run([
+                'test:client'
+            ]);
+        }
+    });
+
+    grunt.registerTask('build', [
+        'clean:dist',
+        'jshint',
+        'copy:dist',
         'injector:sass',
         'sass',
-        'injector',
-        'autoprefixer',
-        'karma'
-      ]);
-    }
-
-    else if (target === 'e2e') {
-      return grunt.task.run([
-        'injector:sass',
-        'injector',
+        'injector:scripts',
+        'injector:css',
         'wiredep',
+        'useminPrepare',
         'autoprefixer',
-        'express:dev',
-        'protractor'
-      ]);
-    }
-
-    else grunt.task.run([
-      'test:client'
+        'karma',
+        'ngtemplates',
+        'concat',
+        'ngAnnotate',
+        'cssmin',
+        'uglify',
+        'filerev',
+        'usemin'
     ]);
-  });
 
-  grunt.registerTask('build', [
-    'karma',
-    'clean:dist',
-    'copy:dist',
-    'injector:sass',
-    'sass',
-    'injector:scripts',
-    'injector:css',
-    'wiredep',
-    'useminPrepare',
-    'autoprefixer',
-    'ngtemplates',
-    'concat',
-    'ngAnnotate',
-    'cssmin',
-    'uglify',
-    'filerev',
-    'usemin'
-  ]);
-
-  grunt.registerTask('default', [
-    'newer:jshint',
-    'test',
-    'build'
-  ]);
+    grunt.registerTask('jshintcheck', [
+        'jshint'
+    ]);
 };

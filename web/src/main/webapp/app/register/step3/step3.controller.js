@@ -1,7 +1,6 @@
-'use strict';
-
 angular.module('privatlakareApp')
   .controller('Step3Ctrl', function ($scope, RegisterViewStateService, UserModel, RegisterModel) {
+        'use strict';
         RegisterViewStateService.updateStep();
         
         $scope.uppgifter = [

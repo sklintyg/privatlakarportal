@@ -1,11 +1,10 @@
-'use strict';
-
 angular.module('privatlakareApp')
-  .config(function ($stateProvider) {
-    $stateProvider
-      .state('app', {
-        views: {
-            'header@': { templateUrl: 'app/header/header.html', controller: 'HeaderController' }
-        }
-      });
-  });
+    .config(function($stateProvider) {
+        'use strict';
+        $stateProvider
+            .state('app', {
+                views: {
+                    'header@': { templateUrl: 'app/header/header.html', controller: 'HeaderController' }
+                }
+            });
+    });

@@ -1,7 +1,6 @@
-'use strict';
-
 angular.module('privatlakareApp')
     .config(function ($stateProvider) {
+        'use strict';
         $stateProvider
             .state('app.register.step2', {
                 url: '/2',

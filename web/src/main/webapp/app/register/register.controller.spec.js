@@ -1,21 +1,20 @@
-'use strict';
+describe('Controller: RegisterCtrl', function() {
+    'use strict';
 
-describe('Controller: RegisterCtrl', function () {
+    // load the controller's module
+    beforeEach(module('privatlakareApp'));
 
-  // load the controller's module
-  beforeEach(module('privatlakareApp'));
+    var RegisterCtrl, scope;
 
-  var RegisterCtrl, scope;
+    // Initialize the controller and a mock scope
+    beforeEach(inject(function($controller, $rootScope) {
+        scope = $rootScope.$new();
+        RegisterCtrl = $controller('RegisterCtrl', {
+            $scope: scope
+        });
+    }));
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    RegisterCtrl = $controller('RegisterCtrl', {
-      $scope: scope
+    it('should ...', function() {
+        expect(1).toEqual(1);
     });
-  }));
-
-  it('should ...', function () {
-    expect(1).toEqual(1);
-  });
 });

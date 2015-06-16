@@ -1,7 +1,7 @@
-'use strict';
-
 angular.module('privatlakareApp')
   .factory('Modal', function ($rootScope, $modal) {
+    'use strict';
+
     /**
      * Opens a modal
      * @param  {Object} scope      - an object to be merged with modal's scope
@@ -33,7 +33,7 @@ angular.module('privatlakareApp')
          * @param  {Function} del - callback, ran when delete is confirmed
          * @return {Function}     - the function to open the modal (ex. myModalFn)
          */
-        delete: function(del) {
+        delete: function(del) { //jshint ignore:line
           del = del || angular.noop;
 
           /**

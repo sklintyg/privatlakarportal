@@ -1,5 +1,3 @@
-'use strict';
-
 var app = angular.module('privatlakareApp', [
   'ngCookies',
   'ngResource',
@@ -9,9 +7,8 @@ var app = angular.module('privatlakareApp', [
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-    $urlRouterProvider
-      .otherwise('/');
-
+    'use strict';
+    $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(false);
 });
 
@@ -45,14 +42,16 @@ app.constant('datepickerPopupConfig', {
 });
 
 // Inject language resources
-app.run(['$log', '$rootScope', '$window', 'messageService', 'UserModel',
-    function($log, $rootScope, $window, messageService, UserModel) {
+app.run(['$log', '$rootScope', '$window', 'messageService', /*'UserModel',*/
+    function($log, $rootScope, $window, messageService/*, UserModel*/) {
         'use strict';
 
         $rootScope.lang = 'sv';
         $rootScope.DEFAULT_LANG = 'sv';
         //UserModel.setUserContext(MODULE_CONFIG.USERCONTEXT);
-        messageService.addResources(ppMessages);
+
+        /* jshint -W117 */
+        messageService.addResources(ppMessages);// jshint ignore:line
 
         $window.animations = 0;
         $window.doneLoading = false;
@@ -62,8 +61,10 @@ app.run(['$log', '$rootScope', '$window', 'messageService', 'UserModel',
         $window.hasRegistered = false;
         // watch the digest cycle
         $rootScope.$watch(function() {
-            if ($window.hasRegistered) return;
-            $window.hasRegistered = true
+            if ($window.hasRegistered) {
+                return;
+            }
+            $window.hasRegistered = true;
             // Note that we're using a private Angular method here (for now)
             $rootScope.$$postDigest(function() {
                 $window.hasRegistered = false;
@@ -71,21 +72,22 @@ app.run(['$log', '$rootScope', '$window', 'messageService', 'UserModel',
         });
 
         $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams){
+            function(/*event, toState, toParams, fromState, fromParams*/){
                 $window.doneLoading = false;
             });
 
         $rootScope.$on('$stateNotFound',
-            function(event, unfoundState, fromState, fromParams){
+            function(/*event, unfoundState, fromState, fromParams*/){
             });
+
         $rootScope.$on('$stateChangeSuccess',
-            function(event, toState, toParams, fromState, fromParams){
+            function(/*event, toState, toParams, fromState, fromParams*/){
                 $window.doneLoading = true;
             });
 
         $rootScope.$on('$stateChangeError',
-            function(event, toState, toParams, fromState, fromParams, error){
-                $log.log("$stateChangeError");
+            function(event, toState/*, toParams, fromState, fromParams, error*/){
+                $log.log('$stateChangeError');
                 $log.log(toState);
             });
     }]);
