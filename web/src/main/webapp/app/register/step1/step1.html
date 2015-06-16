@@ -30,6 +30,7 @@
              ng-model="registerModel.verksamhetensNamn"
              class='form-control'
              value=""
+             style='max-width: 20em'
              ng-change="viewState.limitOtherField('verksamhetensNamn')">
     </div>
   </div>
@@ -37,7 +38,7 @@
   <div class="form-group">
     <label class="control-label">Ägarform</label> <span pp-tooltip field-help-text="label.help.agarform"></span>
     <div class="controls">
-      Privat
+      {{registerModel.agandeForm}}
     </div>
   </div>
 

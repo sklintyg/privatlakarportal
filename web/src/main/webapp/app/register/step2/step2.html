@@ -1,4 +1,90 @@
 <div class="box">
+
+  <div class="form-group">
+    <label class="control-label">Verksamhetens telefonnummer</label> <span pp-tooltip field-help-text="label.help.telefonnummer"></span>
+    <div class="controls">
+      <input type="text"
+             id="telefonnummer"
+             name="telefonnummer"
+             ng-model="registerModel.telefonnummer"
+             class='form-control'
+             value="">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">E-postadress till verksamheten</label> <span pp-tooltip field-help-text="label.help.epost"></span>
+    <div class="controls">
+      <input type="text"
+             id="epost"
+             name="epost"
+             ng-model="registerModel.epost"
+             class='form-control'
+             style='max-width: 20em'
+             value="">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Upprepa e-postadress</label> <span pp-tooltip field-help-text="label.help.epost2"></span>
+    <div class="controls">
+      <input type="text"
+             id="epost2"
+             name="epost2"
+             ng-model="registerModel.epost2"
+             class='form-control'
+             style='max-width: 20em'
+             value="">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Gatuadress</label> <span pp-tooltip field-help-text="label.help.adress"></span>
+    <div class="controls">
+      <input type="text"
+             id="adress"
+             name="adress"
+             ng-model="registerModel.adress"
+             class='form-control'
+             style='max-width: 30em'
+             value="">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Postnummer</label> <span pp-tooltip field-help-text="label.help.postnummer"></span>
+    <div class="controls">
+      <input type="text"
+             id="postnummer"
+             name="postnummer"
+             ng-model="registerModel.postnummer"
+             class='form-control'
+             style='max-width: 5em'
+             value="">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Postort till verksamheten</label> <span pp-tooltip field-help-text="label.help.postort"></span>
+    <div class="controls">
+     {{registerModel.postort}}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Kommun</label> <span pp-tooltip field-help-text="label.help.kommun"></span>
+    <div class="controls">
+      {{registerModel.kommun}}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Län</label> <span pp-tooltip field-help-text="label.help.lan"></span>
+    <div class="controls">
+      {{registerModel.lan}}
+    </div>
+  </div>
+
 </div>
 
 <div class="buttonbar">
