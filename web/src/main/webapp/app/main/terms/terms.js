@@ -13,7 +13,8 @@ angular.module('privatlakareApp')
                         $modal.open({
                             templateUrl: 'app/main/terms/terms.html',
                             controller: 'MainTermsCtrl',
-                            size: 'lg'
+                            size: 'md',
+                            windowClass: 'modal-terms'
                         }).result.finally(function() {
                             $('body').removeClass('modalprinter');
 
