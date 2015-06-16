@@ -169,16 +169,32 @@ module.exports = function (grunt) {
     },
 
     // Renames files for browser caching purposes
-    rev: {
+    filerev: {
       dist: {
-        files: {
+        files:[{
           src: [
             '<%= config.dist %>/{,*/}*.js',
             '<%= config.dist %>/{,*/}*.css',
             '<%= config.dist %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= config.dist %>/assets/fonts/*'
           ]
+        }]
+      }
+    },
+
+    concat: {
+        options: {
+            sourceMap: true
         }
+    },
+
+    uglify: {
+      options: {
+        sourceMap: true,
+        sourceMapIn: function(uglifySource) {
+          return uglifySource + '.map';
+        },
+        sourceMapIncludeSources: true
       }
     },
 
@@ -464,7 +480,7 @@ module.exports = function (grunt) {
     'copy:dist',
     'cssmin',
     'uglify',
-    'rev',
+    'filerev',
     'usemin'
   ]);
 
