@@ -1,8 +1,15 @@
+ext {
+    // Versions used for maintaining dependencies
+    seleniumVersion = '2.42.2'
+    phantomJsVersion = '1.1.0'
+}
+
 buildscript {
     dependencies {
-	classpath 'org.akhikhl.gretty:gretty:1.2.0'
-	classpath 'se.inera.intyg:gradle-fitnesse-plugin:1.0-SNAPSHOT'
+        classpath 'org.akhikhl.gretty:gretty:1.2.0'
+        classpath 'se.inera.intyg:gradle-fitnesse-plugin:1.0-SNAPSHOT'
     }
+    def gebEnv = (System.getProperty("geb.env")) ? (System.getProperty("geb.env")) : "firefox"
 }
 
 description = 'Inera Privatläkarportal Fitnesse specifications'
@@ -19,29 +26,47 @@ fitnesse {
 if (project.hasProperty('runFitnesse')) {
     apply plugin: 'org.akhikhl.gretty'
     gretty {
-	contextPath = '/'
-	contextConfigFile = project(":privatlakarportal-web").projectDir.path + "/src/main/webapp/WEB-INF/jetty-context.xml"
-	logbackConfigFile = "${projectDir}/src/main/resources/logback-test.xml"
-	jvmArgs = ['-Dspring.profiles.active=dev,embedded,hsa-stub,security-fake,db-resetter', '-XX:MaxPermSize=256M']
-	jvmArgs = ['-Dspring.profiles.active=dev,embedded,hsa-stub,security-fake,db-resetter', '-Dstatistics.test.max.intyg=1', '-XX:MaxPermSize=256M']
+        contextPath = '/'
+        contextConfigFile = project(":privatlakarportal-web").projectDir.path + "/src/main/webapp/WEB-INF/jetty-context.xml"
+        logbackConfigFile = "${projectDir}/src/main/resources/logback-test.xml"
+
+       
+        jvmArgs = [
+            '-Dspring.profiles.active=local',
+            '-XX:MaxPermSize=256M',
+            '-Dgeb.env=${gebEnv}'
+        ]
     }
 
     farm {
-	webapp ":privatlakarportal-web"
-	webapp project
-	integrationTestTask = 'fitnesseTest'
+        webapp ":privatlakarportal-web"
+        webapp project
+        integrationTestTask = 'fitnesseTest'
     }
 
     dependencies {
-	gretty "com.h2database:h2:1.3.171"
-	gretty "mysql:mysql-connector-java:5.1.29"
-	gretty "org.apache.activemq:activemq-broker:5.8.0"
-	gretty "org.apache.tomcat:tomcat-catalina:7.0.20"
+        gretty "com.h2database:h2:1.3.171"
+        gretty "mysql:mysql-connector-java:5.1.29"
+        gretty "org.apache.activemq:activemq-broker:5.8.0"
+        gretty "org.apache.tomcat:tomcat-catalina:7.0.20"
     }
 }
 
 dependencies {
     compile project(":privatlakarportal-web")
+
+    // selenium drivers
+    compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-safari-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-htmlunit-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+    compile("com.github.detro.ghostdriver:phantomjsdriver:$phantomJsVersion") { transitive = false }
+
+    // geb
+    compile 'org.codehaus.geb:geb-core:0.7.2'
+    compile 'org.codehaus.geb:geb-spock:0.7.2'
 
     compile "org.fitnesse:fitnesse:20140901"
     compile "org.codehaus.groovy:groovy-all:2.4.0"

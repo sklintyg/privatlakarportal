@@ -1,0 +1,13 @@
+!| Import|
+| se.inera.privatlakarportal.page |
+| se.inera.privatlakarportal.spec |
+| se.inera.privatlakarportal.spec.util |
+ 
+
+!| Config |
+| property | value |
+| geb.build.baseUrl | ${privatlakarportal-web.url} |
+| geb.env | firefox |
+
+| script | Browser |
+| öppna |

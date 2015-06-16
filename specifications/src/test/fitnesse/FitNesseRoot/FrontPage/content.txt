@@ -1,0 +1,5 @@
+!contents -R2 -g -p -f -h
+
+!3 Test suite för Inera Privatläkarportal
+
+* AllBrowsers

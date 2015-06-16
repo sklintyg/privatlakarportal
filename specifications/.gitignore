@@ -1,2 +1,10 @@
 /bin
 /data
+
+# gradle
+.gradle
+build/
+
+#fitnesse stuff
+src/test/fitnesse/FitNesseRoot/files/
+

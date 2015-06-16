@@ -1,3 +1,13 @@
+// Load environment specific settings, if the -Penv=xxx parameter is given on invocation
+task loadConfiguration {
+    if (!project.hasProperty('env')) {
+        project.ext.env = 'local'
+    } else {
+        logger.quiet "Loading configuration for environment '$env'."
+        addProjectPropertiesFromFile(file("$rootDir/env-properties/${env}/settings.properties"))
+    }
+}
+
 allprojects {
     group = 'se.inera.privatlakarportal'
     version = '1.0.0-SNAPSHOT'
@@ -24,4 +34,18 @@ subprojects {
 
     sourceCompatibility = "1.7"
     targetCompatibility = "1.7"
+}
+
+private void addProjectPropertiesFromFile(propfile) {
+    if (propfile.exists()) {
+        def props = new Properties();
+        propfile.withInputStream { props.load(it) }
+        allprojects { subproject ->
+            props.each { key, value ->
+                subproject.ext.setProperty(key, value.toString())
+            }
+        }
+    } else {
+        throw new GradleScriptException("File '${propfile.path}' does not exist.", null)
+    }
 }
