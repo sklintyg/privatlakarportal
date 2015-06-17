@@ -1,10 +1,9 @@
 /*
   Gradle settings for Privatläkarportal
  */
-
-
 rootProject.name = 'privatlakarportal'
-include ':web', ':specifications'
+include ':web', ':specifications', ':integration/wc-integration'
 
 project(':web').name = 'privatlakarportal-web'
 project(':specifications').name = 'privatlakarportal-specifications'
+project(':integration/wc-integration').name = 'privatlakarportal-wc-integration'

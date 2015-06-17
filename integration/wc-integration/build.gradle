@@ -1,0 +1,7 @@
+description = 'Inera Privatlakaportal Webcert-Integration module'
+
+apply plugin: 'java'
+
+dependencies { 
+    compile 'se.inera.intyg.infrastructure.directory.privatepractitioner:intyg-infrastructure-directory-privatepractitioner-schemas:0-SNAPSHOT' 
+}
