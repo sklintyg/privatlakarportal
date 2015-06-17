@@ -71,3 +71,32 @@ gretty {
         '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/application-dev.properties'
      ]
 }
+
+apply plugin: 'maven'
+
+    configurations {
+        deployerJars
+    }
+
+    dependencies {
+        deployerJars "org.apache.maven.wagon:wagon-webdav:1.0-beta-2"
+    }
+
+    ext.nexusUsername = System.properties['nexusUsername']
+    ext.nexusPassword = System.properties['nexusPassword']
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                configuration = configurations.deployerJars
+                repository(url: "dav:https://jenkins.inera.nordicmedtest.se/nexus/content/repositories/releases/") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
+                }
+                snapshotRepository(url: "dav:https://jenkins.inera.nordicmedtest.se/nexus/content/repositories/snapshots/") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
+                }
+                uniqueVersion = false
+            }
+        }
+    }
+
