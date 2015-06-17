@@ -1,0 +1,7 @@
+<div class="form-group" ng-class="{ 'has-error' : !isValid() }">
+  <label class="control-label"><span message key="label.form.{{controlName}}"></span></label> <span pp-tooltip field-help-text="label.form.help.{{controlName}}"></span>
+  <div class="controls">
+    <div ng-transclude></div>
+    <span ng-show="!isValid()" class="help-block"><span message key="label.form.error.{{controlName}}"></span></span>
+  </div>
+</div>

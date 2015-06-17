@@ -5,11 +5,11 @@ angular.module('privatlakareApp').factory('RegisterModel',
         return {
             reset: function() {
                 // Step 1
-                this.befattning = RegisterViewStateService.befattningList[0];
+                this.befattning = null; //RegisterViewStateService.befattningList[0];
                 this.verksamhetensNamn = null;
                 this.agandeForm = 'Privat';
                 this.vardform = RegisterViewStateService.vardformList[0];
-                this.verksamhetstyp = RegisterViewStateService.verksamhetstypList[0];
+                this.verksamhetstyp = null; //RegisterViewStateService.verksamhetstypList[0];
                 this.arbetsplatskod = null;
 
                 // Step 2

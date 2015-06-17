@@ -54,7 +54,35 @@ var ppMessages = {
         // Register
         'register.label.grundinformation': 'Grundinformation',
         'register.label.kontaktuppgifter': 'Kontaktuppgifter i verksamheten',
-        'register.label.bekraftelse': 'Bekräftelse'
+        'register.label.bekraftelse': 'Bekräftelse',
+
+        // Register form
+        'label.form.personnummer' : 'Personnummer',
+        'label.form.help.personnummer' : '',
+
+        'label.form.name' : 'Namn',
+        'label.form.help.name' : '',
+
+        'label.form.befattning' : 'Befattning',
+        'label.form.help.befattning' : '',
+        'label.form.error.befattning' : 'Befattning måste väljas.',
+
+        'label.form.verksamhetensnamn' : 'Verksamhetens namn',
+        'label.form.help.verksamhetensnamn' : '',
+        'label.form.error.verksamhetensnamn' : 'Verksamhetens namn måste fyllas i.',
+
+        'label.form.agarform' : 'Ägarform',
+        'label.form.help.agarform' : '',
+
+        'label.form.vardform' : 'Vårdform',
+        'label.form.help.vardform' : '',
+
+        'label.form.verksamhetstyp' : 'Verksamhetstyp',
+        'label.form.help.verksamhetstyp' : '',
+        'label.form.error.verksamhetstyp' : 'Verksamhetstyp måste väljas.',
+
+        'label.form.arbetsplatskod' : 'Arbetsplatskod <i>(valfritt)</i>',
+        'label.form.help.arbetsplatskod' : ''
     },
     'en': {
         'common.ok': 'OK',
