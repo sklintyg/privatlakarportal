@@ -328,15 +328,14 @@ module.exports = function(grunt) {
 
         // Compiles Sass to CSS
         sass: {
-            server: {
-                options: {
-                    loadPath: [
-                        '<%= config.client %>/bower_components',
-                        '<%= config.client %>/app',
-                        '<%= config.client %>/components'
-                    ],
-                    compass: false
-                },
+            options: {
+                includePaths: [
+                    '<%= config.client %>/bower_components',
+                    '<%= config.client %>/app',
+                    '<%= config.client %>/components'
+                ]
+            },
+            client: {
                 files: {
                     '<%= config.client %>/app/app.css': '<%= config.client %>/app/app.scss'
                 }
