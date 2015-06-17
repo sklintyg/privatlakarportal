@@ -3,12 +3,13 @@ angular.module('privatlakareApp')
         'use strict';
         $stateProvider
             .state('app.register.step2', {
-                url: '/2',
+                url: '/steg2',
                 views: {
                     step: {
                         templateUrl: 'app/register/step2/step2.html',
                         controller: 'Step2Ctrl'
                     }
-                }
+                },
+                data:{step:2}
             });
     });

@@ -16,11 +16,7 @@ angular.module('privatlakareApp').controller('HeaderController',
              */
 
             $scope.logout = function() {
-                if (UserModel.authenticationScheme === 'urn:inera:webcert:fake') {
-                    $window.location = '/logout';
-                } else {
-                    $window.location = '/saml/logout/';
-                }
+                UserModel.logout();
             };
         }
     ]);

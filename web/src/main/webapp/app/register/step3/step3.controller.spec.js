@@ -2,8 +2,9 @@ describe('Controller: Step3Ctrl', function() {
     'use strict';
 
     // load the controller's module
-    beforeEach(module('privatlakareApp'));
-
+    beforeEach(module('privatlakareApp', function($provide) {
+        $provide.value('$state', {current:{data:{step:3}}});
+    }));
     var Step3Ctrl, scope;
 
     // Initialize the controller and a mock scope

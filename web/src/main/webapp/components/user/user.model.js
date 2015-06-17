@@ -1,5 +1,5 @@
 angular.module('privatlakareApp').factory('UserModel',
-    function() {
+    function($window) {
         'use strict';
 
         return {
@@ -8,6 +8,13 @@ angular.module('privatlakareApp').factory('UserModel',
                 this.personnummer = '191212121212';
                 this.authenticationScheme = 'urn:inera:webcert:fake';
                 return this;
+            },
+            logout: function() {
+                if (this.authenticationScheme === 'urn:inera:webcert:fake') {
+                    $window.location = '/logout';
+                } else {
+                    $window.location = '/saml/logout/';
+                }
             }
         };
     }

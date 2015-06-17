@@ -9,7 +9,7 @@ angular.module('privatlakareApp')
             function(event, toState/*, toParams, fromState, fromParams*/) {
 
                 // Prevent user from navigating forwards if clicking the fishbone nav
-                var toStep = RegisterViewStateService.getStepFromUrl(toState.name);
+                var toStep = RegisterViewStateService.getStepFromState(toState);
                 if (toStep > RegisterViewStateService.step + 1) {
                     event.preventDefault();
                     // transitionTo() promise will be rejected with

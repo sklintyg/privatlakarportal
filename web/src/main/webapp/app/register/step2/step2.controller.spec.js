@@ -2,7 +2,9 @@ describe('Controller: Step2Ctrl', function() {
     'use strict';
 
     // load the controller's module
-    beforeEach(module('privatlakareApp'));
+    beforeEach(module('privatlakareApp', function($provide) {
+        $provide.value('$state', {current:{data:{step:2}}});
+    }));
 
     var Step2Ctrl, scope;
 

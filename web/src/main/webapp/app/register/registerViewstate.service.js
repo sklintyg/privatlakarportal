@@ -34,12 +34,12 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             ];
         };
 
-        this.getStepFromUrl = function(url) {
-            return Number(url[url.length - 1]);
-        };
+        this.getStepFromState = function(state) {
+            return state.data.step;
+        }
 
         this.updateStep = function() {
-            this.step = this.getStepFromUrl($state.current.name);
+            this.step = this.getStepFromState($state.current);
         };
 
         this.reset();
