@@ -6,11 +6,11 @@ angular.module('privatlakareApp')
         $scope.uppgifter = [
             { name: 'Personnummer', value: UserModel.personnummer },
             { name: 'Namn', value: UserModel.name },
-            { name: 'Befattning', value: RegisterModel.befattning },
+            { name: 'Befattning', value: RegisterModel.befattning.id === null ? '' : RegisterModel.befattning.label },
             { name: 'Verksamhetens namn', value: RegisterModel.verksamhetensNamn },
             { name: 'Ägandeform', value: RegisterModel.agandeForm },
-            { name: 'Vårdform', value: RegisterModel.vardform },
-            { name: 'Verksamhetstyp', value: RegisterModel.verksamhetstyp },
+            { name: 'Vårdform', value: RegisterModel.vardform.label },
+            { name: 'Verksamhetstyp', value: RegisterModel.verksamhetstyp.id === null ? '' : RegisterModel.verksamhetstyp.label },
             { name: 'Arbetsplatskod', value: RegisterModel.arbetsplatskod }
         ];
 
