@@ -19,7 +19,7 @@ module.exports = function(config) {
       'src/main/webapp/bower_components/angular-sanitize/angular-sanitize.js',
       'src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
       'src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-      'src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
+      'src/main/webapp/bower_components/ngstorage/ngStorage.js',
       'src/main/webapp/app/app.js',
       'src/main/webapp/app/**/*.js',
       'src/main/webapp/components/**/*.js',

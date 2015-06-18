@@ -2,6 +2,7 @@ var app = angular.module('privatlakareApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngStorage',
   'ui.router',
   'ui.bootstrap'
 ]);

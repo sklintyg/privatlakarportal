@@ -1,5 +1,5 @@
 angular.module('privatlakareApp').factory('UserModel',
-    function($window) {
+    function($window, $sessionStorage) {
         'use strict';
 
         return {
@@ -10,6 +10,7 @@ angular.module('privatlakareApp').factory('UserModel',
                 return this;
             },
             logout: function() {
+                $sessionStorage.$reset();
                 if (this.authenticationScheme === 'urn:inera:webcert:fake') {
                     $window.location = '/logout';
                 } else {

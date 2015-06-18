@@ -1,27 +1,41 @@
 angular.module('privatlakareApp').factory('RegisterModel',
-    function(RegisterViewStateService) {
+    function($sessionStorage, RegisterViewStateService) {
         'use strict';
 
-        return {
-            reset: function() {
-                // Step 1
-                this.befattning = null; //RegisterViewStateService.befattningList[0];
-                this.verksamhetensNamn = null;
-                this.agandeForm = 'Privat';
-                this.vardform = RegisterViewStateService.vardformList[0];
-                this.verksamhetstyp = null; //RegisterViewStateService.verksamhetstypList[0];
-                this.arbetsplatskod = null;
+        var data = {};
 
-                // Step 2
-                this.telefonnummer = null;
-                this.epost = null;
-                this.epost2 = null;
-                this.adress = null;
-                this.postnummer = null;
-                this.postort = null;
-                this.kommun = null;
-                return this;
+        function _init() {
+            if ($sessionStorage.registerModel) {
+                data = $sessionStorage.registerModel;
             }
+            else {
+                $sessionStorage.registerModel = _reset();
+            }
+            return data;
+        }
+
+        function _reset() {
+            // Step 1
+            data.befattning = null;
+            data.verksamhetensNamn = null;
+            data.agandeForm = 'Privat';
+            data.vardform = RegisterViewStateService.vardformList[0];
+            data.verksamhetstyp = null;
+            data.arbetsplatskod = null;
+
+            // Step 2
+            data.telefonnummer = null;
+            data.epost = null;
+            data.epost2 = null;
+            data.adress = null;
+            data.postnummer = null;
+            data.postort = null;
+            data.kommun = null;
+            return data;
+        }
+
+        return {
+            init: _init
         };
     }
 );
