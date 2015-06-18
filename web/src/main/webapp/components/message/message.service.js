@@ -13,6 +13,28 @@ angular.module('privatlakareApp').factory('messageService',
 
         var _messageResources = null;
 
+        function _propertyExists(key, language, fallbackToDefaultLanguage) {
+            var value;
+
+            if (!language) {
+                language = $rootScope.lang;
+                if (!language && fallbackToDefaultLanguage) {
+                    language = $rootScope.DEFAULT_LANG;
+                }
+            }
+
+            if (language) {
+                value = _getPropertyInLanguage(language, key, null);
+                if (value === null || value === undefined) {
+                    value = false;
+                }
+            } else {
+                value = false;
+            }
+
+            return value;
+        }
+
         function _getProperty(key, variables, defaultValue, language, fallbackToDefaultLanguage) {
             var value;
 
@@ -68,6 +90,7 @@ angular.module('privatlakareApp').factory('messageService',
         }
 
         return {
+            propertyExists: _propertyExists,
             getProperty: _getProperty,
             addResources: _addResources
         };

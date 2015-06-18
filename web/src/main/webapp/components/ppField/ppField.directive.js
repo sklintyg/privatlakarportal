@@ -2,8 +2,8 @@
  * Enable tooltips for other components than wcFields
  */
 angular.module('privatlakareApp').directive('ppField',
-    [
-        function() {
+    [ 'messageService',
+        function(messageService) {
             'use strict';
 
             return {
@@ -14,13 +14,13 @@ angular.module('privatlakareApp').directive('ppField',
 
                     $scope.controlName = $attrs.ppField;
 
+                    $scope.showHelp = messageService.propertyExists('label.form.help.' + $scope.controlName);
+
                     $scope.isValid = function() {
                         if(!$scope.registerForm[$scope.controlName]) {
                             return true;
                         }
-
-                        return !($scope.registerForm[$scope.controlName].$invalid &&
-                            (!$scope.registerForm[$scope.controlName].$pristine || $scope.registerForm.$submitted));
+                        return !($scope.registerForm[$scope.controlName].$invalid && $scope.registerForm.$submitted);
                     };
                 },
                 templateUrl: 'components/ppField/ppField.directive.html'

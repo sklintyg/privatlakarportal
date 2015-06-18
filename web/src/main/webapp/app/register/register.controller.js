@@ -4,22 +4,4 @@ angular.module('privatlakareApp')
         $scope.user = UserModel;
         $scope.registerModel = RegisterModel.init();
         $scope.viewState = RegisterViewStateService;
-
-        $scope.$on('$stateChangeStart',
-            function(event, toState/*, toParams, fromState, fromParams*/) {
-
-                // Prevent user from navigating forwards if clicking the fishbone nav
-                var toStep = RegisterViewStateService.getStepFromState(toState);
-                if (toStep > RegisterViewStateService.step + 1) {
-                    event.preventDefault();
-                    // transitionTo() promise will be rejected with
-                    // a 'transition prevented' error
-                }
-            });
-
-        $scope.$on('$stateChangeSuccess',
-            function(/*event, toState, toParams, fromState, fromParams*/) {
-                RegisterViewStateService.updateStep();
-            });
-
     });

@@ -1,17 +1,25 @@
 angular.module('privatlakareApp')
-    .controller('Step1Ctrl', function($scope, $state, RegisterViewStateService, RegisterModel) {
+    .controller('Step1Ctrl', function($scope, $state, RegisterViewStateService) {
         'use strict';
-        RegisterViewStateService.updateStep();
 
         // function to submit the form after all validation has occurred
         $scope.submitForm = function() {
-
-            // check to make sure the form is completely valid
-            if ($scope.registerForm.$valid) {
-                $state.go('app.register.step2');
-                return true;
-            }
-
-            return false;
+            $state.go('app.register.step2');
         };
+
+        $scope.$on('$stateChangeStart',
+            function(event, toState/*, toParams, fromState, fromParams*/) {
+
+                if (!RegisterViewStateService.navigationAllowed(toState, $scope.registerForm.$valid)) {
+                    event.preventDefault();
+                    // transitionTo() promise will be rejected with
+                    // a 'transition prevented' error
+                }
+            });
+
+        $scope.$on('$stateChangeSuccess',
+            function(/*event, toState, toParams, fromState, fromParams*/) {
+                RegisterViewStateService.updateStep();
+            });
+
     });

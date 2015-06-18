@@ -6,28 +6,28 @@ angular.module('privatlakareApp')
         var data = RegisterModel.init();
 
         $scope.uppgifter = [
-            { id: 'personnummer', name: 'Personnummer', value: UserModel.personnummer },
-            { id: 'namn', name: 'Namn', value: UserModel.name },
-            { id: 'befattning', name: 'Befattning', value: (!data.befattning) ? '' : data.befattning.label },
-            { id: 'verksamhetensnamn', name: 'Verksamhetens namn', value: data.verksamhetensNamn },
-            { id: 'agandeform', name: 'Ägandeform', value: data.agandeForm },
-            { id: 'vardform', name: 'Vårdform', value: data.vardform.label },
-            { id: 'verksamhetstyp', name: 'Verksamhetstyp', value: (!data.verksamhetstyp) ? '' : data.verksamhetstyp.label },
-            { id: 'arbetsplatskod', name: 'Arbetsplatskod', value: data.arbetsplatskod }
+            { name: 'Personnummer', value: UserModel.personnummer },
+            { name: 'Namn', value: UserModel.name },
+            { name: 'Befattning', value: (!data.befattning) ? '' : data.befattning.label },
+            { name: 'Verksamhetens namn', value: data.verksamhetensNamn },
+            { name: 'Ägandeform', value: data.agandeForm },
+            { name: 'Vårdform', value: data.vardform.label },
+            { name: 'Verksamhetstyp', value: (!data.verksamhetstyp) ? '' : data.verksamhetstyp.label },
+            { name: 'Arbetsplatskod', value: data.arbetsplatskod }
         ];
 
         $scope.kontaktUppgifter = [
-            { id: 'telefonnummer', name: 'Telefonnummer', value: data.telefonnummer },
-            { id: 'epost', name: 'E-post', value: data.epost },
-            { id: 'adress', name: 'Adress', value: data.adress },
-            { id: 'postnummer', name: 'Postnummer', value: data.postnummer },
-            { id: 'postort', name: 'Postort', value: data.postort },
-            { id: 'kommun', name: 'Kommun', value: data.kommun }
+            { name: 'Telefonnummer', value: data.telefonnummer },
+            { name: 'E-post', value: data.epost },
+            { name: 'Adress', value: data.adress },
+            { name: 'Postnummer', value: data.postnummer },
+            { name: 'Postort', value: data.postort },
+            { name: 'Kommun', value: data.kommun }
         ];
 
         $scope.socialstyrelsenUppgifter = [
-            { id: 'legitimeradYrkesgrupp', name: 'Legimiterad yrkesgrupp', value: data.legitimeradYrkesgrupp },
-            { id: 'specialitet', name: 'Specialitet', value: data.specialitet },
-            { id: 'forskrivarkod', name: 'Förskrivarkod', value: data.forskrivarkod }
+            { name: 'Legimiterad yrkesgrupp', value: data.legitimeradYrkesgrupp },
+            { name: 'Specialitet', value: data.specialitet },
+            { name: 'Förskrivarkod', value: data.forskrivarkod }
         ];
   });

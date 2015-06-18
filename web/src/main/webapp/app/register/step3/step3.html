@@ -1,65 +1,61 @@
-<div id="step3">
-  <p>
-    Innan du registreras som privatanvändare ber vi dig kontrollera nedanstående uppgifter.
-  </p>
+<p>
+  Innan du registreras som privatanvändare ber vi dig kontrollera nedanstående uppgifter. </p>
 
-  <h2 class="col-head">Dina och verksamhetens uppgifter</h2>
-  <div class="box">
-    <table>
-      <tbody>
-      <tr ng-repeat="item in uppgifter">
-        <td class="col-md-4">{{item.name}}</td>
-        <td id="{{item.id}}">{{item.value}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+<h2 class="col-head">Dina och verksamhetens uppgifter</h2>
+<div class="box">
+  <table>
+    <tbody>
+    <tr ng-repeat="item in uppgifter">
+      <td style="min-width: 200px; font-weight: bold">{{item.name}}</td>
+      <td>{{item.value}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
-  <h2 class="col-head">Verksamhetens kontaktuppgifter</h2>
-  <div class="box">
-    <table>
-      <tbody>
-      <tr ng-repeat="item in kontaktUppgifter">
-        <td class="col-md-4">{{item.name}}</td>
-        <td id="{{item.id}}">{{item.value}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+<h2 class="col-head">Verksamhetens kontaktuppgifter</h2>
+<div class="box">
+  <table>
+    <tbody>
+    <tr ng-repeat="item in kontaktUppgifter">
+      <td style="min-width: 200px; font-weight: bold">{{item.name}}</td>
+      <td>{{item.value}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
-  <h2 class="col-head">Socialstyrelsens uppgifter (kan ej ändras i Webcert)</h2>
-  <div class="box">
-    <table>
-      <tbody>
-      <tr ng-repeat="item in socialstyrelsenUppgifter">
-        <td class="col-md-4">{{item.name}}</td>
-        <td id="{{item.id}}">{{item.value}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+<h2 class="col-head">Socialstyrelsens uppgifter (kan ej ändras i Webcert)</h2>
+<div class="box">
+  <table>
+    <tbody>
+    <tr ng-repeat="item in socialstyrelsenUppgifter">
+      <td style="min-width: 200px; font-weight: bold">{{item.name}}</td>
+      <td>{{item.value}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
-  <div class="row">
-    <div class="col-md-7">
-      <p class="top-pad">
-        Du som vill använda Webcert i egenskap av privatläkare måste godkänna Användarvillkor för Webcert, vilket bland
-        annat innebär att du ger Inera i uppdrag att såsom personuppgiftsbiträde behandla dina patienters personuppgifter
-        för din räkning. Genom att godkänna villkoeren samtycker du även till att dina personuppgifter behandlas av Inera
-        inom ramen för Webcert. </p>
+<div class="row">
+  <div class="col-md-7">
+    <p class="top-pad">
+      Privatläkare som vill använda tjänsten måste godkänna Webcerts <a ui-sref="terms">Användarvillkor</a> för Webcert, vilket bland
+      annat innebär att du ger Inera i uppdrag att såsom personuppgiftsbiträde behandla dina patienters personuppgifter
+      för din räkning. Genom att godkänna villkoeren samtycker du även till att dina personuppgifter behandlas av Inera
+      inom ramen för Webcert. </p>
 
-      <div class="form-group checkbox">
-        <label class="font-bold">
-          <input type="checkbox" id="godkannvillkor" name="godkannvillkor" ng-model="model.godkannvillkor"> Jag godkänner
-          Användarvillkor för Webcert och samtycker därmed till den behandling av mina personupppgifter som sker i
-          Webcert.
-        </label>
-      </div>
+    <div class="form-group checkbox">
+      <label class="font-bold">
+        <input type="checkbox" id="godkannvillkor" name="godkannvillkor" ng-model="model.godkannvillkor"> Jag godkänner
+        <a ui-sref="terms">Användarvillkor</a> för Webcert och samtycker till att mina personuppgifter får behandlas i Webcert.
+      </label>
     </div>
   </div>
 </div>
 
 <div class="buttonbar">
-  <button id="registerBtn" class="btn btn-success" ui-sref=".complete">Registrera mig</button>
-  <button id="backBtn" class="btn btn-info" ui-sref="app.register.step2">Tillbaka</button>
-  <button id="abortBtn" class="btn btn-secondary" ui-sref=".abort">Avbryt</button>
+  <button class="btn btn-success" ui-sref=".complete">Slutför registrering</button>
+  <button class="btn btn-info" ui-sref="app.register.step2">Tillbaka</button>
+  <button class="btn btn-secondary" ui-sref=".abort">Avbryt</button>
 </div>
