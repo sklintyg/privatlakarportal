@@ -2,7 +2,7 @@ angular.module('privatlakareApp')
     .controller('MainTermsCtrl', function($scope, $http, $templateCache, $window) {
         'use strict';
 
-        $http.get('app/main/terms/terms_text.html', { cache: $templateCache }).
+        $http.get('app/terms/terms_text.html', { cache: $templateCache }).
             success(function(data) {
                 $scope.terms = data;
             });
