@@ -1,0 +1,32 @@
+!3 Starta registrering
+| script | Registrera |
+| gå till startsidan |
+| startsidan visas |
+| starta registrering|
+
+!3 Fyll i registrering sida 1
+| script | Registrera |
+| registrering steg1 sidan visas |
+| ange befattning | Specialistläkare |
+| ange verksamhetensnamn | Fitnesse verksamhet |
+| ange vardform | Hemsjukvård |
+| ange verksamhetstyp | Primärvårdsverksamhet |
+| ange arbetsplatskod | 770088 |
+| fortsätt |
+
+!3 Fyll i registrering sida 2
+| script | Registrera |
+| registrering steg2 sidan visas |
+| fortsätt |
+
+!3 Verifiera registrering sida 3
+| script | Registrera |
+| registrering steg3 sidan visas |
+| check | personnummer | 191212121212 |
+| check | namn| Sandra Nilsson |
+| check | befattning | Specialistläkare |
+| check | verksamhetensnamn | Fitnesse verksamhet |
+| check | agandeform| Privat |
+| check | vardform | Hemsjukvård  |
+| check | verksamhetstyp | Primärvårdsverksamhet |
+| check | arbetsplatskod | 770088 |

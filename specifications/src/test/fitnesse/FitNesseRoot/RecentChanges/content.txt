@@ -1,3 +1,4 @@
+|PrivatlakarPortal.WebTests.RegistreraPrivatlakare||17:07:56 Thu, Jun 18, 2015|
 |FirefoxSuite||14:47:56 Tue, Jun 16, 2015|
 |PrivatlakarPortal.WebTests.TestRootPage||14:47:21 Tue, Jun 16, 2015|
 |PrivatlakarPortal.WebTests.SuiteSetUp||14:46:15 Tue, Jun 16, 2015|

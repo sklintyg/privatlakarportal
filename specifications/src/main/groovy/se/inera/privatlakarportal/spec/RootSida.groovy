@@ -1,7 +1,6 @@
 package se.inera.privatlakarportal.spec
 
-import se.inera.privatlakarportal.spec.Browser
-import se.inera.privatlakarportal.page.RootPage
+import se.inera.privatlakarportal.page.StartPage
 
 class RootSida {
 
@@ -9,8 +8,8 @@ class RootSida {
 
     void execute() {
         Browser.drive {
-            to RootPage
-            assert at(RootPage)
+            to StartPage
+            assert at(StartPage)
             test = true
         }
     }
