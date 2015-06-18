@@ -1,0 +1,23 @@
+description = "Inera Privatläkarportal - Persistence project"
+
+apply plugin: "java"
+
+configurations {
+    provided
+}
+
+dependencies {
+    compile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final"
+    compile "org.hibernate:hibernate-entitymanager:4.3.1.Final"
+    compile "org.springframework:spring-orm:${springContextVersion}"
+    compile "org.springframework:spring-jms:${springContextVersion}"
+    compile "org.liquibase:liquibase-core:${liquibaseVersion}"
+
+    testCompile 'org.codehaus.groovy:groovy-all:2.3.6'
+    testCompile "org.apache.activemq:activemq-spring:5.8.0"
+
+    testRuntime "com.h2database:h2:1.3.171"
+
+    provided "org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1"
+
+}
