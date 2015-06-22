@@ -31,6 +31,12 @@ angular.module('privatlakareApp').factory('RegisterModel',
             data.postnummer = null;
             data.postort = null;
             data.kommun = null;
+            data.lan = null;
+
+            // Step 3
+            data.legitimeradYrkesgrupp = 'Läkare';
+            data.specialitet = 'Allmän medicin';
+            data.forskrivarkod = '0123456';
             return data;
         }
 
