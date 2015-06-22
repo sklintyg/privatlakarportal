@@ -1,7 +1,5 @@
-<div class="box" id="step2">
 <form name="registerForm" ng-submit="submitForm()" novalidate>
-
-  <div class="box">
+  <div class="box" id="step2">
 
     <div pp-field="telefonnummer">
       <input type="text" id="telefonnummer" name="telefonnummer" ng-model="registerModel.telefonnummer"
@@ -49,5 +47,4 @@
     <button id="backBtn" class="btn btn-info" ui-sref="app.register.step1">Tillbaka</button>
     <button id="abortBtn" class="btn btn-secondary" ui-sref=".abort">Avbryt</button>
   </div>
-
 </form>
