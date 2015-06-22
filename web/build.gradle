@@ -68,7 +68,7 @@ gretty {
     contextPath = '/'
     logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
     jvmArgs = [
-        '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/application-dev.properties'
+        '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties'
      ]
 }
 
