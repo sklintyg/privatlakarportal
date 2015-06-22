@@ -13,17 +13,25 @@ angular.module('privatlakareApp')
                 windowClass: 'modal-terms'
             }).result.finally(function() { //jshint ignore:line
                 $('body').removeClass('modalprinter');
-                $state.go('^');
+                if ($state.current.url === 'terms') {
+                    $state.go('^');
+                }
             });
+        }
+
+        function closeTerms(dialogService) {
+            dialogService.close();
         }
 
         $stateProvider
             .state('app.start.terms', {
                 url: 'terms',
-                onEnter: openTerms
+                onEnter: openTerms,
+                onExit: closeTerms
             }).state('app.register.step3.terms', {
                 url: 'terms',
-                onEnter: openTerms
+                onEnter: openTerms,
+                onExit: closeTerms
             });
 
     });

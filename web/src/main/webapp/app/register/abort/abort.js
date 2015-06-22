@@ -7,21 +7,30 @@ angular.module('privatlakareApp')
                 templateUrl: 'app/register/abort/abort.html',
                 controller: 'RegisterAbortCtrl'
             }).result.finally(function() { //jshint ignore:line
-                $state.go('^');
+                if ($state.current.url === 'avbryt') {
+                    $state.go('^');
+                }
             });
+        }
+
+        function closeAbortDialog(dialogService) {
+            dialogService.close();
         }
 
         $stateProvider
             .state('app.register.step1.abort', {
                 url: '/avbryt',
-                onEnter: showAbortDialog
+                onEnter: showAbortDialog,
+                onExit: closeAbortDialog
             })
             .state('app.register.step2.abort', {
                 url: '/avbryt',
-                onEnter: showAbortDialog
+                onEnter: showAbortDialog,
+                onExit: closeAbortDialog
             })
             .state('app.register.step3.abort', {
                 url: '/avbryt',
-                onEnter: showAbortDialog
+                onEnter: showAbortDialog,
+                onExit: closeAbortDialog
             });
     });

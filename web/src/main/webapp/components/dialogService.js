@@ -2,10 +2,19 @@ angular.module('privatlakareApp').factory('dialogService',
     function($modal, $timeout, $window) {
         'use strict';
 
+        var _modal = null;
+
         function _open(options) {
-            var modal = $modal.open(options);
-            _runOnDialogDoneLoading(modal);
-            return modal;
+            _modal = $modal.open(options);
+            _runOnDialogDoneLoading(_modal);
+            return _modal;
+        }
+
+        function _close() {
+            if (_modal) {
+                _modal.dismiss();
+                _modal = null;
+            }
         }
 
         function _runOnDialogDoneLoading(modal, callback) {
@@ -39,6 +48,7 @@ angular.module('privatlakareApp').factory('dialogService',
 
         // Return public API for the service
         return {
+            close: _close,
             open: _open,
             runOnDialogDoneLoading: _runOnDialogDoneLoading
         };
