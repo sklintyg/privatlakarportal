@@ -21,4 +21,25 @@ class RegisterStep2Page extends RegisterPage {
     public void avbryt() {
         abortBtn.click();
     }
+
+    public void angeTelefonnummer(value) {
+        telefonnummer = value;
+    }
+
+    public void angeEpost(value) {
+        epost = value;
+    }
+
+    public void angeEpost2(value) {
+        epost2 = value;
+    }
+
+    public void angeGatuadress(value) {
+        adress = value;
+    }
+
+    public void angePostnummer(value) {
+        postnummer = value;
+    }
+
 }

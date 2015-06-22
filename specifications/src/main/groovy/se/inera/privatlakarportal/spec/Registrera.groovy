@@ -7,26 +7,6 @@ import se.inera.privatlakarportal.page.StartPage
 
 class Registrera {
 
-    public void gåTillStartsidan() {
-        Browser.drive {
-            to StartPage
-        }
-    }
-
-    public boolean startsidanVisas() {
-        boolean result
-        Browser.drive {
-            result = at StartPage
-        }
-        return result
-    }
-
-    public void startaRegistrering() {
-        Browser.drive {
-            page.startaRegistrering()
-        }
-    }
-
     public boolean registreringSteg1SidanVisas() {
         boolean result
         Browser.drive {
@@ -77,6 +57,36 @@ class Registrera {
             result = at RegisterStep2Page
         }
         return result
+    }
+
+    public void angeTelefonnummer(String value) {
+        Browser.drive {
+            page.angeTelefonnummer(value);
+        }
+    }
+
+    public void angeEpost(String value) {
+        Browser.drive {
+            page.angeEpost(value);
+        }
+    }
+
+    public void angeEpost2(String value) {
+        Browser.drive {
+            page.angeEpost2(value);
+        }
+    }
+
+    public void angeGatuadress(String value) {
+        Browser.drive {
+            page.angeGatuadress(value);
+        }
+    }
+
+    public void angePostnummer(String value) {
+        Browser.drive {
+            page.angePostnummer(value);
+        }
     }
 
     public boolean registreringSteg3SidanVisas() {
@@ -168,7 +178,7 @@ class Registrera {
         return result
     }
 
-    public String adress() {
+    public String gatuadress() {
         String result
         Browser.drive {
             result = page.hamtaAdress()

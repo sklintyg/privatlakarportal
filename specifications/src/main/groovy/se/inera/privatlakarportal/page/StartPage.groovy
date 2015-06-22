@@ -2,18 +2,18 @@ package se.inera.privatlakarportal.page
 
 class StartPage extends AbstractPage {
     static url = "http://localhost:8090"
-    static at = { registerBtn.isDisplayed() }
+    static at = { registerBtn.isDisplayed() && !$("#termsModal").isDisplayed() }
 
     static content = {
         registerBtn(to: RegisterStep1Page, toWait:true) { $("#registerBtn")}
         termsLink(to: TermsPage, toWait: true) { $("#termsLink")}
     }
 
-    def startaRegistrering() {
+    public void startaRegistrering() {
         registerBtn.click();
     }
 
-    def visaAnvändarvillkoren() {
+    public void visaAnvändarvillkoren() {
         termsLink.click();
     }
 }

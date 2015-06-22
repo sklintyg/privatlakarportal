@@ -1,8 +1,8 @@
 <div class="modal-header">
   <h1>Användarvillkor för Webcert</h1>
 </div>
-<div class="modal-body" ng-bind-html="terms"></div>
+<div id="termsModal" class="modal-body" ng-bind-html="terms"></div>
 <div class="modal-footer">
-  <button class="btn btn-success" ng-click="dismiss()">Stäng</button>
-  <button class="btn btn-info" ng-click="print()">Skriv ut</button>
+  <button id="dismissBtn" class="btn btn-success" ng-click="dismiss()">Stäng</button>
+  <button id="printBtn" class="btn btn-info" ng-click="print()">Skriv ut</button>
 </div>

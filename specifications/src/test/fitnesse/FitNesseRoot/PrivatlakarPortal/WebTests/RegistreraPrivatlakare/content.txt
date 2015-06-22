@@ -1,5 +1,5 @@
 !3 Starta registrering
-| script | Registrera |
+| script | Startsida |
 | gå till startsidan |
 | startsidan visas |
 | starta registrering|
@@ -17,6 +17,11 @@
 !3 Fyll i registrering sida 2
 | script | Registrera |
 | registrering steg2 sidan visas |
+| ange telefonnummer | 987654321 |
+| ange epost | !-test@example.com-! |
+| ange epost2 | !-test@example.com-! |
+| ange gatuadress | gatuadress |
+| ange postnummer| 99999 |
 | fortsätt |
 
 !3 Verifiera registrering sida 3
@@ -30,3 +35,7 @@
 | check | vardform | Hemsjukvård  |
 | check | verksamhetstyp | Primärvårdsverksamhet |
 | check | arbetsplatskod | 770088 |
+| check | telefonnummer | 987654321 |
+| check | epost | !-test@example.com-! |
+| check | gatuadress | gatuadress |
+| check | postnummer| 99999 |

@@ -1,0 +1,14 @@
+!3 Gå till startsidan
+| script | Startsida |
+| gå till startsidan |
+| startsidan visas |
+
+!3 Visa användarvillkor
+| script | Startsida |
+| visa användarvillkor |
+| användarvillkoren visas |
+
+!3 Stäng användarvillkor
+| script | Startsida |
+| stäng användarvillkoren |
+| startsidan visas |

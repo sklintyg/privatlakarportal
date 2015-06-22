@@ -1,11 +1,19 @@
 package se.inera.privatlakarportal.page
 
 class TermsPage extends StartPage {
-    static url = "http://localhost:8090"
-    static at = { title == "Privatläkarportalen" }
+    static url = "/#/terms"
+    static at = { $("#termsModal").isDisplayed() }
 
     static content = {
-        registerBtn(to: TermsPage, toWait:true) { $("#registerBtn")}
-        termsLink(to: TermsPage, toWait: true) { $("#termsLink")}
+        dismissBtn(to: StartPage, toWait:true) { $("#dismissBtn")}
+        printBtn { $("#printBtn")}
+    }
+
+    public void dismissDialog() {
+        dismissBtn.click();
+    }
+
+    public void print() {
+        printBtn.click();
     }
 }
