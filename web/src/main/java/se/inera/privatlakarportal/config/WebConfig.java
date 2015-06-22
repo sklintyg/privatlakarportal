@@ -39,8 +39,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
       StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
       stringConverter.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "plain", UTF8)));
       converters.add(stringConverter);
-
-      // Add other converters ...
     }
 
     @Override
@@ -50,11 +48,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/robots.txt").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components/");
-//        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
-//        registry.addResourceHandler("/vendor/**").addResourceLocations("/vendor/");
-//        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
-//        registry.addResourceHandler("/partials/**").addResourceLocations(
-//                "/partials/");
     }
 
     @Override
