@@ -40,12 +40,12 @@
 
 // Component styles are injected through grunt
 // injector
-@import 'complete/complete.scss';
-@import 'main/main.scss';
+@import 'register/complete/complete.scss';
 @import 'register/register.scss';
 @import 'register/step1/step1.scss';
 @import 'register/step2/step2.scss';
 @import 'register/step3/step3.scss';
+@import 'start/start.scss';
 @import 'terms/terms.scss';
 // endinjector
 

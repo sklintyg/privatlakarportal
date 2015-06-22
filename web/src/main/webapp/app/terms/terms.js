@@ -18,7 +18,7 @@ angular.module('privatlakareApp')
         }
 
         $stateProvider
-            .state('app.main.terms', {
+            .state('app.start.terms', {
                 url: 'terms',
                 onEnter: openTerms
             }).state('app.register.step3.terms', {

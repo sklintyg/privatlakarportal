@@ -35,11 +35,10 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+    <!-- Site content here -->
     <div ui-view="header"></div>
     <div ui-view="navbar"></div>
-
-    <!-- Add your site or application content here -->
-    <div ui-view="content"></div>
+    <div ui-view="app"></div>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -59,18 +58,18 @@
       <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:js({build/.tmp,src/main/webapp}) app/app.js -->
-        <script src="app/app.js"></script>
+    <!-- build:js({build/.tmp,src/main/webapp}) app/app.main.js -->
+        <script src="app/app.main.js"></script>
           <!-- injector:js -->
-          <script src="app/complete/complete.controller.js"></script>
-          <script src="app/complete/complete.js"></script>
+          <script src="app/app.controller.js"></script>
+          <script src="app/app.js"></script>
           <script src="app/header/header.controller.js"></script>
-          <script src="app/main/main.controller.js"></script>
-          <script src="app/main/main.js"></script>
           <script src="app/messages.js"></script>
           <script src="app/navbar/navbar.controller.js"></script>
           <script src="app/register/abort/abort.controller.js"></script>
           <script src="app/register/abort/abort.js"></script>
+          <script src="app/register/complete/complete.controller.js"></script>
+          <script src="app/register/complete/complete.js"></script>
           <script src="app/register/register.controller.js"></script>
           <script src="app/register/register.js"></script>
           <script src="app/register/register.model.js"></script>
@@ -81,7 +80,8 @@
           <script src="app/register/step2/step2.js"></script>
           <script src="app/register/step3/step3.controller.js"></script>
           <script src="app/register/step3/step3.js"></script>
-          <script src="app/router.js"></script>
+          <script src="app/start/start.controller.js"></script>
+          <script src="app/start/start.js"></script>
           <script src="app/terms/terms.controller.js"></script>
           <script src="app/terms/terms.js"></script>
           <script src="components/dialogService.js"></script>

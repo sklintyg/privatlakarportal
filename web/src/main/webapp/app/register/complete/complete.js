@@ -2,11 +2,11 @@ angular.module('privatlakareApp')
     .config(function($stateProvider) {
         'use strict';
         $stateProvider
-            .state('app.complete', {
+            .state('app.register.complete', {
                 url: '/klar',
                 views: {
-                    'content@': {
-                        templateUrl: 'app/complete/complete.html',
+                    'content@app': {
+                        templateUrl: 'app/register/complete/complete.html',
                         controller: 'CompleteCtrl'
                     }
                 }

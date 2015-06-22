@@ -59,7 +59,7 @@ module.exports = function(grunt) {
                     '<%= config.client %>/{app,components}/**/*.js',
                     '!<%= config.client %>/{app,components}/**/*.spec.js',
                     '!<%= config.client %>/{app,components}/**/*.mock.js',
-                    '!<%= config.client %>/app/app.js'],
+                    '!<%= config.client %>/app/app.main.js'],
                 tasks: ['injector:scripts']
             },
             injectCss: {
@@ -257,7 +257,7 @@ module.exports = function(grunt) {
                     removeScriptTypeAttributes: true,
                     removeStyleLinkTypeAttributes: true
                 },
-                usemin: 'app/app.js'
+                usemin: 'app/app.main.js'
             },
             main: {
                 cwd: '<%= config.client %>',
@@ -360,7 +360,7 @@ module.exports = function(grunt) {
                 files: {
                     '<%= config.client %>/index.html': [
                         ['{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.js',
-                            '!{<%= config.tmp %>,<%= config.client %>}/app/app.js',
+                            '!{<%= config.tmp %>,<%= config.client %>}/app/app.main.js',
                             '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.spec.js',
                             '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.mock.js']
                     ]
