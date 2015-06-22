@@ -85,11 +85,11 @@ var ppMessages = {
         'label.form.help.arbetsplatskod' : 'Ange verksamhetens arbetsplatskod. Arbetsplatskod används för att identifiera vid vilken arbetsplats receptutfärdaren tjänstgör i samband med läkemedelsförskrivning. Vid intygsutfärdande används arbetsplatskod av Försäkringskassan för att samla in information om vid vilken arbetsplats den intygsutfärdande läkaren tjänstgör. Insamlingen sker på Socialstyrelsens uppdrag. Arbetsplatskod är inte en obligatorisk uppgift.',
 
         // Step 2
-        'label.form.telefonnummer' : 'Verksamhetens telefonnummer',
+        'label.form.telefonnummer' : 'Telefonnummer',
         'label.form.help.telefonnummer' : 'Ange det telefonnummer där du vill bli kontaktad om mottagaren av intyget behöver nå dig för kompletterade frågor.',
         'label.form.error.telefonnummer' : 'Telefonnummer måste anges innan du kan fortsätta.',
 
-        'label.form.epost' : 'E-postadress till verksamheten',
+        'label.form.epost' : 'E-postadress',
         'label.form.help.epost' : 'E-postadressen används för att kontakta dig då en mottagare av intyg behöver nå dig för kompletterande frågor samt då Inera behöver nå dig i ärenden som gäller användningen av Webcert. Till exempel för att meddela när du är godkänd för att använda Webcert',
         'label.form.error.epost' : 'E-postadress måste anges innan du kan fortsätta.',
 
@@ -104,7 +104,7 @@ var ppMessages = {
         'label.form.help.postnummer' : 'Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag.',
         'label.form.error.postnummer' : 'Postnummer måste anges innan du kan fortsätta.',
 
-        'label.form.postort' : 'Postort till verksamheten',
+        'label.form.postort' : 'Postort',
 
         'label.form.kommun' : 'Kommun',
         'label.form.help.kommun' : 'Uppgift om kommun går inte att redigera. Om systemet får fler träffar för kommun vid hämtning av uppgiften ska du ange vilken kommun som är rätt.',
