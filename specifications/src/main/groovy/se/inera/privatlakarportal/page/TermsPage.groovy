@@ -2,7 +2,7 @@ package se.inera.privatlakarportal.page
 
 class TermsPage extends StartPage {
     static url = "/#/terms"
-    static at = { $("#termsModal").isDisplayed() }
+    static at = { doneLoading() && termsModal.isDisplayed() }
 
     static content = {
         dismissBtn(to: StartPage, toWait:true) { $("#dismissBtn")}

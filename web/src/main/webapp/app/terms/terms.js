@@ -2,19 +2,19 @@ angular.module('privatlakareApp')
     .config(function($stateProvider) {
         'use strict';
 
-        function openTerms($stateParams, $state, $modal) {
+        function openTerms($stateParams, $state, dialogService) {
 
             $('body').addClass('modalprinter');
 
-            $modal.open({
+            dialogService.open({
                 templateUrl: 'app/terms/terms.html',
                 controller: 'MainTermsCtrl',
                 size: 'md',
                 windowClass: 'modal-terms'
             }).result.finally(function() { //jshint ignore:line
-                    $('body').removeClass('modalprinter');
-                    $state.go('^');
-                });
+                $('body').removeClass('modalprinter');
+                $state.go('^');
+            });
         }
 
         $stateProvider

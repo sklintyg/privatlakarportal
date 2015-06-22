@@ -2,8 +2,8 @@ angular.module('privatlakareApp')
     .config(function ($stateProvider) {
         'use strict';
 
-        function showAbortDialog($state, $modal) {
-            $modal.open({
+        function showAbortDialog($state, dialogService) {
+            dialogService.open({
                 templateUrl: 'app/register/abort/abort.html',
                 controller: 'RegisterAbortCtrl'
             }).result.finally(function() { //jshint ignore:line
