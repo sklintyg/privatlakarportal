@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WebController {
 
-    @RequestMapping(value = "html", method = GET, produces = "text/plain")
+    @RequestMapping(value = "/", method = GET)
     public String getIndexPage() {
-        return "/index.html";
+        return "index";
     }
 
 }
