@@ -1,18 +1,20 @@
 <form name="registerForm" ng-submit="submitForm()" novalidate>
-  <div class="box" id="step2">
 
-    <p>
-      Ange verksamhetens kontaktuppgifter.
-    </p>
+  <p>
+    Ange verksamhetens kontaktuppgifter. </p>
+
+  <div class="box" id="step2">
 
     <div pp-field="telefonnummer">
       <input type="text" id="telefonnummer" name="telefonnummer" ng-model="registerModel.telefonnummer"
-             class='form-control' value="" required>
+             class='form-control' value="" required popover-placement="right" popover-trigger="focus"
+             popover="Telefonnummer fylls i med siffror 0-9, tillåtna tecken är +, - och mellanslag.">
     </div>
 
     <div pp-field="epost">
       <input type="email" id="epost" name="epost" ng-model="registerModel.epost" class='form-control'
-             style='max-width: 20em' value="" required>
+             style='max-width: 20em' value="" required popover-placement="right" popover-trigger="focus"
+             popover="Din e-postadress är viktig! Ange den e-postadress du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor. Kom även ihåg att hålla adressen uppdaterad.">
     </div>
 
     <div pp-field="epost2">
@@ -27,7 +29,9 @@
 
     <div pp-field="postnummer">
       <input type="text" id="postnummer" name="postnummer" ng-model="registerModel.postnummer" class='form-control'
-             style='max-width: 6em' value="" required ng-maxlength="6" maxlength="6">
+             style='max-width: 6em' value="" required ng-maxlength="6" maxlength="6" popover-placement="right"
+             popover-trigger="focus"
+             popover="Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag.">
     </div>
 
     <div pp-field="postort">
@@ -37,7 +41,10 @@
     <div pp-field="kommun">
       {{registerModel.kommun}}
       <select ng-if="false" required id="kommun" name="kommun" class="form-control" ng-model="registerModel.kommun"
-              ng-options="s.label for s in viewState.kommunList track by s.id"></select>
+              ng-options="s.label for s in viewState.kommunList track by s.id"
+              popover-placement="right"
+              popover-trigger="focus"
+              popover="Kommun där verksamheten finns."></select>
     </div>
 
     <div pp-field="lan">

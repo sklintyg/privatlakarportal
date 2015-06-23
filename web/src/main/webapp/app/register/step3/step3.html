@@ -1,45 +1,50 @@
 <div id="step3">
 
-  <p>Kontrollera att sammanfattningen av din information stämmer innan du går vidare. Du kan justera de uppgifter som du själv har angett.
-    Information hämtad från din e-legitimation och från Socialstyrelsens register går inte att redigera.</p>
+  <div class="row">
+    <div class="col-md-7">
+      <p>Kontrollera att sammanfattningen av din information stämmer innan du går vidare. Du kan justera de uppgifter
+        som du själv har angett.
+        Information hämtad från din e-legitimation och från Socialstyrelsens register går inte att redigera.</p>
 
-  <h2 class="col-head">Dina och verksamhetens uppgifter</h2>
-  <div class="box">
-    <table>
-      <tbody>
-      <tr ng-repeat="item in uppgifter">
-        <td class="table-label-col">{{item.name}}</td>
-        <td id="{{item.id}}" ng-class="{'locked' : item.locked}">{{item.value}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+      <h2 class="col-head">Dina och verksamhetens uppgifter</h2>
+      <div class="box">
+        <table>
+          <tbody>
+          <tr ng-repeat="item in uppgifter">
+            <td class="table-label-col">{{item.name}}</td>
+            <td id="{{item.id}}" ng-class="{'locked' : item.locked}">{{item.value}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <h2 class="col-head">Verksamhetens kontaktuppgifter</h2>
-  <div class="box">
-    <table>
-      <tbody>
-      <tr ng-repeat="item in kontaktUppgifter">
-        <td class="table-label-col">{{item.name}}</td>
-        <td id="{{item.id}}" ng-class="{'locked' : item.locked}">{{item.value}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+      <h2 class="col-head">Verksamhetens kontaktuppgifter</h2>
+      <div class="box">
+        <table>
+          <tbody>
+          <tr ng-repeat="item in kontaktUppgifter">
+            <td class="table-label-col">{{item.name}}</td>
+            <td id="{{item.id}}" ng-class="{'locked' : item.locked}">{{item.value}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <h2 class="col-head">Socialstyrelsens uppgifter</h2>
-  <div class="alert alert-info">
-    Nedanstående uppgifter är inhämtade från Socialstyrelsen och kan inte ändras.
-  </div>
-  <div class="box">
-    <table>
-      <tbody>
-      <tr ng-repeat="item in socialstyrelsenUppgifter">
-        <td class="table-label-col">{{item.name}}</td>
-        <td id="{{item.id}}" ng-class="{'locked' : item.locked}">{{item.value}}</td>
-      </tr>
-      </tbody>
-    </table>
+      <h2 class="col-head">Socialstyrelsens uppgifter</h2>
+      <div class="alert alert-info">
+        Nedanstående uppgifter är inhämtade från Socialstyrelsen och kan inte ändras.
+      </div>
+      <div class="box">
+        <table>
+          <tbody>
+          <tr ng-repeat="item in socialstyrelsenUppgifter">
+            <td class="table-label-col">{{item.name}}</td>
+            <td id="{{item.id}}" ng-class="{'locked' : item.locked}">{{item.value}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <div class="row">
@@ -68,7 +73,9 @@
   </div>
 
   <div class="buttonbar">
-    <button id="registerBtn" class="btn btn-success" ui-sref="app.register.complete" ng-disabled="!model.godkannvillkor">Slutför registrering</button>
+    <button id="registerBtn" class="btn btn-success" ui-sref="app.register.complete"
+            ng-disabled="!model.godkannvillkor">Slutför registrering
+    </button>
     <button id="backBtn" class="btn btn-info" ui-sref="app.register.step2">Tillbaka</button>
     <button id="abortBtn" class="btn btn-secondary" ui-sref=".abort">Avbryt</button>
   </div>
