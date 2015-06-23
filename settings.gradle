@@ -3,8 +3,10 @@
  */
 rootProject.name = 'privatlakarportal'
 include ':web', ':specifications', ':integration/wc-integration', ':persistence'
+include ':liquibase-runner'
 
 project(':web').name = 'privatlakarportal-web'
 project(':specifications').name = 'privatlakarportal-specifications'
 project(':integration/wc-integration').name = 'privatlakarportal-wc-integration'
 project(':persistence').name = 'privatlakarportal-persistence'
+project(':liquibase-runner').projectDir = "$rootDir/tools/liquibase-runner" as File
