@@ -57,7 +57,7 @@ private void addProjectPropertiesFromFile(propfile) {
     }
 }
 
-configure (subprojects.findAll { ['liquibase-runner', 'privatlakarportal-web'].contains(it.name) }) {
+configure (subprojects.findAll { ['privatlakarportal-liquibase-runner', 'privatlakarportal-web'].contains(it.name) }) {
 
     apply plugin: 'maven'
 
