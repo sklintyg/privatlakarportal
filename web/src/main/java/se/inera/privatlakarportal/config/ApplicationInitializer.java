@@ -11,6 +11,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+import se.inera.privatlakarportal.persistence.config.PersistenceConfig;
 
 public class ApplicationInitializer implements WebApplicationInitializer {
 

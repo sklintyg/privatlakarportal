@@ -7,6 +7,178 @@
 
   <changeSet id="1" author="me">
     <!-- initial creation of tables -->
+
+    <createTable tableName="PRIVATLAKARE">
+      <column name="HSAID" type="varchar(255)">
+        <constraints unique="true" nullable="false" />
+      </column>
+      <column name="PERSONID" type="varchar(255)">
+        <constraints unique="true" nullable="false" />
+      </column>
+      <column name="FULLSTANDIGT_NAMN" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="FORSKRIVARKOD" type="varchar(255)">
+        <constraints nullable="true" />
+      </column>
+      <column name="GODKAND_ANVANDARE" type="boolean">
+        <constraints nullable="false" />
+      </column>
+
+      <!-- Enhet -->
+      <column name="ENHETS_ID" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="ENHETS_NAMN" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="ARBETSPLATSKOD" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="AGARFORM" type="varchar(255)" defaultValue="Privat">
+         <constraints nullable="false" />
+       </column>
+      <column name="POSTADRESS" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="POSTNUMMER" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="POSTORT" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="TELEFONNUMMER" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="EPOST" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="ENHET_STARTDATUM" type="datetime">
+         <constraints nullable="true" />
+       </column>
+      <column name="ENHET_SLUTDATUM" type="datetime">
+         <constraints nullable="true" />
+       </column>
+
+      <!-- Geografisk indelning -->
+      <column name="LAN" type="varchar(255)">
+         <constraints nullable="true" />
+       </column>
+      <column name="KOMMUN" type="varchar(255)">
+         <constraints nullable="true" />
+       </column>
+
+      <!-- Vårdgivare -->
+      <column name="VARDGIVARE_ID" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="VARDGIVARE_NAMN" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="VARDGIVARE_STARTDATUM" type="datetime">
+         <constraints nullable="true" />
+       </column>
+      <column name="VARDGIVARE_SLUTDATUM" type="datetime">
+         <constraints nullable="true" />
+       </column>
+    </createTable>
+
+    <!-- Specialitet -->
+    <createTable tableName="SPECIALITET">
+      <column name="ID" type="bigint">
+        <constraints unique="true" nullable="false" />
+      </column>
+      <column name="PERSONID" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="KOD" type="varchar(255)">
+        <constraints nullable="true" />
+      </column>
+      <column name="NAMN" type="varchar(255)">
+        <constraints nullable="true" />
+      </column>
+    </createTable>
+
+    <addAutoIncrement columnDataType="bigint"
+        columnName="ID" incrementBy="1" startWith="1"
+        tableName="SPECIALITET" />
+
+    <addForeignKeyConstraint baseColumnNames="PERSONID"
+        baseTableName="SPECIALITET" constraintName="SPECIALITET_PRIVATLAKARE"
+        referencedColumnNames="PERSONID" referencedTableName="PRIVATLAKARE" />
+
+    <!-- Befattning -->
+    <createTable tableName="BEFATTNING">
+      <column name="ID" type="bigint">
+        <constraints unique="true" nullable="false" />
+      </column>
+      <column name="PERSONID" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="KOD" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="NAMN" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <addAutoIncrement columnDataType="bigint"
+        columnName="ID" incrementBy="1" startWith="1"
+        tableName="BEFATTNING" />
+
+    <addForeignKeyConstraint baseColumnNames="PERSONID"
+        baseTableName="BEFATTNING" constraintName="BEFATTNING_PRIVATLAKARE"
+        referencedColumnNames="PERSONID" referencedTableName="PRIVATLAKARE" />
+
+    <!-- Legitimerad yrkesgrupp -->
+    <createTable tableName="LEGITIMERAD_YRKESGRUPP">
+      <column name="ID" type="bigint">
+        <constraints unique="true" nullable="false" />
+      </column>
+      <column name="PERSONID" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="KOD" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="NAMN" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <addAutoIncrement columnDataType="bigint"
+        columnName="ID" incrementBy="1" startWith="1"
+        tableName="LEGITIMERAD_YRKESGRUPP" />
+
+    <addForeignKeyConstraint baseColumnNames="PERSONID"
+        baseTableName="LEGITIMERAD_YRKESGRUPP" constraintName="LEGITIMERAD_YRKESGRUPP_PRIVATLAKARE"
+        referencedColumnNames="PERSONID" referencedTableName="PRIVATLAKARE" />
+
+    <!-- Verksamhetstyp och vårdform -->
+    <createTable tableName="VERKSAMHETSTYP">
+      <column name="ID" type="bigint">
+        <constraints unique="true" nullable="false" />
+      </column>
+      <column name="PERSONID" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="VERKSAMHET" type="varchar(255)">
+         <constraints nullable="false" />
+       </column>
+      <column name="VARDFORM" type="varchar(255)">
+         <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <addAutoIncrement columnDataType="bigint"
+        columnName="ID" incrementBy="1" startWith="1"
+        tableName="VERKSAMHETSTYP" />
+
+    <addForeignKeyConstraint baseColumnNames="PERSONID"
+        baseTableName="VERKSAMHETSTYP" constraintName="VERKSAMHETSTYP_PRIVATLAKARE"
+        referencedColumnNames="PERSONID" referencedTableName="PRIVATLAKARE" />
+
   </changeSet>
 
 </databaseChangeLog>

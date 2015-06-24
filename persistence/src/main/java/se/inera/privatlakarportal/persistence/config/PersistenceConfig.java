@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.peristence.config;
+package se.inera.privatlakarportal.persistence.config;
 
 import java.sql.SQLException;
 import java.util.Properties;
@@ -6,11 +6,10 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -18,6 +17,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import se.inera.privatlakarportal.persistence.liquibase.DbChecker;
 
 @Configuration
 @ComponentScan("se.inera.privatlakarportal.persistence")
@@ -98,5 +98,21 @@ public class PersistenceConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
+    }
+
+    @Bean
+    @Profile("dev")
+    SpringLiquibase initDb(DataSource dataSource) {
+        SpringLiquibase springLiquibase = new SpringLiquibase();
+        springLiquibase.setDataSource(dataSource);
+        springLiquibase.setChangeLog("classpath:changelog/changelog.xml");
+        return springLiquibase;
+    }
+
+    @Bean
+    @Profile("!dev")
+    DbChecker checkDb(DataSource dataSource) {
+        DbChecker dbChecker = new DbChecker(dataSource, "changelog/changelog.xml");
+        return dbChecker;
     }
 }
