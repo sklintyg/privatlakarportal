@@ -2,12 +2,14 @@ angular.module('privatlakareApp')
     .config(function ($stateProvider) {
         'use strict';
 
+        var abortUrl = '/avbryt';
+
         function showAbortDialog($state, dialogService) {
             dialogService.open({
                 templateUrl: 'app/register/abort/abort.html',
                 controller: 'RegisterAbortCtrl'
             }).result.finally(function() { //jshint ignore:line
-                if ($state.current.url === 'avbryt') {
+                if ($state.current.url === abortUrl) {
                     $state.go('^');
                 }
             });
@@ -19,17 +21,17 @@ angular.module('privatlakareApp')
 
         $stateProvider
             .state('app.register.step1.abort', {
-                url: '/avbryt',
+                url: abortUrl,
                 onEnter: showAbortDialog,
                 onExit: closeAbortDialog
             })
             .state('app.register.step2.abort', {
-                url: '/avbryt',
+                url: abortUrl,
                 onEnter: showAbortDialog,
                 onExit: closeAbortDialog
             })
             .state('app.register.step3.abort', {
-                url: '/avbryt',
+                url: abortUrl,
                 onEnter: showAbortDialog,
                 onExit: closeAbortDialog
             });
