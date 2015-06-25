@@ -49,6 +49,7 @@ public class PersistenceConfig {
     private String hibernateFormatSql;
 
     @Bean
+    @Profile("dev")
     Server createTcpServer() throws SQLException {
         Server server = Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", databaseTcpPort);
         server.start();
@@ -56,6 +57,7 @@ public class PersistenceConfig {
     }
 
     @Bean
+    @Profile("dev")
     Server createWebServer() throws SQLException {
         Server server = Server.createWebServer("-web", "-webAllowOthers", "-webPort", databaseHttpPort);
         server.start();
