@@ -7,7 +7,6 @@ angular.module('privatlakareApp')
             $state.go('app.register.step3');
         };
 
-        $scope.pasteerror = false;
         $scope.preventPaste = function(e, fieldName){
             e.preventDefault();
             RegisterViewStateService['pasteError'+fieldName] = true;
