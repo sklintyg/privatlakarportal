@@ -1,6 +1,3 @@
-ENV_CFG="-Dspring.profiles.active={{ profiles }}"
-JVM_CFG="-Xms1024m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=512m -Dfile.encoding=UTF-8"
-DEBUG_CFG="-XX:-HeapDumpOnOutOfMemoryError -XX:HeapDumpPath={{ inera_tomcat_folder }}"
 PRIVATLAKARPORTAL_CFG="-Dprivatlakarportal.config.folder={{ config_etc_folder }} -Dprivatlakarportal.config.file={{ config_etc_folder }}/privatlakarportal.properties -Dprivatlakarportal.logback.file={{ config_etc_folder }}/privatlakarportal-logback.xml"
 PRIVATLAKARPORTAL_RESOURCES="-Dprivatlakarportal.resources.folder={{ app_resources_folder }}"
-export JAVA_OPTS="$JAVA_OPTS $ENV_CFG $JVM_CFG $DEBUG_CFG $CREDENTIALS_CFG $PRIVATLAKARPORTAL_CFG $PRIVATLAKARPORTAL_RESOURCES"
+export JAVA_OPTS="$JAVA_OPTS $PRIVATLAKARPORTAL_CFG $PRIVATLAKARPORTAL_RESOURCES"

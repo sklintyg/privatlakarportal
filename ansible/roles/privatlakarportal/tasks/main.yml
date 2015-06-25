@@ -27,12 +27,24 @@
   environment:
       JAVA_HOME: "{{ java_home }}"
 
+- name: Make sure privatlakarportal-web file download is forced when using shapshots repo
+  file: state=absent  path={{ releases_folder }}/privatlakarportal-web-{{ version }}.war
+  when: repo == "snapshots"
+
 - name: Download privatlakarportal-web-{{ version }}.war
   get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/{{ repo }}/se/inera/privatlakarportal/privatlakarportal-web/{{ version }}/privatlakarportal-web-{{ version }}.war
       dest={{ releases_folder }}/privatlakarportal-web-{{ version }}.war
 
-- name: Deploy privatlakarportal-web-{{ version }}.war in {{ webapps_folder }}
-  command: cp {{ releases_folder }}/privatlakarportal-web-{{ version }}.war {{ webapps_folder }}
+- name: remove old version of unpacked privatlakarportal war
+  file: state=absent
+      path={{ webapps_folder }}/privatlakarportal
+
+- name: remove old version of privatlakarportal.war
+  file: state=absent
+      path={{ webapps_folder }}/privatlakarportal.war
+
+- name: Deploy privatlakarportal-web-{{ version }}.war as privatlakarportal.war in {{ webapps_folder }}
+  command: cp {{ releases_folder }}/privatlakarportal-web-{{ version }}.war {{ webapps_folder }}/privatlakarportal.war
 
 - name: Create version file
   template: src=version.txt.j2 dest={{ webapps_folder }}/version.txt
