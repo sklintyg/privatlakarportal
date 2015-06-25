@@ -1,6 +1,5 @@
-'use strict';
-
 describe('Controller: CompleteCtrl', function () {
+  'use strict';
 
   // load the controller's module
   beforeEach(module('privatlakareApp'));

@@ -58,59 +58,64 @@ var ppMessages = {
 
         // Register form step 1
         'label.form.personnummer' : 'Personnummer',
-        'label.form.help.personnummer' : 'Personnummer hämtas från den e-legitimation som används vid inloggning. Personnummer går inte att ändra.',
+        'label.form.personnummer.help' : 'Personnummer hämtas från den e-legitimation som används vid inloggning. Personnummer går inte att ändra.',
 
         'label.form.name' : 'Namn',
-        'label.form.help.name' : 'Namn hämtas från folkbokföringen. Namn går inte att ändra.',
+        'label.form.name.help' : 'Namn hämtas från folkbokföringen. Namn går inte att ändra.',
 
         'label.form.befattning' : 'Befattning',
-        'label.form.help.befattning' : 'Välj din huvudsakliga befattning enligt AID-etikett (Arbetsidentifikation kommuner och landsting).',
-        'label.form.error.befattning' : 'Befattning måste anges innan du kan fortsätta.',
+        'label.form.befattning.help' : 'Välj din huvudsakliga befattning enligt AID-etikett (Arbetsidentifikation kommuner och landsting).',
+        'label.form.befattning.error' : 'Befattning måste anges innan du kan fortsätta.',
 
         'label.form.verksamhetensnamn' : 'Verksamhetens namn',
-        'label.form.help.verksamhetensnamn' : 'Ange verksamhetens fullständiga namn.',
-        'label.form.error.verksamhetensnamn' : 'Verksamhetens namn måste anges innan du kan fortsätta.',
+        'label.form.verksamhetensnamn.help' : 'Ange verksamhetens fullständiga namn.',
+        'label.form.verksamhetensnamn.error.required' : 'Verksamhetens namn måste anges innan du kan fortsätta.',
 
         'label.form.agarform' : 'Ägarform',
-        'label.form.help.agarform' : 'Ange verksamhetens ägarform enligt Hälso- och sjukvårdens adressregister, HSA. ”Privat” är förvalt och informationen går inte att ändra.',
+        'label.form.agarform.help' : 'Ange verksamhetens ägarform enligt Hälso- och sjukvårdens adressregister, HSA. ”Privat” är förvalt och informationen går inte att ändra.',
 
         'label.form.vardform' : 'Vårdform',
-        'label.form.help.vardform' : 'Ange verksamhetens huvudsakliga vårdform enligt definition i Socialstyrelsens termbank.',
+        'label.form.vardform.help' : 'Ange verksamhetens huvudsakliga vårdform enligt definition i Socialstyrelsens termbank.',
 
         'label.form.verksamhetstyp' : 'Verksamhetstyp',
-        'label.form.help.verksamhetstyp' : 'Välj den typ av verksamhet som huvudsakligen bedrivs. Med \'övrig medicinsk verksamhet\' avses paramedicinsk verksamhet som bedrivs av exempelvis sjukgymnaster, arbetsterapeuter, kiropraktorer och logopeder. Med \'övrig medicinsk serviceverksamhet\' avses all medicinsk serviceverksamhet undantaget laboratorieverksamhet och radiologisk verksamhet. Välj \'medicinsk verksamhet\' om den verksamhet du bedriver inte stämmer med några andra verksamhetstyper i denna lista.',
-        'label.form.error.verksamhetstyp' : 'Verksamhetstyp måste anges innan du kan fortsätta.',
+        'label.form.verksamhetstyp.help' : 'Välj den typ av verksamhet som huvudsakligen bedrivs. Med \'övrig medicinsk verksamhet\' avses paramedicinsk verksamhet som bedrivs av exempelvis sjukgymnaster, arbetsterapeuter, kiropraktorer och logopeder. Med \'övrig medicinsk serviceverksamhet\' avses all medicinsk serviceverksamhet undantaget laboratorieverksamhet och radiologisk verksamhet. Välj \'medicinsk verksamhet\' om den verksamhet du bedriver inte stämmer med några andra verksamhetstyper i denna lista.',
+        'label.form.verksamhetstyp.error.required' : 'Verksamhetstyp måste anges innan du kan fortsätta.',
 
         'label.form.arbetsplatskod' : 'Arbetsplatskod <i>(valfritt)</i>',
-        'label.form.help.arbetsplatskod' : 'Ange verksamhetens arbetsplatskod. Arbetsplatskod används för att identifiera vid vilken arbetsplats receptutfärdaren tjänstgör i samband med läkemedelsförskrivning. Vid intygsutfärdande används arbetsplatskod av Försäkringskassan för att samla in information om vid vilken arbetsplats den intygsutfärdande läkaren tjänstgör. Insamlingen sker på Socialstyrelsens uppdrag. Arbetsplatskod är inte en obligatorisk uppgift.',
+        'label.form.arbetsplatskod.help' : 'Ange verksamhetens arbetsplatskod. Arbetsplatskod används för att identifiera vid vilken arbetsplats receptutfärdaren tjänstgör i samband med läkemedelsförskrivning. Vid intygsutfärdande används arbetsplatskod av Försäkringskassan för att samla in information om vid vilken arbetsplats den intygsutfärdande läkaren tjänstgör. Insamlingen sker på Socialstyrelsens uppdrag. Arbetsplatskod är inte en obligatorisk uppgift.',
 
         // Step 2
         'label.form.telefonnummer' : 'Telefonnummer',
-        'label.form.help.telefonnummer' : 'Ange det telefonnummer där du vill bli kontaktad om mottagaren av intyget behöver nå dig för kompletterade frågor.',
-        'label.form.error.telefonnummer' : 'Telefonnummer måste anges innan du kan fortsätta.',
+        'label.form.telefonnummer.help' : 'Ange det telefonnummer där du vill bli kontaktad om mottagaren av intyget behöver nå dig för kompletterade frågor.',
+        'label.form.telefonnummer.error.required' : 'Telefonnummer måste anges innan du kan fortsätta.',
 
         'label.form.epost' : 'E-postadress',
-        'label.form.help.epost' : 'E-postadressen används för att kontakta dig då en mottagare av intyg behöver nå dig för kompletterande frågor samt då Inera behöver nå dig i ärenden som gäller användningen av Webcert. Till exempel för att meddela när du är godkänd för att använda Webcert',
-        'label.form.error.epost' : 'E-postadress måste anges innan du kan fortsätta.',
+        'label.form.epost.help' : 'E-postadressen används för att kontakta dig då en mottagare av intyg behöver nå dig för kompletterande frågor samt då Inera behöver nå dig i ärenden som gäller användningen av Webcert. Till exempel för att meddela när du är godkänd för att använda Webcert',
+        'label.form.epost.error.required' : 'E-postadress måste anges innan du kan fortsätta.',
+        'label.form.epost.error.email' : 'En korrekt e-postadress måste anges innan du kan fortsätta.',
 
         'label.form.epost2' : 'Upprepa e-postadress',
-        'label.form.error.epost2' : 'E-postadress måste anges innan du kan fortsätta.',
+        'label.form.epost2.error.required' : 'E-postadress måste anges innan du kan fortsätta.',
+        'label.form.epost2.error.email' : 'En korrekt e-postadress måste anges innan du kan fortsätta.',
+        'label.form.epost2.error.confirmemail' : 'E-postadressen är inte identisk med ovanstående angiven e-post.',
+        'label.form.epost2.error.pastenotallowed' : 'Du måste ange e-postadresserna genom att skriva in dem.',
+
 
         'label.form.adress' : 'Postadress',
-        'label.form.help.adress' : 'Ange den postadress som du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor. Postadressen är även nödvändig för Ineras eventuella fakturering för användning av Webcert.',
-        'label.form.error.adress' : 'Postadress måste anges innan du kan fortsätta.',
+        'label.form.adress.help' : 'Ange den postadress som du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor. Postadressen är även nödvändig för Ineras eventuella fakturering för användning av Webcert.',
+        'label.form.adress.error.required' : 'Postadress måste anges innan du kan fortsätta.',
 
         'label.form.postnummer' : 'Postnummer',
-        'label.form.help.postnummer' : 'Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag.',
-        'label.form.error.postnummer' : 'Postnummer måste anges innan du kan fortsätta.',
+        'label.form.postnummer.help' : 'Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag.',
+        'label.form.postnummer.error.required' : 'Postnummer måste anges innan du kan fortsätta.',
 
         'label.form.postort' : 'Postort',
 
         'label.form.kommun' : 'Kommun',
-        'label.form.help.kommun' : 'Uppgift om kommun går inte att redigera. Om systemet får fler träffar för kommun vid hämtning av uppgiften ska du ange vilken kommun som är rätt.',
+        'label.form.kommun.help' : 'Uppgift om kommun går inte att redigera. Om systemet får fler träffar för kommun vid hämtning av uppgiften ska du ange vilken kommun som är rätt.',
 
         'label.form.lan' : 'Län',
-        'label.form.help.lan' : 'Län där verksamheten finns. Uppgift om län går inte att ändra.'
+        'label.form.lan.help' : 'Län där verksamheten finns. Uppgift om län går inte att ändra.'
     },
     'en': {
         'common.ok': 'OK',

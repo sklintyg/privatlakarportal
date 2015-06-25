@@ -3,14 +3,18 @@ var app = angular.module('privatlakareApp', [
   'ngResource',
   'ngSanitize',
   'ngStorage',
+  'ngMessages',
   'ui.router',
   'ui.bootstrap'
 ]);
 
-app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $tooltipProvider) {
     'use strict';
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(false);
+    $tooltipProvider.setTriggers({
+        'show': 'hide'
+    });
 });
 
 // Global config of default date picker config (individual attributes can be

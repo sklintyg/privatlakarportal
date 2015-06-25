@@ -17,6 +17,7 @@ module.exports = function(config) {
       'src/main/webapp/bower_components/angular-resource/angular-resource.js',
       'src/main/webapp/bower_components/angular-cookies/angular-cookies.js',
       'src/main/webapp/bower_components/angular-sanitize/angular-sanitize.js',
+      'src/main/webapp/bower_components/angular-messages/angular-messages.js',
       'src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
       'src/main/webapp/bower_components/angular-i18n/angular-locale_sv-se.js',
@@ -33,7 +34,7 @@ module.exports = function(config) {
     preprocessors: {
       '**/*.jade': 'ng-jade2js',
       '**/*.html': 'html2js',
-      '**/*.coffee': 'coffee',
+      '**/*.coffee': 'coffee'
     },
 
     ngHtml2JsPreprocessor: {

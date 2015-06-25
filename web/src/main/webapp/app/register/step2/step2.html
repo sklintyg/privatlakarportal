@@ -14,12 +14,23 @@
     <div pp-field="epost">
       <input type="email" id="epost" name="epost" ng-model="registerModel.epost" class='form-control'
              style='max-width: 20em' value="" required popover-placement="right" popover-trigger="focus"
+             ng-paste="preventPaste($event, 'Epost')"
              popover="Din e-postadress är viktig! Ange den e-postadress du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor. Kom även ihåg att hålla adressen uppdaterad.">
+      <div class="has-error">
+        <div ng-if="viewState.pasteErrorEpost" class="help-block" role="alert">
+          <span message key="label.form.epost2.error.pastenotallowed"></span>
+        </div>
+      </div>
     </div>
 
     <div pp-field="epost2">
       <input type="email" id="epost2" name="epost2" ng-model="registerModel.epost2" class='form-control'
-             style='max-width: 20em' value="" required>
+             style='max-width: 20em' value="" required validate-confirm-email="epost" ng-paste="preventPaste($event, 'Epost2')">
+      <div class="has-error">
+        <div ng-if="viewState.pasteErrorEpost2" class="help-block" role="alert">
+          <span message key="label.form.epost2.error.pastenotallowed"></span>
+        </div>
+      </div>
     </div>
 
     <div pp-field="adress">

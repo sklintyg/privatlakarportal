@@ -1,5 +1,4 @@
 angular.module('privatlakareApp')
-    .controller('AppCtrl', function($scope, $http, $templateCache, $window) {
+    .controller('AppCtrl', function() {
         'use strict';
-
     });

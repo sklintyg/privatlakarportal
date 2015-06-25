@@ -6,6 +6,7 @@
     "angular-resource": "1.4.0",
     "angular-cookies": "1.4.0",
     "angular-sanitize": "1.4.0",
+    "angular-messages": "1.4.0",
     "angular-bootstrap": "0.13.0",
     "angular-ui-router": "0.2.15",
     "angular-i18n": "1.4.0",

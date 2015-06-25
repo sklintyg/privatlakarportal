@@ -5,6 +5,9 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
         this.reset = function() {
             this.step = 1;
 
+            this.pasteErrorEpost = false;
+            this.pasteErrorEpost2 = false;
+
             this.befattningList = [
                 { id: '201011', label: 'Distriktsläkare/Specialist allmänmedicin' },
                 { id: '201012', label: 'Skolläkare' },
@@ -34,7 +37,7 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
 
         this.getStepFromState = function(state) {
             return state.data.step;
-        }
+        };
 
         this.updateStep = function() {
             this.step = this.getStepFromState($state.current);
