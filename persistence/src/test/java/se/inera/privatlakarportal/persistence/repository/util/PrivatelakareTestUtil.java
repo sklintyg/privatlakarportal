@@ -53,8 +53,8 @@ public class PrivatelakareTestUtil {
         privatlakare.setVardgivareSlutdatum(LocalDateTime.parse("2015-06-04"));
 
         Set<Befattning> befattningar = new HashSet<Befattning>();
-        befattningar.add(new Befattning(privatlakare, "Befattning kod 1", "Befattning namn 1"));
-        befattningar.add(new Befattning(privatlakare, "Befattning kod 2", "Befattning namn 2"));
+        befattningar.add(new Befattning(privatlakare, "Befattning kod 1"));
+        befattningar.add(new Befattning(privatlakare, "Befattning kod 2"));
         privatlakare.setBefattningar(befattningar);
 
         Set<LegitimeradYrkesgrupp> legitimeradeYrkesgrupper = new HashSet<LegitimeradYrkesgrupp>();

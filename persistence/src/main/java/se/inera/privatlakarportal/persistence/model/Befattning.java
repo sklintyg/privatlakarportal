@@ -20,9 +20,6 @@ public class Befattning {
     @Column(name = "KOD", nullable = false)
     private String kod;
 
-    @Column(name = "NAMN", nullable = false)
-    private String namn;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -48,10 +45,9 @@ public class Befattning {
     public Befattning() {
     }
 
-    public Befattning(Privatlakare privatlakare, String kod, String namn) {
+    public Befattning(Privatlakare privatlakare, String kod) {
         this.privatlakare = privatlakare;
         this.kod = kod;
-        this.namn = namn;
     }
 
     public Privatlakare getPrivatlakare() {
@@ -68,13 +64,5 @@ public class Befattning {
 
     public void setKod(String kod) {
         this.kod = kod;
-    }
-
-    public String getNamn() {
-        return namn;
-    }
-
-    public void setNamn(String namn) {
-        this.namn = namn;
     }
 }

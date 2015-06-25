@@ -118,9 +118,6 @@
       <column name="KOD" type="varchar(255)">
         <constraints nullable="false" />
       </column>
-      <column name="NAMN" type="varchar(255)">
-        <constraints nullable="false" />
-      </column>
     </createTable>
 
     <addAutoIncrement columnDataType="bigint"
