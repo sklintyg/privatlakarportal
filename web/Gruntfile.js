@@ -159,9 +159,23 @@ module.exports = function(grunt) {
         // Automatically inject Bower components into the app
         wiredep: {
             target: {
-                src: '<%= config.client %>/index.html',
+                src: [
+                    '<%= config.client %>/index.html',
+                    'karma.conf.js'
+                ],
                 ignorePath: '<%= config.client %>/',
-                exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/']
+                exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/'],
+                fileTypes: {
+                    js: {
+                        block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
+                        detect: {
+                            js: /".*\.js"/gi
+                        },
+                        replace: {
+                            js: '\'<%= config.client %>/{{filePath}}\','
+                        }
+                    }
+                }
             }
         },
 
