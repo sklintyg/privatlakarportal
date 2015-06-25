@@ -42,7 +42,7 @@ node {
 }
 
 war {
-    webAppDirName = 'build/webapp'
+    from 'build/webapp'
 }
 
 task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
