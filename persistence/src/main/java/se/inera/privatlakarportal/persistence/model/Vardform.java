@@ -6,8 +6,8 @@ import javax.persistence.*;
  * Created by pebe on 2015-06-24.
  */
 @Entity
-@Table(name = "VERKSAMHETSTYP")
-public class Verksamhetstyp {
+@Table(name = "VARDFORM")
+public class Vardform {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +27,7 @@ public class Verksamhetstyp {
         } else if (o == null || getClass() != o.getClass()) {
             return false;
         } else {
-            Verksamhetstyp other = (Verksamhetstyp) o;
+            Vardform other = (Vardform) o;
 
             if (id == null) {
                 return false;
@@ -42,10 +42,10 @@ public class Verksamhetstyp {
         return id != null ? id.hashCode() : 0;
     }
 
-    public Verksamhetstyp() {
+    public Vardform() {
     }
 
-    public Verksamhetstyp(Privatlakare privatlakare, String kod) {
+    public Vardform(Privatlakare privatlakare, String kod) {
         this.privatlakare = privatlakare;
         this.kod = kod;
     }
@@ -65,4 +65,5 @@ public class Verksamhetstyp {
     public void setKod(String kod) {
         this.kod = kod;
     }
+
 }

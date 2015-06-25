@@ -68,9 +68,14 @@ public class PrivatelakareTestUtil {
         privatlakare.setSpecialiteter(specialiteter);
 
         Set<Verksamhetstyp> verksamhetsTyper = new HashSet<Verksamhetstyp>();
-        verksamhetsTyper.add(new Verksamhetstyp(privatlakare, "Verksamhetstyp verksamhet 1", "Verksamhetstyp vardform 1"));
-        verksamhetsTyper.add(new Verksamhetstyp(privatlakare, "Verksamhetstyp verksamhet 2", "Verksamhetstyp vardform 2"));
+        verksamhetsTyper.add(new Verksamhetstyp(privatlakare, "Verksamhetstyp 1"));
+        verksamhetsTyper.add(new Verksamhetstyp(privatlakare, "Verksamhetstyp 2"));
         privatlakare.setVerksamhetstyper(verksamhetsTyper);
+
+        Set<Vardform> vardformer = new HashSet<Vardform>();
+        vardformer.add(new Vardform(privatlakare, "Vardform 1"));
+        vardformer.add(new Vardform(privatlakare, "Vardform 2"));
+        privatlakare.setVardformer(vardformer);
 
         return privatlakare;
     }

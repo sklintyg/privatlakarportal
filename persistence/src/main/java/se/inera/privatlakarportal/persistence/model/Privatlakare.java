@@ -97,6 +97,9 @@ public class Privatlakare {
     @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL)
     private Set<Verksamhetstyp> verksamhetstyper;
 
+    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL)
+    private Set<Vardform> vardformer;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -325,5 +328,13 @@ public class Privatlakare {
 
     public void setVerksamhetstyper(Set<Verksamhetstyp> verksamhetstyper) {
         this.verksamhetstyper = verksamhetstyper;
+    }
+
+    public Set<Vardform> getVardformer() {
+        return vardformer;
+    }
+
+    public void setVardformer(Set<Vardform> vardformer) {
+        this.vardformer = vardformer;
     }
 }

@@ -155,7 +155,7 @@
         baseTableName="LEGITIMERAD_YRKESGRUPP" constraintName="LEGITIMERAD_YRKESGRUPP_PRIVATLAKARE"
         referencedColumnNames="PERSONID" referencedTableName="PRIVATLAKARE" />
 
-    <!-- Verksamhetstyp och vårdform -->
+    <!-- Verksamhetstyp -->
     <createTable tableName="VERKSAMHETSTYP">
       <column name="ID" type="bigint">
         <constraints unique="true" nullable="false" />
@@ -163,12 +163,9 @@
       <column name="PERSONID" type="varchar(255)">
         <constraints nullable="false" />
       </column>
-      <column name="VERKSAMHET" type="varchar(255)">
+      <column name="KOD" type="varchar(255)">
          <constraints nullable="false" />
        </column>
-      <column name="VARDFORM" type="varchar(255)">
-         <constraints nullable="false" />
-      </column>
     </createTable>
 
     <addAutoIncrement columnDataType="bigint"
@@ -177,6 +174,27 @@
 
     <addForeignKeyConstraint baseColumnNames="PERSONID"
         baseTableName="VERKSAMHETSTYP" constraintName="VERKSAMHETSTYP_PRIVATLAKARE"
+        referencedColumnNames="PERSONID" referencedTableName="PRIVATLAKARE" />
+
+    <!-- Vårdform -->
+    <createTable tableName="VARDFORM">
+      <column name="ID" type="bigint">
+        <constraints unique="true" nullable="false" />
+      </column>
+      <column name="PERSONID" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="KOD" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <addAutoIncrement columnDataType="bigint"
+        columnName="ID" incrementBy="1" startWith="1"
+        tableName="VARDFORM" />
+
+    <addForeignKeyConstraint baseColumnNames="PERSONID"
+        baseTableName="VARDFORM" constraintName="VARDFORM_PRIVATLAKARE"
         referencedColumnNames="PERSONID" referencedTableName="PRIVATLAKARE" />
 
   </changeSet>

@@ -60,5 +60,6 @@ public class PrivatlakareRepositoryTest  {
         assertThat(read.getLegitimeradeYrkesgrupper(), is(equalTo(saved.getLegitimeradeYrkesgrupper())));
         assertThat(read.getSpecialiteter(), is(equalTo(saved.getSpecialiteter())));
         assertThat(read.getVerksamhetstyper(), is(equalTo(saved.getVerksamhetstyper())));
+        assertThat(read.getVardformer(), is(equalTo(saved.getVardformer())));
     }
 }
