@@ -1,0 +1,12 @@
+# This playbook deploys privatlakarportalen 
+
+- hosts: privatlakarportal-tomcat
+  sudo: yes 
+  vars:
+    # repo - values: snapshot or release
+    repo: snapshots
+    version: 1.0.0-SNAPSHOT
+    config_version: master
+
+  roles:
+    - privatlakarportal
