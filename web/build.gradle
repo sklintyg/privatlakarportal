@@ -36,7 +36,6 @@ dependencies {
 
 grunt {
     colors = true
-    bufferOutput = true
 }
 
 node {
