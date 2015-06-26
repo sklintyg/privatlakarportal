@@ -17,11 +17,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan("se.inera.privatlakarportal.web")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
-    }
-
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -35,9 +30,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         int cachePeriod = 3600 * 24 * 15;
+        registry.addResourceHandler("/index.html").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/robots.txt").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components/");
+        registry.addResourceHandler("/app/**").addResourceLocations("/app/");
+        registry.addResourceHandler("/components/**").addResourceLocations("/components/");
     }
 
     @Override
