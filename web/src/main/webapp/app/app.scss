@@ -1,179 +1,193 @@
-
 /**
  * Bootstrap Fonts
  */
-
 @font-face {
-    font-family: 'Glyphicons Halflings';
-    src: url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot');
-    src: url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
-    url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'),
-    url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'),
-    url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
+  font-family: 'Glyphicons Halflings';
+  src: url("../bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot");
+  src: url("../bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff") format("woff"), url("../bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 
 /**
  *Font Awesome Fonts
  */
-
 @font-face {
-    font-family: 'FontAwesome';
-    src: url('../bower_components/font-awesome/fonts/fontawesome-webfont.eot?v=4.1.0');
-    src: url('../bower_components/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'),
-    url('../bower_components/font-awesome/fonts/fontawesome-webfont.woff?v=4.1.0') format('woff'),
-    url('../bower_components/font-awesome/fonts/fontawesome-webfont.ttf?v=4.1.0') format('truetype'),
-    url('../bower_components/font-awesome/fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+  font-family: 'FontAwesome';
+  src: url("../bower_components/font-awesome/fonts/fontawesome-webfont.eot?v=4.1.0");
+  src: url("../bower_components/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.1.0") format("embedded-opentype"), url("../bower_components/font-awesome/fonts/fontawesome-webfont.woff?v=4.1.0") format("woff"), url("../bower_components/font-awesome/fonts/fontawesome-webfont.ttf?v=4.1.0") format("truetype"), url("../bower_components/font-awesome/fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 
 /**
  * App-wide Styles
  */
-
 .browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
-}
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
 
-// Component styles are injected through grunt
-// injector
-@import 'register/complete/complete.scss';
-@import 'register/register.scss';
-@import 'register/step1/step1.scss';
-@import 'register/step2/step2.scss';
-@import 'register/step3/step3.scss';
-@import 'start/start.scss';
-@import 'terms/terms.scss';
-// endinjector
+.locked {
+  color: #777; }
+
+.table-label-col {
+  min-width: 300px;
+  font-weight: bold; }
+
+.modal-terms .modal-body {
+  max-height: 450px;
+  overflow-y: scroll; }
+
+/* Printable modal */
+@media print {
+  body.modalprinter * {
+    visibility: hidden; }
+  body.modalprinter .modal,
+  body.modalprinter .modal-header *,
+  body.modalprinter .modal-body * {
+    visibility: visible;
+    overflow-y: visible;
+    position: initial; }
+  body.modalprinter .modal-dialog {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    top: 0;
+    width: initial; }
+  body.modalprinter .modal-terms .modal-body {
+    max-height: initial;
+    overflow-y: visible; } }
 
 /*****************************
 App-wide special styles
 *******************************/
-
 html, body, .container-fluid {
-    font-size: 14px;
-    font-family: "Helvetica Neue", helvetica, arial, sans-serif;
-    text-align: left;
-}
+  font-size: 14px;
+  font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+  text-align: left; }
 
 body {
-  padding-bottom: 30px;
-}
+  padding-bottom: 30px; }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-weight: bold;
-}
+  font-weight: bold; }
 
 input, textarea, .uneditable-input {
-    max-width: 206px;
-}
+  max-width: 206px; }
 
 select {
-    max-width: 220px;
-}
+  max-width: 220px; }
 
 .form-control {
-    padding: 4px 6px;
-}
+  padding: 4px 6px; }
 
 p {
-    margin: 0;
-    padding: 0 0 10px;
+  margin: 0;
+  padding: 0 0 10px; }
+
+p.leading-number {
+  padding-left: 35px;
+  position: relative;
 }
 
 a {
-    color: #28b4c4;
-    cursor: pointer;
-}
+  color: #28b4c4;
+  cursor: pointer; }
 
 a.backlink {
-    display: inline-block;
-    line-height: 18px;
-    padding-left: 15px;
-    background: transparent url(/img/back-link-icon.gif) center left no-repeat;
-}
+  display: inline-block;
+  line-height: 18px;
+  padding-left: 15px;
+  background: transparent url(/img/back-link-icon.gif) center left no-repeat; }
 
 h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-    padding-bottom: 10px;
-}
+  margin: 0;
+  padding-bottom: 10px; }
 
 h1 {
-    font-size: 24px;
-    color: #008391;
-}
+  font-size: 24px;
+  color: #008391; }
 
 h1.backlink-heading {
-    display: inline-block;
-    margin-right: 20px;
-    line-height: 29px;
-}
+  display: inline-block;
+  margin-right: 20px;
+  line-height: 29px; }
 
 h2 {
-    font-size: 16px;
-    line-height: 20px;
-    padding-top: 30px;
-}
+  font-size: 16px;
+  line-height: 20px;
+  padding-top: 30px; }
 
 h2.less-top-padding {
-    /* useful if h2 is placed immediately after h1 */
-    padding-top: 10px;
-}
+  /* useful if h2 is placed immediately after h1 */
+  padding-top: 10px; }
 
 .col-head {
-    font-size: 20px;
-    color: #008391;
-    padding-bottom: 10px;
-}
+  font-size: 20px;
+  color: #008391;
+  padding-bottom: 10px; }
 
 h3 {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 20px;
-}
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 20px; }
 
 h5.inline-heading {
-    padding: 20px 0 5px 0;
-}
+  padding: 20px 0 5px 0; }
 
 .multiline {
-    white-space: pre-line;
-}
+  white-space: pre-line; }
 
 .bluebox {
-    background-color: #008391;
-    -webkit-border-radius: 8px 8px 8px 8px;
-    -moz-border-radius: 8px 8px 8px 8px;
-    border-radius: 8px 8px 8px 8px;
-    color: #fff;
-    padding: 20px;
-    margin-bottom: 10px;
+  background-color: #008391;
+  -webkit-border-radius: 8px 8px 8px 8px;
+  -moz-border-radius: 8px 8px 8px 8px;
+  border-radius: 8px 8px 8px 8px;
+  color: #fff;
+  padding: 20px;
+  margin-bottom: 10px; }
+
+.number-circle {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  padding: 4px 0 0 0;
+  background: #fff;
+  border: 1px solid #777;
+  color: #111;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.number-circle.leading {
+  position:absolute;
+  left: 0;
 }
 
 .box {
-    display: block;
-    padding: 20px 40px 15px 40px;
-    background-color: #e5e5e5;
-    -webkit-border-radius: 4px 4px 4px 4px;
-    -moz-border-radius: 4px 4px 4px 4px;
-    border-radius: 4px 4px 4px 4px;
-}
+  display: block;
+  padding: 20px 40px 15px 40px;
+  background-color: #e5e5e5;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px; }
 
 .buttonbar .btn {
-    margin: 5px 5px 0 0;
-}
+  margin: 5px 5px 0 0; }
 
 .buttonbar .btn-info, .buttonbar .btn-inverse {
-    padding: 7px 15px;
-}
+  padding: 7px 15px; }
 
 .top-pad {
-  padding-top: 20px;
-}
+  padding-top: 20px; }
 
 .font-bold, label.font-bold {
-  font-weight: bold;
+  font-weight: bold; }
+
+.section-line {
+  border-top: 1px solid #eeeeee;
+}
+
+.more-top-padding {
+  padding-top: 20px;
 }
