@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -33,9 +32,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/index.html").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/robots.txt").addResourceLocations("/").setCachePeriod(cachePeriod);
-        registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components/");
-        registry.addResourceHandler("/app/**").addResourceLocations("/app/");
-        registry.addResourceHandler("/components/**").addResourceLocations("/components/");
+        registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components");
+        registry.addResourceHandler("/app/**").addResourceLocations("/app");
+        registry.addResourceHandler("/components/**").addResourceLocations("/components");
     }
 
     @Override
