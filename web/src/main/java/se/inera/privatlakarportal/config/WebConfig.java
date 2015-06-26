@@ -32,9 +32,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/index.html").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/robots.txt").addResourceLocations("/").setCachePeriod(cachePeriod);
-        registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components");
-        registry.addResourceHandler("/app/**").addResourceLocations("/app");
-        registry.addResourceHandler("/components/**").addResourceLocations("/components");
+        registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components/");
+        registry.addResourceHandler("/app/**").addResourceLocations("/app/");
+        registry.addResourceHandler("/components/**").addResourceLocations("/components/");
     }
 
     @Override
