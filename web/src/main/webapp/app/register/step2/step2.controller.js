@@ -10,9 +10,9 @@ angular.module('privatlakareApp')
         $scope.preventPaste = function(e, fieldName){
             e.preventDefault();
             RegisterViewStateService['pasteError'+fieldName] = true;
-            $timeout(function() {
+/*            $timeout(function() {
                 RegisterViewStateService['pasteError'+fieldName] = false;
-            }, 3000);
+            }, 3000);*/
             return false;
         };
 

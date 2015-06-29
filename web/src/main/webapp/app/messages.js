@@ -98,8 +98,6 @@ var ppMessages = {
         'label.form.epost2.error.required' : 'E-postadress måste anges innan du kan fortsätta.',
         'label.form.epost2.error.email' : 'En korrekt e-postadress måste anges innan du kan fortsätta.',
         'label.form.epost2.error.confirmemail' : 'E-postadressen är inte identisk med ovanstående angiven e-post.',
-        'label.form.epost2.error.pastenotallowed' : 'Du måste ange e-postadresserna genom att skriva in dem.',
-
 
         'label.form.adress' : 'Postadress',
         'label.form.adress.help' : 'Ange den postadress som du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor. Postadressen är även nödvändig för Ineras eventuella fakturering för användning av Webcert.',
@@ -115,7 +113,10 @@ var ppMessages = {
         'label.form.kommun.help' : 'Uppgift om kommun går inte att redigera. Om systemet får fler träffar för kommun vid hämtning av uppgiften ska du ange vilken kommun som är rätt.',
 
         'label.form.lan' : 'Län',
-        'label.form.lan.help' : 'Län där verksamheten finns. Uppgift om län går inte att ändra.'
+        'label.form.lan.help' : 'Län där verksamheten finns. Uppgift om län går inte att ändra.',
+
+        // General errors
+        'label.form.error.pastenotallowed' : 'Du måste ange e-postadresserna genom att skriva in dem.'
     },
     'en': {
         'common.ok': 'OK',
