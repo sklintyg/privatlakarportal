@@ -2,8 +2,8 @@
  * Show an alert that can be closed
  */
 angular.module('privatlakareApp').directive('alertSingle',
-    [ 'messageService',
-        function(messageService) {
+    [
+        function() {
             'use strict';
 
             return {

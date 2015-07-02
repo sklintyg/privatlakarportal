@@ -2,13 +2,16 @@
   <div class="header clearfix">
     <div class="headerbox">
       <span class="headerbox-logo pull-left">
-        <img alt="Till startsidan" src="/assets/images/logo.png" /></span>
+        <a ui-sref="app.start"><img alt="Till startsidan" src="/assets/images/logo.png" /></a></span>
       <span class="headerbox-date pull-left">
         <span id="location" class="location">{{today | date:"shortDate"}}</span><br>
       </span>
     </div>
+    <div class="headerbox-avatar pull-right">
+      <a ui-sref="app.minsida"><img ng-src="/assets/images/avatar.png"></a>
+    </div>
     <div class="headerbox-user pull-right">
-      <div class="headerbox-user-profile headerbox-avatar">
+      <div class="headerbox-user-profile">
         <span id="logged-in-role" ng-switch="user.state">
                   <strong ng-switch-when="true">Läkare</strong>
                   <strong ng-switch-default>Ej registrerad användare</strong>

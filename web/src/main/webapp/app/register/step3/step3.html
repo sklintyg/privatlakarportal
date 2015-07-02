@@ -31,18 +31,8 @@
       </div>
 
       <h2 class="col-head">Socialstyrelsens uppgifter</h2>
-      <div class="alert alert-info">
-        Nedanstående uppgifter är inhämtade från Socialstyrelsen och kan inte ändras.
-      </div>
       <div class="box">
-        <table>
-          <tbody>
-          <tr ng-repeat="item in socialstyrelsenUppgifter">
-            <td class="table-label-col">{{item.name}}</td>
-            <td id="{{item.id}}" ng-class="{'locked' : item.locked}">{{item.value}}</td>
-          </tr>
-          </tbody>
-        </table>
+        <div form-social-uppgifter></div>
       </div>
     </div>
   </div>
