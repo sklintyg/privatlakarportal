@@ -1,21 +1,20 @@
-'use strict';
+describe('Controller: MinsidaCtrl', function() {
+    'use strict';
 
-describe('Controller: MinsidaCtrl', function () {
+    // load the controller's module
+    beforeEach(module('privatlakareApp'));
 
-  // load the controller's module
-  beforeEach(module('privatlakareApp'));
+    var MinsidaCtrl, scope;
 
-  var MinsidaCtrl, scope;
+    // Initialize the controller and a mock scope
+    beforeEach(inject(function($controller, $rootScope) {
+        scope = $rootScope.$new();
+        MinsidaCtrl = $controller('MinsidaCtrl', {
+            $scope: scope
+        });
+    }));
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    MinsidaCtrl = $controller('MinsidaCtrl', {
-      $scope: scope
+    it('should ...', function() {
+        expect(1).toEqual(1);
     });
-  }));
-
-  it('should ...', function () {
-    expect(1).toEqual(1);
-  });
 });

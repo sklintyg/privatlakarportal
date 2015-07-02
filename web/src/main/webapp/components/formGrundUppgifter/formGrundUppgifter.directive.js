@@ -10,8 +10,6 @@ angular.module('privatlakareApp').directive('formGrundUppgifter',
                 restrict: 'A',
                 transclude: true,
                 scope: true,
-                controller: function($scope) {
-                },
                 templateUrl: 'components/formGrundUppgifter/formGrundUppgifter.directive.html'
             };
         }]);
