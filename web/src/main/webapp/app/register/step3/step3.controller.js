@@ -25,10 +25,4 @@ angular.module('privatlakareApp')
             { id: 'kommun', name: 'Kommun', value: data.kommun },
             { id: 'lan', name: 'Län', value: data.lan }
         ];
-
-        $scope.socialstyrelsenUppgifter = [
-            { id: 'legitimeradYrkesgrupp', name: 'Legimiterad yrkesgrupp', value: data.legitimeradYrkesgrupp, locked: true },
-            { id: 'specialitet', name: 'Specialitet', value: data.specialitet, locked: true },
-            { id: 'forskrivarkod', name: 'Förskrivarkod', value: data.forskrivarkod, locked: true }
-        ];
   });

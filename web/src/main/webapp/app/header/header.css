@@ -30,17 +30,15 @@ span.headerbox-date {
 div.headerbox-user {
     font-size: 13px;
     line-height: 16px;
-    padding: 10px 30px 0 0;
+    padding: 10px 0 0 0;
 }
 
 div.headerbox-avatar {
-    padding-right: 30px;
-    background: url("/assets/images/avatar.png") no-repeat 100% 50%;
-    height: 34px;
+    padding: 10px 30px 0 0;
 }
 
 div.headerbox-user-profile {
-    padding-right: 44px;
+    padding-right: 15px;
     font-size: 13px;
     line-height: 18px;
     text-align: left;

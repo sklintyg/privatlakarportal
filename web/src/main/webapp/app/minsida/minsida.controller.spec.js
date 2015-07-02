@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Controller: Step1Ctrl', function () {
+describe('Controller: MinsidaCtrl', function () {
 
   // load the controller's module
   beforeEach(module('privatlakareApp'));
 
-  var Step1Ctrl, scope;
+  var MinsidaCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-      Step1Ctrl = $controller('Step1Ctrl', {
+    MinsidaCtrl = $controller('MinsidaCtrl', {
       $scope: scope
     });
   }));
