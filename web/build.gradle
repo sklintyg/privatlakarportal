@@ -66,6 +66,7 @@ gretty {
     logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
     jvmArgs = [
         '-Dspring.profiles.active=dev',
-        '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties'
+        '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties',
+        '-XX:MaxPermSize=256M'
      ]
 }

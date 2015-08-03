@@ -29,9 +29,9 @@ public class PrivatlakareRepositoryTest  {
     private PrivatlakareRepository privatlakareRepository;
 
     @Test
-    public void testFindOne() {
+    public void testFindByPersonId() {
         Privatlakare saved = privatlakareRepository.save(PrivatelakareTestUtil.buildPrivatlakare());
-        Privatlakare read = privatlakareRepository.findOne(saved.getPersonId());
+        Privatlakare read = privatlakareRepository.findByPersonId(saved.getPersonId());
 
         assertThat(read.getAgarform(), is(equalTo(saved.getAgarform())));
         assertThat(read.getArbetsplatsKod(), is(equalTo(saved.getArbetsplatsKod())));

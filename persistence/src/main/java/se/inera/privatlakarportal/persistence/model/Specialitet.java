@@ -14,7 +14,7 @@ public class Specialitet {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERSONID", nullable = false)
+    @JoinColumn(name = "PRIVATLAKARE_ID", nullable = false)
     private Privatlakare privatlakare;
 
     @Column(name = "KOD", nullable = false)

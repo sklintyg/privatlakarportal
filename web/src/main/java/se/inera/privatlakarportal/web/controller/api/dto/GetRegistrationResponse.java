@@ -1,12 +1,14 @@
 package se.inera.privatlakarportal.web.controller.api.dto;
 
-import org.apache.commons.lang.StringUtils;
+/**
+ * Created by pebe on 2015-08-06.
+ */
+public class GetRegistrationResponse {
 
-public class CreateRegistrationRequest {
+    private Registration registration;
 
-    Registration registration;
-
-    public CreateRegistrationRequest() {
+    public GetRegistrationResponse(Registration registration) {
+        this.registration = registration;
     }
 
     public Registration getRegistration() {
