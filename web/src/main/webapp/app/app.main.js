@@ -1,4 +1,5 @@
 var app = angular.module('privatlakareApp', [
+  'ngAnimate',
   'ngCookies',
   'ngResource',
   'ngSanitize',
