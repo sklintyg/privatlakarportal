@@ -1,25 +1,17 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Registrering - steg {{viewState.step}} av 3</h1>
+<h1 class="page-header">Registrering - steg {{viewState.step}} av 3</h1>
 
-      <div class="row-fluid">
-        <div class="wizard">
-          <ul class="steps">
-            <li ui-sref-active="active" ui-sref=".step1" ng-class="{'wstep-completed': viewState.step > 1}"><span message key="register.label.grundinformation"></span><span class="chevron"></span></a></li>
-            <li ui-sref-active="active" ui-sref=".step2" ng-class="{'wstep-completed': viewState.step > 2}"><span message key="register.label.kontaktuppgifter"></span><span class="chevron"></span></a></li>
-            <li ui-sref-active="active" ui-sref=".step3"><span message key="register.label.bekraftelse"></span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div ui-view="step"></div>
-
-    </div>
+<div class="row-fluid">
+  <div class="wizard">
+    <ul class="steps">
+      <li ui-sref-active="active" ui-sref=".step1" ng-class="{'wstep-completed': viewState.step > 1}"><span message
+                                                                                                            key="register.label.grundinformation"></span><span
+          class="chevron"></span></a></li>
+      <li ui-sref-active="active" ui-sref=".step2" ng-class="{'wstep-completed': viewState.step > 2}"><span message
+                                                                                                            key="register.label.kontaktuppgifter"></span><span
+          class="chevron"></span></a></li>
+      <li ui-sref-active="active" ui-sref=".step3"><span message key="register.label.bekraftelse"></span></li>
+    </ul>
   </div>
 </div>
 
-<footer class="footer">
-  <div class="container">
-  </div>
-</footer>
+<div ui-view="step"></div>

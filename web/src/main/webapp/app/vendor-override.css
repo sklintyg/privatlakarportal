@@ -365,6 +365,10 @@ UI-bootstrap
     text-align: left;
 }
 
+.popover {
+    max-width: 360px;
+}
+
 /* Alerts */
 .alert {
     padding-right: 22px;

@@ -1,5 +1,5 @@
 angular.module('privatlakareApp')
-    .config(function ($stateProvider) {
+    .config(function($stateProvider) {
         'use strict';
         $stateProvider
             .state('app.register.step2', {
@@ -10,6 +10,6 @@ angular.module('privatlakareApp')
                         controller: 'Step2Ctrl'
                     }
                 },
-                data:{step:2}
+                data: { step: 2 }
             });
     });
