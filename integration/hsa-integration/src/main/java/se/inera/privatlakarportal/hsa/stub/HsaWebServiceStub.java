@@ -97,6 +97,9 @@ public class HsaWebServiceStub implements HsaWsResponderInterface {
 
         String personId = parameters.getPersonalIdentityNumber();
         HsaHospPerson hospPerson = hsaServiceStub.getHospPerson(personId);
+        if (hospPerson == null) {
+            return null;
+        }
 
         GetHospPersonResponseType response = new GetHospPersonResponseType();
         response.setPersonalIdentityNumber(hospPerson.getPersonalIdentityNumber());

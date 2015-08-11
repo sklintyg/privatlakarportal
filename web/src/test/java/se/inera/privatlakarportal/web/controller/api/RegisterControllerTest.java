@@ -10,6 +10,8 @@ import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.RegisterService;
 import se.inera.privatlakarportal.service.RegisterServiceImpl;
 import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
+import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponse;
+import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponseStatus;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;

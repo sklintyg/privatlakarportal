@@ -1,6 +1,8 @@
 package se.inera.privatlakarportal.service;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRespo
 import se.inera.privatlakarportal.web.controller.api.dto.Registration;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,6 +26,11 @@ import java.util.Set;
  */
 @Service
 public class RegisterServiceImpl implements RegisterService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RegisterServiceImpl.class);
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private PrivatlakareRepository privatlakareRepository;
@@ -33,11 +41,12 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private HospPersonService hospPersonService;
 
+    private static final String LAKARE = "Läkare";
+
     @Override
     @Transactional
     public Registration getRegistration() {
-        // TODO Get personId and name from logged in user object
-        Privatlakare privatlakare = privatlakareRepository.findByPersonId("19121212-1212");
+        Privatlakare privatlakare = privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber());
 
         if (privatlakare == null) {
             return null;
@@ -72,8 +81,7 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     @Transactional
     public HospInformation getHospInformation() {
-        // TODO Get personId from logged in user object
-        GetHospPersonResponseType response = hospPersonService.getHospPerson("19121212-1212");
+        GetHospPersonResponseType response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
 
         HospInformation hospInformation = new HospInformation();
         hospInformation.setPersonalPrescriptionCode(response.getPersonalPrescriptionCode());
@@ -93,7 +101,7 @@ public class RegisterServiceImpl implements RegisterService {
                     "CreateRegistrationRequest is not valid");
         }
 
-        if (privatlakareRepository.findByPersonId("19121212-1212") != null) {
+        if (privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber()) != null) {
             throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS,
                     "Registration already exists");
@@ -108,7 +116,7 @@ public class RegisterServiceImpl implements RegisterService {
         Privatlakare privatlakare = new Privatlakare();
 
         // TODO Get personId and name from logged in user object
-        privatlakare.setPersonId("19121212-1212");
+        privatlakare.setPersonId(userService.getUser().getPersonalIdentityNumber());
         privatlakare.setFullstandigtNamn("Namn");
 
         privatlakare.setAgarform("Privat");
@@ -138,14 +146,62 @@ public class RegisterServiceImpl implements RegisterService {
         verksamhetstyper.add(new Verksamhetstyp(privatlakare, registration.getVerksamhetstyp()));
         privatlakare.setVerksamhetstyper(verksamhetstyper);
 
-        // TODO Get following information from HSA
-//        privatlakare.setSpecialiteter());
-//        privatlakare.setLegitimeradeYrkesgrupper();
-//        privatlakare.setForskrivarKod();
-//        privatlakare.setGodkandAnvandare(true);
+        CreateRegistrationResponseStatus status;
+        GetHospPersonResponseType hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
+        if (hospPersonResponse == null) {
+            status = CreateRegistrationResponseStatus.AUTHENTICATION_INPROGRESS;
+            // TODO Call handleCertifier in HSA
+        }
+        else {
+            Set<Specialitet> specialiteter = new HashSet<Specialitet>();
+            if (hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() !=
+                hospPersonResponse.getSpecialityNames().getSpecialityName().size()) {
+                LOG.error("getHospPerson getSpecialityCodes count " +
+                        hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() +
+                        "doesn't match getSpecialityNames count '{}' != '{}'" +
+                        hospPersonResponse.getSpecialityNames().getSpecialityName().size());
+                throw new PrivatlakarportalServiceException(
+                        PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
+                        "Inconsistent data from HSA");
+            } else {
+                for (int i = 0; i < hospPersonResponse.getSpecialityCodes().getSpecialityCode().size(); i++) {
+                    specialiteter.add(new Specialitet(privatlakare,
+                            hospPersonResponse.getSpecialityNames().getSpecialityName().get(i),
+                            hospPersonResponse.getSpecialityCodes().getSpecialityCode().get(i)));
+                }
+            }
+            privatlakare.setSpecialiteter(specialiteter);
+
+            Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<LegitimeradYrkesgrupp>();
+            if (hospPersonResponse.getHsaTitles().getHsaTitle().size() !=
+                    hospPersonResponse.getTitleCodes().getTitleCode().size()) {
+                LOG.error("getHospPerson getHsaTitles count " +
+                        hospPersonResponse.getHsaTitles().getHsaTitle().size() +
+                        "doesn't match getTitleCodes count '{}' != '{}'" +
+                        hospPersonResponse.getTitleCodes().getTitleCode().size());
+                throw new PrivatlakarportalServiceException(
+                        PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
+                        "Inconsistent data from HSA");
+            } else {
+                for (int i = 0; i < hospPersonResponse.getHsaTitles().getHsaTitle().size(); i++) {
+                    legitimeradYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare,
+                            hospPersonResponse.getHsaTitles().getHsaTitle().get(i),
+                            hospPersonResponse.getTitleCodes().getTitleCode().get(i)));
+                }
+            }
+            privatlakare.setLegitimeradeYrkesgrupper(legitimeradYrkesgrupper);
+
+            privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
+
+            status = CreateRegistrationResponseStatus.NOT_AUTHORIZED;
+            if (hospPersonResponse.getHsaTitles().getHsaTitle().contains(LAKARE)) {
+                privatlakare.setGodkandAnvandare(true);
+                status = CreateRegistrationResponseStatus.AUTHORIZED;
+            }
+        }
 
         privatlakareRepository.save(privatlakare);
 
-        return CreateRegistrationResponseStatus.AUTHORIZED;
+        return status;
     }
 }

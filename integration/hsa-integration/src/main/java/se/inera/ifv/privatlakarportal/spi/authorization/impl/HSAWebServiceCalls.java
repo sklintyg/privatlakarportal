@@ -70,7 +70,7 @@ public class HSAWebServiceCalls {
             GetHospPersonResponseType response = hsaWebServiceClient.getHospPerson(logicalAddressHeader, messageId, parameters);
             return response;
         } catch (Throwable ex) {
-            LOG.error("Failed to call callGetHsaPerson with hsaId '{}'", parameters.getPersonalIdentityNumber());
+            LOG.error("Failed to call callGetHospPerson with id '{}'", parameters.getPersonalIdentityNumber());
             Throwables.propagate(ex);
             return null;
         }

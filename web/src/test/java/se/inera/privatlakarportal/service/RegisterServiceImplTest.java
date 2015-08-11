@@ -5,9 +5,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
-import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
+import se.inera.ifv.hsawsresponder.v3.*;
+import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
@@ -16,8 +15,10 @@ import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.dto.HospInformation;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
+import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponseStatus;
 import se.inera.privatlakarportal.web.controller.api.dto.Registration;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,8 +35,23 @@ public class RegisterServiceImplTest {
     @Mock
     private HospPersonService hospPersonService;
 
+    @Mock
+    private UserService userService;
+
+
     @InjectMocks
     private RegisterService registerService = new RegisterServiceImpl();
+
+    private GetHospPersonResponseType createGetHospPersonResponse() {
+        GetHospPersonResponseType getHospPersonResponseType = new GetHospPersonResponseType();
+
+        getHospPersonResponseType.setSpecialityCodes(new SpecialityCodesType());
+        getHospPersonResponseType.setSpecialityNames(new SpecialityNamesType());
+        getHospPersonResponseType.setTitleCodes(new TitleCodesType());
+        getHospPersonResponseType.setHsaTitles(new HsaTitlesType());
+
+        return getHospPersonResponseType;
+    }
 
     private Registration createValidRegistration() {
         Registration registration = new Registration();
@@ -57,19 +73,6 @@ public class RegisterServiceImplTest {
         return registration;
     }
 
-    @Test
-    public void testCreateRegistration() {
-
-        PrivatlakareId privatlakareId = new PrivatlakareId();
-        privatlakareId.setId(1);
-        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
-
-        Registration registration = createValidRegistration();
-        registerService.createRegistration(registration);
-
-        verify(privatlakareRepository).save(any(Privatlakare.class));
-    }
-
     @Test(expected = PrivatlakarportalServiceException.class)
     public void testInvalidCreateRegistration() {
         Registration registration = new Registration();
@@ -77,7 +80,67 @@ public class RegisterServiceImplTest {
     }
 
     @Test
+    public void testCreateRegistrationLakare() {
+
+        PrivatlakareId privatlakareId = new PrivatlakareId();
+        privatlakareId.setId(1);
+        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("191212-1212"));
+
+        GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
+        hospPersonResponse.getTitleCodes().getTitleCode().add("LK");
+        hospPersonResponse.getHsaTitles().getHsaTitle().add("Läkare");
+        when(hospPersonService.getHospPerson("191212-1212")).thenReturn(hospPersonResponse);
+
+        Registration registration = createValidRegistration();
+        CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
+
+        verify(privatlakareRepository).save(any(Privatlakare.class));
+        assertEquals(response, CreateRegistrationResponseStatus.AUTHORIZED);
+    }
+
+    @Test
+    public void testCreateRegistrationEjLakare() {
+
+        PrivatlakareId privatlakareId = new PrivatlakareId();
+        privatlakareId.setId(1);
+        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("191212-1212"));
+
+        when(hospPersonService.getHospPerson("191212-1212")).thenReturn(createGetHospPersonResponse());
+
+        Registration registration = createValidRegistration();
+        CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
+
+        verify(privatlakareRepository).save(any(Privatlakare.class));
+        assertEquals(response, CreateRegistrationResponseStatus.NOT_AUTHORIZED);
+    }
+
+    @Test
+    public void testCreateRegistrationEjIHosp() {
+
+        PrivatlakareId privatlakareId = new PrivatlakareId();
+        privatlakareId.setId(1);
+        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("191212-1212"));
+
+        when(hospPersonService.getHospPerson("191212-1212")).thenReturn(null);
+
+        Registration registration = createValidRegistration();
+        CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
+
+        verify(privatlakareRepository).save(any(Privatlakare.class));
+        assertEquals(response, CreateRegistrationResponseStatus.AUTHENTICATION_INPROGRESS);
+    }
+
+    @Test
     public void getHospInformation() {
+
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("191212-1212"));
+
         GetHospPersonResponseType hospPersonResponse = new GetHospPersonResponseType();
         hospPersonResponse.setPersonalIdentityNumber("191212-1212");
         hospPersonResponse.setPersonalPrescriptionCode("0000000");
@@ -88,14 +151,14 @@ public class RegisterServiceImplTest {
         specialityNamesType.getSpecialityName().add("Test speciality");
         hospPersonResponse.setSpecialityNames(specialityNamesType);
 
-        when(hospPersonService.getHospPerson(any(String.class))).thenReturn(hospPersonResponse);
+        when(hospPersonService.getHospPerson("191212-1212")).thenReturn(hospPersonResponse);
 
         HospInformation hospInformation = registerService.getHospInformation();
 
-        assert(hospInformation.getPersonalPrescriptionCode() == "0000000");
-        assert(hospInformation.getHsaTitles().size() == 1);
-        assert(hospInformation.getHsaTitles().get(0) == "Test title");
-        assert(hospInformation.getSpecialityNames().size() == 1);
-        assert(hospInformation.getSpecialityNames().get(0) == "Test speciality");
+        assertEquals(hospInformation.getPersonalPrescriptionCode(), "0000000");
+        assertEquals(hospInformation.getHsaTitles().size(), 1);
+        assertEquals(hospInformation.getHsaTitles().get(0), "Test title");
+        assertEquals(hospInformation.getSpecialityNames().size(), 1);
+        assertEquals(hospInformation.getSpecialityNames().get(0), "Test speciality");
     }
 }
