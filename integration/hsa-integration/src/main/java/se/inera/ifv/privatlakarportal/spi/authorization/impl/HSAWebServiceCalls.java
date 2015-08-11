@@ -65,6 +65,17 @@ public class HSAWebServiceCalls {
         }
     }
 
+    public HandleCertifierResponseType callHandleCertifier(HandleCertifierType parameters) {
+        try {
+            HandleCertifierResponseType response = hsaWebServiceClient.handleCertifier(logicalAddressHeader, messageId, parameters);
+            return response;
+        } catch (Throwable ex) {
+            LOG.error("Failed to call callHandleCertifier with certifierId '{}'", parameters.getCertifierId());
+            Throwables.propagate(ex);
+            return null;
+        }
+    }
+
     public GetHospPersonResponseType callGetHospPerson(GetHospPersonType parameters) {
         try {
             GetHospPersonResponseType response = hsaWebServiceClient.getHospPerson(logicalAddressHeader, messageId, parameters);

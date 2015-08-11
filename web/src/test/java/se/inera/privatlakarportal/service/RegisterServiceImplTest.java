@@ -2,6 +2,7 @@ package se.inera.privatlakarportal.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -20,8 +21,7 @@ import se.inera.privatlakarportal.web.controller.api.dto.Registration;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
@@ -86,6 +86,8 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
+        when(privatlakareRepository.save(any(Privatlakare.class))).then(AdditionalAnswers.returnsFirstArg());
+
         when(userService.getUser()).thenReturn(new PrivatlakarUser("191212-1212"));
 
         GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
@@ -97,6 +99,7 @@ public class RegisterServiceImplTest {
         CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
+        verify(hospPersonService, times(0)).handleCertifier(any(String.class), any(String.class));
         assertEquals(response, CreateRegistrationResponseStatus.AUTHORIZED);
     }
 
@@ -107,6 +110,8 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
+        when(privatlakareRepository.save(any(Privatlakare.class))).then(AdditionalAnswers.returnsFirstArg());
+
         when(userService.getUser()).thenReturn(new PrivatlakarUser("191212-1212"));
 
         when(hospPersonService.getHospPerson("191212-1212")).thenReturn(createGetHospPersonResponse());
@@ -115,6 +120,7 @@ public class RegisterServiceImplTest {
         CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
+        verify(hospPersonService, times(0)).handleCertifier(any(String.class), any(String.class));
         assertEquals(response, CreateRegistrationResponseStatus.NOT_AUTHORIZED);
     }
 
@@ -125,14 +131,19 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
+        when(privatlakareRepository.save(any(Privatlakare.class))).then(AdditionalAnswers.returnsFirstArg());
+
         when(userService.getUser()).thenReturn(new PrivatlakarUser("191212-1212"));
 
         when(hospPersonService.getHospPerson("191212-1212")).thenReturn(null);
+
+        when(hospPersonService.handleCertifier(eq("191212-1212"), any(String.class))).thenReturn(true);
 
         Registration registration = createValidRegistration();
         CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
+        verify(hospPersonService).handleCertifier(eq("191212-1212"), any(String.class));
         assertEquals(response, CreateRegistrationResponseStatus.AUTHENTICATION_INPROGRESS);
     }
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.ifv.hsawsresponder.v3.HandleCertifierResponseType;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
@@ -150,7 +151,11 @@ public class RegisterServiceImpl implements RegisterService {
         GetHospPersonResponseType hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
         if (hospPersonResponse == null) {
             status = CreateRegistrationResponseStatus.AUTHENTICATION_INPROGRESS;
-            // TODO Call handleCertifier in HSA
+            if (!hospPersonService.handleCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
+                throw new PrivatlakarportalServiceException(
+                    PrivatlakarportalErrorCodeEnum.EXTERNAL_ERROR,
+                    "Failed to call handleCertifier in HSA");
+            }
         }
         else {
             Set<Specialitet> specialiteter = new HashSet<Specialitet>();

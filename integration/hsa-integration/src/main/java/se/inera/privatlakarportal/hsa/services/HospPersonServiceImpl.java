@@ -38,4 +38,24 @@ public class HospPersonServiceImpl implements HospPersonService {
 
         return response;
     }
+
+    @Override
+    public boolean handleCertifier(String personId, String certifierId) {
+
+        LOG.debug("Getting handleCertifier for certifierId '{}'", certifierId);
+
+        HandleCertifierType parameters = new HandleCertifierType();
+        parameters.setPersonalIdentityNumber(personId);
+        parameters.setAddToCertifiers(true);
+        parameters.setCertifierId(certifierId);
+
+        HandleCertifierResponseType response = client.callHandleCertifier(parameters);
+
+        if (!response.getResult().equals("OK")) {
+            LOG.error("handleCertifier returned result '{}' for certifierId '{}'", response.getResult(), certifierId);
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -1,5 +1,7 @@
 package se.inera.privatlakarportal.hsa.stub;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
 
@@ -8,6 +10,8 @@ import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
 import se.inera.ifv.hsawsresponder.v3.*;
 
 public class HsaWebServiceStub implements HsaWsResponderInterface {
+
+    private static final Logger LOG = LoggerFactory.getLogger(HsaWebServiceStub.class);
 
     @Autowired
     private HsaServiceStub hsaServiceStub;
@@ -143,6 +147,11 @@ public class HsaWebServiceStub implements HsaWsResponderInterface {
 
     @Override
     public HandleCertifierResponseType handleCertifier(AttributedURIType logicalAddress, AttributedURIType id, HandleCertifierType parameters) throws HsaWsFault {
-        return null;
+
+        LOG.debug("handleCertifier was called with personId '{}' certifierId '{}'", parameters.getPersonalIdentityNumber(), parameters.getCertifierId());
+
+        HandleCertifierResponseType response = new HandleCertifierResponseType();
+        response.setResult("OK");
+        return response;
     }
 }
