@@ -95,7 +95,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         if (privatlakareRepository.findByPersonId("19121212-1212") != null) {
             throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                    PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS,
                     "Registration already exists");
         }
 
