@@ -62,8 +62,14 @@
     </div>
   </div>
 
+  <div ng-show="viewState.registerErrorMessage != null">
+    <div class="alert alert-danger">
+      {{viewState.registerErrorMessage}}
+    </div>
+  </div>
+
   <div class="buttonbar">
-    <button id="registerBtn" class="btn btn-success" ui-sref="app.register.complete"
+    <button id="registerBtn" class="btn btn-success" ng-click="createAccount()"
             ng-disabled="!model.godkannvillkor">Skapa konto
     </button>
     <button id="backBtn" class="btn btn-info" ui-sref="app.register.step2">Tillbaka</button>

@@ -131,7 +131,7 @@ public class RegisterServiceImpl implements RegisterService {
         privatlakare.setPostadress(registration.getAdress());
         privatlakare.setPostnummer(registration.getPostnummer());
         privatlakare.setPostort(registration.getPostort());
-        privatlakare.setTelefonnummer(registration.getEpost());
+        privatlakare.setTelefonnummer(registration.getTelefonnummer());
         privatlakare.setVardgivareId(hsaId);
         privatlakare.setVardgivareNamn(registration.getVerksamhetensNamn());
 

@@ -18,7 +18,7 @@ angular.module('privatlakareApp').factory('RegisterModel',
             // Step 1
             data.befattning = null;
             data.verksamhetensNamn = null;
-            data.agandeForm = 'Privat';
+            data.agarForm = 'Privat';
             data.vardform = RegisterViewStateService.vardformList[0];
             data.verksamhetstyp = null;
             data.arbetsplatskod = null;
@@ -41,7 +41,8 @@ angular.module('privatlakareApp').factory('RegisterModel',
         }
 
         return {
-            init: _init
+            init: _init,
+            reset: _reset
         };
     }
 );
