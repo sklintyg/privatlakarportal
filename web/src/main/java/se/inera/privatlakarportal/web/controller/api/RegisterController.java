@@ -6,10 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import se.inera.privatlakarportal.service.RegisterService;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponse;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponseStatus;
-import se.inera.privatlakarportal.web.controller.api.dto.GetRegistrationResponse;
+import se.inera.privatlakarportal.service.dto.HospInformation;
+import se.inera.privatlakarportal.web.controller.api.dto.*;
 
 /**
  * Created by pebe on 2015-06-25.
@@ -31,5 +29,11 @@ public class RegisterController {
         CreateRegistrationResponseStatus status = registerService.createRegistration(request.getRegistration());
         return new CreateRegistrationResponse(status);
     }
+
+    @RequestMapping(value = "/registration/getHospInformation")
+    public HospInformation getHospInformation() {
+        return registerService.getHospInformation();
+    }
+
 
 }

@@ -4,9 +4,12 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.privatlakarportal.service.dto.HospInformation;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponseStatus;
@@ -26,6 +29,9 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Autowired
     private PrivatlakareIdRepository privatlakareidRepository;
+
+    @Autowired
+    private HospPersonService hospPersonService;
 
     @Override
     @Transactional
@@ -61,6 +67,20 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         return registration;
+    }
+
+    @Override
+    @Transactional
+    public HospInformation getHospInformation() {
+        // TODO Get personId from logged in user object
+        GetHospPersonResponseType response = hospPersonService.getHospPerson("19121212-1212");
+
+        HospInformation hospInformation = new HospInformation();
+        hospInformation.setPersonalPrescriptionCode(response.getPersonalPrescriptionCode());
+        hospInformation.setSpecialityNames(response.getSpecialityNames().getSpecialityName());
+        hospInformation.setHsaTitles(response.getHsaTitles().getHsaTitle());
+
+        return hospInformation;
     }
 
     @Override

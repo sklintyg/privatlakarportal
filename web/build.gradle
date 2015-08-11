@@ -14,6 +14,7 @@ apply plugin: 'com.moowork.grunt'
 
 dependencies {
     compile project(":privatlakarportal-persistence")
+    compile project(":privatlakarportal-hsa-integration")
 
     compile 'org.springframework:spring-webmvc:4.1.4.RELEASE'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
