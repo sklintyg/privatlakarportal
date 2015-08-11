@@ -24,12 +24,14 @@ app_resources_src: "{{ playbook_dir }}/../src/main/resources/"
 app_resources_folder: "{{ inera_root }}/privatlakarportal-resources"
 
 # Tomcat installation
-tomcat_conf: "{{ inera_root }}/tomcat7/conf"
-tomcat_bin: "{{ inera_root }}/tomcat7/bin"
-tomcat_lib: "{{ inera_root }}/tomcat7/lib"
-tomcat_service: inera-tomcat
-inera_tomcat_folder: "/var/lib/{{ tomcat_service }}"
-webapps_folder: "{{ inera_tomcat_folder }}/webapps"
+tomcat_root_folder: tomcat-priv
+tomcat_service: privatlakarportal-tomcat
+
+tomcat_conf: "{{ inera_root }}/{{ tomcat_root_folder }}/conf"
+tomcat_bin: "{{ inera_root }}/{{ tomcat_root_folder }}/bin"
+tomcat_lib: "{{ inera_root }}/{{ tomcat_root_folder }}/lib"
+tomcat_service_folder: "/var/lib/{{ tomcat_service }}"
+webapps_folder: "{{ tomcat_service_folder }}/webapps"
 
 # Database configuration
 database_server: localhost

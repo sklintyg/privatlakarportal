@@ -7,4 +7,5 @@
   roles:
     - privatlakarportal-systemvariabler
     - privatlakarportal-resurser
+    - privatlakarportal-jarfiler
     - config-folder
