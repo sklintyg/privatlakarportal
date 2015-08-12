@@ -1,13 +1,14 @@
 package se.inera.privatlakarportal.web.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.inera.privatlakarportal.service.RegisterService;
 import se.inera.privatlakarportal.service.dto.HospInformation;
+import se.inera.privatlakarportal.service.postnummer.PostnummerService;
+import se.inera.privatlakarportal.service.postnummer.model.Omrade;
 import se.inera.privatlakarportal.web.controller.api.dto.*;
+
+import java.util.List;
 
 /**
  * Created by pebe on 2015-06-25.
@@ -18,6 +19,9 @@ public class RegisterController {
 
     @Autowired
     private RegisterService registerService;
+
+    @Autowired
+    private PostnummerService postnummerService;
 
     @RequestMapping(value = "/registration")
     public GetRegistrationResponse getRegistration() {
@@ -35,5 +39,8 @@ public class RegisterController {
         return registerService.getHospInformation();
     }
 
-
+    @RequestMapping(value = "/registration/omrade/{postnummer}")
+    public GetOmradeResponse getOmrade(@PathVariable("postnummer") String postnummer) {
+        return new GetOmradeResponse(postnummerService.getOmradeByPostnummer(postnummer));
+    }
 }
