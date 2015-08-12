@@ -3,17 +3,34 @@
 
 module.exports = function(grunt) {
 
+    grunt.loadNpmTasks('grunt-connect-proxy');
+
     // Load grunt tasks automatically, when needed
     require('jit-grunt')(grunt, {
         connect: 'grunt-contrib-connect',
         useminPrepare: 'grunt-usemin',
         ngtemplates: 'grunt-angular-templates',
         protractor: 'grunt-protractor-runner',
-        injector: 'grunt-injector'
+        injector: 'grunt-injector',
+        configureProxies: 'grunt-connect-proxy'
     });
 
     // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);
+
+    // connect middleware for enabling post requests through
+    function enablePost(req, res, next) {
+
+        console.log(req.method);
+        console.log(req.url);
+        console.log(req.headers);
+        console.log('Setting full access control.');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+        return next();
+    }
 
     // Define the configuration for all the tasks
     grunt.initConfig({
@@ -31,21 +48,22 @@ module.exports = function(grunt) {
                 options: {
                     port: 9091,
                     hostname: '*',
-                    middleware: function(connect, options) {
+                    middleware: function(connect, options, middlewares) {
                         return [
+                            enablePost,
                             require('connect-livereload')(),
                             connect.static('src/main/webapp'),
                             require('grunt-connect-proxy/lib/utils').proxyRequest
                         ];
-                    },
-                    proxies: [
-                        {
-                            context: '/',
-                            host: 'localhost',
-                            port: 9090
-                        }
-                    ]
-                }
+                    }
+                },
+                proxies: [
+                    {
+                        context: '/',
+                        host: 'localhost',
+                        port: 8090
+                    }
+                ]
             }
         },
         open: {
@@ -444,6 +462,7 @@ module.exports = function(grunt) {
             'injector',
             'wiredep',
             'autoprefixer',
+            'configureProxies:dev',
             'connect:dev',
             'wait',
             'open',

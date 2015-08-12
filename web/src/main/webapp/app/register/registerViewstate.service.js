@@ -5,6 +5,7 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
         this.reset = function() {
             this.step = 1;
 
+            this.registerErrorMessage = null;
             this.pasteErrorEpost = false;
             this.pasteErrorEpost2 = false;
 

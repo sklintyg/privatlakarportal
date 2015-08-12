@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan("se.inera.privatlakarportal.web")
+@ComponentScan("se.inera.privatlakarportal.web, se.inera.privatlakarportal.service")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean

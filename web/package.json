@@ -9,7 +9,7 @@
     "grunt-angular-templates": "0.5.7",
     "grunt-autoprefixer": "0.7.2",
     "grunt-cli": "0.1.13",
-    "grunt-connect-proxy": "0.2.0",
+    "grunt-connect-proxy": "^0.2",
     "grunt-connect-rewrite": "0.2.1",
     "grunt-contrib-clean": "0.5.0",
     "grunt-contrib-concat": "0.5.1",
@@ -42,5 +42,8 @@
     "karma-ng-html2js-preprocessor": "0.1.0",
     "karma-phantomjs-launcher": "0.1.4",
     "time-grunt": "0.3.1"
+  },
+  "devDependencies": {
+    "grunt-connect-proxy": "^0.2.0"
   }
 }

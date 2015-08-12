@@ -1,7 +1,7 @@
 package se.inera.privatlakarportal.persistence.model;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
@@ -15,6 +15,11 @@ import java.util.Set;
 public class Privatlakare {
 
     @Id
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid")
+    @Column(name = "PRIVATLAKARE_ID", nullable = false)
+    private String privatlakareId;
+
     @Column(name = "PERSONID", nullable = false)
     private String personId;
 
@@ -120,6 +125,14 @@ public class Privatlakare {
     @Override
     public int hashCode() {
         return personId != null ? personId.hashCode() : 0;
+    }
+
+    public String getPrivatlakareId() {
+        return privatlakareId;
+    }
+
+    public void setPrivatlakareId(String privatlakareId) {
+        this.privatlakareId = privatlakareId;
     }
 
     public String getPersonId() {

@@ -14,6 +14,7 @@ apply plugin: 'com.moowork.grunt'
 
 dependencies {
     compile project(":privatlakarportal-persistence")
+    compile project(":privatlakarportal-hsa-integration")
 
     compile 'org.springframework:spring-webmvc:4.1.4.RELEASE'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
@@ -21,6 +22,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.10'
     compile 'ch.qos.logback:logback-classic:1.0.13'
     compile 'wsdl4j:wsdl4j:1.6.3'
+    compile 'commons-lang:commons-lang:2.6'
 
     compile 'org.apache.cxf:cxf-rt-frontend-jaxws:3.0.4'
     compile 'org.apache.cxf:cxf-rt-transports-http:3.0.4'
@@ -65,6 +67,7 @@ gretty {
     logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
     jvmArgs = [
         '-Dspring.profiles.active=dev',
-        '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties'
+        '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties',
+        '-XX:MaxPermSize=256M'
      ]
 }
