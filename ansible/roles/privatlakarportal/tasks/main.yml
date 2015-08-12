@@ -37,14 +37,14 @@
 
 - name: remove old version of unpacked privatlakarportal war
   file: state=absent
-      path={{ webapps_folder }}/privatlakarportal
+      path={{ webapps_folder }}/ROOT
 
-- name: remove old version of privatlakarportal.war
+- name: remove old version of ROOT.war
   file: state=absent
-      path={{ webapps_folder }}/privatlakarportal.war
+      path={{ webapps_folder }}/ROOT.war
 
-- name: Deploy privatlakarportal-web-{{ version }}.war as privatlakarportal.war in {{ webapps_folder }}
-  command: cp {{ releases_folder }}/privatlakarportal-web-{{ version }}.war {{ webapps_folder }}/privatlakarportal.war
+- name: Deploy privatlakarportal-web-{{ version }}.war as ROOT.war in {{ webapps_folder }}
+  command: cp {{ releases_folder }}/privatlakarportal-web-{{ version }}.war {{ webapps_folder }}/ROOT.war
 
 - name: Create version file
   template: src=version.txt.j2 dest={{ webapps_folder }}/version.txt
