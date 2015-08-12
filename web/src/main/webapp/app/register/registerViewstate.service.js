@@ -68,6 +68,10 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             return value !== null && value !== undefined ? value : null;
         }
 
+        function isDefined(value) {
+            return value !== null && typeof value !== 'undefined';
+        }
+
         this.decorateModelWithHospInfo = function(model) {
 
             this.loading.hosp = true;
@@ -76,15 +80,17 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             function processHospResult(hospInfo) {
                 viewState.loading.hosp = false;
 
-                if(hospInfo === null) {
+                if(!isDefined(hospInfo)) {
                     viewState.errorMessage.hosp = 'Kunde inte hämta information från socialstyrelsen.';
+                    model.legitimeradYrkesgrupp = null;
+                    model.specialitet = null;
+                    model.forskrivarkod = null;
                 } else {
                     viewState.errorMessage.hosp = null;
+                    model.legitimeradYrkesgrupp = returnJoinedArrayOrNull(hospInfo.hsaTitles);
+                    model.specialitet = returnJoinedArrayOrNull(hospInfo.specialityNames);
+                    model.forskrivarkod = valueOrNull(hospInfo.personalPrescriptionCode);
                 }
-
-                model.legitimeradYrkesgrupp = returnJoinedArrayOrNull(hospInfo.hsaTitles);
-                model.specialitet = returnJoinedArrayOrNull(hospInfo.specialityNames);
-                model.forskrivarkod = valueOrNull(hospInfo.personalPrescriptionCode);
 
                 /// TEMP FIX UNTIL kommun/län lookup is implemented
                 model.postort = 'Linköping';

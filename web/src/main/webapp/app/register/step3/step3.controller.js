@@ -6,7 +6,7 @@ angular.module('privatlakareApp')
         RegisterViewStateService.updateStep();
 
         var model = RegisterModel.init();
-        var privatLakareDetails = RegisterViewStateService.getRegisterDetailsTableDataFromModel(model);
+        var privatLakareDetails = RegisterViewStateService.getRegisterDetailsTableDataFromModel(UserModel, model);
         $scope.uppgifter = privatLakareDetails.uppgifter;
         $scope.kontaktUppgifter = privatLakareDetails.kontaktUppgifter;
         $scope.viewState = RegisterViewStateService;
@@ -19,10 +19,10 @@ angular.module('privatlakareApp')
                 $log.debug('Registration complete - data:');
                 $log.debug(successData);
                 $state.go('app.register.complete');
-                RegisterViewStateService.registerErrorMessage = null;
+                RegisterViewStateService.errorMessage.register = null;
                 RegisterModel.reset();
             }, function(errorData) {
-                RegisterViewStateService.registerErrorMessage = 'Kunde inte registrera privatläkare. (' + errorData.message + ')';
+                RegisterViewStateService.errorMessage.register = 'Kunde inte registrera privatläkare. (' + errorData.message + ')';
                 $log.debug('Failed to register errorCode:' + errorData.errorCode + ' reason:' + errorData.message);
             });
         };
