@@ -10,7 +10,7 @@ public class PrivatelakareTestUtil {
 
     public static Privatlakare buildPrivatlakare() {
         return buildPrivatlakare(
-            "19121212-1212",
+            "191212121212",
             "SE000000000000-WEBCERT00001",
             "Tolvan Tolvansson",
             "test@example.com",

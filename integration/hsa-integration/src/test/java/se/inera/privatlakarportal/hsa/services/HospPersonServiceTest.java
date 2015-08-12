@@ -16,8 +16,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class HospPersonServiceTest {
 
-    private static final String VALID_PERSON_ID = "191212-1212";
-    private static final String INVALID_PERSON_ID = "000000-0000";
+    private static final String VALID_PERSON_ID = "1912121212";
+    private static final String INVALID_PERSON_ID = "0000000000";
 
     @Mock
     HSAWebServiceCalls hsaWebServiceCalls;

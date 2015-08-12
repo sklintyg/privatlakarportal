@@ -10,6 +10,6 @@ import se.inera.privatlakarportal.auth.PrivatlakarUser;
 public class UserServiceImpl implements UserService {
     @Override
     public PrivatlakarUser getUser() {
-        return new PrivatlakarUser("19121212-1212");
+        return new PrivatlakarUser("191212121212");
     }
 }
