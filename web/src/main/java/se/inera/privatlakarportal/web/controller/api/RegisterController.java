@@ -19,7 +19,7 @@ public class RegisterController {
     @Autowired
     private RegisterService registerService;
 
-    @RequestMapping(value = "/registration/get")
+    @RequestMapping(value = "/registration")
     public GetRegistrationResponse getRegistration() {
         return new GetRegistrationResponse(registerService.getRegistration());
     }
@@ -30,7 +30,7 @@ public class RegisterController {
         return new CreateRegistrationResponse(status);
     }
 
-    @RequestMapping(value = "/registration/getHospInformation")
+    @RequestMapping(value = "/registration/hospInformation")
     public HospInformation getHospInformation() {
         return registerService.getHospInformation();
     }
