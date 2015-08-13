@@ -17,9 +17,10 @@ def getDate() {
 allprojects {
     group = 'se.inera.privatlakarportal'
 
-    if (System.properties['nightlyBuildNumber']) {
-        ext.versionExtension = System.properties['nightlyBuildNumber']
-        version = "1.0-a${ext.versionExtension}-${getDate()}"
+    if (System.properties['releaseBuildNumber'] && System.properties['buildNumber']) {
+        version = "${System.properties['releaseBuildNumber']}-b${System.properties['buildNumber']}"
+    } else if (System.properties['buildNumber']) {
+        version = "1.0-a${System.properties['buildNumber']}-${getDate()}"
     } else {
         version = '1.0.0-SNAPSHOT'
     }
@@ -98,4 +99,16 @@ configure (subprojects.findAll { ['privatlakarportal-liquibase-runner', 'privatl
             }
         }
     }
+    task uploadReleaseArchives (type : Upload) {
+        repositories {
+            mavenDeployer {
+                configuration = configurations.deployerJars
+                repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
+                }
+                uniqueVersion = false
+            }
+        }
+    }
+    
 }
