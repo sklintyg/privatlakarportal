@@ -1,13 +1,20 @@
 angular.module('privatlakareApp').service('RegisterViewStateService',
-    function($state) {
+    function($state,
+        HospProxy) {
         'use strict';
 
         this.reset = function() {
             this.step = 1;
 
-            this.registerErrorMessage = null;
-            this.pasteErrorEpost = false;
-            this.pasteErrorEpost2 = false;
+            this.errorMessage = {
+                register: null,
+                pasteEpost: false,
+                pasteEpost2: false
+            };
+
+            this.loading = {
+                hosp: false
+            };
 
             this.befattningList = [
                 { id: '201011', label: 'Distriktsläkare/Specialist allmänmedicin' },
@@ -51,6 +58,74 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
                 return false;
             }
             return true;
+        };
+
+        function returnJoinedArrayOrNull(value) {
+            return value !== null && value !== undefined ? value.join(', ') : null;
+        }
+
+        function valueOrNull(value) {
+            return value !== null && value !== undefined ? value : null;
+        }
+
+        function isDefined(value) {
+            return value !== null && typeof value !== 'undefined';
+        }
+
+        this.decorateModelWithHospInfo = function(model) {
+
+            this.loading.hosp = true;
+            var viewState = this;
+
+            function processHospResult(hospInfo) {
+                viewState.loading.hosp = false;
+
+                if(!isDefined(hospInfo)) {
+                    viewState.errorMessage.hosp = 'Kunde inte hämta information från socialstyrelsen.';
+                    model.legitimeradYrkesgrupp = null;
+                    model.specialitet = null;
+                    model.forskrivarkod = null;
+                } else {
+                    viewState.errorMessage.hosp = null;
+                    model.legitimeradYrkesgrupp = returnJoinedArrayOrNull(hospInfo.hsaTitles);
+                    model.specialitet = returnJoinedArrayOrNull(hospInfo.specialityNames);
+                    model.forskrivarkod = valueOrNull(hospInfo.personalPrescriptionCode);
+                }
+
+                /// TEMP FIX UNTIL kommun/län lookup is implemented
+                model.postort = 'Linköping';
+                model.kommun = 'Linköping';
+                model.lan = 'Östergötland';
+            }
+
+            HospProxy.getHospInformation().then(processHospResult, processHospResult);
+        };
+
+        this.getRegisterDetailsTableDataFromModel = function(UserModel, RegisterModel) {
+            var model = RegisterModel;
+            var details = {};
+            details.uppgifter = [
+                { id: 'personnummer', name: 'Personnummer', value: UserModel.personnummer, locked: true },
+                { id: 'namn', name: 'Namn', value: UserModel.name, locked: true },
+                { id: 'befattning', name: 'Befattning', value: (!model.befattning) ? '' : model.befattning.label },
+                { id: 'verksamhetensnamn', name: 'Verksamhetens namn', value: model.verksamhetensNamn },
+                { id: 'agarform', name: 'Ägarform', value: model.agarForm, locked: true },
+                { id: 'vardform', name: 'Vårdform', value: model.vardform.label },
+                { id: 'verksamhetstyp', name: 'Verksamhetstyp', value: (!model.verksamhetstyp) ? '' : model.verksamhetstyp.label },
+                { id: 'arbetsplatskod', name: 'Arbetsplatskod', value: model.arbetsplatskod }
+            ];
+
+            details.kontaktUppgifter = [
+                { id: 'telefonnummer', name: 'Telefonnummer', value: model.telefonnummer },
+                { id: 'epost', name: 'E-post till verksamheten', value: model.epost },
+                { id: 'adress', name: 'Adress till verksamheten', value: model.adress },
+                { id: 'postnummer', name: 'Postnummer till verksamheten', value: model.postnummer },
+                { id: 'postort', name: 'Postort till verksamheten', value: model.postort },
+                { id: 'kommun', name: 'Kommun', value: model.kommun },
+                { id: 'lan', name: 'Län', value: model.lan }
+            ];
+
+            return details;
         };
 
         this.reset();

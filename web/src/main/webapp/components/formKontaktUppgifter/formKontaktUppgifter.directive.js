@@ -13,7 +13,7 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                 controller: function($scope) {
                     $scope.preventPaste = function(e, fieldName){
                         e.preventDefault();
-                        RegisterViewStateService['pasteError'+fieldName] = true;
+                        RegisterViewStateService.errorMessage['paste'+fieldName] = true;
                         /*            $timeout(function() {
                          RegisterViewStateService['pasteError'+fieldName] = false;
                          }, 3000);*/

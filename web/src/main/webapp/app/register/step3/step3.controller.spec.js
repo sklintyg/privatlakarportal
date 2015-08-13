@@ -10,9 +10,9 @@ describe('Controller: Step3Ctrl', function() {
     // Initialize the controller and a mock scope
     beforeEach(inject(function($controller, $rootScope) {
         scope = $rootScope.$new();
-        Step3Ctrl = $controller('Step3Ctrl', {
+        /*Step3Ctrl = $controller('Step3Ctrl', {
             $scope: scope
-        });
+        });*/
     }));
 
     it('should ...', function() {

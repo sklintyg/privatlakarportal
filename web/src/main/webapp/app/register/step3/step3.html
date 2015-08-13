@@ -32,7 +32,17 @@
 
       <h2 class="col-head">Socialstyrelsens uppgifter</h2>
       <div class="box">
-        <div form-social-uppgifter></div>
+        <div pp-spinner show-spinner="viewState.loading.hosp" label="common.label.loading">
+
+          <!-- nicer: <div pp-error="viewState.errorMessage.register"></div> -->
+          <div ng-show="viewState.errorMessage.hosp != null">
+            <div class="alert alert-danger">
+              {{viewState.errorMessage.hosp}}
+            </div>
+          </div>
+
+          <div ng-show="viewState.errorMessage.hosp == null" form-social-uppgifter></div>
+        </div>
       </div>
     </div>
   </div>
@@ -62,9 +72,9 @@
     </div>
   </div>
 
-  <div ng-show="viewState.registerErrorMessage != null">
+  <div ng-show="viewState.errorMessage.register != null">
     <div class="alert alert-danger">
-      {{viewState.registerErrorMessage}}
+      {{viewState.errorMessage.register}}
     </div>
   </div>
 
