@@ -20,6 +20,7 @@ import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRespo
 import se.inera.privatlakarportal.web.controller.api.dto.Registration;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -171,5 +172,16 @@ public class RegisterServiceImplTest {
         assertEquals(hospInformation.getHsaTitles().get(0), "Test title");
         assertEquals(hospInformation.getSpecialityNames().size(), 1);
         assertEquals(hospInformation.getSpecialityNames().get(0), "Test speciality");
+    }
+
+    @Test
+    public void getHospInformationNotInHosp() {
+
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+        when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
+
+        HospInformation hospInformation = registerService.getHospInformation();
+
+        assertNull(hospInformation);
     }
 }

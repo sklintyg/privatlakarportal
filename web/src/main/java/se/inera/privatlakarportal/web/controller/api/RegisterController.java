@@ -35,8 +35,8 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/registration/hospInformation")
-    public HospInformation getHospInformation() {
-        return registerService.getHospInformation();
+    public GetHospInformationResponse getHospInformation() {
+        return new GetHospInformationResponse(registerService.getHospInformation());
     }
 
     @RequestMapping(value = "/registration/omrade/{postnummer}")

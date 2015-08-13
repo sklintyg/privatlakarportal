@@ -84,6 +84,10 @@ public class RegisterServiceImpl implements RegisterService {
     public HospInformation getHospInformation() {
         GetHospPersonResponseType response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
 
+        if (response == null) {
+            return null;
+        }
+
         HospInformation hospInformation = new HospInformation();
         hospInformation.setPersonalPrescriptionCode(response.getPersonalPrescriptionCode());
         hospInformation.setSpecialityNames(response.getSpecialityNames().getSpecialityName());
