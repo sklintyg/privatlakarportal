@@ -9,8 +9,27 @@ angular.module('privatlakareApp').factory('HospProxy',
 
                 var promise = $q.defer();
 
+                /*
+                *
+                * In case we need a global timeout config in the future it ca nbe added as a httpinterceptor
+                *
+                *  angular.module('yourapp')
+                 .factory('timeoutHttpIntercept', function ($rootScope, $q) {
+                 return {
+                 'request': function(config) {
+                 config.timeout = 10000;
+                 return config;
+                 }
+                 };
+                 });
+                 And then in .config inject $httpProvider and do this:
+
+                 $httpProvider.interceptors.push('timeoutHttpIntercept');
+                *
+                * */
+
                 var restPath = '/api/registration/hospInformation';
-                $http.get(restPath).success(function(data) {
+                $http.get(restPath, {timeout: 30000}).success(function(data) {
                     $log.debug('registration/hospInformation - got data:');
                     $log.debug(data);
                     promise.resolve(data.hospInformation);
