@@ -82,7 +82,7 @@ configure (subprojects.findAll { ['privatlakarportal-liquibase-runner', 'privatl
                 snapshotRepository(url: "dav:https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots") {
                     authentication(userName: nexusUsername, password: nexusPassword)
                 }
-                uniqueVersion = false
+                uniqueVersion = true
             }
         }
     }
