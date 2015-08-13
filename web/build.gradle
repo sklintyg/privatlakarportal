@@ -24,8 +24,8 @@ dependencies {
     compile 'wsdl4j:wsdl4j:1.6.3'
     compile 'commons-lang:commons-lang:2.6'
 
-    compile 'org.apache.cxf:cxf-rt-frontend-jaxws:3.0.4'
-    compile 'org.apache.cxf:cxf-rt-transports-http:3.0.4'
+    compile 'org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}'
+    compile 'org.apache.cxf:cxf-rt-transports-http:${cxfVersion}'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'

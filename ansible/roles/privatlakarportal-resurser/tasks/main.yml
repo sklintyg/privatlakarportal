@@ -1,9 +1,17 @@
 ---
 # file: roles/privatlakarportal-resurser/tasks/main.yml
 
+- name: configure shared jdbc datasource for Privatlakarportal
+  lineinfile:
+    dest="{{ tomcat_conf }}/server.xml"
+    regexp="    <Resource name='sharedPrivatlakarportal'"
+    insertbefore="  </GlobalNamingResources>"
+    line="    <Resource name="sharedPrivatlakarportal" global="sharedPrivatportal" type="javax.sql.DataSource" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" username='inera' password='inera' driverClassName='com.mysql.jdbc.Driver' url='jdbc:mysql://localhost:3306/privatlakarportal?useCompression=true' maxActive='20' maxIdle='20' minIdle='10' initialSize='10' validationQuery='SELECT 1' validationQueryTimeout='3' testWhileIdle='true' timeBetweenEvictionRunsMillis='300000' minEvictableIdleTimeMillis='60000' defaultAutocommit='false'/>"
+
 - name: configure jdbc resource
   lineinfile:
     dest="{{ tomcat_conf }}/context.xml"
-    regexp="    <Resource name='jdbc/privatlakarportal'"
+    regexp="    ResourceLink name='jdbc/privatlakarportal'"
     insertbefore="</Context>"
-    line="    <Resource name='jdbc/privatlakarportal' auth='Container' type='javax.sql.DataSource' username='{{ database_username }}' password='{{ database_password }}' driverClassName='{{ database_driver }}' url='{{ database_url }}' maxActive='{{ database_pool_maxActive }}' maxIdle='{{ database_pool_maxIdle }}' minIdle='{{ database_pool_minIdle }}' initialSize='{{ database_pool_initialSize }}' validationQuery='SELECT 1' validationQueryTimeout='3' testWhileIdle='true' timeBetweenEvictionRunsMillis='300000' minEvictableIdleTimeMillis='60000' defaultAutocommit='false' />"
+    line="    <ResourceLink name="jdbc/privatlakarportal" global="sharedPrivatlakarportal" type="javax.sql.DataSource"/>
+    

@@ -36,7 +36,7 @@ subprojects {
     targetCompatibility = "1.7"
 
     ext {
-        cxfVersion = '2.7.10'
+        cxfVersion = '3.0.4'
         springContextVersion = "4.0.8.RELEASE"
         springSecurityVersion = "3.2.5.RELEASE"
         liquibaseVersion = "3.3.1"
