@@ -55,4 +55,4 @@
        version={{ config_version }}
 
 - name: start tomcat
-  service: name={{ tomcat_service }} state=started pattern=org.apache.catalina.startup.Bootstrap
+  service: name={{ tomcat_service }} state=started pattern=org.apache.catalina.startup.Catalina

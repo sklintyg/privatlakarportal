@@ -6,12 +6,12 @@
     dest="{{ tomcat_conf }}/server.xml"
     regexp="    <Resource name='sharedPrivatlakarportal'"
     insertbefore="  </GlobalNamingResources>"
-    line="    <Resource name="sharedPrivatlakarportal" global="sharedPrivatportal" type="javax.sql.DataSource" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" username='inera' password='inera' driverClassName='com.mysql.jdbc.Driver' url='jdbc:mysql://localhost:3306/privatlakarportal?useCompression=true' maxActive='20' maxIdle='20' minIdle='10' initialSize='10' validationQuery='SELECT 1' validationQueryTimeout='3' testWhileIdle='true' timeBetweenEvictionRunsMillis='300000' minEvictableIdleTimeMillis='60000' defaultAutocommit='false'/>"
+    line="    <Resource name='sharedPrivatlakarportal' global='sharedPrivatportal' type='javax.sql.DataSource' factory='org.apache.tomcat.jdbc.pool.DataSourceFactory' username='inera' password='inera' driverClassName='com.mysql.jdbc.Driver' url='jdbc:mysql://localhost:3306/privatlakarportal?useCompression=true' maxActive='20' maxIdle='20' minIdle='10' initialSize='10' validationQuery='SELECT 1' validationQueryTimeout='3' testWhileIdle='true' timeBetweenEvictionRunsMillis='300000' minEvictableIdleTimeMillis='60000' defaultAutocommit='false'/>"
 
 - name: configure jdbc resource
   lineinfile:
     dest="{{ tomcat_conf }}/context.xml"
     regexp="    ResourceLink name='jdbc/privatlakarportal'"
     insertbefore="</Context>"
-    line="    <ResourceLink name="jdbc/privatlakarportal" global="sharedPrivatlakarportal" type="javax.sql.DataSource"/>
+    line="    <ResourceLink name='jdbc/privatlakarportal' global='sharedPrivatlakarportal' type='javax.sql.DataSource'/>"
     
