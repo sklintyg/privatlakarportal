@@ -8,9 +8,21 @@ task loadConfiguration {
     }
 }
 
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd')
+    return formattedDate
+}
+
 allprojects {
     group = 'se.inera.privatlakarportal'
-    version = '1.0.0-SNAPSHOT'
+
+    if (System.properties['nightlyBuildNumber']) {
+        ext.versionExtension = System.properties['nightlyBuildNumber']
+        version = "1.0-a${ext.versionExtension}-${getDate()}"
+    } else {
+        version = '1.0.0-SNAPSHOT'
+    }
 
     repositories {
         mavenLocal()
@@ -76,10 +88,10 @@ configure (subprojects.findAll { ['privatlakarportal-liquibase-runner', 'privatl
         repositories {
             mavenDeployer {
                 configuration = configurations.deployerJars
-                repository(url: "dav:https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
+                repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/nightly") {
                     authentication(userName: nexusUsername, password: nexusPassword)
                 }
-                snapshotRepository(url: "dav:https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots") {
+                snapshotRepository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots") {
                     authentication(userName: nexusUsername, password: nexusPassword)
                 }
                 uniqueVersion = false
