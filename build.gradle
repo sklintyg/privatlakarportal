@@ -13,14 +13,17 @@ def getDate() {
     def formattedDate = date.format('yyyy-MM-dd')
     return formattedDate
 }
+def buildType
 
 allprojects {
     group = 'se.inera.privatlakarportal'
-
+    
     if (System.properties['releaseBuildNumber'] && System.properties['buildNumber']) {
         version = "${System.properties['releaseBuildNumber']}-b${System.properties['buildNumber']}"
+        buildType = 'releases'
     } else if (System.properties['buildNumber']) {
         version = "1.0-a${System.properties['buildNumber']}-${getDate()}"
+        buildType = 'nightly'
     } else {
         version = '1.0.0-SNAPSHOT'
     }
@@ -89,26 +92,16 @@ configure (subprojects.findAll { ['privatlakarportal-liquibase-runner', 'privatl
         repositories {
             mavenDeployer {
                 configuration = configurations.deployerJars
-                repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/nightly") {
-                    authentication(userName: nexusUsername, password: nexusPassword)
+                if (buildType) {
+                    repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/${buildType}") {
+                            authentication(userName: nexusUsername, password: nexusPassword)
+                    }
                 }
                 snapshotRepository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots") {
-                    authentication(userName: nexusUsername, password: nexusPassword)
+                        authentication(userName: nexusUsername, password: nexusPassword)
                 }
                 uniqueVersion = false
             }
         }
     }
-    task uploadReleaseArchives (type : Upload) {
-        repositories {
-            mavenDeployer {
-                configuration = configurations.deployerJars
-                repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
-                    authentication(userName: nexusUsername, password: nexusPassword)
-                }
-                uniqueVersion = false
-            }
-        }
-    }
-    
 }
