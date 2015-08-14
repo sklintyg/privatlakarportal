@@ -3,20 +3,24 @@ package se.inera.privatlakarportal.persistence.config;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import liquibase.integration.spring.SpringLiquibase;
+
 import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jndi.JndiTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+
 import se.inera.privatlakarportal.persistence.liquibase.DbChecker;
 
 @Configuration
@@ -65,7 +69,21 @@ public class PersistenceConfig {
     }
 
     @Bean(destroyMethod = "close")
-    DataSource dataSource() {
+    @Profile("!dev")
+    DataSource jndiDataSource() {
+        DataSource dataSource = null;
+        JndiTemplate jndi = new JndiTemplate();
+        try {
+            dataSource = (DataSource) jndi.lookup("java:comp/env/jdbc/privatlakarportal");
+        } catch (NamingException e) {
+            
+        }
+        return dataSource;
+    }
+
+    @Bean(destroyMethod = "close")
+    @Profile("dev")
+    DataSource standaloneDataSource() {
         HikariConfig dataSourceConfig = new HikariConfig();
         dataSourceConfig.setDriverClassName(databaseDriver);
         dataSourceConfig.setJdbcUrl(databaseUrl);
