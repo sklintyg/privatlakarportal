@@ -3,6 +3,10 @@ angular.module('privatlakareApp').factory('PostnummerHelper',
         'use strict';
 
         function _cleanPostnummer(postnr) {
+            if(!ObjectHelper.isDefined(postnr)) {
+                return;
+            }
+
             postnr = postnr.trim();
             postnr = postnr.replaceAll(' ', '');
             return postnr;
