@@ -13,17 +13,12 @@ def getDate() {
     def formattedDate = date.format('yyyy-MM-dd')
     return formattedDate
 }
-def buildType
 
 allprojects {
     group = 'se.inera.privatlakarportal'
-    
-    if (System.properties['releaseBuildNumber'] && System.properties['buildNumber']) {
-        version = "${System.properties['releaseBuildNumber']}-b${System.properties['buildNumber']}"
-        buildType = 'releases'
-    } else if (System.properties['buildNumber']) {
-        version = "1.0-a${System.properties['buildNumber']}-${getDate()}"
-        buildType = 'nightly'
+
+    if (System.env.BUILD_VERSION && System.env.BUILD_NUMBER) {
+        version = "$System.env.BUILD_VERSION-b$System.env.BUILD_NUMBER"
     } else {
         version = '1.0.0-SNAPSHOT'
     }
@@ -73,17 +68,16 @@ private void addProjectPropertiesFromFile(propfile) {
     }
 }
 
-configure (subprojects.findAll { ['privatlakarportal-liquibase-runner', 'privatlakarportal-web'].contains(it.name) }) {
+configure (subprojects.findAll { [
+        'privatlakarportal-liquibase-runner',
+        'privatlakarportal-web'
+    ].contains(it.name) }) {
 
     apply plugin: 'maven'
 
-    configurations {
-        deployerJars
-    }
+    configurations { deployerJars }
 
-    dependencies {
-        deployerJars "org.apache.maven.wagon:wagon-webdav:1.0-beta-2"
-    }
+    dependencies { deployerJars "org.apache.maven.wagon:wagon-webdav:1.0-beta-2" }
 
     ext.nexusUsername = System.properties['nexusUsername']
     ext.nexusPassword = System.properties['nexusPassword']
@@ -92,13 +86,11 @@ configure (subprojects.findAll { ['privatlakarportal-liquibase-runner', 'privatl
         repositories {
             mavenDeployer {
                 configuration = configurations.deployerJars
-                if (buildType) {
-                    repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/${buildType}") {
-                            authentication(userName: nexusUsername, password: nexusPassword)
-                    }
+                repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases}") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
                 }
                 snapshotRepository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots") {
-                        authentication(userName: nexusUsername, password: nexusPassword)
+                    authentication(userName: nexusUsername, password: nexusPassword)
                 }
                 uniqueVersion = false
             }

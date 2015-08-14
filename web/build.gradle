@@ -48,6 +48,20 @@ war {
     from 'build/webapp'
 }
 
+task assembleManifestClasspath() << {
+    war {
+        manifest {
+            def buildNumber = System.env.BUILD_NUMBER != null ? System.env.BUILD_NUMBER : '1.0.0-SNAPSHOT' 
+            attributes("Build": buildNumber)
+            def gitRevision = System.env.GIT_COMMIT != null ? System.env.GIT_COMMIT : 'Local-build'  
+            attributes("Git-revision" : gitRevision)
+            attributes("Build-Time": new Date())
+        }
+    }
+}
+
+war.dependsOn assembleManifestClasspath
+
 task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
     script = file('node_modules/bower/bin/bower')
     args = ["--config.storage.cache=${gradle.getGradleUserHomeDir()}/caches/bower/cache",
@@ -60,7 +74,6 @@ task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
 
 grunt_build.dependsOn bowerInstall
 build.dependsOn grunt_build
-
 
 gretty {
     httpPort = 8090
