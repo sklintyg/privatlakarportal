@@ -16,6 +16,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $too
     $tooltipProvider.setTriggers({
         'show': 'hide'
     });
+
+    // Add replaceAll function to all strings.
+    String.prototype.replaceAll = function(f,r) {
+        return this.split(f).join(r);
+    };
+
 });
 
 // Global config of default date picker config (individual attributes can be

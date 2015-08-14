@@ -15,6 +15,15 @@ angular.module('privatlakareApp').value('mockResponse', {
         'hospInformation': null
     },
     'hospFailModel' : {
-    }
-
+    },
+    'omradeOK': {
+        'omradeList':[
+            {'postnummer':'13155','postort':'NACKA','kommun':'STOCKHOLM','lan':'STOCKHOLM'},
+            {'postnummer':'13155','postort':'NACKA','kommun':'NACKA','lan':'STOCKHOLM'}
+        ]
+    },
+    'omradeModel': [
+        {'postnummer':'13155','postort':'NACKA','kommun':'STOCKHOLM','lan':'STOCKHOLM'},
+        {'postnummer':'13155','postort':'NACKA','kommun':'NACKA','lan':'STOCKHOLM'}
+    ]
 });

@@ -30,17 +30,34 @@
          popover-trigger="focus" popover="Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag.">
 </div>
 
-<div pp-field="postort">
-  {{registerModel.postort}}
-</div>
+<p ng-show="!viewState.validPostnummer">
+  <i>Fyll i postnummer för förslag på postort, kommun och län.</i>
+</p>
 
-<div pp-field="kommun">
-  {{registerModel.kommun}}
-  <select ng-if="false" required id="kommun" name="kommun" class="form-control" ng-model="registerModel.kommun"
-          ng-options="s.label for s in viewState.kommunList track by s.id" popover-placement="right"
-          popover-trigger="focus" popover="Kommun där verksamheten finns."></select>
-</div>
+<div ng-show="viewState.validPostnummer">
+  <div pp-spinner show-spinner="viewState.loading.region" label="common.label.loading">
 
-<div pp-field="lan">
-  {{registerModel.lan}}
+    <p ng-show="registerModel.postort == null">
+      <i>Inga träffar för postnummer {{registerModel.postnummer}}. Var vänlig kontrollera postnumret och försök igen.</i>
+    </p>
+    <div ng-show="registerModel.postort != null">
+
+      <div pp-field="postort">
+        {{registerModel.postort}}
+      </div>
+
+      <div pp-field="kommun">
+        {{registerModel.kommun}}
+        <select ng-if="false" required id="kommun" name="kommun" class="form-control" ng-model="registerModel.kommun"
+                ng-options="s.label for s in viewState.kommunList track by s.id" popover-placement="right"
+                popover-trigger="focus" popover="Kommun där verksamheten finns."></select>
+      </div>
+
+      <div pp-field="lan">
+        {{registerModel.lan}}
+      </div>
+
+    </div>
+
+  </div>
 </div>

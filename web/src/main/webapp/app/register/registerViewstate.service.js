@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').service('RegisterViewStateService',
     function($state,
-        HospProxy) {
+        HospProxy, ObjectHelper) {
         'use strict';
 
         this.reset = function() {
@@ -13,8 +13,11 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             };
 
             this.loading = {
-                hosp: false
+                hosp: false,
+                region: false
             };
+
+            this.validPostnummer = false;
 
             this.befattningList = [
                 { id: '201011', label: 'Distriktsläkare/Specialist allmänmedicin' },
@@ -60,18 +63,6 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             return true;
         };
 
-        function returnJoinedArrayOrNull(value) {
-            return value !== null && value !== undefined ? value.join(', ') : null;
-        }
-
-        function valueOrNull(value) {
-            return value !== null && value !== undefined ? value : null;
-        }
-
-        function isDefined(value) {
-            return value !== null && typeof value !== 'undefined';
-        }
-
         this.decorateModelWithHospInfo = function(model) {
 
             this.loading.hosp = true;
@@ -80,16 +71,16 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             function processHospResult(hospInfo) {
                 viewState.loading.hosp = false;
 
-                if(!isDefined(hospInfo)) {
+                if(!ObjectHelper.isDefined(hospInfo)) {
                     viewState.errorMessage.hosp = 'Kunde inte hämta information från socialstyrelsen.';
                     model.legitimeradYrkesgrupp = null;
                     model.specialitet = null;
                     model.forskrivarkod = null;
                 } else {
                     viewState.errorMessage.hosp = null;
-                    model.legitimeradYrkesgrupp = returnJoinedArrayOrNull(hospInfo.hsaTitles);
-                    model.specialitet = returnJoinedArrayOrNull(hospInfo.specialityNames);
-                    model.forskrivarkod = valueOrNull(hospInfo.personalPrescriptionCode);
+                    model.legitimeradYrkesgrupp = ObjectHelper.returnJoinedArrayOrNull(hospInfo.hsaTitles);
+                    model.specialitet = ObjectHelper.returnJoinedArrayOrNull(hospInfo.specialityNames);
+                    model.forskrivarkod = ObjectHelper.valueOrNull(hospInfo.personalPrescriptionCode);
                 }
 
                 /// TEMP FIX UNTIL kommun/län lookup is implemented
@@ -126,6 +117,17 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             ];
 
             return details;
+        };
+
+        this.cleanPostnummer = function(postnr) {
+            postnr = postnr.trim();
+            postnr = postnr.replaceAll(' ', '');
+            return postnr;
+        };
+
+        this.isValidPostnummer = function(postnr) {
+            var cleanPostnr = this.cleanPostnummer(postnr);
+            return (ObjectHelper.isDefined(cleanPostnr) && (cleanPostnr.length === 5) && !isNaN(Number(cleanPostnr)));
         };
 
         this.reset();
