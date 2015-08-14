@@ -11,7 +11,7 @@
 - name: configure jdbc resource
   lineinfile:
     dest="{{ tomcat_conf }}/context.xml"
-    regexp="    ResourceLink name='jdbc/privatlakarportal'"
+    regexp="    <ResourceLink name='jdbc/privatlakarportal'"
     insertbefore="</Context>"
     line="    <ResourceLink name='jdbc/privatlakarportal' global='sharedPrivatlakarportal' type='javax.sql.DataSource'/>"
     
