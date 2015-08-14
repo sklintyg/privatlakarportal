@@ -18,6 +18,9 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             };
 
             this.validPostnummer = false;
+            this.kommunOptions = null;
+            this.kommunSelectionMode = false;
+            this.kommunSelected = false;
 
             this.befattningList = [
                 { id: '201011', label: 'Distriktsläkare/Specialist allmänmedicin' },
@@ -82,11 +85,6 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
                     model.specialitet = ObjectHelper.returnJoinedArrayOrNull(hospInfo.specialityNames);
                     model.forskrivarkod = ObjectHelper.valueOrNull(hospInfo.personalPrescriptionCode);
                 }
-
-                /// TEMP FIX UNTIL kommun/län lookup is implemented
-                model.postort = 'Linköping';
-                model.kommun = 'Linköping';
-                model.lan = 'Östergötland';
             }
 
             HospProxy.getHospInformation().then(processHospResult, processHospResult);
@@ -103,7 +101,7 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
                 { id: 'agarform', name: 'Ägarform', value: model.agarForm, locked: true },
                 { id: 'vardform', name: 'Vårdform', value: model.vardform.label },
                 { id: 'verksamhetstyp', name: 'Verksamhetstyp', value: (!model.verksamhetstyp) ? '' : model.verksamhetstyp.label },
-                { id: 'arbetsplatskod', name: 'Arbetsplatskod', value: model.arbetsplatskod }
+                { id: 'arbetsplatskod', name: 'Arbetsplatskod (frivilligt)', value: model.arbetsplatskod || 'Ej angivet' }
             ];
 
             details.kontaktUppgifter = [
@@ -117,17 +115,6 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             ];
 
             return details;
-        };
-
-        this.cleanPostnummer = function(postnr) {
-            postnr = postnr.trim();
-            postnr = postnr.replaceAll(' ', '');
-            return postnr;
-        };
-
-        this.isValidPostnummer = function(postnr) {
-            var cleanPostnr = this.cleanPostnummer(postnr);
-            return (ObjectHelper.isDefined(cleanPostnr) && (cleanPostnr.length === 5) && !isNaN(Number(cleanPostnr)));
         };
 
         this.reset();

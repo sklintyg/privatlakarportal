@@ -7,16 +7,16 @@ describe('Proxy: OmradeProxy', function() {
 
     }));
 
-    var OmradeProxy, mockResponse, $rootScope, $httpBackend, RegisterViewStateService;
+    var OmradeProxy, mockResponse, $rootScope, $httpBackend, PostnummerHelper;
     
     // Initialize the controller and a mock scope
 
-    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _OmradeProxy_, _mockResponse_, _RegisterViewStateService_) {
+    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _OmradeProxy_, _mockResponse_, _PostnummerHelper_) {
         $httpBackend = _$httpBackend_;
         OmradeProxy = _OmradeProxy_;
         $rootScope = _$rootScope_;
         mockResponse = _mockResponse_;
-        RegisterViewStateService = _RegisterViewStateService_;
+        PostnummerHelper = _PostnummerHelper_;
     }));
 
     describe('OmradeProxy', function() {
@@ -26,7 +26,7 @@ describe('Proxy: OmradeProxy', function() {
                 var onSuccess = jasmine.createSpy('onSuccess');
                 var onError = jasmine.createSpy('onError');
 
-                var cleanedpostnr = RegisterViewStateService.cleanPostnummer(postnummer);
+                var cleanedpostnr = PostnummerHelper.cleanPostnummer(postnummer);
 
                 $httpBackend.expectGET('/api/registration/omrade/' + cleanedpostnr).respond(mockResponse.omradeOK);
 

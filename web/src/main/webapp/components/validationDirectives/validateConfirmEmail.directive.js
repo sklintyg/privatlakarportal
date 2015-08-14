@@ -1,5 +1,5 @@
 /**
- * Enable tooltips for other components than wcFields
+ * Adds validation to confirm values are identical between two fields.
  */
 angular.module('privatlakareApp').directive('validateConfirmEmail',
     [

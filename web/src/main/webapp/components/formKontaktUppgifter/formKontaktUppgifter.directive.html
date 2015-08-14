@@ -26,8 +26,14 @@
 
 <div pp-field="postnummer">
   <input type="text" id="postnummer" name="postnummer" ng-model="registerModel.postnummer" class='form-control'
-         style='max-width: 6em' value="" required ng-maxlength="6" maxlength="6" popover-placement="right"
+         style='max-width: 6em' value="" required ng-maxlength="6" maxlength="6" popover-placement="right" validate-postnummer
          popover-trigger="focus" popover="Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag.">
+</div>
+
+<div ng-show="viewState.kommunSelectionMode">
+  <div class="alert alert-warning">
+    Uppgift om kommun har {{viewState.kommunHits}} träffar. Ange den kommun som är rätt.
+  </div>
 </div>
 
 <p ng-show="!viewState.validPostnummer">
@@ -47,14 +53,22 @@
       </div>
 
       <div pp-field="kommun">
-        {{registerModel.kommun}}
-        <select ng-if="false" required id="kommun" name="kommun" class="form-control" ng-model="registerModel.kommun"
-                ng-options="s.label for s in viewState.kommunList track by s.id" popover-placement="right"
-                popover-trigger="focus" popover="Kommun där verksamheten finns."></select>
+        <div ng-show="!viewState.kommunSelectionMode">
+          {{registerModel.kommun}}
+        </div>
+        <div ng-if="viewState.kommunSelectionMode">
+          <select required id="kommun" name="kommun" class="form-control" ng-model="viewState.kommunSelected"
+                  ng-options="s.label for s in viewState.kommunOptions track by s.id" popover-placement="right"
+                  popover-trigger="focus" popover="Kommun där verksamheten finns.">
+            <option value="">Välj kommun</option>
+          </select>
+        </div>
       </div>
 
-      <div pp-field="lan">
-        {{registerModel.lan}}
+      <div ng-show="registerModel.lan != null">
+        <div pp-field="lan">
+          {{registerModel.lan}}
+        </div>
       </div>
 
     </div>

@@ -107,11 +107,13 @@ var ppMessages = {
         'label.form.postnummer' : 'Postnummer',
         'label.form.postnummer.help' : 'Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag.',
         'label.form.postnummer.error.required' : 'Postnummer måste anges innan du kan fortsätta.',
+        'label.form.postnummer.error.format' : 'Felaktigt postnummer. Postnummer måste anges på formaten XXXXX eller XXX XX.',
 
         'label.form.postort' : 'Postort',
 
         'label.form.kommun' : 'Kommun',
         'label.form.kommun.help' : 'Uppgift om kommun går inte att redigera. Om systemet får fler träffar för kommun vid hämtning av uppgiften ska du ange vilken kommun som är rätt.',
+        'label.form.kommun.error.required' : 'Kommun måste väljas innan du kan fortsätta.',
 
         'label.form.lan' : 'Län',
         'label.form.lan.help' : 'Län där verksamheten finns. Uppgift om län går inte att ändra.',
