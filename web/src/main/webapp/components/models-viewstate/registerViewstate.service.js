@@ -7,21 +7,28 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             this.step = 1;
 
             this.errorMessage = {
-                register: null,
-                pasteEpost: false,
-                pasteEpost2: false
+                register: null, // step 3
+                pasteEpost: false, // step 2
+                pasteEpost2: false // step 2
             };
 
             this.loading = {
-                hosp: false,
-                region: false
+                hosp: false, // step 3
+                region: false // step 2
             };
 
+            // move to step 2 viewstateservice
             this.validPostnummer = false;
             this.kommunOptions = null;
             this.kommunSelectionMode = false;
             this.kommunSelected = false;
 
+            // Hosp info, move to social model, service for use in formSocialUppgifter directive
+            this.legitimeradYrkesgrupp = null;
+            this.specialitet = null;
+            this.forskrivarkod = null;
+
+            // move to step 1 viewstate
             this.befattningList = [
                 { id: '201011', label: 'Distriktsläkare/Specialist allmänmedicin' },
                 { id: '201012', label: 'Skolläkare' },
@@ -51,6 +58,7 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             return this;
         };
 
+        // general step navigation
         this.getStepFromState = function(state) {
             return state.data.step;
         };
@@ -68,30 +76,31 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             return true;
         };
 
-        this.decorateModelWithHospInfo = function(model) {
+        // step 3 viewstate or even hosp service
+        this.decorateModelWithHospInfo = function() {
 
             this.loading.hosp = true;
             var viewState = this;
 
             function processHospResult(hospInfo) {
                 viewState.loading.hosp = false;
-
                 if(!ObjectHelper.isDefined(hospInfo)) {
                     viewState.errorMessage.hosp = 'Kunde inte hämta information från socialstyrelsen.';
-                    model.legitimeradYrkesgrupp = null;
-                    model.specialitet = null;
-                    model.forskrivarkod = null;
+                    viewState.legitimeradYrkesgrupp = null;
+                    viewState.specialitet = null;
+                    viewState.forskrivarkod = null;
                 } else {
                     viewState.errorMessage.hosp = null;
-                    model.legitimeradYrkesgrupp = ObjectHelper.returnJoinedArrayOrNull(hospInfo.hsaTitles);
-                    model.specialitet = ObjectHelper.returnJoinedArrayOrNull(hospInfo.specialityNames);
-                    model.forskrivarkod = ObjectHelper.valueOrNull(hospInfo.personalPrescriptionCode);
+                    viewState.legitimeradYrkesgrupp = ObjectHelper.returnJoinedArrayOrNull(hospInfo.hsaTitles);
+                    viewState.specialitet = ObjectHelper.returnJoinedArrayOrNull(hospInfo.specialityNames);
+                    viewState.forskrivarkod = ObjectHelper.valueOrNull(hospInfo.personalPrescriptionCode);
                 }
             }
 
             HospProxy.getHospInformation().then(processHospResult, processHospResult);
         };
 
+        // step 3 viewstate
         this.getRegisterDetailsTableDataFromModel = function(UserModel, RegisterModel) {
             var model = RegisterModel;
             var details = {};

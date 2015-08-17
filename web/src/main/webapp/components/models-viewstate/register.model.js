@@ -33,11 +33,6 @@ angular.module('privatlakareApp').factory('RegisterModel',
             data.postort = null;
             data.kommun = null;
             data.lan = null;
-
-            // Step 3
-            data.legitimeradYrkesgrupp = null;
-            data.specialitet = null;
-            data.forskrivarkod = null;
             return data;
         }
 
