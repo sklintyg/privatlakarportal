@@ -67,6 +67,8 @@ public class PostnummerRepositoryFactory {
                 postnummerRepository.addPostnummer(omrade.getPostnummer(), omrade);
             }
 
+            reader.close();
+
         } catch (IOException ioe) {
             LOG.error("IOException occured when loading postnummer file '{}'", fileUrl);
             throw new RuntimeException("Error occured when loading postnummer file", ioe);
