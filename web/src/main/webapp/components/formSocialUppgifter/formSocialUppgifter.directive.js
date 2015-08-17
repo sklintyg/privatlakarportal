@@ -2,7 +2,7 @@
  * Form directive to show socialstyrelsenuppgifter
  */
 angular.module('privatlakareApp').directive('formSocialUppgifter',
-    function(RegisterModel) {
+    function() {
         'use strict';
 
         return {
@@ -10,15 +10,13 @@ angular.module('privatlakareApp').directive('formSocialUppgifter',
             transclude: true,
             scope: true,
             controller: function($scope) {
-
-                var data = RegisterModel.init();
-
-                $scope.socialstyrelsenUppgifter = [
-                    { id: 'legitimeradYrkesgrupp', name: 'Legimiterad yrkesgrupp', value: data.legitimeradYrkesgrupp, locked: true },
-                    { id: 'specialitet', name: 'Specialitet', value: data.specialitet, locked: true },
-                    { id: 'forskrivarkod', name: 'Förskrivarkod', value: data.forskrivarkod, locked: true }
-                ];
-
+                $scope.$watch('registerModel' , function(newVal) {
+                    $scope.socialstyrelsenUppgifter = [
+                        { id: 'legitimeradYrkesgrupp', name: 'Legimiterad yrkesgrupp', value: newVal.legitimeradYrkesgrupp, locked: true },
+                        { id: 'specialitet', name: 'Specialitet', value: newVal.specialitet, locked: true },
+                        { id: 'forskrivarkod', name: 'Förskrivarkod', value: newVal.forskrivarkod, locked: true }
+                    ];
+                });
             },
             templateUrl: 'components/formSocialUppgifter/formSocialUppgifter.directive.html'
         };

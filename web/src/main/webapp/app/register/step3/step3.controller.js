@@ -10,8 +10,8 @@ angular.module('privatlakareApp')
         $scope.uppgifter = privatLakareDetails.uppgifter;
         $scope.kontaktUppgifter = privatLakareDetails.kontaktUppgifter;
         $scope.viewState = RegisterViewStateService;
-
         RegisterViewStateService.decorateModelWithHospInfo(model);
+        $scope.registerModel = model;
 
         // Skapa konto button
         $scope.createAccount = function(){
