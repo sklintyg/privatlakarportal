@@ -11,8 +11,12 @@ angular.module('privatlakareApp')
             $log.debug(lakarData);
 
             if(ObjectHelper.isDefined(lakarData)) {
-                RegisterModel.set(lakarData);
+                $log.debug('sagae');
+                RegisterModel.set(lakarData.registration);
                 $scope.registerModel = RegisterModel.get();
+                $scope.registerModel.legitimeradYrkesgrupp = ObjectHelper.returnJoinedArrayOrNull(lakarData.hospInformation.hsaTitles);
+                $scope.registerModel.specialitet = ObjectHelper.returnJoinedArrayOrNull(lakarData.hospInformation.specialityNames);
+                $scope.registerModel.forskrivarkod = ObjectHelper.valueOrNull(lakarData.hospInformation.personalPrescriptionCode);
             } else {
                 $scope.registerModel = RegisterModel.reset();
                 $scope.viewState = RegisterViewStateService.reset();
@@ -21,4 +25,9 @@ angular.module('privatlakareApp')
             $log.debug('MinsidaCtrl - Got error:');
             $log.debug(errorData);
         });
+
+
+        $scope.save = function() {
+            RegisterProxy.savePrivatlakare(RegisterModel.get());
+        };
     });

@@ -16,7 +16,7 @@ angular.module('privatlakareApp').directive('formSocialUppgifter',
                         { id: 'specialitet', name: 'Specialitet', value: newVal.specialitet, locked: true },
                         { id: 'forskrivarkod', name: 'Förskrivarkod', value: newVal.forskrivarkod, locked: true }
                     ];
-                });
+                }, true);
             },
             templateUrl: 'components/formSocialUppgifter/formSocialUppgifter.directive.html'
         };

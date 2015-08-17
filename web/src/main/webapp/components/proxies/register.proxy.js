@@ -21,7 +21,7 @@ angular.module('privatlakareApp').factory('RegisterProxy',
                         data.registration.vardform = { id: data.registration.vardform };
                         data.registration.verksamhetstyp = { id: data.registration.verksamhetstyp };
                         data.registration.epost2 = data.registration.epost;
-                        promise.resolve(data.registration);
+                        promise.resolve(data);
                     }
                 }).error(function(data, status) {
                     $log.error('error ' + status);
