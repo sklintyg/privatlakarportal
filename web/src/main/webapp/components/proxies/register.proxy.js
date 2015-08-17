@@ -35,6 +35,38 @@ angular.module('privatlakareApp').factory('RegisterProxy',
             /*
              * Register a privatlakare
              */
+            function _savePrivatlakare(RegisterModel) {
+
+                var promise = $q.defer();
+
+                // Create flat dto from model to send to backend
+                var dto = { registration: angular.copy(RegisterModel) };
+                dto.registration.befattning = RegisterModel.befattning.id;
+                dto.registration.vardform = RegisterModel.vardform.id;
+                dto.registration.verksamhetstyp = RegisterModel.verksamhetstyp.id;
+                $log.debug('savePrivatlakare dto:');
+                $log.debug(dto);
+
+                // POST
+                var restPath = '/api/registration/save';
+                $http.post(restPath, dto).success(function(data) {
+                    $log.debug('registration/save - got data:');
+                    $log.debug(data);
+                    promise.resolve(data);
+                }).error(function(data, status) {
+                    $log.error('error ' + status);
+                    $log.debug('dto:');
+                    $log.debug(dto);
+                    // Let calling code handle the error of no data response
+                    promise.reject(data);
+                });
+
+                return promise.promise;
+            }
+
+            /*
+             * Register a privatlakare
+             */
             function _registerPrivatlakare(RegisterModel) {
 
                 var promise = $q.defer();
@@ -67,6 +99,7 @@ angular.module('privatlakareApp').factory('RegisterProxy',
             // Return public API for the service
             return {
                 getPrivatlakare: _getPrivatlakare,
+                savePrivatlakare: _savePrivatlakare,
                 registerPrivatlakare: _registerPrivatlakare
             };
         });
