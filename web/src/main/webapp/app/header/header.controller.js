@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').controller('HeaderController',
-    ['$scope', '$window', 'UserModel',
-        function($scope, $window, UserModel) {
+        function($scope, $window, $state,
+            UserModel) {
             'use strict';
 
             //Expose 'now' as a model property for the template to render as todays date
@@ -15,8 +15,12 @@ angular.module('privatlakareApp').controller('HeaderController',
              * Exposed scope interaction functions
              */
 
+            $scope.updateAccount = function() {
+                $state.go('app.minsida');
+            };
+
             $scope.logout = function() {
                 UserModel.logout();
             };
         }
-    ]);
+    );
