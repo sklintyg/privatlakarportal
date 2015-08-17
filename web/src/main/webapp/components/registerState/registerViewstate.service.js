@@ -47,6 +47,8 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
                 { id: '18', label: 'Tandvårdsverksamhet' },
                 { id: '20', label: 'Övrig medicinsk serviceverksamhet' }
             ];
+
+            return this;
         };
 
         this.getStepFromState = function(state) {

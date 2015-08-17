@@ -15,6 +15,7 @@ angular.module('privatlakareApp').factory('RegisterModel',
         }
 
         function _reset() {
+
             // Step 1
             data.befattning = null;
             data.verksamhetensNamn = null;
@@ -34,15 +35,25 @@ angular.module('privatlakareApp').factory('RegisterModel',
             data.lan = null;
 
             // Step 3
-            data.legitimeradYrkesgrupp = 'Läkare';
-            data.specialitet = 'Allmän medicin';
-            data.forskrivarkod = '0123456';
+            data.legitimeradYrkesgrupp = null;
+            data.specialitet = null;
+            data.forskrivarkod = null;
+            return data;
+        }
+
+        function _set(newData) {
+            data = angular.copy(newData);
+        }
+
+        function _get() {
             return data;
         }
 
         return {
             init: _init,
-            reset: _reset
+            reset: _reset,
+            set: _set,
+            get: _get
         };
     }
 );

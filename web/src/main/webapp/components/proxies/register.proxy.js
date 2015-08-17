@@ -1,5 +1,6 @@
 angular.module('privatlakareApp').factory('RegisterProxy',
-        function($http, $log, $q) {
+        function($http, $log, $q,
+            ObjectHelper) {
             'use strict';
 
             /*
@@ -9,11 +10,15 @@ angular.module('privatlakareApp').factory('RegisterProxy',
 
                 var promise = $q.defer();
 
-                var restPath = '/api/registration/get';
+                var restPath = '/api/registration';
                 $http.get(restPath).success(function(data) {
-                    $log.debug('registration/get - got data:');
+                    $log.debug('registration - got data:');
                     $log.debug(data);
-                    promise.resolve(data);
+                    if(!ObjectHelper.isDefined(data)) {
+                        promise.reject(data);
+                    } else {
+                        promise.resolve(data.registration);
+                    }
                 }).error(function(data, status) {
                     $log.error('error ' + status);
                     // Let calling code handle the error of no data response
