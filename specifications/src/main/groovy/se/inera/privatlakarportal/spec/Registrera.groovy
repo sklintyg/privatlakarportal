@@ -210,6 +210,14 @@ class Registrera {
         return result
     }
 
+    public String lan() {
+        String result
+        Browser.drive {
+            result = page.hamtaLan()
+        }
+        return result
+    }
+
 
     public String legitimeradYrkesgrupp() {
         String result

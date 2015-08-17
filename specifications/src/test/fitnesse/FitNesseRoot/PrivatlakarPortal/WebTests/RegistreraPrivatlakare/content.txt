@@ -21,7 +21,7 @@
 | ange epost | !-test@example.com-! |
 | ange epost2 | !-test@example.com-! |
 | ange gatuadress | gatuadress |
-| ange postnummer| 99999 |
+| ange postnummer| 13100 |
 | fortsätt |
 
 !3 Verifiera registrering sida 3
@@ -38,4 +38,10 @@
 | check | telefonnummer | 987654321 |
 | check | epost | !-test@example.com-! |
 | check | gatuadress | gatuadress |
-| check | postnummer| 99999 |
+| check | postnummer | 13100 |
+| check | postort | NACKA |
+| check | kommun | NACKA |
+| check | lan | STOCKHOLM |
+| check | legitimeradYrkesgrupp | hsaTitle1, hsaTitle2 |
+| check | specialitet | specialityName1, specialityName2 |
+| check | forskrivarkod | 1234567 |

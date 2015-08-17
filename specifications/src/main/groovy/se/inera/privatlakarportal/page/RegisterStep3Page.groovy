@@ -2,7 +2,7 @@ package se.inera.privatlakarportal.page
 
 class RegisterStep3Page extends RegisterPage {
     static url = "/#/registrera/steg3"
-    static at = { $("#step3").isDisplayed() }
+    static at = { $("#step3").isDisplayed() && doneLoading() }
 
     static content = {
         registerBtn { $("#registerBtn")}
@@ -24,6 +24,7 @@ class RegisterStep3Page extends RegisterPage {
         postnummer { $("#postnummer") }
         postort { $("#postort") }
         kommun { $("#kommun") }
+        lan { $("#lan") }
 
         legitimeradYrkesgrupp { $("#legitimeradYrkesgrupp") }
         specialitet { $("#specialitet") }
@@ -57,6 +58,7 @@ class RegisterStep3Page extends RegisterPage {
     public String hamtaPostnummer() { return postnummer.text() }
     public String hamtaPostort() { return postort.text() }
     public String hamtaKommun() { return kommun.text() }
+    public String hamtaLan() { return lan.text() }
 
     public String hamtaLegitimeradYrkesgrupp() { return legitimeradYrkesgrupp.text() }
     public String hamtaSpecialitet() { return specialitet.text() }
