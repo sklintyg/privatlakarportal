@@ -17,6 +17,10 @@ angular.module('privatlakareApp').factory('RegisterProxy',
                     if(!ObjectHelper.isDefined(data)) {
                         promise.reject(data);
                     } else {
+                        data.registration.befattning = { id: data.registration.befattning };
+                        data.registration.vardform = { id: data.registration.vardform };
+                        data.registration.verksamhetstyp = { id: data.registration.verksamhetstyp };
+                        data.registration.epost2 = data.registration.epost;
                         promise.resolve(data.registration);
                     }
                 }).error(function(data, status) {

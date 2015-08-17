@@ -18,13 +18,39 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                         return false;
                     };
 
+                    function setKommunSelected(value) {
+                        $sessionStorage.kommunSelected = value;
+                        $scope.viewState.kommunSelected = $sessionStorage.kommunSelected;
+                    }
+
                     function clearRegionData() {
                         $scope.registerModel.postort = null;
                         $scope.registerModel.kommun = null;
-                        $sessionStorage.kommunSelected = null;
-                        $scope.viewState.kommunSelected = $sessionStorage.kommunSelected;
+                        setKommunSelected(null);
                         $scope.registerModel.lan = null;
                         $scope.viewState.kommunSelectionMode = false;
+                    }
+
+                    function setRegionModel(regionList) {
+                        if (regionList.length > 1) {
+                            $scope.registerModel.postort = regionList[0].postort;
+
+                            // Reset everything if kommun hasn't been chosen
+                            if ($scope.registerModel.kommun === null) {
+                                $scope.registerModel.kommun = null;
+                                setKommunSelected(null);
+                                $scope.registerModel.lan = null;
+                            } else {
+                                // Otherwise set loaded values
+                                setKommunSelected({ id: $scope.registerModel.kommun,
+                                    label: $scope.registerModel.kommun, lan: $scope.registerModel.lan });
+                            }
+
+                        } else {
+                            $scope.registerModel.postort = regionList[0].postort;
+                            $scope.registerModel.kommun = regionList[0].kommun;
+                            $scope.registerModel.lan = regionList[0].lan;
+                        }
                     }
 
                     function loadRegions(postnummer) {
@@ -41,16 +67,7 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                                 } else {
                                     $sessionStorage.cachedRegionList = angular.copy(regionList);
                                     updateRegionView(regionList);
-                                    if(regionList.length > 1) {
-                                        $scope.registerModel.postort = regionList[0].postort;
-                                        $scope.registerModel.kommun = null;
-                                        $sessionStorage.kommunSelected = null;
-                                        $scope.registerModel.lan = null;
-                                    } else {
-                                        $scope.registerModel.postort = regionList[0].postort;
-                                        $scope.registerModel.kommun = regionList[0].kommun;
-                                        $scope.registerModel.lan = regionList[0].lan;
-                                    }
+                                    setRegionModel(regionList);
                                 }
 
                             }, function(errorData) {
@@ -72,7 +89,7 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                         if(regionList.length > 1) {
                             $scope.viewState.kommunSelectionMode = true;
                             angular.forEach(regionList, function(value, key) {
-                                this.push({ id: key, label: value.kommun, lan: value.lan});
+                                this.push({ id: value.kommun, label: value.kommun, lan: value.lan});
                             }, $scope.viewState.kommunOptions);
                         } else {
                             $scope.viewState.kommunSelectionMode = false;
@@ -80,20 +97,7 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                     }
 
                     $scope.$watch('registerModel.postnummer', function(newVal, oldVal) {
-
-                        if(newVal === oldVal) {
-                            // First load. If we don't have a postort yet, load data from backend
-                            if($scope.registerModel.postort === null) {
-                                loadRegions(newVal);
-                            } else { // Otherwise just set what we have in the model and only load later if the postnummer changes
-                                // Update view from the last region request
-                                $scope.viewState.validPostnummer = true; // Must be a valid postnummer since we have looked up postort before.
-                                updateRegionView($sessionStorage.cachedRegionList);
-                                $scope.viewState.kommunSelected = $sessionStorage.kommunSelected;
-                            }
-                        } else {
-                            loadRegions(newVal);
-                        }
+                        loadRegions(newVal);
                     });
 
                     $scope.$watch('viewState.kommunSelected', function(newVal) {
@@ -103,13 +107,11 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
 
                         if(typeof newVal === 'object' && newVal !== null) {
                             $scope.registerModel.kommun = newVal.label;
-                            $sessionStorage.kommunSelected = newVal;
-                            $scope.viewState.kommunSelected = $sessionStorage.kommunSelected;
+                            setKommunSelected(newVal);
                             $scope.registerModel.lan = newVal.lan;
                         } else {
                             $scope.registerModel.kommun = null;
-                            $sessionStorage.kommunSelected = null;
-                            $scope.viewState.kommunSelected = $sessionStorage.kommunSelected;
+                            setKommunSelected(null);
                             $scope.registerModel.lan = null;
                         }
                     });

@@ -41,7 +41,7 @@ public class Privatlakare {
     @Column(name = "ENHETS_NAMN", nullable = false)
     private String enhetsNamn;
 
-    @Column(name = "ARBETSPLATSKOD", nullable = false)
+    @Column(name = "ARBETSPLATSKOD", nullable = true)
     private String arbetsplatsKod;
 
     @Column(name = "AGARFORM", nullable = false)

@@ -46,7 +46,7 @@
          <constraints nullable="false" />
        </column>
       <column name="ARBETSPLATSKOD" type="varchar(255)">
-         <constraints nullable="false" />
+         <constraints nullable="true" />
        </column>
       <column name="AGARFORM" type="varchar(255)" defaultValue="Privat">
          <constraints nullable="false" />
