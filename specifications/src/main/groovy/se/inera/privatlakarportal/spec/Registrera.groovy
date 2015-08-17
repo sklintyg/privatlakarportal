@@ -129,10 +129,10 @@ class Registrera {
         return result
     }
 
-    public String agandeform() {
+    public String agarform() {
         String result
         Browser.drive {
-            result = page.hamtaAgandeform()
+            result = page.hamtaAgarform()
         }
         return result
     }

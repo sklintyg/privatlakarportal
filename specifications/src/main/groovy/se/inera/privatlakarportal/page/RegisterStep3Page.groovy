@@ -13,7 +13,7 @@ class RegisterStep3Page extends RegisterPage {
         namn { $("#namn") }
         befattning { $("#befattning") }
         verksamhetensnamn { $("#verksamhetensnamn") }
-        agandeform { $("#agandeform") }
+        agarform { $("#agarform") }
         vardform { $("#vardform") }
         verksamhetstyp { $("#verksamhetstyp") }
         arbetsplatskod { $("#arbetsplatskod") }
@@ -46,7 +46,7 @@ class RegisterStep3Page extends RegisterPage {
     public String hamtaNamn() { return namn.text() }
     public String hamtaBefattning() { return befattning.text() }
     public String hamtaVerksamhetensnamn() { return verksamhetensnamn.text() }
-    public String hamtaAgandeform() { return agandeform.text() }
+    public String hamtaAgarform() { return agarform.text() }
     public String hamtaVardform() { return vardform.text() }
     public String hamtaVerksamhetstyp() { return verksamhetstyp.text() }
     public String hamtaArbetsplatskod() { return arbetsplatskod.text() }

@@ -31,7 +31,7 @@
 | check | namn| Sandra Nilsson |
 | check | befattning | Specialistläkare |
 | check | verksamhetensnamn | Fitnesse verksamhet |
-| check | agandeform| Privat |
+| check | agarform| Privat |
 | check | vardform | Hemsjukvård  |
 | check | verksamhetstyp | Primärvårdsverksamhet |
 | check | arbetsplatskod | 770088 |
