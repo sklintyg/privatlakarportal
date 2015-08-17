@@ -1,12 +1,14 @@
 package se.inera.privatlakarportal.service;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.ifv.hsawsresponder.v3.*;
+import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
@@ -14,10 +16,11 @@ import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.dto.HospInformation;
+import se.inera.privatlakarportal.service.dto.SaveRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponseStatus;
-import se.inera.privatlakarportal.web.controller.api.dto.Registration;
+import se.inera.privatlakarportal.service.dto.CreateRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.dto.Registration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -39,6 +42,8 @@ public class RegisterServiceImplTest {
     @Mock
     private UserService userService;
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @InjectMocks
     private RegisterService registerService = new RegisterServiceImpl();
@@ -74,10 +79,28 @@ public class RegisterServiceImplTest {
         return registration;
     }
 
-    @Test(expected = PrivatlakarportalServiceException.class)
+    @Test
     public void testInvalidCreateRegistration() {
+
+        thrown.expect(PrivatlakarportalServiceException.class );
+        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
+
         Registration registration = new Registration();
         registerService.createRegistration(registration);
+    }
+
+    @Test
+    public void testcreatePrivatlakareAlreadyExists() {
+
+        thrown.expect(PrivatlakarportalServiceException.class );
+        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS));
+
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+
+        when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(new Privatlakare());
+
+        Registration registration = createValidRegistration();
+        CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
     }
 
     @Test
@@ -86,8 +109,6 @@ public class RegisterServiceImplTest {
         PrivatlakareId privatlakareId = new PrivatlakareId();
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
-
-        when(privatlakareRepository.save(any(Privatlakare.class))).then(AdditionalAnswers.returnsFirstArg());
 
         when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
 
@@ -111,8 +132,6 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(privatlakareRepository.save(any(Privatlakare.class))).then(AdditionalAnswers.returnsFirstArg());
-
         when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
 
         when(hospPersonService.getHospPerson("1912121212")).thenReturn(createGetHospPersonResponse());
@@ -132,8 +151,6 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(privatlakareRepository.save(any(Privatlakare.class))).then(AdditionalAnswers.returnsFirstArg());
-
         when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
 
         when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
@@ -146,6 +163,33 @@ public class RegisterServiceImplTest {
         verify(privatlakareRepository).save(any(Privatlakare.class));
         verify(hospPersonService).handleCertifier(eq("1912121212"), any(String.class));
         assertEquals(response, CreateRegistrationResponseStatus.AUTHENTICATION_INPROGRESS);
+    }
+
+    @Test
+    public void testSavePrivatlakare() {
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+
+        when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(new Privatlakare());
+
+        Registration registration = createValidRegistration();
+        SaveRegistrationResponseStatus response = registerService.saveRegistration(registration);
+
+        verify(privatlakareRepository).save(any(Privatlakare.class));
+        assertEquals(response, SaveRegistrationResponseStatus.OK);
+    }
+
+    @Test
+    public void testSavePrivatlakareNotFound() {
+
+        thrown.expect(PrivatlakarportalServiceException.class );
+        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.NOT_FOUND));
+
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+
+        when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(null);
+
+        Registration registration = createValidRegistration();
+        SaveRegistrationResponseStatus response = registerService.saveRegistration(registration);
     }
 
     @Test

@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.web.controller.api.dto;
+package se.inera.privatlakarportal.service.dto;
 
 /**
  * Created by pebe on 2015-08-05.

@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.web.controller.api.dto;
+package se.inera.privatlakarportal.service.dto;
 
 import org.apache.commons.lang.StringUtils;
 

@@ -1,5 +1,7 @@
 package se.inera.privatlakarportal.web.controller.api.dto;
 
+import se.inera.privatlakarportal.service.dto.CreateRegistrationResponseStatus;
+
 public class CreateRegistrationResponse {
 
     private CreateRegistrationResponseStatus status;

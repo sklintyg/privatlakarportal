@@ -2,11 +2,14 @@ package se.inera.privatlakarportal.web.controller.api.dto;
 
 import se.inera.privatlakarportal.service.dto.Registration;
 
-public class CreateRegistrationRequest {
+/**
+ * Created by pebe on 2015-08-17.
+ */
+public class SaveRegistrationRequest {
 
     Registration registration;
 
-    public CreateRegistrationRequest() {
+    public SaveRegistrationRequest() {
     }
 
     public Registration getRegistration() {

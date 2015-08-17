@@ -7,19 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.ifv.hsawsresponder.v3.HandleCertifierResponseType;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.dto.HospInformation;
+import se.inera.privatlakarportal.service.dto.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponseStatus;
-import se.inera.privatlakarportal.web.controller.api.dto.Registration;
+import se.inera.privatlakarportal.service.dto.CreateRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.dto.Registration;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -112,45 +111,26 @@ public class RegisterServiceImpl implements RegisterService {
                     "Registration already exists");
         }
 
-        // Generate next hsaId
-        // Format: "SE" + ineras orgnr (inkl "sekelsiffror", alltså 165565594230) + "-" + "WEBCERT" + femsiffrigt löpnr.
-        // PrivatlakareId uses an autoincrement column to get next value
-        PrivatlakareId privatlakareId = privatlakareidRepository.save(new PrivatlakareId());
-        String hsaId = "SE165565594230-WEBCERT" + StringUtils.leftPad(Integer.toString(privatlakareId.getId()), 5, '0');
-
         Privatlakare privatlakare = new Privatlakare();
 
         // TODO Get personId and name from logged in user object
         privatlakare.setPersonId(userService.getUser().getPersonalIdentityNumber());
         privatlakare.setFullstandigtNamn("Namn");
 
-        privatlakare.setAgarform("Privat");
-        privatlakare.setArbetsplatsKod(registration.getArbetsplatskod());
+        // Generate next hsaId
+        // Format: "SE" + ineras orgnr (inkl "sekelsiffror", alltså 165565594230) + "-" + "WEBCERT" + femsiffrigt löpnr.
+        // PrivatlakareId uses an autoincrement column to get next value
+        PrivatlakareId privatlakareId = privatlakareidRepository.save(new PrivatlakareId());
+        String hsaId = "SE165565594230-WEBCERT" + StringUtils.leftPad(Integer.toString(privatlakareId.getId()), 5, '0');
+
         privatlakare.setEnhetsId(hsaId);
-        privatlakare.setEnhetsNamn(registration.getVerksamhetensNamn());
-        privatlakare.setEpost(registration.getEpost());
         privatlakare.setHsaId(hsaId);
-        privatlakare.setKommun(registration.getKommun());
-        privatlakare.setLan(registration.getLan());
-        privatlakare.setPostadress(registration.getAdress());
-        privatlakare.setPostnummer(registration.getPostnummer());
-        privatlakare.setPostort(registration.getPostort());
-        privatlakare.setTelefonnummer(registration.getTelefonnummer());
         privatlakare.setVardgivareId(hsaId);
-        privatlakare.setVardgivareNamn(registration.getVerksamhetensNamn());
 
-        Set<Befattning> befattningar = new HashSet<Befattning>();
-        befattningar.add(new Befattning(privatlakare, registration.getBefattning()));
-        privatlakare.setBefattningar(befattningar);
+        // Set properties from client
+        convertRegistrationToPrivatlakare(registration, privatlakare);
 
-        Set<Vardform> vardformer = new HashSet<Vardform>();
-        vardformer.add(new Vardform(privatlakare, registration.getVardform()));
-        privatlakare.setVardformer(vardformer);
-
-        Set<Verksamhetstyp> verksamhetstyper = new HashSet<Verksamhetstyp>();
-        verksamhetstyper.add(new Verksamhetstyp(privatlakare, registration.getVerksamhetstyp()));
-        privatlakare.setVerksamhetstyper(verksamhetstyper);
-
+        // Lookup hospPerson in HSA
         CreateRegistrationResponseStatus status;
         GetHospPersonResponseType hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
         if (hospPersonResponse == null) {
@@ -212,5 +192,54 @@ public class RegisterServiceImpl implements RegisterService {
         privatlakareRepository.save(privatlakare);
 
         return status;
+    }
+
+    @Override
+    public SaveRegistrationResponseStatus saveRegistration(Registration registration) {
+        if (registration == null || !registration.checkIsValid()) {
+            throw new PrivatlakarportalServiceException(
+                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                    "SaveRegistrationRequest is not valid");
+        }
+
+        Privatlakare privatlakare = privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber());
+
+        if (privatlakare == null) {
+            throw new PrivatlakarportalServiceException(
+                    PrivatlakarportalErrorCodeEnum.NOT_FOUND,
+                    "Registration not found");
+        }
+
+        convertRegistrationToPrivatlakare(registration, privatlakare);
+
+        privatlakareRepository.save(privatlakare);
+
+        return SaveRegistrationResponseStatus.OK;
+    }
+
+    private void convertRegistrationToPrivatlakare(Registration registration, Privatlakare privatlakare) {
+        privatlakare.setAgarform("Privat");
+        privatlakare.setArbetsplatsKod(registration.getArbetsplatskod());
+        privatlakare.setEnhetsNamn(registration.getVerksamhetensNamn());
+        privatlakare.setEpost(registration.getEpost());
+        privatlakare.setKommun(registration.getKommun());
+        privatlakare.setLan(registration.getLan());
+        privatlakare.setPostadress(registration.getAdress());
+        privatlakare.setPostnummer(registration.getPostnummer());
+        privatlakare.setPostort(registration.getPostort());
+        privatlakare.setTelefonnummer(registration.getTelefonnummer());
+        privatlakare.setVardgivareNamn(registration.getVerksamhetensNamn());
+
+        Set<Befattning> befattningar = new HashSet<Befattning>();
+        befattningar.add(new Befattning(privatlakare, registration.getBefattning()));
+        privatlakare.setBefattningar(befattningar);
+
+        Set<Vardform> vardformer = new HashSet<Vardform>();
+        vardformer.add(new Vardform(privatlakare, registration.getVardform()));
+        privatlakare.setVardformer(vardformer);
+
+        Set<Verksamhetstyp> verksamhetstyper = new HashSet<Verksamhetstyp>();
+        verksamhetstyper.add(new Verksamhetstyp(privatlakare, registration.getVerksamhetstyp()));
+        privatlakare.setVerksamhetstyper(verksamhetstyper);
     }
 }
