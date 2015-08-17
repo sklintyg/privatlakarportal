@@ -32,6 +32,12 @@ describe('Proxy: RegisterProxy', function() {
         'adress':'fsdf','postnummer':'325235','postort':'Linköping','kommun':'Linköping','lan':'Östergötland'}
     };
 
+    var testGetLakareModel = {
+        'befattning':'201012','verksamhetensNamn':'dfggd','agarForm':'Privat','vardform':'03','verksamhetstyp':'15','arbetsplatskod':'dfgd',
+            'telefonnummer':'a@a.a','epost':'a@a.a',
+            'adress':'fsdf','postnummer':'325235','postort':'Linköping','kommun':'Linköping','lan':'Östergötland'
+    };
+
     // Initialize the controller and a mock scope
     beforeEach(inject(function(_$rootScope_, _$httpBackend_, _RegisterProxy_) {
         $httpBackend = _$httpBackend_;
@@ -43,14 +49,14 @@ describe('Proxy: RegisterProxy', function() {
         it('should get the data for the logged in privatlakare', function() {
             var onSuccess = jasmine.createSpy('onSuccess');
             var onError = jasmine.createSpy('onError');
-            $httpBackend.expectGET('/api/registration/get').respond(testGetLakareResponse);
+            $httpBackend.expectGET('/api/registration').respond(testGetLakareResponse);
 
             RegisterProxy.getPrivatlakare().then(onSuccess, onError);
             $httpBackend.flush();
             // promises are resolved/dispatched only on next $digest cycle
             $rootScope.$apply();
 
-            expect(onSuccess).toHaveBeenCalledWith(testGetLakareResponse);
+            expect(onSuccess).toHaveBeenCalledWith(testGetLakareModel);
             expect(onError).not.toHaveBeenCalled();
         });
 
