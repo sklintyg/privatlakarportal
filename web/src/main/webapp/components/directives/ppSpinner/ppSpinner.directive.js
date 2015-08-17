@@ -11,7 +11,7 @@ angular.module('privatlakareApp').directive('ppSpinner',
                 showSpinner: '=',
                 isHeader: '='
             },
-            templateUrl: '/components/ppSpinner/ppSpinner.directive.html',
+            templateUrl: '/components/directives/ppSpinner/ppSpinner.directive.html',
             link: {
                 pre : function (/*scope, element*/){
                     $window.rendered = false;

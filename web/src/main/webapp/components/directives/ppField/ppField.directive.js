@@ -21,6 +21,6 @@ angular.module('privatlakareApp').directive('ppField',
                         return !($scope.registerForm[$scope.controlName].$invalid && $scope.registerForm.$submitted);
                     };
                 },
-                templateUrl: 'components/ppField/ppField.directive.html'
+                templateUrl: 'components/directives/ppField/ppField.directive.html'
             };
         }]);

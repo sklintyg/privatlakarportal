@@ -116,6 +116,6 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                         }
                     });
                 },
-                templateUrl: 'components/formKontaktUppgifter/formKontaktUppgifter.directive.html'
+                templateUrl: 'components/appDirectives/formKontaktUppgifter/formKontaktUppgifter.directive.html'
             };
         });

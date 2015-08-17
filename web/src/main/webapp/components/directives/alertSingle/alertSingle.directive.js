@@ -18,6 +18,6 @@ angular.module('privatlakareApp').directive('alertSingle',
                         $scope.alertModel = false;
                     };
                 },
-                templateUrl: 'components/alertSingle/alertSingle.directive.html'
+                templateUrl: 'components/directives/alertSingle/alertSingle.directive.html'
             };
         }]);
