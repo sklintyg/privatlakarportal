@@ -3,8 +3,9 @@ package se.inera.privatlakarportal.web.controller.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import se.inera.privatlakarportal.service.RegisterService;
-import se.inera.privatlakarportal.service.dto.CreateRegistrationResponseStatus;
-import se.inera.privatlakarportal.service.dto.SaveRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.CreateRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
+import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.postnummer.PostnummerService;
 import se.inera.privatlakarportal.web.controller.api.dto.*;
 
@@ -23,7 +24,8 @@ public class RegisterController {
 
     @RequestMapping(value = "/registration")
     public GetRegistrationResponse getRegistration() {
-        return new GetRegistrationResponse(registerService.getRegistration());
+        RegistrationWithHospInformation registrationWithHospInformation = registerService.getRegistration();
+        return new GetRegistrationResponse(registrationWithHospInformation.getRegistration(), registrationWithHospInformation.getHospInformation());
     }
 
     @RequestMapping(value = "/registration/create", method = RequestMethod.POST, consumes = "application/json")

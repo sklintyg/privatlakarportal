@@ -15,12 +15,12 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.service.dto.HospInformation;
-import se.inera.privatlakarportal.service.dto.SaveRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.HospInformation;
+import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.service.dto.CreateRegistrationResponseStatus;
-import se.inera.privatlakarportal.service.dto.Registration;
+import se.inera.privatlakarportal.service.model.CreateRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.Registration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.service.dto;
+package se.inera.privatlakarportal.service.model;
 
 import java.util.List;
 

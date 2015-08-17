@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.web.controller.api.dto;
 
-import se.inera.privatlakarportal.service.dto.Registration;
+import se.inera.privatlakarportal.service.model.HospInformation;
+import se.inera.privatlakarportal.service.model.Registration;
 
 /**
  * Created by pebe on 2015-08-06.
@@ -9,8 +10,11 @@ public class GetRegistrationResponse {
 
     private Registration registration;
 
-    public GetRegistrationResponse(Registration registration) {
+    private HospInformation hospInformation;
+
+    public GetRegistrationResponse(Registration registration, HospInformation hospInformation) {
         this.registration = registration;
+        this.hospInformation = hospInformation;
     }
 
     public Registration getRegistration() {
@@ -19,5 +23,13 @@ public class GetRegistrationResponse {
 
     public void setRegistration(Registration registration) {
         this.registration = registration;
+    }
+
+    public HospInformation getHospInformation() {
+        return hospInformation;
+    }
+
+    public void setHospInformation(HospInformation hospInformation) {
+        this.hospInformation = hospInformation;
     }
 }

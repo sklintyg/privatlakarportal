@@ -11,14 +11,13 @@ import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.service.dto.HospInformation;
-import se.inera.privatlakarportal.service.dto.SaveRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.*;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.service.dto.CreateRegistrationResponseStatus;
-import se.inera.privatlakarportal.service.dto.Registration;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -45,7 +44,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     @Transactional
-    public Registration getRegistration() {
+    public RegistrationWithHospInformation getRegistration() {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber());
 
         if (privatlakare == null) {
@@ -75,7 +74,22 @@ public class RegisterServiceImpl implements RegisterService {
             registration.setVerksamhetstyp(privatlakare.getVerksamhetstyper().iterator().next().getKod());
         }
 
-        return registration;
+        HospInformation hospInformation = new HospInformation();
+        List<String> legitimeradeYrkesgrupper = new ArrayList<String>();
+        for(LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
+            legitimeradeYrkesgrupper.add(legitimeradYrkesgrupp.getNamn());
+        }
+        hospInformation.setHsaTitles(legitimeradeYrkesgrupper);
+
+        List<String> specialiteter = new ArrayList<String>();
+        for(Specialitet specialitet : privatlakare.getSpecialiteter()) {
+            specialiteter.add(specialitet.getNamn());
+        }
+        hospInformation.setSpecialityNames(specialiteter);
+
+        hospInformation.setPersonalPrescriptionCode(privatlakare.getForskrivarKod());
+
+        return new RegistrationWithHospInformation(registration, hospInformation);
     }
 
     @Override

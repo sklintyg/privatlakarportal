@@ -1,9 +1,9 @@
 package se.inera.privatlakarportal.service;
 
-import se.inera.privatlakarportal.service.dto.HospInformation;
-import se.inera.privatlakarportal.service.dto.CreateRegistrationResponseStatus;
-import se.inera.privatlakarportal.service.dto.Registration;
-import se.inera.privatlakarportal.service.dto.SaveRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.HospInformation;
+import se.inera.privatlakarportal.service.model.CreateRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.Registration;
+import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 
 /**
  * Created by pebe on 2015-06-25.
@@ -14,7 +14,7 @@ public interface RegisterService {
 
     SaveRegistrationResponseStatus saveRegistration(Registration registration);
 
-    Registration getRegistration();
+    se.inera.privatlakarportal.service.model.RegistrationWithHospInformation getRegistration();
 
     HospInformation getHospInformation();
 }

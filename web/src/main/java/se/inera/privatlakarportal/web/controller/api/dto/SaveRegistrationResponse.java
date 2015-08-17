@@ -1,6 +1,6 @@
 package se.inera.privatlakarportal.web.controller.api.dto;
 
-import se.inera.privatlakarportal.service.dto.SaveRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 
 /**
  * Created by pebe on 2015-08-17.
