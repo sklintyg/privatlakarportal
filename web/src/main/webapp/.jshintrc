@@ -32,6 +32,8 @@
         "describe": false,
         "expect": false,
         "it": false,
+        "xit": false,
+        "spyOn": false,
         "jasmine": false,
         "angular": true,
         "moment": false,

@@ -13,10 +13,10 @@ angular.module('privatlakareApp').directive('ppSpinner',
             },
             templateUrl: '/components/ppSpinner/ppSpinner.directive.html',
             link: {
-                pre : function (scope, element){
+                pre : function (/*scope, element*/){
                     $window.rendered = false;
                 },
-                post : function (scope, element){
+                post : function (scope/*, element*/){
                     scope.$watch('showSpinner', function(newVal, oldVal){
                         if (newVal !== oldVal && !newVal && !scope.isHeader) {
                             $timeout(function(){

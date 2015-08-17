@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').factory('OmradeProxy',
-        function($http, $log, $q,
-            ObjectHelper) {
+        function($http, $log, $q
+            ) {
             'use strict';
 
             /*

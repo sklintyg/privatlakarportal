@@ -2,7 +2,7 @@ describe('Proxy: RegisterProxy', function() {
     'use strict';
 
     // Load the module and mock away everything that is not necessary.
-    beforeEach(angular.mock.module('privatlakareApp', function($provide) {
+    beforeEach(angular.mock.module('privatlakareApp', function(/*$provide*/) {
 
     }));
 
@@ -10,9 +10,10 @@ describe('Proxy: RegisterProxy', function() {
     
     var correctRegisterModel = {'befattning':{'id':'201013','label':'Företagsläkare'},'verksamhetensNamn':'arar','agarForm':'Privat',
         'vardform':{'id':'03','label':'Hemsjukvård'},'verksamhetstyp':{'id':'12','label':'Laboratorieverksamhet'},'arbetsplatskod':'aetaet',
-        'telefonnummer':'325325','epost':'a@a.a','epost2':'a@a.a','adress':'gesgs','postnummer':'35463','postort':'Linköping','kommun':'Linköping','lan':'Östergötland',
+        'telefonnummer':'325325','epost':'a@a.a','epost2':'a@a.a','adress':'gesgs','postnummer':'35463',
+        'postort':'Linköping','kommun':'Linköping','lan':'Östergötland',
         'legitimeradYrkesgrupp':'Läkare','specialitet':'Allmän medicin','forskrivarkod':'0123456'};
-    
+/*
     var correctDTO = { 'registration':{
         'befattning':'202010',
         'verksamhetensNamn':'ewrsfdbg',
@@ -25,7 +26,7 @@ describe('Proxy: RegisterProxy', function() {
         'legitimeradYrkesgrupp':'Läkare','specialitet':'Allmän medicin','forskrivarkod':'0123456'
     }};
     //var incorrectRegisterModel = angular.copy(correctRegisterModel);
-
+*/
     var testGetLakareResponse = {'registration':
         {'befattning':'201012','verksamhetensNamn':'dfggd','agarForm':'Privat','vardform':'03','verksamhetstyp':'15','arbetsplatskod':'dfgd',
         'telefonnummer':'a@a.a','epost':'a@a.a',

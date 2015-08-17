@@ -88,7 +88,7 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                         $scope.viewState.kommunOptions = [];
                         if(regionList.length > 1) {
                             $scope.viewState.kommunSelectionMode = true;
-                            angular.forEach(regionList, function(value, key) {
+                            angular.forEach(regionList, function(value/*, key*/) {
                                 this.push({ id: value.kommun, label: value.kommun, lan: value.lan});
                             }, $scope.viewState.kommunOptions);
                         } else {
@@ -96,7 +96,7 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                         }
                     }
 
-                    $scope.$watch('registerModel.postnummer', function(newVal, oldVal) {
+                    $scope.$watch('registerModel.postnummer', function(newVal/*, oldVal*/) {
                         loadRegions(newVal);
                     });
 

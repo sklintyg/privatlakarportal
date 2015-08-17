@@ -10,7 +10,8 @@ describe('Service: RegisterViewstateService', function() {
 
     var testModelNoHOSP = {'befattning':{'id':'201013','label':'Företagsläkare'},'verksamhetensNamn':'arar','agarForm':'Privat',
         'vardform':{'id':'03','label':'Hemsjukvård'},'verksamhetstyp':{'id':'12','label':'Laboratorieverksamhet'},'arbetsplatskod':'aetaet',
-        'telefonnummer':'325325','epost':'a@a.a','epost2':'a@a.a','adress':'gesgs','postnummer':'35463','postort':'Linköping','kommun':'Linköping','lan':'Östergötland',
+        'telefonnummer':'325325','epost':'a@a.a','epost2':'a@a.a','adress':'gesgs','postnummer':'35463',
+        'postort':'Linköping','kommun':'Linköping','lan':'Östergötland',
         'legitimeradYrkesgrupp':null,'specialitet':null,'forskrivarkod':null};
     
     // Initialize the controller and a mock scope
@@ -34,7 +35,7 @@ describe('Service: RegisterViewstateService', function() {
 
             spyOn(HospProxy, 'getHospInformation').and.callFake(function() {
                 return {
-                    then: function(onSuccess, onError) {
+                    then: function(onSuccess) {
                         onSuccess(mockResponse.hospModel);
                     }
                 };

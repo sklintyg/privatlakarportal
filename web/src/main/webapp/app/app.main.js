@@ -18,7 +18,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $too
     });
 
     // Add replaceAll function to all strings.
-    String.prototype.replaceAll = function(f,r) {
+    String.prototype.replaceAll = function(f,r) { // jshint ignore:line
         return this.split(f).join(r);
     };
 
