@@ -17,12 +17,12 @@ angular.module('privatlakareApp').directive('ppSpinner',
                     $window.rendered = false;
                 },
                 post : function (scope/*, element*/){
-                    scope.$watch('showContent', function(newVal, oldVal){
-                        if (newVal !== oldVal && newVal && !scope.isHeader) {
+                    scope.$watch('showSpinner', function(newVal, oldVal){
+                        if (newVal !== oldVal && !newVal && !scope.isHeader) {
                             $timeout(function(){
                                 $window.rendered = true;
                             });
-                        } else if(!newVal){
+                        } else if(newVal){
                             $window.rendered = false;
                         }
                     });
