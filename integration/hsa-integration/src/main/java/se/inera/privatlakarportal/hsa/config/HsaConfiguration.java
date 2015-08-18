@@ -40,18 +40,18 @@ public class HsaConfiguration {
     @Value("${hsa.ws.key.manager.password}")
     String hsaWsKeyManagerPassword;
 
-    @Value("${hsa.ws.certificate.file)")
+    @Value("${hsa.ws.certificate.file}")
     String hsaWsCertificateFile;
-    @Value("${hsa.ws.certificate.password)")
+    @Value("${hsa.ws.certificate.password}")
     String hsaWsCertificatePassword;
-    @Value("${hsa.ws.certificate.type)")
+    @Value("${hsa.ws.certificate.type}")
     String hsaWsCertificateType;
 
-    @Value("${hsa.ws.truststore.file)")
+    @Value("${hsa.ws.truststore.file}")
     String hsaWsTruststoreFile;
-    @Value("${hsa.ws.truststore.password)")
+    @Value("${hsa.ws.truststore.password}")
     String hsaWsTruststorePassword;
-    @Value("${hsa.ws.truststore.type)")
+    @Value("${hsa.ws.truststore.type}")
     String hsaWsTruststoreType;
 
     @Bean
