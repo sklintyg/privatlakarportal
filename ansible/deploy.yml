@@ -4,8 +4,8 @@
   sudo: yes 
   vars:
     # repo - values: snapshot or release
-    repo: releases
-    version: 1.0.0-b8
+    repo: snapshots
+    version: 1.0.0-SNAPSHOT
     config_version: master
 
   roles:
