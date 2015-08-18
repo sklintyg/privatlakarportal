@@ -28,7 +28,7 @@ describe('Service: RegisterViewstateService', function() {
         HospProxy = _HospProxy_;
     }));
 
-    describe('decorateModelWithHospInfo', function() {
+    xdescribe('decorateModelWithHospInfo', function() {
 
         // Success
         it('should decorate the model with hospinfo', function() {
