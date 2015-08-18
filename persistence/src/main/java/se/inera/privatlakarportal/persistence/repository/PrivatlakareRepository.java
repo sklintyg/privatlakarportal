@@ -12,6 +12,9 @@ import java.util.List;
  */
 public interface PrivatlakareRepository extends JpaRepository<Privatlakare, String> {
 
+    @Query("SELECT p from Privatlakare p WHERE p.hsaId = :hsaId")
+    Privatlakare findByHsaId(@Param("hsaId") String hsaId);
+
     @Query("SELECT p from Privatlakare p WHERE p.personId = :personId")
     Privatlakare findByPersonId(@Param("personId") String personId);
 

@@ -2,7 +2,7 @@
   Gradle settings for Privatläkarportal
  */
 rootProject.name = 'privatlakarportal'
-include ':web', ':specifications', ':integration/hsa-integration', ':integration/wc-integration', ':persistence'
+include ':web', ':specifications', ':integration/hsa-integration', ':integration/wc-integration', ':persistence', ':common'
 include ':tools/liquibase-runner'
 
 project(':web').name = 'privatlakarportal-web'
@@ -12,4 +12,5 @@ project(':integration/wc-integration').name = 'privatlakarportal-wc-integration'
 project(':persistence').name = 'privatlakarportal-persistence'
 project(':tools/liquibase-runner').name = 'privatlakarportal-liquibase-runner'
 project(':privatlakarportal-liquibase-runner').projectDir = "$rootDir/tools/liquibase-runner" as File
+project(':common').name = 'privatlakarportal-common'
 
