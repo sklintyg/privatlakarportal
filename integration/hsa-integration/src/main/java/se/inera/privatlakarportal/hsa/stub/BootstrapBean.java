@@ -43,7 +43,7 @@ public class BootstrapBean {
 
     @PostConstruct
     public void bootstrapHospPerson() throws IOException {
-        List<Resource> files = getResourceListing("bootstrap-hospperson/*.json");
+        List<Resource> files = getResourceListing("classpath:bootstrap-hospperson/*.json");
         LOG.debug("Bootstrapping {} hospPerson for HSA stub ...", files.size());
         for (Resource res : files) {
             addHospPerson(res);

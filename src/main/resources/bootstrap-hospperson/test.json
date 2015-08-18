@@ -1,0 +1,11 @@
+{
+    "personalIdentityNumber": "191212121212",
+    "personalPrescriptionCode": "1234567",
+    "educationCodes":["educationCode1","educationCode2"],
+    "restrictions":["restriction1","restriction2"],
+    "restrictionCodes":["restrictionCode1","restrictionCode2"],
+    "titleCodes":["titleCode1","titleCode2"],
+    "specialityCodes":["specialityCode1","specialityCode2"],
+    "specialityNames":["specialityName1","specialityName2"],
+    "hsaTitles":["hsaTitle1","hsaTitle2"]
+}

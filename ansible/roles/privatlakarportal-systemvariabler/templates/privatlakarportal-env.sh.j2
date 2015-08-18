@@ -1,3 +1,6 @@
+ENV_CFG="-Dspring.profiles.active={{ profiles }}"
+JVM_CFG="-Xms1024m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=512m -Dfile.encoding=UTF-8"
 PRIVATLAKARPORTAL_CFG="-Dprivatlakarportal.config.folder={{ config_etc_folder }} -Dprivatlakarportal.config.file={{ config_etc_folder }}/privatlakarportal.properties -Dprivatlakarportal.logback.file={{ config_etc_folder }}/privatlakarportal-logback.xml"
 PRIVATLAKARPORTAL_RESOURCES="-Dprivatlakarportal.resources.folder={{ app_resources_folder }}"
-export JAVA_OPTS="$JAVA_OPTS $PRIVATLAKARPORTAL_CFG $PRIVATLAKARPORTAL_RESOURCES"
+LOGSENDER_CFG="-Dlogsender.config.folder={{ config_etc_folder }} -Dlogsender.config.file={{ config_etc_folder }}/logsender.properties -Dlogsender.logback.file={{ config_etc_folder }}/logsender-logback.xml"
+export JAVA_OPTS="$JAVA_OPTS $ENV_CFG $JVM_CFG $PRIVATLAKARPORTAL_CFG $PRIVATLAKARPORTAL_RESOURCES $LOGSENDER_CFG"

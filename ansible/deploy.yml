@@ -4,9 +4,10 @@
   sudo: yes 
   vars:
     # repo - values: snapshot or release
-    repo: snapshots
-    version: 1.0.0-SNAPSHOT
+    repo: releases
+    version: 1.0.0-b8
     config_version: master
 
   roles:
+    - app-resources
     - privatlakarportal
