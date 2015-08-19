@@ -4,4 +4,4 @@ PRIVATLAKARPORTAL_CFG="-Dprivatlakarportal.config.folder={{ config_etc_folder }}
 PRIVATLAKARPORTAL_RESOURCES="-Dprivatlakarportal.resources.folder={{ app_resources_folder }}"
 CREDENTIALS_CFG="-Dcredentials.file={{ config_etc_folder }}/credentials.properties"
 LOGSENDER_CFG="-Dlogsender.config.folder={{ config_etc_folder }} -Dlogsender.config.file={{ config_etc_folder }}/logsender.properties -Dlogsender.logback.file={{ config_etc_folder }}/logsender-logback.xml"
-export JAVA_OPTS="$JAVA_OPTS $ENV_CFG $JVM_CFG $PRIVATLAKARPORTAL_CFG $PRIVATLAKARPORTAL_RESOURCES $LOGSENDER_CFG"
+export JAVA_OPTS="$JAVA_OPTS $ENV_CFG $JVM_CFG $PRIVATLAKARPORTAL_CFG $PRIVATLAKARPORTAL_RESOURCES $CREDENTIALS_CFG $LOGSENDER_CFG"
