@@ -1,5 +1,5 @@
 angular.module('privatlakareApp')
-    .controller('MinsidaCtrl', function($scope, $state, $log,
+    .controller('MinsidaCtrl', function($scope, $state, $log, $window,
         UserModel, RegisterModel, RegisterViewStateService, RegisterProxy, ObjectHelper) {
         'use strict';
         $scope.user = UserModel;
@@ -34,5 +34,19 @@ angular.module('privatlakareApp')
 
         $scope.save = function() {
             RegisterProxy.savePrivatlakare(RegisterModel.get());
+        };
+
+        $window.onbeforeunload = function(event) {
+            if ($scope.registerForm.$dirty) {
+                var message = 'Om du lämnar sidan sparas inte dina ändringar.';
+                if (typeof event === 'undefined') {
+                    event = $window.event;
+                }
+                if (event) {
+                    event.returnValue = message;
+                }
+                return message;
+            }
+            return null;
         };
     });
