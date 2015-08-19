@@ -7,7 +7,7 @@ describe('Controller: MinsidaCtrl', function() {
     var MinsidaCtrl, scope;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function($controller, $rootScope) {
+    beforeEach(inject(function($controller, $rootScope, $window) {
         scope = $rootScope.$new();
         scope.registerForm = {
             $dirty: true
@@ -15,6 +15,7 @@ describe('Controller: MinsidaCtrl', function() {
         MinsidaCtrl = $controller('MinsidaCtrl', {
             $scope: scope
         });
+        $window.onbeforeunload = function() {};
     }));
 
     it('should ...', function() {

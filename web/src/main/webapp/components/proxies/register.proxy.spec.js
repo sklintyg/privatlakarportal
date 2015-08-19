@@ -2,8 +2,9 @@ describe('Proxy: RegisterProxy', function() {
     'use strict';
 
     // Load the module and mock away everything that is not necessary.
-    beforeEach(angular.mock.module('privatlakareApp', function(/*$provide*/) {
-
+    beforeEach(angular.mock.module('htmlTemplates'));
+    beforeEach(angular.mock.module('privatlakareApp', function($provide) {
+        $provide.value('RegisterModel', jasmine.createSpyObj('RegisterModel', ['get', 'convertToViewModel', 'convertToDTO']));
     }));
 
     var RegisterProxy, $rootScope, $httpBackend;
@@ -34,9 +35,11 @@ describe('Proxy: RegisterProxy', function() {
     };
 
     var testGetLakareModel = {
-        'befattning':'201012','verksamhetensNamn':'dfggd','agarForm':'Privat','vardform':'03','verksamhetstyp':'15','arbetsplatskod':'dfgd',
+        'registration': {
+            'befattning':'201012','verksamhetensNamn':'dfggd','agarForm':'Privat','vardform':'03','verksamhetstyp':'15','arbetsplatskod':'dfgd',
             'telefonnummer':'a@a.a','epost':'a@a.a',
             'adress':'fsdf','postnummer':'325235','postort':'Linköping','kommun':'Linköping','lan':'Östergötland'
+        }
     };
 
     // Initialize the controller and a mock scope
@@ -47,7 +50,7 @@ describe('Proxy: RegisterProxy', function() {
     }));
 
     describe('getPrivatlakare', function() {
-        xit('should get the data for the logged in privatlakare', function() {
+        it('should get the data for the logged in privatlakare', function() {
             var onSuccess = jasmine.createSpy('onSuccess');
             var onError = jasmine.createSpy('onError');
             $httpBackend.expectGET('/api/registration').respond(testGetLakareResponse);
@@ -57,12 +60,24 @@ describe('Proxy: RegisterProxy', function() {
             // promises are resolved/dispatched only on next $digest cycle
             $rootScope.$apply();
 
-            expect(onSuccess).toHaveBeenCalledWith(testGetLakareModel);
+            expect(onSuccess).toHaveBeenCalled();
             expect(onError).not.toHaveBeenCalled();
         });
+    });
 
-        xit('should fail when called with an incorrect RegisterModel', function() {
-            expect(1).toEqual(1);
+    describe('savePrivatlakare', function() {
+        it('should save changes to a privatlakare successfully when called with a correct RegisterModel', function() {
+            var onSuccess = jasmine.createSpy('onSuccess');
+            var onError = jasmine.createSpy('onError');
+            $httpBackend.expectPOST('/api/registration/save').respond('200', { status: 'OK'} );
+
+            RegisterProxy.savePrivatlakare(correctRegisterModel).then(onSuccess, onError);
+            $httpBackend.flush();
+            // promises are resolved/dispatched only on next $digest cycle
+            $rootScope.$apply();
+
+            expect(onSuccess).toHaveBeenCalled();
+            expect(onError).not.toHaveBeenCalled();
         });
     });
 
@@ -79,10 +94,6 @@ describe('Proxy: RegisterProxy', function() {
 
             expect(onSuccess).toHaveBeenCalled();
             expect(onError).not.toHaveBeenCalled();
-        });
-
-        xit('should fail when called with an incorrect RegisterModel', function() {
-            expect(1).toEqual(1);
         });
     });
 });

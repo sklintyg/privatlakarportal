@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').factory('RegisterProxy',
         function($http, $log, $q,
-            ObjectHelper) {
+            ObjectHelper, RegisterModel) {
             'use strict';
 
             /*
@@ -17,10 +17,7 @@ angular.module('privatlakareApp').factory('RegisterProxy',
                     if(!ObjectHelper.isDefined(data)) {
                         promise.reject(data);
                     } else {
-                        data.registration.befattning = { id: data.registration.befattning };
-                        data.registration.vardform = { id: data.registration.vardform };
-                        data.registration.verksamhetstyp = { id: data.registration.verksamhetstyp };
-                        data.registration.epost2 = data.registration.epost;
+                        data = RegisterModel.convertToViewModel(data);
                         promise.resolve(data);
                     }
                 }).error(function(data, status) {
@@ -35,15 +32,12 @@ angular.module('privatlakareApp').factory('RegisterProxy',
             /*
              * Register a privatlakare
              */
-            function _savePrivatlakare(RegisterModel) {
+            function _savePrivatlakare(registerModel) {
 
                 var promise = $q.defer();
 
                 // Create flat dto from model to send to backend
-                var dto = { registration: angular.copy(RegisterModel) };
-                dto.registration.befattning = RegisterModel.befattning.id;
-                dto.registration.vardform = RegisterModel.vardform.id;
-                dto.registration.verksamhetstyp = RegisterModel.verksamhetstyp.id;
+                var dto = RegisterModel.convertToDTO(registerModel);
                 $log.debug('savePrivatlakare dto:');
                 $log.debug(dto);
 
@@ -67,15 +61,12 @@ angular.module('privatlakareApp').factory('RegisterProxy',
             /*
              * Register a privatlakare
              */
-            function _registerPrivatlakare(RegisterModel) {
+            function _registerPrivatlakare(registerModel) {
 
                 var promise = $q.defer();
 
                 // Create flat dto from model to send to backend
-                var dto = { registration: angular.copy(RegisterModel) };
-                dto.registration.befattning = RegisterModel.befattning.id;
-                dto.registration.vardform = RegisterModel.vardform.id;
-                dto.registration.verksamhetstyp = RegisterModel.verksamhetstyp.id;
+                var dto = RegisterModel.convertToDTO(registerModel);
                 $log.debug('registerPrivatlakare dto:');
                 $log.debug(dto);
 
