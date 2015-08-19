@@ -55,7 +55,8 @@
 
   <div class="buttonbar">
     <button id="registerBtn" class="btn btn-success" ng-click="createAccount()"
-            ng-disabled="!model.godkannvillkor">Skapa konto
+            ng-disabled="!model.godkannvillkor">
+      <img ng-show="viewState.loading.register" ng-src="/assets/images/ajax-loader-small-green.gif"/> Skapa konto
     </button>
     <button id="backBtn" class="btn btn-info" ui-sref="app.register.step2">Tillbaka</button>
     <button id="abortBtn" class="btn btn-secondary" ui-sref=".abort">Avbryt</button>

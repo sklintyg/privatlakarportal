@@ -15,13 +15,16 @@ angular.module('privatlakareApp')
 
         // Skapa konto button
         $scope.createAccount = function(){
+            RegisterViewStateService.loading.register = true;
             RegisterProxy.registerPrivatlakare(model).then(function(successData) {
                 $log.debug('Registration complete - data:');
                 $log.debug(successData);
                 $state.go('app.register.complete');
+                RegisterViewStateService.loading.register = false;
                 RegisterViewStateService.errorMessage.register = null;
                 RegisterModel.reset();
             }, function(errorData) {
+                RegisterViewStateService.loading.register = false;
                 RegisterViewStateService.errorMessage.register = 'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
                 $log.debug('Failed to register errorCode:' + errorData.errorCode + ' reason:' + errorData.message);
             });

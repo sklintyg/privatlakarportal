@@ -16,7 +16,7 @@
   <div class="buttonbar section-line top-pad">
     <div alert-message alert-model="viewState.errorMessage.save" alert-severity="danger"></div>
     <button id="saveBtn" class="btn btn-success" ng-click="save()" ng-disabled="registerForm.$pristine">
-      Spara
+      <img ng-show="viewState.loading.save" ng-src="/assets/images/ajax-loader-small-green.gif"/> Spara
     </button>
   </div>
 

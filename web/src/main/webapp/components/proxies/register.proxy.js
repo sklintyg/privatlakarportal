@@ -17,7 +17,7 @@ angular.module('privatlakareApp').factory('RegisterProxy',
                     $log.debug('registration - got data:');
                     $log.debug(data);
                     if(!ObjectHelper.isDefined(data)) {
-                        promise.reject(data);
+                        promise.reject({ errorCode: data, message: 'invalid data'});
                     } else {
                         data = RegisterModel.convertToViewModel(data);
                         promise.resolve(data);
@@ -25,7 +25,11 @@ angular.module('privatlakareApp').factory('RegisterProxy',
                 }).error(function(data, status) {
                     $log.error('error ' + status);
                     // Let calling code handle the error of no data response
-                    promise.reject(data);
+                    if(data === null) {
+                        promise.reject({errorCode: data, message: 'no response'});
+                    } else {
+                        promise.reject(data);
+                    }
                 });
 
                 return promise.promise;
@@ -58,8 +62,11 @@ angular.module('privatlakareApp').factory('RegisterProxy',
                         $log.debug('dto:');
                         $log.debug(dto);
                         // Let calling code handle the error of no data response
-                        promise.reject(data);
-                    });
+                        if(data === null) {
+                            promise.reject({errorCode: data, message: 'no response'});
+                        } else {
+                            promise.reject(data);
+                        }                    });
                 }
 
                 return promise.promise;
@@ -88,7 +95,11 @@ angular.module('privatlakareApp').factory('RegisterProxy',
                     $log.debug('dto:');
                     $log.debug(dto);
                     // Let calling code handle the error of no data response
-                    promise.reject(data);
+                    if(data === null) {
+                        promise.reject({errorCode: data, message: 'no response'});
+                    } else {
+                        promise.reject(data);
+                    }
                 });
 
                 return promise.promise;

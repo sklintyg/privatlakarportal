@@ -13,8 +13,10 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             };
 
             this.loading = {
+                register: false, // step 3
                 hosp: false, // step 3
-                region: false // step 2
+                region: false, // step 2
+                save: false // minsida
             };
 
             // move to step 2 viewstateservice
