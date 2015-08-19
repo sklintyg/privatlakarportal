@@ -9,6 +9,9 @@ describe('Controller: MinsidaCtrl', function() {
     // Initialize the controller and a mock scope
     beforeEach(inject(function($controller, $rootScope) {
         scope = $rootScope.$new();
+        scope.registerForm = {
+            $dirty: true
+        };
         MinsidaCtrl = $controller('MinsidaCtrl', {
             $scope: scope
         });
