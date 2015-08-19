@@ -1,5 +1,6 @@
 angular.module('privatlakareApp').factory('HospProxy',
-        function($http, $log, $q) {
+        function($http, $log, $q,
+            networkConfig) {
             'use strict';
 
             /*
@@ -29,7 +30,7 @@ angular.module('privatlakareApp').factory('HospProxy',
                 * */
 
                 var restPath = '/api/registration/hospInformation';
-                $http.get(restPath, {timeout: 30000}).success(function(data) {
+                $http.get(restPath, {timeout: networkConfig.hospTimeout}).success(function(data) {
                     $log.debug('registration/hospInformation - got data:');
                     $log.debug(data);
                     promise.resolve(data.hospInformation);

@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').factory('OmradeProxy',
-        function($http, $log, $q
-            ) {
+        function($http, $log, $q,
+               networkConfig) {
             'use strict';
 
             /*
@@ -25,7 +25,7 @@ angular.module('privatlakareApp').factory('OmradeProxy',
                     } else {
                         var restPath = '/api/registration/omrade/' + postnummer;
                         $log.debug('REST call: getOmradeList - ' + restPath);
-                        $http.get(restPath, {timeout: 30000}).success(function(data) {
+                        $http.get(restPath, { timeout: networkConfig.regionTimeout }).success(function(data) {
                             $log.debug('registration/omrade - got data:');
                             $log.debug(data);
 

@@ -33,7 +33,12 @@ angular.module('privatlakareApp')
         });
 
         $scope.save = function() {
-            RegisterProxy.savePrivatlakare(RegisterModel.get());
+            RegisterProxy.savePrivatlakare(RegisterModel.get()).then(function(successData) {
+                $scope.registerForm.$setPristine();
+                RegisterViewStateService.errorMessage.save = null;
+            }, function(errorData) {
+                RegisterViewStateService.errorMessage.save = 'Kunde inte spara ändringarna. Försök igen senare. (' + errorData.message + ')';
+            });
         };
 
         $window.onbeforeunload = function(event) {
@@ -49,4 +54,8 @@ angular.module('privatlakareApp')
             }
             return null;
         };
+
+        $scope.$on('$destroy', function() {
+            $window.onbeforeunload = null;
+        });
     });

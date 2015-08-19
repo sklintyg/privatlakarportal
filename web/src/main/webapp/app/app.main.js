@@ -9,6 +9,12 @@ var app = angular.module('privatlakareApp', [
   'ui.bootstrap'
 ]);
 
+app.value('networkConfig', {
+    regionTimeout: 1000, // prod: 30000
+    registerTimeout: 1000, // prod: 30000
+    hospTimeout: 1000 // prod: 30000
+});
+
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $tooltipProvider) {
     'use strict';
     $urlRouterProvider.otherwise('/');
@@ -42,6 +48,9 @@ app.constant('datepickerConfig', {
     minDate: null,
     maxDate: null
 });
+
+// Global config of default date picker config (individual attributes can be
+// overridden per directive usage)
 
 app.constant('datepickerPopupConfig', {
     datepickerPopup: 'yyyy-MM-dd',

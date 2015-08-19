@@ -14,7 +14,8 @@
   <div class="top-pad"></div>
 
   <div class="buttonbar section-line top-pad">
-    <button id="saveBtn" class="btn btn-success" ng-click="save()">
+    <div alert-message alert-model="viewState.errorMessage.save" alert-severity="danger"></div>
+    <button id="saveBtn" class="btn btn-success" ng-click="save()" ng-disabled="registerForm.$pristine">
       Spara
     </button>
   </div>

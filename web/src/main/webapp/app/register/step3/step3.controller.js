@@ -22,7 +22,7 @@ angular.module('privatlakareApp')
                 RegisterViewStateService.errorMessage.register = null;
                 RegisterModel.reset();
             }, function(errorData) {
-                RegisterViewStateService.errorMessage.register = 'Kunde inte registrera privatläkare. (' + errorData.message + ')';
+                RegisterViewStateService.errorMessage.register = 'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
                 $log.debug('Failed to register errorCode:' + errorData.errorCode + ' reason:' + errorData.message);
             });
         };

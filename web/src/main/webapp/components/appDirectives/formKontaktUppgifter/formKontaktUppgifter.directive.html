@@ -41,9 +41,10 @@
 </p>
 
 <div ng-show="viewState.validPostnummer">
+  <div alert-message alert-model="viewState.errorMessage.region" alert-severity="danger"></div>
   <div pp-spinner show-spinner="viewState.loading.region" label="common.label.loading">
 
-    <p ng-show="registerModel.postort == null">
+    <p ng-show="registerModel.postort == null && viewState.errorMessage.region == null">
       <i>Inga träffar för postnummer {{registerModel.postnummer}}. Var vänlig kontrollera postnumret och försök igen.</i>
     </p>
     <div ng-show="registerModel.postort != null">

@@ -1,5 +1,6 @@
 angular.module('privatlakareApp').factory('RegisterModel',
-    function($sessionStorage, RegisterViewStateService) {
+    function($sessionStorage, $log,
+        RegisterViewStateService) {
         'use strict';
 
         var data = {};
@@ -55,6 +56,11 @@ angular.module('privatlakareApp').factory('RegisterModel',
 
         function _convertToDTO(viewModel) {
             var dto = { registration: angular.copy(viewModel) };
+            if(dto.registration.befattning === null || dto.registration.vardform === null || dto.registration.verksamhetstyp === null) {
+                $log.debug('_convertToDTO - invalid state. befattning, vardform or verksamhetstyp is null');
+                return null;
+            }
+
             dto.registration.befattning = dto.registration.befattning.id;
             dto.registration.vardform = dto.registration.vardform.id;
             dto.registration.verksamhetstyp = dto.registration.verksamhetstyp.id;

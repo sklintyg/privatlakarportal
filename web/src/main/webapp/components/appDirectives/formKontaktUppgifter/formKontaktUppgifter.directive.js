@@ -61,6 +61,7 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
 
                             OmradeProxy.getOmradeList(postnummer).then(function(regionList) {
                                 $scope.viewState.loading.region = false;
+                                $scope.viewState.errorMessage.region = null;
                                 if(regionList === null) {
                                     $log.debug('No region was found for postnummer:' + postnummer);
                                     clearRegionData();
@@ -73,6 +74,7 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                             }, function(errorData) {
                                 $log.debug('Failed to get omradeList: ' + errorData);
                                 $scope.viewState.loading.region = false;
+                                $scope.viewState.errorMessage.region = 'Kunde inte hämta områdesinformation. Försök igen senare.';
                                 clearRegionData();
                             });
 
