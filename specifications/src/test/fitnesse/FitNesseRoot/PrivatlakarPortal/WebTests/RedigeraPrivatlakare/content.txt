@@ -1,0 +1,49 @@
+!3 Skapa privatläkare via REST
+| !-SkapaPrivatlakare-! |
+#| befattning | verksamhetensNamn | agarForm | vardform | verksamhetstyp | arbetsplatskod | telefonnummer | epost | adress | postnummer | postort | kommun | lan |
+#|201013|Kliniken|Privat|03|12|0123456|070123456|a@a.a|Gatan|13100|NACKA|NACKA|STOCKHOLM|
+
+!3 Gå till min sida
+
+| script | !-RedigeraMinSida-! |
+| gå till min sida |
+| min sida visas |
+
+!3 Fyll i registrering
+| script | !-RedigeraMinSida-! |
+| ange befattning | Specialistläkare |
+| ange verksamhetensnamn | Fitnesse verksamhet |
+| ange vardform | Hemsjukvård |
+| ange verksamhetstyp | Primärvårdsverksamhet |
+| ange arbetsplatskod | 770088 |
+| ange telefonnummer | 987654321 |
+| ange epost | !-test@example.com-! |
+| ange epost2 | !-test@example.com-! |
+| ange gatuadress | gatuadress |
+| ange postnummer| 13100 |
+| spara registrering |
+
+!3 Ladda om sidan
+
+!3 Verifiera registrering
+| script | !-RedigeraMinSida-! |
+| check | personnummer | 191212121212 |
+| check | namn| Sandra Nilsson |
+| check | befattning | Specialistläkare |
+| check | verksamhetensnamn | Fitnesse verksamhet |
+| check | agarform| Privat |
+| check | vardform | Hemsjukvård  |
+| check | verksamhetstyp | Primärvårdsverksamhet |
+| check | arbetsplatskod | 770088 |
+| check | telefonnummer | 987654321 |
+| check | epost | !-test@example.com-! |
+| check | gatuadress | gatuadress |
+| check | postnummer | 13100 |
+| check | postort | NACKA |
+| check | kommun | NACKA |
+| check | lan | STOCKHOLM |
+| check | legitimeradYrkesgrupp | hsaTitle1, hsaTitle2 |
+| check | specialitet | specialityName1, specialityName2 |
+| check | forskrivarkod | 1234567 |
+
+!3 Ta bort läkaren

@@ -7,7 +7,7 @@
 
 !| Config |
 | property | value |
-| geb.build.baseUrl | ${privatlakarportal-web.url} |
+| geb.build.baseUrl | ${privatlakarportalweb.url} |
 | geb.env | chrome |
 
 | script | Browser |
