@@ -11,6 +11,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import se.inera.privatlakarportal.hsa.config.HsaConfiguration;
@@ -30,15 +31,16 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/*");
  
-// Save for spring security
-//        FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
-//        springSecurityFilterChain.addMappingForUrlPatterns(null, false, "/*");
+        // Spring security filter
+        FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
+        springSecurityFilterChain.addMappingForUrlPatterns(null, false, "/*");
  
         FilterRegistration.Dynamic hiddenHttpMethodFilter = servletContext.addFilter("hiddenHttpMethodFilter", HiddenHttpMethodFilter.class);
         hiddenHttpMethodFilter.addMappingForUrlPatterns(null, false, "/*");
 
         registerCharachterEncodingFilter(servletContext);
 
+        // CXF services filter
         ServletRegistration.Dynamic cxfServlet = servletContext.addServlet("services", new CXFServlet());
         cxfServlet.setLoadOnStartup(1);
         cxfServlet.addMapping("/services/*");

@@ -48,8 +48,9 @@ subprojects {
 
     ext {
         cxfVersion = '3.0.4'
-        springContextVersion = "4.0.8.RELEASE"
+        springContextVersion = "4.1.4.RELEASE"
         springSecurityVersion = "3.2.5.RELEASE"
+        springSecurityExtensionsVersion = "1.0.1.RELEASE"
         liquibaseVersion = "3.3.1"
     }
 }

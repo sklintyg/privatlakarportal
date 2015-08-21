@@ -16,7 +16,9 @@ dependencies {
     compile project(":privatlakarportal-persistence")
     compile project(":privatlakarportal-hsa-integration")
 
-    compile 'org.springframework:spring-webmvc:4.1.4.RELEASE'
+    compile "org.springframework:spring-webmvc:${springContextVersion}"
+    compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
+    compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecurityExtensionsVersion}"
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile 'org.slf4j:slf4j-api:1.7.10'

@@ -13,7 +13,7 @@ import se.inera.privatlakarportal.web.controller.api.dto.*;
  * Created by pebe on 2015-06-25.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/registration")
 public class RegisterController {
 
     @Autowired
@@ -22,30 +22,30 @@ public class RegisterController {
     @Autowired
     private PostnummerService postnummerService;
 
-    @RequestMapping(value = "/registration")
+    @RequestMapping(value = "")
     public GetRegistrationResponse getRegistration() {
         RegistrationWithHospInformation registrationWithHospInformation = registerService.getRegistration();
         return new GetRegistrationResponse(registrationWithHospInformation.getRegistration(), registrationWithHospInformation.getHospInformation());
     }
 
-    @RequestMapping(value = "/registration/create", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
     public CreateRegistrationResponse createRegistration(@RequestBody CreateRegistrationRequest request) {
         CreateRegistrationResponseStatus status = registerService.createRegistration(request.getRegistration());
         return new CreateRegistrationResponse(status);
     }
 
-    @RequestMapping(value = "/registration/save", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = "application/json")
     public SaveRegistrationResponse createRegistration(@RequestBody SaveRegistrationRequest request) {
         SaveRegistrationResponseStatus status = registerService.saveRegistration(request.getRegistration());
         return new SaveRegistrationResponse(status);
     }
 
-    @RequestMapping(value = "/registration/hospInformation")
+    @RequestMapping(value = "/hospInformation")
     public GetHospInformationResponse getHospInformation() {
         return new GetHospInformationResponse(registerService.getHospInformation());
     }
 
-    @RequestMapping(value = "/registration/omrade/{postnummer}")
+    @RequestMapping(value = "/omrade/{postnummer}")
     public GetOmradeResponse getOmrade(@PathVariable("postnummer") String postnummer) {
         return new GetOmradeResponse(postnummerService.getOmradeByPostnummer(postnummer));
     }

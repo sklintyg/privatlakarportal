@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.service;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
 
@@ -8,8 +9,10 @@ import se.inera.privatlakarportal.auth.PrivatlakarUser;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
     @Override
     public PrivatlakarUser getUser() {
-        return new PrivatlakarUser("191212121212");
+        return (PrivatlakarUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
 }

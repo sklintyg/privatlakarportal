@@ -2,7 +2,7 @@
 # file: host_vars/privatlakarportal-demo
 
 # Spring profiles
-profiles: test
+profiles: test,pp-security-test
 
 # Configuration repository
 environment_name: "demo"
