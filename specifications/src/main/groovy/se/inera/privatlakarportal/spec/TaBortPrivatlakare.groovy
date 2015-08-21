@@ -8,40 +8,24 @@ public class TaBortPrivatlakare extends RestClientFixture {
 
     def restClient = createRestClient()
 
-    String personnr
     String id
-    String idTemplate
-    int from
-    int to
+    String restPath = 'registration/'
 
-	private String template
-	
 	public void reset() {
-		template = null
 	}
 	
     public void execute() {
-		if (from && to && personnr && !idTemplate) {
-			template = "test-${personnr}-intyg-%1\$s"
-		} else if (idTemplate) {
-			template = idTemplate
-		}
         Exception pendingException
         String failedIds = ""
-        for (i in from..to) {
-            if (template) {
-                id = String.format(template, i)
-            }
-            try {
-            restClient.delete(
-                    path: 'certificate/' + id,
-                    requestContentType: JSON
-            )
-            } catch(e) {
-                failedIds += id + ","
-                if (!pendingException) {
-                    pendingException = e
-                }
+        try {
+        restClient.delete(
+                path: restPath + id,
+                requestContentType: JSON
+        )
+        } catch(e) {
+            failedIds += id + ","
+            if (!pendingException) {
+                pendingException = e
             }
         }
         if (pendingException) {
@@ -49,9 +33,9 @@ public class TaBortPrivatlakare extends RestClientFixture {
         }
     }
 
-    public void taBortAllaIntyg() {
+    public void taBortAllaPrivatlakare() {
         restClient.delete(
-            path: 'certificate/',
+            path: restPath,
             requestContentType: JSON
         )
     }

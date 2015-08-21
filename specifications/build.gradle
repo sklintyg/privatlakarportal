@@ -33,6 +33,7 @@ if (project.hasProperty('runFitnesse')) {
        
         jvmArgs = [
             '-Dspring.profiles.active=local',
+            '-Dprivatlakarportal-web.url=http://localhost:8090/',
             '-XX:MaxPermSize=256M',
         ]
     }

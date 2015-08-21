@@ -24,6 +24,8 @@
 | spara registrering |
 
 !3 Ladda om sidan
+| script | Browser |
+| ladda om |
 
 !3 Verifiera registrering
 | script | !-RedigeraMinSida-! |
@@ -47,3 +49,5 @@
 | check | forskrivarkod | 1234567 |
 
 !3 Ta bort läkaren
+| script | !-TaBortPrivatlakare-! |
+| ta bort alla privatlakare |
