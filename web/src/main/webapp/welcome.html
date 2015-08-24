@@ -23,14 +23,14 @@
 
   var loginArr = [
     {
-      "firstName": "Tolvan",
-      "lastName": "Privatläkarsson",
-      "personId" : "19121212-1212"
-    },
-    {
       "firstName" : "Oskar",
       "lastName" : "Johansson",
       "personId" : "199008252398"
+    },
+    {
+      "firstName": "Tolvan",
+      "lastName": "Privatläkarsson",
+      "personId" : "191212121212"
     },
     {
       "firstName" : "Nina",
@@ -90,8 +90,8 @@
 
             <h4>Mallar</h4>
             <select id="jsonSelect" name="jsonSelect" ng-model="selectedIndex" size="15" style="width: 100%" class="form-control">
-              <option value="0" id="private-practicioner-1">Tolvan Privatläkarsson (Test Privatläkare)</option>
-              <option value="1" id="private-practicioner-2">Oskar Johansson (Godkänd Privatläkare)</option>
+              <option value="0" id="private-practicioner-1">Oskar Johansson (Ej registrerad Privatläkare)</option>
+              <option value="1" id="private-practicioner-2">Tolvan Privatläkarsson (Godkänd Privatläkare)</option>
               <option value="2" id="private-practicioner-3">Nina Greger (Ej godkänd Privatläkare)</option>
             </select>
             <input id="loginBtn" type="submit" value="Logga in" class="btn btn-primary"
