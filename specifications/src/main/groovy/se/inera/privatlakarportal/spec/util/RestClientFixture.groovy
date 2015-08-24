@@ -24,7 +24,7 @@ class RestClientFixture {
      */
     static def createRestClient(String url) {
         def restClient = new RESTClient(url)
-        restClient.ignoreSSLIssues()
+        //restClient.ignoreSSLIssues()
         restClient
     }
 }

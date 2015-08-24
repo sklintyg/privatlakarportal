@@ -7,7 +7,7 @@
 
 !| Config |
 | property | value |
-| geb.build.baseUrl | ${privatlakarportal-web.url} |
+| geb.build.baseUrl | localhost:8090 |
 | geb.env | chrome |
 
 | script | Browser |

@@ -1,7 +1,7 @@
 !3 Skapa privatläkare via REST
 | !-SkapaPrivatlakare-! |
-#| befattning | verksamhetensNamn | agarForm | vardform | verksamhetstyp | arbetsplatskod | telefonnummer | epost | adress | postnummer | postort | kommun | lan |
-#|201013|Kliniken|Privat|03|12|0123456|070123456|a@a.a|Gatan|13100|NACKA|NACKA|STOCKHOLM|
+| befattning | verksamhetensNamn | agarForm | vardform | verksamhetstyp | arbetsplatskod | telefonnummer | epost | adress | postnummer | postort | kommun | lan |
+|201013|Kliniken|Privat|03|12|0123456|070123456|a@a.a|Gatan|13100|NACKA|NACKA|STOCKHOLM|
 
 !3 Gå till min sida
 
