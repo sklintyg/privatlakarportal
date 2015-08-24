@@ -21,14 +21,14 @@ module.exports = function(grunt) {
     // connect middleware for enabling post requests through
     function enablePost(req, res, next) {
 
-        console.log(req.method);
+/*        console.log(req.method);
         console.log(req.url);
         console.log(req.headers);
         console.log('Setting full access control.');
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
+*/
         return next();
     }
 
@@ -40,6 +40,7 @@ module.exports = function(grunt) {
         config: {
             // configurable paths
             client: 'src/main/webapp',
+            node_modules: 'node_modules',
             dist: 'build/webapp',
             tmp: 'build/.tmp'
         },
@@ -358,13 +359,17 @@ module.exports = function(grunt) {
             }
         },
 
+
+
+
         // Compiles Sass to CSS
         sass: {
             options: {
                 includePaths: [
                     '<%= config.client %>/bower_components',
                     '<%= config.client %>/app',
-                    '<%= config.client %>/components'
+                    '<%= config.client %>/components',
+                    '<%= config.node_modules %>/compass-mixins/lib'
                 ]
             },
             client: {
