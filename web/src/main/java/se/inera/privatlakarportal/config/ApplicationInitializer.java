@@ -51,6 +51,6 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         CharacterEncodingFilter cef = new CharacterEncodingFilter();
         cef.setForceEncoding(true);
         cef.setEncoding("UTF-8");
-        aContext.addFilter("charachterEncodingFilter", cef).addMappingForUrlPatterns(null ,true, "/*");
+        aContext.addFilter("characterEncodingFilter", cef).addMappingForUrlPatterns(null ,true, "/*");
     }
 }
