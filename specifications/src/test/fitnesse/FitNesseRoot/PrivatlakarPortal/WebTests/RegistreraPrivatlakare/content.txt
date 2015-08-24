@@ -1,6 +1,9 @@
+!3 Logga in
+| script | !-LoggaIn-! |
+| logga in som | private-practicioner-1 |
+
 !3 Starta registrering
 | script | Startsida |
-| gå till startsidan |
 | startsidan visas |
 | starta registrering|
 
