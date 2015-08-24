@@ -27,7 +27,7 @@
 <div pp-field="postnummer">
   <input type="text" id="postnummer" name="postnummer" ng-model="registerModel.postnummer" class='form-control'
          style='max-width: 6em' value="" required ng-maxlength="6" maxlength="6" popover-placement="right"
-         popover-trigger="focus" popover="Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag."
+         popover-trigger="focus" popover="Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag. Postort, kommun och län fylls i automatiskt."
       validate-region region-model="registerModel">
 </div>
 
@@ -36,27 +36,27 @@
     Uppgift om kommun har {{viewState.kommunHits}} träffar. Ange den kommun som är rätt.
   </div>
 </div>
+<div alert-message alert-model="viewState.errorMessage.region" alert-severity="danger"></div>
+<div class="alert alert-warning" ng-show="viewState.validPostnummer && registerModel.postort == null && viewState.errorMessage.region == null">
+  <i>Inga träffar för postnummer {{registerModel.postnummer}}. Var vänlig kontrollera postnumret och försök igen.</i>
+</div>
 
-<p ng-show="!viewState.validPostnummer">
-  <i>Fyll i postnummer för förslag på postort, kommun och län.</i>
-</p>
-
-<div ng-show="viewState.validPostnummer">
-  <div alert-message alert-model="viewState.errorMessage.region" alert-severity="danger"></div>
+<div>
   <div pp-spinner show-spinner="viewState.loading.region" label="common.label.loading">
 
-    <p ng-show="registerModel.postort == null && viewState.errorMessage.region == null">
-      <i>Inga träffar för postnummer {{registerModel.postnummer}}. Var vänlig kontrollera postnumret och försök igen.</i>
-    </p>
-    <div ng-show="registerModel.postort != null">
+    <div>
 
       <div pp-field="postort">
-        {{registerModel.postort}}
+        <div class="readonly-field">
+          {{registerModel.postort}}
+        </div>
       </div>
 
       <div pp-field="kommun">
         <div ng-show="!viewState.kommunSelectionMode">
-          {{registerModel.kommun}}
+          <div class="readonly-field">
+            {{registerModel.kommun}}
+          </div>
         </div>
         <div ng-if="viewState.kommunSelectionMode">
           <select required id="kommun" name="kommun" class="form-control" ng-model="viewState.kommunSelected"
@@ -67,9 +67,11 @@
         </div>
       </div>
 
-      <div ng-show="registerModel.lan != null">
+      <div>
         <div pp-field="lan">
-          {{registerModel.lan}}
+          <div class="readonly-field">
+            {{registerModel.lan}}
+          </div>
         </div>
       </div>
 

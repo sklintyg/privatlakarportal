@@ -74,7 +74,8 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                             }, function(errorData) {
                                 $log.debug('Failed to get omradeList: ' + errorData);
                                 $scope.viewState.loading.region = false;
-                                $scope.viewState.errorMessage.region = 'Kunde inte hämta områdesinformation. Försök igen senare.';
+                                $scope.viewState.errorMessage.region = 'Ett tekniskt fel har uppstått.' +
+                                    ' Postnumret kunde inte hämtas. Prova igen senare.';
                                 clearRegionData();
                             });
 
