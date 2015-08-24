@@ -7,7 +7,7 @@
 
 !| Config |
 | property | value |
-| geb.build.baseUrl | localhost:8090 |
+| geb.build.baseUrl| ${System.properties.baseUrl} |
 | geb.env | chrome |
 
 | script | Browser |

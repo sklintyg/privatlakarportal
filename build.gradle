@@ -15,6 +15,7 @@ def getDate() {
 }
 
 allprojects {
+
     group = 'se.inera.privatlakarportal'
 
     if (System.env.BUILD_VERSION && System.env.BUILD_NUMBER) {

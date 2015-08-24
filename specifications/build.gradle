@@ -12,6 +12,8 @@ buildscript {
     def gebEnv = (System.getProperty("geb.env")) ? (System.getProperty("geb.env")) : "firefox"
 }
 
+task testProps << { println baseUrl}
+
 description = 'Inera Privatläkarportal Fitnesse specifications'
 
 apply plugin: 'groovy'
@@ -30,7 +32,6 @@ if (project.hasProperty('runFitnesse')) {
         contextConfigFile = project(":privatlakarportal-web").projectDir.path + "/src/main/webapp/WEB-INF/jetty-context.xml"
         logbackConfigFile = "${projectDir}/src/main/resources/logback-test.xml"
 
-       
         jvmArgs = [
             '-Dspring.profiles.active=local',
             '-Dprivatlakarportal.baseUrl=http://localhost:8090/',

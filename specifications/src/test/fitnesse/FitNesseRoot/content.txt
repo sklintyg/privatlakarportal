@@ -5,5 +5,5 @@
 *!
 
 !*> '''Classpath'''
-${maven.classpath}
+${gradle.classpath}
 *!
