@@ -231,6 +231,18 @@ public class RegisterServiceImpl implements RegisterService {
         return SaveRegistrationResponseStatus.OK;
     }
 
+    @Override
+    public boolean removePrivatlakare(String personId) {
+        Privatlakare toDelete = privatlakareRepository.findByPersonId(personId);
+        if (toDelete == null) {
+            LOG.error("No Privatlakare with id {} found in the database!", personId);
+            return false;
+        }
+        privatlakareRepository.delete(toDelete);
+        LOG.info("Deleted Privatlakare with id {}", personId);
+        return true;
+    }
+
     private void convertRegistrationToPrivatlakare(Registration registration, Privatlakare privatlakare) {
         privatlakare.setAgarform("Privat");
         privatlakare.setArbetsplatsKod(registration.getArbetsplatskod());

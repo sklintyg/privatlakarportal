@@ -1,5 +1,15 @@
 package se.inera.privatlakarportal.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -7,25 +17,25 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.inera.ifv.hsawsresponder.v3.*;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
+
+import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
+import se.inera.ifv.hsawsresponder.v3.SpecialityCodesType;
+import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
+import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.service.model.HospInformation;
-import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
 import se.inera.privatlakarportal.service.model.CreateRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.Registration;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
@@ -227,5 +237,23 @@ public class RegisterServiceImplTest {
         HospInformation hospInformation = registerService.getHospInformation();
 
         assertNull(hospInformation);
+    }
+
+    @Test
+    public void testRemovePrivatlakare() {
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+
+        when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(new Privatlakare());
+
+        Registration registration = createValidRegistration();
+
+        registerService.saveRegistration(registration);
+
+        assertTrue(registerService.removePrivatlakare("1912121212"));
+    }
+
+    @Test
+    public void testRemoveNonExistingPrivatlakare() {
+        assertFalse(registerService.removePrivatlakare("195206142597"));
     }
 }

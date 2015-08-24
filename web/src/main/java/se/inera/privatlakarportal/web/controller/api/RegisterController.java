@@ -49,4 +49,9 @@ public class RegisterController {
     public GetOmradeResponse getOmrade(@PathVariable("postnummer") String postnummer) {
         return new GetOmradeResponse(postnummerService.getOmradeByPostnummer(postnummer));
     }
+
+    @RequestMapping(value = "/registration/remove/{id}")
+    public boolean removePrivatlakare(@PathVariable("id") String personId) {
+        return registerService.removePrivatlakare(personId);
+    }
 }
