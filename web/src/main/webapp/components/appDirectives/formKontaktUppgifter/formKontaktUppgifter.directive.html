@@ -26,8 +26,9 @@
 
 <div pp-field="postnummer">
   <input type="text" id="postnummer" name="postnummer" ng-model="registerModel.postnummer" class='form-control'
-         style='max-width: 6em' value="" required ng-maxlength="6" maxlength="6" popover-placement="right" validate-postnummer
-         popover-trigger="focus" popover="Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag.">
+         style='max-width: 6em' value="" required ng-maxlength="6" maxlength="6" popover-placement="right"
+         popover-trigger="focus" popover="Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag."
+      validate-region region-model="registerModel">
 </div>
 
 <div ng-show="viewState.kommunSelectionMode">

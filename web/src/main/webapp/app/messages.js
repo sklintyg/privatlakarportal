@@ -108,6 +108,7 @@ var ppMessages = {
         'label.form.postnummer.help' : 'Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag.',
         'label.form.postnummer.error.required' : 'Postnummer måste anges innan du kan fortsätta.',
         'label.form.postnummer.error.format' : 'Felaktigt postnummer. Postnummer måste anges på formaten XXXXX eller XXX XX.',
+        'label.form.postnummer.error.region' : 'Ett giltigt postnummer som ger en postort, kommun och län måste anges.',
 
         'label.form.postort' : 'Postort',
 
