@@ -1,5 +1,5 @@
-|PrivatlakarPortal.WebTests.SuiteSetUp||14:32:04 Mon, Aug 24, 2015|
-|PrivatlakarPortal||14:12:56 Mon, Aug 24, 2015|
+|PrivatlakarPortal.WebTests.SuiteSetUp||10:57:10 Tue, Aug 25, 2015|
+|PrivatlakarPortal||10:50:36 Tue, Aug 25, 2015|
 |PrivatlakarPortal.WebTests.RedigeraPrivatlakare||15:11:13 Fri, Aug 21, 2015|
 |PrivatlakarPortal.WebTests.RegistreraPrivatlakare||16:30:52 Mon, Aug 17, 2015|
 |PrivatlakarPortal.WebTests.AnvandarVillkor||10:51:33 Mon, Jun 22, 2015|

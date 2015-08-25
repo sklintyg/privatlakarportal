@@ -9,10 +9,7 @@ buildscript {
         classpath 'org.akhikhl.gretty:gretty:1.2.0'
         classpath 'se.inera.intyg:gradle-fitnesse-plugin:1.0-SNAPSHOT'
     }
-    def gebEnv = (System.getProperty("geb.env")) ? (System.getProperty("geb.env")) : "firefox"
 }
-
-task testProps << { println baseUrl}
 
 description = 'Inera Privatläkarportal Fitnesse specifications'
 
@@ -23,13 +20,13 @@ fitnesse {
     port = 9125
     root = "FitNesseRoot"
     workingDir = "src/test/fitnesse"
+    extraProperties = [baseUrl: baseUrl] 
 }
 
 if (project.hasProperty('runFitnesse')) {
     apply plugin: 'org.akhikhl.gretty'
     gretty {
         contextPath = '/'
-        contextConfigFile = project(":privatlakarportal-web").projectDir.path + "/src/main/webapp/WEB-INF/jetty-context.xml"
         logbackConfigFile = "${projectDir}/src/main/resources/logback-test.xml"
 
         jvmArgs = [

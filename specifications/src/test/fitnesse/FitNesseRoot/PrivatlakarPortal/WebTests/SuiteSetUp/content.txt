@@ -7,7 +7,7 @@
 
 !| Config |
 | property | value |
-| geb.build.baseUrl| ${System.properties.baseUrl} |
+| geb.build.baseUrl| ${baseUrl} |
 | geb.env | chrome |
 
 | script | Browser |
