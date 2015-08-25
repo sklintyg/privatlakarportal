@@ -76,17 +76,17 @@ class MinSidaPage extends AbstractPage {
 
     public String hamtaPersonnummer() { return personnummer.text() }
     public String hamtaNamn() { return namn.text() }
-    public String hamtaBefattning() { return befattning.text() }
-    public String hamtaVerksamhetensnamn() { return verksamhetensnamn.text() }
+    public String hamtaBefattning() { return befattning.find('option').find{ it.value() == befattning.value()}.text()  }
+    public String hamtaVerksamhetensnamn() { return verksamhetensnamn.value() }
     public String hamtaAgarform() { return agarform.text() }
-    public String hamtaVardform() { return vardform.text() }
-    public String hamtaVerksamhetstyp() { return verksamhetstyp.text() }
-    public String hamtaArbetsplatskod() { return arbetsplatskod.text() }
+    public String hamtaVardform() { return vardform.find('option').find{ it.value() == vardform.value()}.text() }
+    public String hamtaVerksamhetstyp() { return verksamhetstyp.find('option').find{ it.value() == verksamhetstyp.value()}.text() }
+    public String hamtaArbetsplatskod() { return arbetsplatskod.value() }
 
-    public String hamtaTelefonnummer() { return telefonnummer.text() }
-    public String hamtaEpost() { return epost.text() }
-    public String hamtaAdress() { return adress.text() }
-    public String hamtaPostnummer() { return postnummer.text() }
+    public String hamtaTelefonnummer() { return telefonnummer.value() }
+    public String hamtaEpost() { return epost.value() }
+    public String hamtaAdress() { return adress.value() }
+    public String hamtaPostnummer() { return postnummer.value() }
     public String hamtaPostort() { return postort.text() }
     public String hamtaKommun() { return kommun.text() }
     public String hamtaLan() { return lan.text() }

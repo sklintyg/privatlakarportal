@@ -44,8 +44,8 @@
 | check | postort | NACKA |
 | check | kommun | NACKA |
 | check | lan | STOCKHOLM |
-| check | legitimeradYrkesgrupp | hsaTitle1, hsaTitle2 |
-| check | specialitet | specialityName1, specialityName2 |
+| check | legitimeradYrkesgrupp | hsaTitle2, hsaTitle1 |
+| check | specialitet | specialityName2, specialityName1 |
 | check | forskrivarkod | 1234567 |
 
 !3 Ta bort läkaren
