@@ -25,5 +25,7 @@ angular.module('privatlakareApp').value('mockResponse', {
     'omradeModel': [
         {'postnummer':'13155','postort':'NACKA','kommun':'STOCKHOLM','lan':'STOCKHOLM'},
         {'postnummer':'13155','postort':'NACKA','kommun':'NACKA','lan':'STOCKHOLM'}
-    ]
+    ],
+    'userOK': {'user':{'namn':'Oskar Johansson','status':'NOT_STARTED'}},
+    'userModel': {'namn':'Oskar Johansson','status':'NOT_STARTED'}
 });

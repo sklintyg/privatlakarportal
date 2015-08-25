@@ -12,12 +12,15 @@
     </div>
     <div class="headerbox-user pull-right">
       <div class="headerbox-user-profile">
-        <span id="logged-in-role" ng-switch="user.state">
-                  <strong ng-switch-when="true">Läkare</strong>
-                  <strong ng-switch-default>Ej registrerad användare</strong>
-                  </span>
+        <span id="logged-in-role" ng-switch="user.status">
+          <strong ng-switch-when="COMPLETE">Läkare</strong>
+          <strong ng-switch-when="WAITING_FOR_HOSP">Registrerad användare</strong>
+          <strong ng-switch-default>Ej registrerad användare</strong>
+        </span>
         - <span class="logged-in">{{user.name}}</span><br>
-        <span class="pull-right"><a id="updateAccount" ng-click="updateAccount()">Ändra uppgifter</a> | <a id="logoutLink" ng-click="logout()">Logga ut</a></span>
+        <span class="pull-right">
+          <span ng-show="user.status == 'WAITING_FOR_HOSP' || user.status == 'COMPLETE'"><a id="updateAccount" ng-click="updateAccount()">Ändra uppgifter</a> | </span><a id="logoutLink" ng-click="logout()">Logga ut</a>
+        </span>
       </div>
     </div>
   </div>

@@ -12,9 +12,6 @@ angular.module('privatlakareApp').directive('alertMessage',
                     'alertModel' : '=',
                     'alertSeverity' : '@'
                 },
-/*                controller: function($scope, $element, $attrs) {
-                    $scope.alertMessage = $attrs.alertMessage;
-                },*/
                 templateUrl: 'components/commonDirectives/alertMessage/alertMessage.directive.html'
             };
         }]);

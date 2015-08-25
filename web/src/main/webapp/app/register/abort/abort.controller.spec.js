@@ -19,7 +19,7 @@ describe('Controller: RegisterAbortCtrl', function() {
     }));
 
     it('should clear user data and logout on confirm abort', function() {
-        spyOn(UserModel, 'logout').and.callThrough();
+        spyOn(UserModel, 'logout').and.callFake(function() {});
 
         var model = RegisterModel.init();
         model.verksamhetensNamn = 'Kliniken';

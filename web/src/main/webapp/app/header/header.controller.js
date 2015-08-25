@@ -5,7 +5,7 @@ angular.module('privatlakareApp').controller('HeaderController',
 
             //Expose 'now' as a model property for the template to render as todays date
             $scope.today = new Date();
-            $scope.user = UserModel.reset();
+            $scope.user = UserModel.init();
 
             /**
              * Private functions
