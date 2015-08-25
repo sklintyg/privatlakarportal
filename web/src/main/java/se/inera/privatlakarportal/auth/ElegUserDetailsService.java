@@ -28,7 +28,15 @@ public class ElegUserDetailsService implements SAMLUserDetailsService {
             String fornamn = getAuthenticationAttribute(samlCredential, CgiElegAssertion.FORNAMN_ATTRIBUTE);
             String efternamn = getAuthenticationAttribute(samlCredential, CgiElegAssertion.MELLAN_OCH_EFTERNAMN_ATTRIBUTE);
             String namn = fornamn + " " + efternamn;
-            return new PrivatlakarUser(personId, namn);
+
+            PrivatlakarUser privatlakarUser = new PrivatlakarUser(personId, namn);
+
+            if (samlCredential.getAuthenticationAssertion() != null) {
+                String authnContextClassRef = samlCredential.getAuthenticationAssertion().getAuthnStatements().get(0).getAuthnContext().getAuthnContextClassRef().getAuthnContextClassRef();
+                privatlakarUser.setAuthenticationScheme(authnContextClassRef);
+            }
+
+            return privatlakarUser;
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 throw e;
