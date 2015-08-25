@@ -25,7 +25,10 @@ public class ElegUserDetailsService implements SAMLUserDetailsService {
     public Object loadUserBySAML(SAMLCredential samlCredential) throws UsernameNotFoundException {
         try {
             String personId = getAuthenticationAttribute(samlCredential, CgiElegAssertion.PERSON_ID_ATTRIBUTE);
-            return new PrivatlakarUser(personId);
+            String fornamn = getAuthenticationAttribute(samlCredential, CgiElegAssertion.FORNAMN_ATTRIBUTE);
+            String efternamn = getAuthenticationAttribute(samlCredential, CgiElegAssertion.MELLAN_OCH_EFTERNAMN_ATTRIBUTE);
+            String namn = fornamn + " " + efternamn;
+            return new PrivatlakarUser(personId, namn);
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 throw e;

@@ -17,7 +17,7 @@ public class UserController {
 
     @RequestMapping(value = "")
     public GetUserResponse getUser() {
-        return new GetUserResponse(userService.getUser().getPersonalIdentityNumber());
+        return new GetUserResponse(userService.getUser().getName());
     }
 
 }

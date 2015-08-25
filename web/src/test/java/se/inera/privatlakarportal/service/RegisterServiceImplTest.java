@@ -95,7 +95,7 @@ public class RegisterServiceImplTest {
         thrown.expect(PrivatlakarportalServiceException.class );
         thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS));
 
-        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212", "Test User"));
 
         when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(new Privatlakare());
 
@@ -110,7 +110,7 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212", "Test User"));
 
         GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
         hospPersonResponse.getTitleCodes().getTitleCode().add("LK");
@@ -132,7 +132,7 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212", "Test User"));
 
         when(hospPersonService.getHospPerson("1912121212")).thenReturn(createGetHospPersonResponse());
 
@@ -151,7 +151,7 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212", "Test User"));
 
         when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
 
@@ -167,7 +167,7 @@ public class RegisterServiceImplTest {
 
     @Test
     public void testSavePrivatlakare() {
-        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212", "Test User"));
 
         when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(new Privatlakare());
 
@@ -184,7 +184,7 @@ public class RegisterServiceImplTest {
         thrown.expect(PrivatlakarportalServiceException.class );
         thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.NOT_FOUND));
 
-        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212", "Test User"));
 
         when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(null);
 
@@ -195,7 +195,7 @@ public class RegisterServiceImplTest {
     @Test
     public void getHospInformation() {
 
-        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212", "Test User"));
 
         GetHospPersonResponseType hospPersonResponse = new GetHospPersonResponseType();
         hospPersonResponse.setPersonalIdentityNumber("1912121212");
@@ -221,7 +221,7 @@ public class RegisterServiceImplTest {
     @Test
     public void getHospInformationNotInHosp() {
 
-        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212", "Test User"));
         when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
 
         HospInformation hospInformation = registerService.getHospInformation();
