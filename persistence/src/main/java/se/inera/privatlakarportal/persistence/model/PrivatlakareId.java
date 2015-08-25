@@ -1,11 +1,6 @@
 package se.inera.privatlakarportal.persistence.model;
 
-import java.util.Set;
-
 import javax.persistence.*;
-
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
 
 /**
  * Created by pebe on 2015-06-24.

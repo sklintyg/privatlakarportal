@@ -8,7 +8,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.privatlakarportal.service.RegisterService;
 import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)

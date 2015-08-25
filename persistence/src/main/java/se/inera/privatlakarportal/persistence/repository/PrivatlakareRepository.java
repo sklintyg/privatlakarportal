@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 
-import java.util.List;
-
 /**
  * Created by pebe on 2015-06-24.
  */

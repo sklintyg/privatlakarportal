@@ -2,7 +2,6 @@ package se.inera.privatlakarportal.persistence.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
 
 /**

@@ -10,11 +10,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import se.inera.privatlakarportal.persistence.config.PersistenceConfig;
 import se.inera.privatlakarportal.persistence.config.PersistenceConfigTest;
-import se.inera.privatlakarportal.persistence.model.Befattning;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.util.PrivatelakareTestUtil;
-
-import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

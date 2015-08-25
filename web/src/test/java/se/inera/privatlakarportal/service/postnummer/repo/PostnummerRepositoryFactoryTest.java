@@ -3,9 +3,6 @@ package se.inera.privatlakarportal.service.postnummer.repo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import se.inera.privatlakarportal.service.postnummer.model.Omrade;
 
 import static org.junit.Assert.assertEquals;
