@@ -10,6 +10,7 @@ var app = angular.module('privatlakareApp', [
 ]);
 
 app.value('networkConfig', {
+    defaultTimeout: 1000, // prod: 30000
     regionTimeout: 1000, // prod: 30000
     registerTimeout: 1000, // prod: 30000
     hospTimeout: 1000 // prod: 30000
