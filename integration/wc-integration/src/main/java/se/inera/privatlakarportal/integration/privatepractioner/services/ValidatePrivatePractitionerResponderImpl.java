@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.integration.services;
+package se.inera.privatlakarportal.integration.privatepractioner.services;
 
 import org.apache.cxf.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

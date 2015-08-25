@@ -1,12 +1,12 @@
-package se.inera.privatlakarportal.integration.services;
+package se.inera.privatlakarportal.integration.privatepractioner.services;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerType;
-import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
+import se.inera.privatlakarportal.integration.privatepractioner.services.IntegrationService;
+import se.inera.privatlakarportal.integration.privatepractioner.services.ValidatePrivatePractitionerResponderImpl;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerType;
 
 import static org.mockito.Mockito.verify;

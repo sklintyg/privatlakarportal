@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.integration.services;
+package se.inera.privatlakarportal.integration.privatepractioner.services;
 
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;

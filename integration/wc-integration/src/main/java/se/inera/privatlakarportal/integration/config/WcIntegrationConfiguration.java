@@ -2,19 +2,29 @@ package se.inera.privatlakarportal.integration.config;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import se.inera.privatlakarportal.integration.services.GetPrivatePractitionerResponderImpl;
-import se.inera.privatlakarportal.integration.services.ValidatePrivatePractitionerResponderImpl;
+import org.springframework.context.annotation.Import;
+import se.inera.privatlakarportal.integration.privatepractioner.services.GetPrivatePractitionerResponderImpl;
+import se.inera.privatlakarportal.integration.privatepractioner.services.ValidatePrivatePractitionerResponderImpl;
+import se.inera.privatlakarportal.integration.terms.config.TermsStubConfiguration;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitioner.v1.rivtabp21.GetPrivatePractitionerResponderInterface;
+import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitioner.v1.rivtabp21.ValidatePrivatePractitionerResponderInterface;
 
 @Configuration
-@ComponentScan("se.inera.privatlakarportal.integration.services")
+@ComponentScan({
+    "se.inera.privatlakarportal.integration.privatepractioner",
+    "se.inera.privatlakarportal.integration.terms"})
 public class WcIntegrationConfiguration {
+
+    @Value("${terms.ws.services.url}")
+    private String termsWsUrl;
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -45,5 +55,13 @@ public class WcIntegrationConfiguration {
         EndpointImpl endpoint = new EndpointImpl(bus, implementor);
         endpoint.publish("/validate-private-practitioner/v1.0");
         return endpoint;
+    }
+
+    @Bean
+    public GetPrivatePractitionerTermsResponderInterface termsWebServiceClient() {
+        JaxWsProxyFactoryBean proxyFactoryBean = new JaxWsProxyFactoryBean();
+        proxyFactoryBean.setAddress(termsWsUrl);
+        proxyFactoryBean.setServiceClass(GetPrivatePractitionerTermsResponderInterface.class);
+        return (GetPrivatePractitionerTermsResponderInterface) proxyFactoryBean.create();
     }
 }

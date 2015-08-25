@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.integration.services;
+package se.inera.privatlakarportal.integration.privatepractioner.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

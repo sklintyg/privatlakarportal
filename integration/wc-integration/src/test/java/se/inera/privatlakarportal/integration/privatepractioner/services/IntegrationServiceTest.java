@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.integration.services;
+package se.inera.privatlakarportal.integration.privatepractioner.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.privatlakarportal.integration.privatepractioner.services.IntegrationServiceImpl;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;

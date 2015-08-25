@@ -7,8 +7,10 @@ dependencies {
     compile project(":privatlakarportal-common")
 
     compile 'se.inera.intyg.infrastructure.directory.privatepractitioner:intyg-infrastructure-directory-privatepractitioner-schemas:0-SNAPSHOT'
+    compile 'se.inera.intyg.infrastructure.directory.privatepractitioner.terms:intyg-infrastructure-directory-privatepractitioner-terms-schemas:0-SNAPSHOT'
 
     compile "org.springframework:spring-context:${springContextVersion}"
+    compile 'com.google.guava:guava:18.0'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
