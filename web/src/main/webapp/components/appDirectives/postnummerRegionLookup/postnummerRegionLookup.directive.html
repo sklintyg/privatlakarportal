@@ -21,14 +21,14 @@
     <div>
 
       <div pp-field="postort">
-        <div class="readonly-field">
+        <div class="readonly-field" id="postort">
           {{registerModel.postort}}
         </div>
       </div>
 
       <div pp-field="kommun">
         <div ng-show="!viewState.kommunSelectionMode">
-          <div class="readonly-field">
+          <div class="readonly-field" id="valdKommun">
             {{registerModel.kommun}}
           </div>
         </div>
@@ -43,7 +43,7 @@
 
       <div>
         <div pp-field="lan">
-          <div class="readonly-field">
+          <div class="readonly-field" id="lan">
             {{registerModel.lan}}
           </div>
         </div>

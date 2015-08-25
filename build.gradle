@@ -1,11 +1,13 @@
 // Load environment specific settings, if the -Penv=xxx parameter is given on invocation
 task loadConfiguration {
-    if (!project.hasProperty('env')) {
-        project.ext.env = 'local'
+    def environment = null
+    if (project.hasProperty('env')) {
+         environment = project.getProperty('env')
     } else {
-        logger.quiet "Loading configuration for environment '$env'."
-        addProjectPropertiesFromFile(file("$rootDir/env-properties/${env}/settings.properties"))
+         environment = "local"
     }
+    logger.quiet "Loading configuration for environment '$environment'."
+    addProjectPropertiesFromFile(file("$rootDir/env-properties/${environment}/settings.properties"))
 }
 
 def getDate() {
@@ -15,6 +17,7 @@ def getDate() {
 }
 
 allprojects {
+
     group = 'se.inera.privatlakarportal'
 
     if (System.env.BUILD_VERSION && System.env.BUILD_NUMBER) {
@@ -34,6 +37,7 @@ allprojects {
     }
     buildscript {
         repositories {
+            mavenLocal()
             maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/" }
             jcenter()
         }

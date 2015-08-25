@@ -1,17 +1,27 @@
 package se.inera.privatlakarportal.spec
 
-import se.inera.privatlakarportal.page.RegisterStep1Page
-import se.inera.privatlakarportal.page.RegisterStep2Page
-import se.inera.privatlakarportal.page.RegisterStep3Page
+import se.inera.privatlakarportal.page.MinSidaPage
 
-class Registrera {
+class RedigeraMinSida {
 
-    public boolean registreringSteg1SidanVisas() {
+    public void gåTillMinSida() {
+        Browser.drive {
+            to MinSidaPage
+        }
+    }
+
+    public boolean minSidaVisas() {
         boolean result
         Browser.drive {
-            result = at RegisterStep1Page
+            result = at MinSidaPage
         }
         return result
+    }
+
+    public void sparaRegistrering() {
+        Browser.drive {
+            page.spara();
+        }
     }
 
     public void angeBefattning(String value) {
@@ -44,20 +54,6 @@ class Registrera {
         }
     }
 
-    public void fortsätt() {
-        Browser.drive {
-            page.fortsätt();
-        }
-    }
-
-    public boolean registreringSteg2SidanVisas() {
-        boolean result
-        Browser.drive {
-            result = at RegisterStep2Page
-        }
-        return result
-    }
-
     public void angeTelefonnummer(String value) {
         Browser.drive {
             page.angeTelefonnummer(value);
@@ -86,14 +82,6 @@ class Registrera {
         Browser.drive {
             page.angePostnummer(value);
         }
-    }
-
-    public boolean registreringSteg3SidanVisas() {
-        boolean result
-        Browser.drive {
-            result = at RegisterStep3Page
-        }
-        return result
     }
 
     public String personnummer() {

@@ -17,4 +17,6 @@ public interface RegisterService {
     se.inera.privatlakarportal.service.model.RegistrationWithHospInformation getRegistration();
 
     HospInformation getHospInformation();
+
+    boolean removePrivatlakare(String personId);
 }
