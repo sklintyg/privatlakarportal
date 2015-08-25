@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.service.exception;
+package se.inera.privatlakarportal.common.exception;
 
 public enum PrivatlakarportalErrorCodeEnum {
     BAD_REQUEST,

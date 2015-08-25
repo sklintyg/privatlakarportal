@@ -2,8 +2,8 @@ package se.inera.privatlakarportal.service.exception;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 
 /**
  * Created by pebe on 2015-08-17.

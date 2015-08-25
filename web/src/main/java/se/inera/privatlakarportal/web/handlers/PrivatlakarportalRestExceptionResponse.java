@@ -1,6 +1,6 @@
 package se.inera.privatlakarportal.web.handlers;
 
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 
 public class PrivatlakarportalRestExceptionResponse {
 

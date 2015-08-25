@@ -12,8 +12,8 @@ import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.model.*;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 
 import java.util.ArrayList;
 import java.util.HashSet;

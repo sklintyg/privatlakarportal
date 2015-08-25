@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 

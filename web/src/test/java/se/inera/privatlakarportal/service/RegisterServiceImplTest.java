@@ -17,8 +17,8 @@ import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepositor
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.service.model.CreateRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.model.Registration;
 
