@@ -6,18 +6,18 @@ import se.inera.privatlakarportal.service.model.RegistrationStatus;
 /**
  * Created by pebe on 2015-08-25.
  */
-public class UserStatus {
+public class User {
 
-    private PrivatlakarUser privatlakarUser;
+    private String namn;
     private RegistrationStatus status;
 
-    public UserStatus(PrivatlakarUser privatlakarUser, RegistrationStatus status) {
-        this.privatlakarUser = privatlakarUser;
+    public User(PrivatlakarUser privatlakarUser, RegistrationStatus status) {
+        namn = privatlakarUser.getName();
         this.status = status;
     }
 
-    public PrivatlakarUser getPrivatlakarUser() {
-        return privatlakarUser;
+    public String getNamn() {
+        return namn;
     }
 
     public RegistrationStatus getStatus() {
