@@ -3,7 +3,7 @@ angular.module('privatlakareApp')
         'use strict';
         $stateProvider
             .state('app.start', {
-                url: '/',
+                url: '/start',
                 views: {
                     'content@app': { templateUrl: 'app/start/start.html', controller: 'MainCtrl' }
                 }

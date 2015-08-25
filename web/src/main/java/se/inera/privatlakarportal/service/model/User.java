@@ -8,16 +8,16 @@ import se.inera.privatlakarportal.service.model.RegistrationStatus;
  */
 public class User {
 
-    private String namn;
+    private String name;
     private RegistrationStatus status;
 
     public User(PrivatlakarUser privatlakarUser, RegistrationStatus status) {
-        namn = privatlakarUser.getName();
+        name = privatlakarUser.getName();
         this.status = status;
     }
 
-    public String getNamn() {
-        return namn;
+    public String getName() {
+        return name;
     }
 
     public RegistrationStatus getStatus() {
