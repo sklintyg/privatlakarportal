@@ -49,12 +49,12 @@
     </p>
     <div ng-show="registerModel.postort != null">
 
-      <div pp-field="postort">
+      <div pp-field="postort" id="postort">
         {{registerModel.postort}}
       </div>
 
       <div pp-field="kommun">
-        <div ng-show="!viewState.kommunSelectionMode">
+        <div ng-show="!viewState.kommunSelectionMode" id="valdKommun">
           {{registerModel.kommun}}
         </div>
         <div ng-if="viewState.kommunSelectionMode">
@@ -67,7 +67,7 @@
       </div>
 
       <div ng-show="registerModel.lan != null">
-        <div pp-field="lan">
+        <div pp-field="lan" id="lan">
           {{registerModel.lan}}
         </div>
       </div>

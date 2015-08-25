@@ -5,7 +5,7 @@ class MinSidaPage extends AbstractPage {
     static at = { $("#minsida").isDisplayed() }
 
     static content = {
-        sparaBtn { $("#sparaBtn")}
+        sparaBtn { $("#saveBtn")}
 
         personnummer { $("#personnummer") }
         namn { $("#namn") }
@@ -22,7 +22,7 @@ class MinSidaPage extends AbstractPage {
         adress { $("#adress") }
         postnummer { $("#postnummer") }
         postort { $("#postort") }
-        kommun { $("#kommun") }
+        kommun { $("#valdKommun") }
         lan { $("#lan") }
 
         legitimeradYrkesgrupp { $("#legitimeradYrkesgrupp") }

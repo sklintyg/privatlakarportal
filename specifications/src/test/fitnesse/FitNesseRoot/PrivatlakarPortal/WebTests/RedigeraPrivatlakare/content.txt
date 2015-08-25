@@ -49,5 +49,8 @@
 | check | forskrivarkod | 1234567 |
 
 !3 Ta bort läkaren
-| script | !-TaBortPrivatlakare-! |
-| ta bort alla privatlakare |
+| !-TaBortPrivatlakare-! |
+| id           | resultat? |
+| 191212121212 | true      |
+
+

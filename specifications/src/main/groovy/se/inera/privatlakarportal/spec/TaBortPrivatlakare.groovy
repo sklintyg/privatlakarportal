@@ -9,7 +9,8 @@ public class TaBortPrivatlakare extends RestClientFixture {
     def restClient = createRestClient()
 
     String id
-    String restPath = 'registration/'
+    String restPath = 'registration/remove/'
+    boolean responseStatus
 
 	public void reset() {
 	}
@@ -18,10 +19,12 @@ public class TaBortPrivatlakare extends RestClientFixture {
         Exception pendingException
         String failedIds = ""
         try {
-        restClient.delete(
-                path: restPath + id,
-                requestContentType: JSON
-        )
+            def resp = restClient.delete(
+                    path: restPath + id,
+                    requestContentType: JSON
+            )
+            responseStatus = resp.status
+            
         } catch(e) {
             failedIds += id + ","
             if (!pendingException) {
@@ -32,11 +35,8 @@ public class TaBortPrivatlakare extends RestClientFixture {
             throw new Exception("Kunde inte ta bort " + failedIds, pendingException)
         }
     }
-
-    public void taBortAllaPrivatlakare() {
-        restClient.delete(
-            path: restPath,
-            requestContentType: JSON
-        )
+    
+    public boolean resultat() {
+       responseStatus
     }
 }

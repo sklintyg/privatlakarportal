@@ -7,27 +7,11 @@ import se.inera.privatlakarportal.spec.util.RestClientFixture
 
 import static groovyx.net.http.ContentType.JSON
 
-/*
-{
-    "registration": {
-        "befattning": "201013",
-        "verksamhetensNamn": "Kliniken",
-        "agarForm": "Privat",
-        "vardform": "03",
-        "verksamhetstyp": "12",
-        "arbetsplatskod": "0123456",
-        "telefonnummer": "070123456",
-        "epost": "a@a.a",
-        "adress": "Gatan",
-        "postnummer": "13100",
-        "postort": "NACKA",
-        "kommun": "NACKA",
-        "lan": "STOCKHOLM"
-    }
-}
-*/
+
 
 public class SkapaPrivatlakare extends RestClientFixture {
+
+    def test = '{ "registration": { "befattning": "201013", "verksamhetensNamn": "Kliniken", "agarForm": "Privat", "vardform": "03", "verksamhetstyp": "12", "arbetsplatskod": "0123456", "telefonnummer": "070123456", "epost": "a@a.a", "adress": "Gatan", "postnummer": "13100", "postort": "NACKA", "kommun": "NACKA", "lan": "STOCKHOLM" }}'
 
     String befattning
 	String verksamhetensNamn
@@ -81,7 +65,8 @@ public class SkapaPrivatlakare extends RestClientFixture {
     }
 
     protected createPayload() {
-        '"' + overrideDocumentFromFixture() + '"'
+        test
+        //'"' + overrideDocumentFromFixture() + '"'
     }
 
     protected overrideDocumentFromFixture() {
