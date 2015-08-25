@@ -3,7 +3,7 @@ package se.inera.privatlakarportal.web.controller.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import se.inera.privatlakarportal.service.RegisterService;
-import se.inera.privatlakarportal.service.model.CreateRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.postnummer.PostnummerService;
@@ -30,7 +30,7 @@ public class RegisterController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
     public CreateRegistrationResponse createRegistration(@RequestBody CreateRegistrationRequest request) {
-        CreateRegistrationResponseStatus status = registerService.createRegistration(request.getRegistration());
+        RegistrationStatus status = registerService.createRegistration(request.getRegistration());
         return new CreateRegistrationResponse(status);
     }
 

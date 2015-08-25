@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
                 status = RegistrationStatus.WAITING_FOR_HOSP;
             }
             else {
-                status = RegistrationStatus.COMPLETE;
+                status = RegistrationStatus.AUTHORIZED;
             }
         }
 

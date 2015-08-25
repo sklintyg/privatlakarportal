@@ -111,7 +111,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     @Transactional
-    public CreateRegistrationResponseStatus createRegistration(Registration registration) {
+    public RegistrationStatus createRegistration(Registration registration) {
 
         if (registration == null || !registration.checkIsValid()) {
             throw new PrivatlakarportalServiceException(
@@ -145,10 +145,10 @@ public class RegisterServiceImpl implements RegisterService {
         convertRegistrationToPrivatlakare(registration, privatlakare);
 
         // Lookup hospPerson in HSA
-        CreateRegistrationResponseStatus status;
+        RegistrationStatus status;
         GetHospPersonResponseType hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
         if (hospPersonResponse == null) {
-            status = CreateRegistrationResponseStatus.AUTHENTICATION_INPROGRESS;
+            status = RegistrationStatus.WAITING_FOR_HOSP;
             if (!hospPersonService.handleCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
                 throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.EXTERNAL_ERROR,
@@ -196,10 +196,10 @@ public class RegisterServiceImpl implements RegisterService {
 
             privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
 
-            status = CreateRegistrationResponseStatus.NOT_AUTHORIZED;
+            status = RegistrationStatus.NOT_AUTHORIZED;
             if (hospPersonResponse.getHsaTitles().getHsaTitle().contains(LAKARE)) {
                 privatlakare.setGodkandAnvandare(true);
-                status = CreateRegistrationResponseStatus.AUTHORIZED;
+                status = RegistrationStatus.AUTHORIZED;
             }
         }
 
