@@ -32,36 +32,29 @@ describe('Controller: BootCtrl', function() {
         $state = _$state_;
     }));
 
-    it('should be redirected to start page if not registered yet', function() {
+    it('should redirect to step 1 if targetId parameter is "new"', function() {
         succeed = true;
         user = {name:'Nisse', status: 'NOT_STARTED'};
+        $state.params.targetId = 'new';
         spyOn($state, 'go').and.stub();
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
-        expect($state.go).toHaveBeenCalledWith('app.start');
+        BootCtrl = $controller('BootLinkCtrl', { $scope: scope });
+        expect($state.go).toHaveBeenCalledWith('app.register.step1');
     });
 
-    it('should be redirected to minsida page if registered but havent received läkarlegimitation yet', function() {
+    it('should show error if invalid targetId is supplied', function() {
         succeed = true;
-        user = {name:'Nisse', status: 'WAITING_FOR_HOSP'};
+        user = {name:'Nisse', status: 'NOT_STARTED'};
+        $state.params.targetId = '';
         spyOn($state, 'go').and.stub();
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
-        expect($state.go).toHaveBeenCalledWith('app.minsida');
+        BootCtrl = $controller('BootLinkCtrl', { $scope: scope });
+        expect(scope.errorMessage).not.toBe(null);
     });
 
-    it('should be redirected to minsida page if registered and got läkarlegitimation', function() {
-        succeed = true;
-        user = {name:'Nisse', status: 'COMPLETE'};
-        spyOn($state, 'go').and.stub();
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
-        expect($state.go).toHaveBeenCalledWith('app.minsida');
-    });
-
-    it('should be redirected to fake login page if not logged in or user couldnt be fetched', function() {
+    it('should show error if a user is not received', function() {
         succeed = false;
         error = {};
-        spyOn(UserModel, 'logout').and.stub();
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
-        expect(UserModel.logout).toHaveBeenCalled();
+        $state.params.targetId = '';
+        BootCtrl = $controller('BootLinkCtrl', { $scope: scope });
         expect(scope.errorMessage).not.toBe(null);
     });
 
