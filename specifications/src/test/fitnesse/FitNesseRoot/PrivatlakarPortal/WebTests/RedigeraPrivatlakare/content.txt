@@ -1,3 +1,8 @@
+!3 Rensa
+| !-TaBortPrivatlakare-! |
+| id           | resultat? |
+| 199008252398 | true      |
+
 !3 Skapa privatläkare via REST
 | !-SkapaPrivatlakare-! |
 | befattning | verksamhetensNamn | agarForm | vardform | verksamhetstyp | arbetsplatskod | telefonnummer | epost | adress | postnummer | postort | kommun | lan |
@@ -32,8 +37,8 @@
 
 !3 Verifiera registrering
 | script | !-RedigeraMinSida-! |
-| check | personnummer | 191212121212 |
-| check | namn| Sandra Nilsson |
+| check | personnummer | 199008252398 |
+| check | namn| Oskar Johansson|
 | check | befattning | Specialistläkare |
 | check | verksamhetensnamn | Fitnesse verksamhet |
 | check | agarform| Privat |
@@ -54,6 +59,6 @@
 !3 Ta bort läkaren
 | !-TaBortPrivatlakare-! |
 | id           | resultat? |
-| 191212121212 | true      |
+| 199008252398 | true      |
 
 

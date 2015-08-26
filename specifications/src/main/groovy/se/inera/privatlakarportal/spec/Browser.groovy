@@ -2,9 +2,14 @@ package se.inera.privatlakarportal.spec
 
 import geb.driver.CachingDriverFactory
 
+import org.openqa.selenium.Alert
 import org.openqa.selenium.Cookie
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.support.ui.WebDriverWait
 
 import se.inera.privatlakarportal.page.AbstractPage
+
+import org.openqa.selenium.support.ui.ExpectedConditions
 
 public class Browser {
 
@@ -25,7 +30,13 @@ public class Browser {
     public void laddaOm() {
         if (!browser) throw new IllegalStateException("Browser not initialized")
         browser.driver.navigate().refresh()
+        WebDriver webDriver = browser.driver
+
         browser.drive {
+            WebDriverWait wait = new WebDriverWait(driver, 2);
+            wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
             waitFor {
                 js.doneLoading && js.dialogDoneLoading
             }

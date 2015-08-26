@@ -10,18 +10,15 @@ import static groovyx.net.http.ContentType.JSON
 
 
 public class SkapaPrivatlakare extends RestClientFixture {
-
-    def test = '{ "registration": { "befattning": "201013", "verksamhetensNamn": "Kliniken", "agarForm": "Privat", "vardform": "03", "verksamhetstyp": "12", "arbetsplatskod": "0123456", "telefonnummer": "070123456", "epost": "a@a.a", "adress": "Gatan", "postnummer": "13100", "postort": "NACKA", "kommun": "NACKA", "lan": "STOCKHOLM" }}'
-
     String befattning
-	String verksamhetensNamn
+    String verksamhetensNamn
     String agarForm
-	String vardform
-	String verksamhetstyp
+    String vardform
+    String verksamhetstyp
     String arbetsplatskod
     String telefonnummer
     String epost
-	String adress
+    String adress
     String postnummer
     String postort
     String kommun
@@ -31,9 +28,9 @@ public class SkapaPrivatlakare extends RestClientFixture {
 	String responseStatus;
     def privatlakare
 
-	public String respons() {
-		return responseStatus;
-	}
+    public String respons() {
+        return responseStatus;
+    }
 
 	public void reset() {
         // reset defaults
@@ -66,8 +63,7 @@ public class SkapaPrivatlakare extends RestClientFixture {
     }
 
     protected createPayload() {
-        test
-        //'"' + overrideDocumentFromFixture() + '"'
+        overrideDocumentFromFixture()
     }
 
     protected overrideDocumentFromFixture() {

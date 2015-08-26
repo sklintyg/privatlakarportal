@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.*;
@@ -22,9 +23,10 @@ import java.util.Set;
 
 /**
  * Created by pebe on 2015-06-26.
+ * @param <E>
  */
 @Service
-public class RegisterServiceImpl implements RegisterService {
+public class RegisterServiceImpl<E> implements RegisterService {
 
     private static final Logger LOG = LoggerFactory.getLogger(RegisterServiceImpl.class);
 
@@ -256,16 +258,10 @@ public class RegisterServiceImpl implements RegisterService {
         privatlakare.setTelefonnummer(registration.getTelefonnummer());
         privatlakare.setVardgivareNamn(registration.getVerksamhetensNamn());
 
-        Set<Befattning> befattningar = new HashSet<Befattning>();
-        befattningar.add(new Befattning(privatlakare, registration.getBefattning()));
-        privatlakare.setBefattningar(befattningar);
-
-        Set<Vardform> vardformer = new HashSet<Vardform>();
-        vardformer.add(new Vardform(privatlakare, registration.getVardform()));
-        privatlakare.setVardformer(vardformer);
-
-        Set<Verksamhetstyp> verksamhetstyper = new HashSet<Verksamhetstyp>();
-        verksamhetstyper.add(new Verksamhetstyp(privatlakare, registration.getVerksamhetstyp()));
-        privatlakare.setVerksamhetstyper(verksamhetstyper);
+        /* Effectively change the oneToMany cardinality of the following to act as oneToOne, see javadoc for more info*/
+        privatlakare.updateBefattningar(registration.getBefattning());
+        privatlakare.updateVardformer(registration.getVardform());
+        privatlakare.updateVerksamhetstyper(registration.getVerksamhetstyp());
     }
+
 }

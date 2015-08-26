@@ -1,11 +1,19 @@
 package se.inera.privatlakarportal.persistence.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
-
-import javax.persistence.*;
-import java.util.Set;
 
 /**
  * Created by pebe on 2015-06-24.
@@ -90,19 +98,19 @@ public class Privatlakare {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime vardgivareSlutdatum;
 
-    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
     private Set<Befattning> befattningar;
 
-    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
     private Set<LegitimeradYrkesgrupp> legitimeradeYrkesgrupper;
 
-    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
     private Set<Specialitet> specialiteter;
 
-    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
     private Set<Verksamhetstyp> verksamhetstyper;
 
-    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
     private Set<Vardform> vardformer;
 
     @Override
@@ -319,6 +327,20 @@ public class Privatlakare {
         this.befattningar = befattningar;
     }
 
+    /**
+     * Update Befattningar with a new Befattningskod if the Set exists,
+     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior 
+     * @param kod 
+     */
+    public void updateBefattningar(String kod) {
+        if (this.getBefattningar() != null && !this.getBefattningar().isEmpty()) {
+            this.befattningar.iterator().next().setKod(kod);
+        } else {
+            this.befattningar = new HashSet<Befattning>();
+            this.befattningar.add(new Befattning(this, kod));
+        }
+    }
+
     public Set<LegitimeradYrkesgrupp> getLegitimeradeYrkesgrupper() {
         return legitimeradeYrkesgrupper;
     }
@@ -343,11 +365,39 @@ public class Privatlakare {
         this.verksamhetstyper = verksamhetstyper;
     }
 
+    /**
+     * Update Verksamhetstyper with a new Verksamhetstyp-kod if the Set exists,
+     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior 
+     * @param kod 
+     */
+    public void updateVerksamhetstyper(String kod) {
+        if (this.getVerksamhetstyper() != null && !this.getVerksamhetstyper().isEmpty()) {
+            this.verksamhetstyper.iterator().next().setKod(kod);
+        } else {
+            this.verksamhetstyper = new HashSet<Verksamhetstyp>();
+            this.verksamhetstyper.add(new Verksamhetstyp(this, kod));
+        }
+    }
+
     public Set<Vardform> getVardformer() {
         return vardformer;
     }
 
     public void setVardformer(Set<Vardform> vardformer) {
         this.vardformer = vardformer;
+    }
+
+    /**
+     * Update Vardformer with a new Vardform-kod if the Set exists,
+     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior 
+     * @param kod 
+     */
+    public void updateVardformer(String kod) {
+        if (this.getVardformer() != null && !this.getVardformer().isEmpty()) {
+            this.vardformer.iterator().next().setKod(kod);
+        } else {
+            this.vardformer = new HashSet<Vardform>();
+            this.vardformer.add(new Vardform(this, kod));
+        }
     }
 }
