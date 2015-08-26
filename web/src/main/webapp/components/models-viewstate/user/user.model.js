@@ -33,9 +33,14 @@ angular.module('privatlakareApp').factory('UserModel',
             get: function() {
                 return data;
             },
+            fakeLogin: function() {
+                if (data.authenticationScheme === fakeSchemeId) {
+                    $window.location = '/welcome.html';
+                }
+            },
             logout: function() {
                 $sessionStorage.$reset();
-                if (this.authenticationScheme === fakeSchemeId) {
+                if (data.authenticationScheme === fakeSchemeId) {
                     $window.location = '/logout';
                 } else {
                     $window.location = '/saml/logout/';

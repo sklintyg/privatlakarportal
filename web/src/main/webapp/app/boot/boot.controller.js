@@ -25,7 +25,7 @@ angular.module('privatlakareApp')
             }, function() {
                 $scope.loading = false;
                 $scope.errorMessage = 'Kunde inte hämta användare. Har du loggat in?';
-                UserModel.logout();
+                UserModel.fakeLogin();
             });
         //}, 3000);
     });

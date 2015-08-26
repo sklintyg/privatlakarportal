@@ -61,7 +61,6 @@ describe('Controller: BootCtrl', function() {
         error = {};
         spyOn(UserModel, 'logout').and.stub();
         BootCtrl = $controller('BootCtrl', { $scope: scope });
-        expect(UserModel.logout).toHaveBeenCalled();
         expect(scope.errorMessage).not.toBe(null);
     });
 

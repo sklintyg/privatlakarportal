@@ -64,13 +64,12 @@ app.constant('datepickerPopupConfig', {
 });
 
 // Inject language resources
-app.run(['$log', '$rootScope', '$window', 'messageService', /*'UserModel',*/
-    function($log, $rootScope, $window, messageService/*, UserModel*/) {
+app.run(['$log', '$rootScope', '$window', 'messageService',
+    function($log, $rootScope, $window, messageService) {
         'use strict';
 
         $rootScope.lang = 'sv';
         $rootScope.DEFAULT_LANG = 'sv';
-        //UserModel.setUserContext(MODULE_CONFIG.USERCONTEXT);
 
         /* jshint -W117 */
         messageService.addResources(ppMessages);// jshint ignore:line
