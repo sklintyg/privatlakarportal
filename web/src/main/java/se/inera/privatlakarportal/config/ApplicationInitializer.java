@@ -16,13 +16,14 @@ import org.springframework.web.servlet.DispatcherServlet;
 import se.inera.privatlakarportal.hsa.config.HsaConfiguration;
 import se.inera.privatlakarportal.integration.config.WcIntegrationConfiguration;
 import se.inera.privatlakarportal.persistence.config.PersistenceConfig;
+import se.inera.privatlakarportal.pu.config.PUConfiguration;
 
 public class ApplicationInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(javax.servlet.ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.register(ApplicationConfig.class, PersistenceConfig.class, HsaConfiguration.class, WcIntegrationConfiguration.class);
+        appContext.register(ApplicationConfig.class, PersistenceConfig.class, HsaConfiguration.class, PUConfiguration.class, WcIntegrationConfiguration.class);
         servletContext.addListener(new ContextLoaderListener(appContext));
  
         AnnotationConfigWebApplicationContext webConfig = new AnnotationConfigWebApplicationContext();
