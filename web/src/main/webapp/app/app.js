@@ -1,5 +1,5 @@
 angular.module('privatlakareApp')
-    .config(function($stateProvider) {
+    .config(function($stateProvider, $httpProvider, http403ResponseInterceptorProvider) {
         'use strict';
         $stateProvider
             .state('app', {
@@ -8,4 +8,8 @@ angular.module('privatlakareApp')
                     'header@': { templateUrl: 'app/header/header.html', controller: 'HeaderController' }
                 }
             });
+
+        // Configure 403 interceptor provider
+        http403ResponseInterceptorProvider.setRedirectUrl('/');
+        $httpProvider.interceptors.push('http403ResponseInterceptor');
     });
