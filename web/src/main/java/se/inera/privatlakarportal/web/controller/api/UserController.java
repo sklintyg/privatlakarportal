@@ -17,7 +17,7 @@ public class UserController {
 
     @RequestMapping(value = "")
     public GetUserResponse getUser() {
-        return new GetUserResponse(userService.getUserStatus());
+        return new GetUserResponse(userService.getUserWithStatus());
     }
 
 }

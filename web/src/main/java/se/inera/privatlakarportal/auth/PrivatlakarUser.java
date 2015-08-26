@@ -7,6 +7,7 @@ public class PrivatlakarUser {
 
     private String personalIdentityNumber;
     private String name;
+    private String authenticationScheme;
 
     public PrivatlakarUser(String personalIdentityNumber, String name) {
         this.personalIdentityNumber = personalIdentityNumber;
@@ -19,5 +20,13 @@ public class PrivatlakarUser {
 
     public String getName() {
         return name;
+    }
+
+    public String getAuthenticationScheme() {
+        return authenticationScheme;
+    }
+
+    public void setAuthenticationScheme(String authenticationScheme) {
+        this.authenticationScheme = authenticationScheme;
     }
 }

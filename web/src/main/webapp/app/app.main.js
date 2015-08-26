@@ -10,6 +10,7 @@ var app = angular.module('privatlakareApp', [
 ]);
 
 app.value('networkConfig', {
+    defaultTimeout: 1000, // prod: 30000
     regionTimeout: 1000, // prod: 30000
     registerTimeout: 1000, // prod: 30000
     hospTimeout: 1000 // prod: 30000
@@ -63,13 +64,12 @@ app.constant('datepickerPopupConfig', {
 });
 
 // Inject language resources
-app.run(['$log', '$rootScope', '$window', 'messageService', /*'UserModel',*/
-    function($log, $rootScope, $window, messageService/*, UserModel*/) {
+app.run(['$log', '$rootScope', '$window', 'messageService',
+    function($log, $rootScope, $window, messageService) {
         'use strict';
 
         $rootScope.lang = 'sv';
         $rootScope.DEFAULT_LANG = 'sv';
-        //UserModel.setUserContext(MODULE_CONFIG.USERCONTEXT);
 
         /* jshint -W117 */
         messageService.addResources(ppMessages);// jshint ignore:line

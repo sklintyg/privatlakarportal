@@ -199,6 +199,7 @@ h5.inline-heading {
 
 // Component styles are injected through grunt
 // injector
+@import 'boot/boot.scss';
 @import 'minsida/minsida.scss';
 @import 'register/complete/complete.scss';
 @import 'register/step1/step1.scss';

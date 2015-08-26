@@ -21,8 +21,7 @@ import org.w3c.dom.Element;
  */
 public abstract class BaseFakeAuthenticationProvider implements AuthenticationProvider {
 
-    public static final String FAKE_AUTHENTICATION_SITHS_CONTEXT_REF = "urn:inera:webcert:siths:fake";
-    public static final String FAKE_AUTHENTICATION_ELEG_CONTEXT_REF = "urn:inera:webcert:eleg:fake";
+    public static final String FAKE_AUTHENTICATION_ELEG_CONTEXT_REF = "urn:inera:privatlakarportal:eleg:fake";
 
     private static DocumentBuilder documentBuilder;
 

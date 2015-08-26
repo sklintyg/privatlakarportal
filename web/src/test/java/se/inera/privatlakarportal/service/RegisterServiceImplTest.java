@@ -31,10 +31,10 @@ import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepositor
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
 import se.inera.privatlakarportal.service.model.HospInformation;
+import se.inera.privatlakarportal.service.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.service.model.CreateRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.Registration;
 import static org.junit.Assert.assertEquals;
@@ -115,7 +115,7 @@ public class RegisterServiceImplTest {
         when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(new Privatlakare());
 
         Registration registration = createValidRegistration();
-        CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
+        RegistrationStatus response = registerService.createRegistration(registration);
     }
 
     @Test
@@ -133,11 +133,11 @@ public class RegisterServiceImplTest {
         when(hospPersonService.getHospPerson("1912121212")).thenReturn(hospPersonResponse);
 
         Registration registration = createValidRegistration();
-        CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
+        RegistrationStatus response = registerService.createRegistration(registration);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
         verify(hospPersonService, times(0)).handleCertifier(any(String.class), any(String.class));
-        assertEquals(response, CreateRegistrationResponseStatus.AUTHORIZED);
+        assertEquals(response, RegistrationStatus.AUTHORIZED);
     }
 
     @Test
@@ -152,11 +152,11 @@ public class RegisterServiceImplTest {
         when(hospPersonService.getHospPerson("1912121212")).thenReturn(createGetHospPersonResponse());
 
         Registration registration = createValidRegistration();
-        CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
+        RegistrationStatus response = registerService.createRegistration(registration);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
         verify(hospPersonService, times(0)).handleCertifier(any(String.class), any(String.class));
-        assertEquals(response, CreateRegistrationResponseStatus.NOT_AUTHORIZED);
+        assertEquals(response, RegistrationStatus.NOT_AUTHORIZED);
     }
 
     @Test
@@ -173,11 +173,11 @@ public class RegisterServiceImplTest {
         when(hospPersonService.handleCertifier(eq("1912121212"), any(String.class))).thenReturn(true);
 
         Registration registration = createValidRegistration();
-        CreateRegistrationResponseStatus response = registerService.createRegistration(registration);
+        RegistrationStatus response = registerService.createRegistration(registration);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
         verify(hospPersonService).handleCertifier(eq("1912121212"), any(String.class));
-        assertEquals(response, CreateRegistrationResponseStatus.AUTHENTICATION_INPROGRESS);
+        assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
     }
 
     @Test

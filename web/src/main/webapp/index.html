@@ -25,7 +25,6 @@
       <link rel="stylesheet" href="app/vendor-override.css">
       <link rel="stylesheet" href="components/commonDirectives/alertMessage/alertMessage.css">
       <link rel="stylesheet" href="components/commonDirectives/alertSingle/alertSingle.css">
-      <link rel="stylesheet" href="components/commonDirectives/ppField/ppField.css">
       <link rel="stylesheet" href="components/modal/modal.css">
       <!-- endinjector -->
     <!-- endbuild -->
@@ -65,6 +64,9 @@
           <!-- injector:js -->
           <script src="app/app.controller.js"></script>
           <script src="app/app.js"></script>
+          <script src="app/boot/boot.controller.js"></script>
+          <script src="app/boot/boot.js"></script>
+          <script src="app/boot/bootLink.controller.js"></script>
           <script src="app/header/header.controller.js"></script>
           <script src="app/messages.js"></script>
           <script src="app/minsida/minsida.controller.js"></script>
@@ -108,7 +110,7 @@
           <script src="components/models-viewstate/user/user.model.js"></script>
           <script src="components/proxies/omrade.proxy.js"></script>
           <script src="components/proxies/register.proxy.js"></script>
-          <script src="components/utils/http403ResponseInterceptor.service.js"></script>
+          <script src="components/proxies/user.proxy.js"></script>
           <script src="components/utils/object.helper.js"></script>
           <script src="components/utils/postnummer.helper.js"></script>
           <script src="components/utils/string.helper.js"></script>

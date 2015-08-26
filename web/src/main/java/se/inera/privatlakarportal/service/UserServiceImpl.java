@@ -7,7 +7,7 @@ import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.model.RegistrationStatus;
-import se.inera.privatlakarportal.service.model.UserStatus;
+import se.inera.privatlakarportal.service.model.User;
 
 import javax.transaction.Transactional;
 
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserStatus getUserStatus() {
+    public User getUserWithStatus() {
         PrivatlakarUser privatlakarUser = getUser();
 
         RegistrationStatus status = RegistrationStatus.UNKNOWN;
@@ -41,11 +41,11 @@ public class UserServiceImpl implements UserService {
                 status = RegistrationStatus.WAITING_FOR_HOSP;
             }
             else {
-                status = RegistrationStatus.COMPLETE;
+                status = RegistrationStatus.AUTHORIZED;
             }
         }
 
-        return new UserStatus(privatlakarUser, status);
+        return new User(privatlakarUser, status);
     }
 
 }

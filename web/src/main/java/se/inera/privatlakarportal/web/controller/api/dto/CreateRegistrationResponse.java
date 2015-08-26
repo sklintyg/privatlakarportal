@@ -1,20 +1,20 @@
 package se.inera.privatlakarportal.web.controller.api.dto;
 
-import se.inera.privatlakarportal.service.model.CreateRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.RegistrationStatus;
 
 public class CreateRegistrationResponse {
 
-    private CreateRegistrationResponseStatus status;
+    private RegistrationStatus status;
 
-    public CreateRegistrationResponse(CreateRegistrationResponseStatus status) {
+    public CreateRegistrationResponse(RegistrationStatus status) {
         this.status = status;
     }
 
-    public CreateRegistrationResponseStatus getStatus() {
+    public RegistrationStatus getStatus() {
         return status;
     }
 
-    public void setStatus(CreateRegistrationResponseStatus status) {
+    public void setStatus(RegistrationStatus status) {
         this.status = status;
     }
 }
