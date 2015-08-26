@@ -33,6 +33,7 @@
         "expect": false,
         "it": false,
         "xit": false,
+        "xdescribe": false,
         "spyOn": false,
         "jasmine": false,
         "angular": true,

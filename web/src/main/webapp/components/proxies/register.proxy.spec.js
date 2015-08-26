@@ -33,7 +33,7 @@ describe('Proxy: RegisterProxy', function() {
         'telefonnummer':'a@a.a','epost':'a@a.a',
         'adress':'fsdf','postnummer':'325235','postort':'Linköping','kommun':'Linköping','lan':'Östergötland'}
     };
-
+/*
     var testGetLakareModel = {
         'registration': {
             'befattning':'201012','verksamhetensNamn':'dfggd','agarForm':'Privat','vardform':'03','verksamhetstyp':'15','arbetsplatskod':'dfgd',
@@ -41,7 +41,7 @@ describe('Proxy: RegisterProxy', function() {
             'adress':'fsdf','postnummer':'325235','postort':'Linköping','kommun':'Linköping','lan':'Östergötland'
         }
     };
-
+*/
     // Initialize the controller and a mock scope
     beforeEach(inject(function(_$rootScope_, _$httpBackend_, _RegisterProxy_) {
         $httpBackend = _$httpBackend_;

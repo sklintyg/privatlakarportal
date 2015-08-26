@@ -7,7 +7,7 @@ describe('Model: RegisterModel', function() {
     }));
 
     var RegisterModel, $rootScope, $httpBackend;
-
+/*
     var testPostDTO = {
         'registration': {
             'befattning':'201013',
@@ -19,7 +19,7 @@ describe('Model: RegisterModel', function() {
             'adress':'Gatan','postnummer':'12345','postort':'Linköping','kommun':'Linköping','lan':'Östergötland'
         }
     };
-
+*/
     var testGetDTO = {
         'registration': {
             'befattning':'201013',
