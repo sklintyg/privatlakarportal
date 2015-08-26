@@ -4,7 +4,7 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import org.springframework.core.io.ClassPathResource
 import se.inera.privatlakarportal.spec.util.RestClientFixture
-
+import se.inera.privatlakarportal.spec.util.RestClientUtils
 import static groovyx.net.http.ContentType.JSON
 
 
@@ -57,6 +57,7 @@ public class SkapaPrivatlakare extends RestClientFixture {
 	
     public void execute() {
         def restClient = createRestClient()
+        RestClientUtils.login(restClient);
         def resp = restClient.post(
             path: 'registration/create',
             body: createPayload(),

@@ -3,8 +3,11 @@
 | befattning | verksamhetensNamn | agarForm | vardform | verksamhetstyp | arbetsplatskod | telefonnummer | epost | adress | postnummer | postort | kommun | lan |
 |201013|Kliniken|Privat|03|12|0123456|070123456|a@a.a|Gatan|13100|NACKA|NACKA|STOCKHOLM|
 
-!3 Gå till min sida
+!3 Logga in som privatläkare
+| script | !-LoggaIn-! |
+| logga in som | private-practicioner-1 |
 
+!3 Gå till min sida
 | script | !-RedigeraMinSida-! |
 | gå till min sida |
 | min sida visas |

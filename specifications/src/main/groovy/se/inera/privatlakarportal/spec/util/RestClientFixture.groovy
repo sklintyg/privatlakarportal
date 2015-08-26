@@ -7,7 +7,6 @@ import groovyx.net.http.RESTClient
  * @author andreaskaltenbach
  */
 class RestClientFixture {
-
     String baseUrl = System.getProperty("privatlakarportal.baseUrl") + "/api/"
     
     /**

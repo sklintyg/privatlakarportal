@@ -1,4 +1,4 @@
-|PrivatlakarPortal.WebTests.RedigeraPrivatlakare||16:15:32 Tue, Aug 25, 2015|
+|PrivatlakarPortal.WebTests.RedigeraPrivatlakare||09:01:14 Wed, Aug 26, 2015|
 |PrivatlakarPortal.WebTests.SuiteSetUp||12:51:56 Tue, Aug 25, 2015|
 |PrivatlakarPortal||10:50:36 Tue, Aug 25, 2015|
 |PrivatlakarPortal.WebTests.RegistreraPrivatlakare||16:30:52 Mon, Aug 17, 2015|

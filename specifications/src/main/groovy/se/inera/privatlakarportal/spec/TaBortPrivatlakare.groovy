@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.spec
 
 import se.inera.privatlakarportal.spec.util.RestClientFixture
+import se.inera.privatlakarportal.spec.util.RestClientUtils
 
 import static groovyx.net.http.ContentType.JSON
 
@@ -12,31 +13,19 @@ public class TaBortPrivatlakare extends RestClientFixture {
     String restPath = 'registration/remove/'
     boolean responseStatus
 
-	public void reset() {
-	}
-	
-    public void execute() {
-        Exception pendingException
-        String failedIds = ""
-        try {
-            def resp = restClient.delete(
-                    path: restPath + id,
-                    requestContentType: JSON
-            )
-            responseStatus = resp.status
-            
-        } catch(e) {
-            failedIds += id + ","
-            if (!pendingException) {
-                pendingException = e
-            }
-        }
-        if (pendingException) {
-            throw new Exception("Kunde inte ta bort " + failedIds, pendingException)
-        }
+    public void reset() {
     }
-    
+
+    public void execute() {
+        RestClientUtils.login(restClient)
+        def resp = restClient.delete(
+                path: restPath + id,
+                requestContentType: JSON
+        )
+        responseStatus = resp.status
+    }
+
     public boolean resultat() {
-       responseStatus
+        responseStatus
     }
 }
