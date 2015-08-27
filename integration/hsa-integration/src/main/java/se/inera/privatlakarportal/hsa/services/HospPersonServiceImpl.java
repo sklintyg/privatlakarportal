@@ -16,11 +16,6 @@ public class HospPersonServiceImpl implements HospPersonService {
     @Autowired
     private HSAWebServiceCalls client;
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see se.inera.webcert.hsa.services.HsaPersonService#getHsaPersonInfo(java.lang.String)
-     */
     @Override
     public GetHospPersonResponseType getHospPerson(String personId) {
 
