@@ -6,7 +6,7 @@ angular.module('privatlakareApp')
         RegisterViewStateService.updateStep();
 
         var model = RegisterModel.init();
-        var privatLakareDetails = RegisterViewStateService.getRegisterDetailsTableDataFromModel(UserModel, model);
+        var privatLakareDetails = RegisterViewStateService.getRegisterDetailsTableDataFromModel(UserModel.get(), model);
         $scope.uppgifter = privatLakareDetails.uppgifter;
         $scope.kontaktUppgifter = privatLakareDetails.kontaktUppgifter;
         $scope.viewState = RegisterViewStateService;
