@@ -1,5 +1,6 @@
 angular.module('privatlakareApp')
-    .controller('Step1Ctrl', function($scope, $state, RegisterViewStateService) {
+    .controller('Step1Ctrl', function($scope, $state, $window,
+        RegisterViewStateService, WindowUnload) {
         'use strict';
 
         // function to submit the form after all validation has occurred
@@ -22,4 +23,6 @@ angular.module('privatlakareApp')
                 RegisterViewStateService.updateStep();
             });
 
+        // Add browser dialog to ask if user wants to save before leaving if he closes the window on an edited form.
+        WindowUnload.bindUnload($scope);
     });

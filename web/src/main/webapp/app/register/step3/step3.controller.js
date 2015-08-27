@@ -1,6 +1,6 @@
 angular.module('privatlakareApp')
-  .controller('Step3Ctrl', function ($scope, $log, $state,
-        RegisterViewStateService, UserModel, RegisterModel, RegisterProxy) {
+  .controller('Step3Ctrl', function ($scope, $log, $state, $window,
+        RegisterViewStateService, UserModel, RegisterModel, RegisterProxy, WindowUnload) {
         'use strict';
 
         RegisterViewStateService.updateStep();
@@ -30,4 +30,6 @@ angular.module('privatlakareApp')
             });
         };
 
+        // Add browser dialog to ask if user wants to save before leaving if he closes the window on an edited form.
+        WindowUnload.bindUnload($scope);
   });

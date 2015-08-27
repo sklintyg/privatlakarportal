@@ -33,14 +33,19 @@ angular.module('privatlakareApp').provider('http403ResponseInterceptor',
          * Mandatory provider $get function. here we can inject the dependencies the
          * actual implementation needs, in this case $q (and $window for redirection)
          */
-        this.$get = [ '$q', '$window', function($q, $window) {
+        this.$get = [ '$q', '$window', 'UserModel', function($q, $window, UserModel) {
             //Ref our config object
             var config = this.config;
 
             function responseError(rejection) {
                 // for 403 responses - redirect browser to configured redirect url
                 if (rejection.status === 403) {
+
                     var redirectUrl = config.redirectUrl;
+                    if (UserModel.get().authenticationScheme === UserModel.get().fakeSchemeId) {
+                        redirectUrl = '/welcome.html';
+                    }
+
                     $window.location.href = redirectUrl;
                 }
                 // signal rejection (arguably not meaningful here since we just

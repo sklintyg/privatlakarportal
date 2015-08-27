@@ -2,7 +2,6 @@ angular.module('privatlakareApp').factory('UserModel',
     function($window, $sessionStorage) {
         'use strict';
 
-        var fakeSchemeId = 'urn:inera:privatlakarportal:eleg:fake';
         var data = {};
 
         function _reset() {
@@ -11,6 +10,7 @@ angular.module('privatlakareApp').factory('UserModel',
             data.status = null;
             data.personnummer = null;
             data.authenticationScheme = null;
+            data.fakeSchemeId = 'urn:inera:privatlakarportal:eleg:fake';
             return data;
         }
 
@@ -27,6 +27,7 @@ angular.module('privatlakareApp').factory('UserModel',
 
             set: function(user) {
                 data.name = user.name;
+                data.personnummer = user.personalIdentityNumber;
                 data.status = user.status;
                 data.authenticationScheme = user.authenticationScheme;
                 $sessionStorage.user = data;

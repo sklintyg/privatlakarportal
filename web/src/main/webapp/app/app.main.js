@@ -16,13 +16,24 @@ app.value('networkConfig', {
     hospTimeout: 1000 // prod: 30000
 });
 
-app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $tooltipProvider) {
+app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $tooltipProvider, $httpProvider,
+    http403ResponseInterceptorProvider) {
     'use strict';
+
+    // Default route
     $urlRouterProvider.otherwise('/');
+
+    // Use /#/ syntax. True = regular / syntax
     $locationProvider.html5Mode(false);
+
+    // Tooltip config
     $tooltipProvider.setTriggers({
         'show': 'hide'
     });
+
+    // Configure 403 interceptor provider
+    http403ResponseInterceptorProvider.setRedirectUrl('/');
+    $httpProvider.interceptors.push('http403ResponseInterceptor');
 
     // Add replaceAll function to all strings.
     String.prototype.replaceAll = function(f,r) { // jshint ignore:line

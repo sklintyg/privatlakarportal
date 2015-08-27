@@ -1,6 +1,6 @@
 angular.module('privatlakareApp')
     .controller('MinsidaCtrl', function($scope, $state, $log, $window,
-        UserModel, RegisterModel, RegisterViewStateService, RegisterProxy, ObjectHelper) {
+        UserModel, RegisterModel, RegisterViewStateService, RegisterProxy, ObjectHelper, WindowUnload) {
         'use strict';
         $scope.user = UserModel.init();
         $scope.registerModel = RegisterModel.reset();
@@ -44,21 +44,9 @@ angular.module('privatlakareApp')
             });
         };
 
-        $window.onbeforeunload = function(event) {
-            if ($scope.registerForm.$dirty) {
-                var message = 'Om du lämnar sidan sparas inte dina ändringar.';
-                if (typeof event === 'undefined') {
-                    event = $window.event;
-                }
-                if (event) {
-                    event.returnValue = message;
-                }
-                return message;
-            }
-            return null;
-        };
-
-        $scope.$on('$destroy', function() {
-            $window.onbeforeunload = null;
+        // Add browser dialog to ask if user wants to save before leaving if he closes the window on an edited form.
+        $scope.$watch('registerForm.$dirty',  function(newVal) {
+            RegisterViewStateService.windowUnloadWarningCondition.condition = newVal;
         });
+        WindowUnload.bindUnload($scope, RegisterViewStateService.windowUnloadWarningCondition);
     });
