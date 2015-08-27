@@ -30,8 +30,8 @@
 !3 Verifiera registrering sida 3
 | script | Registrera |
 | registrering steg3 sidan visas |
-| check | personnummer | 191212121212 |
-| check | namn| Sandra Nilsson |
+| check | personnummer | 199008252398 |
+| check | namn| Oskar II Johansson |
 | check | befattning | Specialistläkare |
 | check | verksamhetensnamn | Fitnesse verksamhet |
 | check | agarform| Privat |
