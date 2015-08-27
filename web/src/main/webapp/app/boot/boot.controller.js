@@ -15,8 +15,9 @@ angular.module('privatlakareApp')
                 case 'NOT_STARTED':
                     $state.go('app.start');
                     break;
+                case 'NOT_AUTHORIZED':
                 case 'WAITING_FOR_HOSP':
-                case 'COMPLETE':
+                case 'AUTHORIZED':
                     $state.go('app.minsida');
                     break;
                 default:

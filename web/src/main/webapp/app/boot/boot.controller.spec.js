@@ -50,7 +50,7 @@ describe('Controller: BootCtrl', function() {
 
     it('should be redirected to minsida page if registered and got läkarlegitimation', function() {
         succeed = true;
-        user = {name:'Nisse', status: 'COMPLETE'};
+        user = {name:'Nisse', status: 'AUTHORIZED'};
         spyOn($state, 'go').and.stub();
         BootCtrl = $controller('BootCtrl', { $scope: scope });
         expect($state.go).toHaveBeenCalledWith('app.minsida');
