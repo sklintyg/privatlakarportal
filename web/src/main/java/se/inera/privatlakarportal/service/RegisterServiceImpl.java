@@ -116,22 +116,30 @@ public class RegisterServiceImpl<E> implements RegisterService {
     public RegistrationStatus createRegistration(Registration registration) {
 
         if (registration == null || !registration.checkIsValid()) {
+            LOG.error("createRegistration: CreateRegistrationRequest is not valid");
             throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
                     "CreateRegistrationRequest is not valid");
         }
 
         if (privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber()) != null) {
+            LOG.error("createRegistration: Registration already exists");
             throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS,
                     "Registration already exists");
         }
+        
+        if (!userService.getUser().isNameFromPuService()) {
+            LOG.error("createRegistration: Not allowed to create registration without updated name from PU-service");
+            throw new PrivatlakarportalServiceException(
+                    PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
+                    "Not allowed to create registration without updated name from PU-service");
+        }
 
         Privatlakare privatlakare = new Privatlakare();
 
-        // TODO Get personId and name from logged in user object
         privatlakare.setPersonId(userService.getUser().getPersonalIdentityNumber());
-        privatlakare.setFullstandigtNamn("Namn");
+        privatlakare.setFullstandigtNamn(userService.getUser().getName());
 
         // Generate next hsaId
         // Format: "SE" + ineras orgnr (inkl "sekelsiffror", alltså 165565594230) + "-" + "WEBCERT" + femsiffrigt löpnr.
