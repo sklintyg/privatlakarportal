@@ -8,18 +8,30 @@ import se.inera.privatlakarportal.service.model.RegistrationStatus;
  */
 public class User {
 
+    private String personalIdentityNumber;
     private String name;
+    private boolean nameFromPuService;
     private String authenticationScheme;
     private RegistrationStatus status;
 
     public User(PrivatlakarUser privatlakarUser, RegistrationStatus status) {
+        personalIdentityNumber = privatlakarUser.getPersonalIdentityNumber();
         name = privatlakarUser.getName();
+        nameFromPuService = privatlakarUser.isNameFromPuService();
         authenticationScheme = privatlakarUser.getAuthenticationScheme();
         this.status = status;
     }
 
+    public String getPersonalIdentityNumber() {
+        return personalIdentityNumber;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public boolean isNameFromPuService() {
+        return nameFromPuService;
     }
 
     public String getAuthenticationScheme() {

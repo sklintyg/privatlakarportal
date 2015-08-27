@@ -6,11 +6,14 @@ import org.opensaml.xml.XMLObject;
 import org.opensaml.xml.schema.XSString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Component;
+import se.inera.privatlakarportal.pu.model.PersonSvar;
+import se.inera.privatlakarportal.pu.services.PUService;
 
 
 /**
@@ -20,6 +23,9 @@ import org.springframework.stereotype.Component;
 public class ElegUserDetailsService implements SAMLUserDetailsService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ElegUserDetailsService.class);
+
+    @Autowired
+    PUService puService;
 
     @Override
     public Object loadUserBySAML(SAMLCredential samlCredential) throws UsernameNotFoundException {
@@ -34,6 +40,19 @@ public class ElegUserDetailsService implements SAMLUserDetailsService {
             if (samlCredential.getAuthenticationAssertion() != null) {
                 String authnContextClassRef = samlCredential.getAuthenticationAssertion().getAuthnStatements().get(0).getAuthnContext().getAuthnContextClassRef().getAuthnContextClassRef();
                 privatlakarUser.setAuthenticationScheme(authnContextClassRef);
+            }
+
+            try {
+                PersonSvar personSvar = puService.getPerson(personId);
+                if (personSvar.getStatus() == PersonSvar.Status.FOUND && personSvar.getPerson() != null) {
+                    String name = personSvar.getPerson().getFornamn() + " " + personSvar.getPerson().getEfternamn();
+                    privatlakarUser.updateNameFromPuService(name);
+                } else {
+                    LOG.warn("Person '{}' not found in puService", personId);
+                }
+            }
+            catch(RuntimeException e) {
+                LOG.error("Failed to contact puService");
             }
 
             return privatlakarUser;

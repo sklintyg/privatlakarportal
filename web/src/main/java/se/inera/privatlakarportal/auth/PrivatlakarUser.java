@@ -8,10 +8,12 @@ public class PrivatlakarUser {
     private String personalIdentityNumber;
     private String name;
     private String authenticationScheme;
+    private boolean nameFromPuService;
 
     public PrivatlakarUser(String personalIdentityNumber, String name) {
         this.personalIdentityNumber = personalIdentityNumber;
         this.name = name;
+        nameFromPuService = false;
     }
 
     public String getPersonalIdentityNumber() {
@@ -29,4 +31,14 @@ public class PrivatlakarUser {
     public void setAuthenticationScheme(String authenticationScheme) {
         this.authenticationScheme = authenticationScheme;
     }
+
+    public boolean isNameFromPuService() {
+        return nameFromPuService;
+    }
+
+    public void updateNameFromPuService(String name) {
+        this.name = name;
+        nameFromPuService = true;
+    }
+
 }
