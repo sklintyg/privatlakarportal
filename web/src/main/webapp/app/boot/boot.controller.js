@@ -3,7 +3,7 @@ angular.module('privatlakareApp')
         UserProxy, UserModel) {
         'use strict';
 
-        $scope.user = UserModel.get();
+        $scope.user = UserModel.init();
 
         $scope.$watch('user', function(newVal) {
             switch (newVal.status) {
