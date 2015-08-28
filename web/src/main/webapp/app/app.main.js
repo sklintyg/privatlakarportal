@@ -75,12 +75,21 @@ app.constant('datepickerPopupConfig', {
 });
 
 // Inject language resources
-app.run(['$log', '$rootScope', '$window', 'messageService',
-    function($log, $rootScope, $window, messageService) {
+app.run(
+    function($log, $rootScope, $window,
+        messageService, UserProxy, UserModel) {
         'use strict';
 
         $rootScope.lang = 'sv';
         $rootScope.DEFAULT_LANG = 'sv';
+
+        // Get logged in user
+        UserModel.init();
+        UserProxy.getUser().then(function(successData) {
+            UserModel.set(successData);
+        }, function() {
+            UserModel.fakeLogin();
+        });
 
         /* jshint -W117 */
         messageService.addResources(ppMessages);// jshint ignore:line
@@ -122,4 +131,4 @@ app.run(['$log', '$rootScope', '$window', 'messageService',
                 $log.log('$stateChangeError');
                 $log.log(toState);
             });
-    }]);
+    });

@@ -11,6 +11,7 @@ angular.module('privatlakareApp').factory('UserModel',
             data.personnummer = null;
             data.authenticationScheme = null;
             data.fakeSchemeId = 'urn:inera:privatlakarportal:eleg:fake';
+            data.loggedIn = false;
             return data;
         }
 
@@ -30,6 +31,7 @@ angular.module('privatlakareApp').factory('UserModel',
                 data.personnummer = user.personalIdentityNumber;
                 data.status = user.status;
                 data.authenticationScheme = user.authenticationScheme;
+                data.loggedIn = true;
                 $sessionStorage.user = data;
             },
             get: function() {

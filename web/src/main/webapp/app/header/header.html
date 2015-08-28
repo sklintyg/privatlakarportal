@@ -8,7 +8,7 @@
       </span>
     </div>
 
-    <div ng-show="user.status != null">
+    <div ng-show="user.loggedIn">
       <div class="headerbox-avatar pull-right">
         <a ui-sref="app.minsida"><img ng-src="/assets/images/avatar.png"></a>
       </div>
@@ -21,7 +21,7 @@
         </span>
           - <span class="logged-in">{{user.name}}</span><br>
         <span class="pull-right">
-          <span ng-show="user.status == 'WAITING_FOR_HOSP' || user.status == 'COMPLETE'"><a id="updateAccount"
+          <span ng-show="user.status == 'WAITING_FOR_HOSP' || user.status == 'AUTHORIZED'"><a id="updateAccount"
                                                                                             ng-click="updateAccount()">Ändra
             uppgifter</a> | </span><a id="logoutLink" ng-click="logout()">Logga ut</a>
         </span>

@@ -46,6 +46,7 @@ angular.module('privatlakareApp').provider('http403ResponseInterceptor',
                         redirectUrl = '/welcome.html';
                     }
 
+                    UserModel.get().loggedIn = false;
                     $window.location.href = redirectUrl;
                 }
                 // signal rejection (arguably not meaningful here since we just
