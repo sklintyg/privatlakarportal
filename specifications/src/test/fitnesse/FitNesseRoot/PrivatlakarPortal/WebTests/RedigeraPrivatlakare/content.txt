@@ -33,12 +33,12 @@
 
 !3 Ladda om sidan
 | script | Browser |
-| ladda om |
+| ladda om | true |
 
 !3 Verifiera registrering
 | script | !-RedigeraMinSida-! |
 | check | personnummer | 199008252398 |
-| check | namn| Oskar Johansson|
+| check | namn| Oskar II Johansson|
 | check | befattning | Specialistläkare |
 | check | verksamhetensnamn | Fitnesse verksamhet |
 | check | agarform| Privat |

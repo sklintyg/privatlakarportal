@@ -27,16 +27,18 @@ public class Browser {
         CachingDriverFactory.clearCache()
     }
 
-    public void laddaOm() {
+    public void laddaOm(acceptBrowserDialog) {
         if (!browser) throw new IllegalStateException("Browser not initialized")
         browser.driver.navigate().refresh()
         WebDriver webDriver = browser.driver
 
         browser.drive {
-            WebDriverWait wait = new WebDriverWait(driver, 2);
-            wait.until(ExpectedConditions.alertIsPresent());
-            Alert alert = driver.switchTo().alert();
-            alert.accept();
+            if(acceptBrowserDialog == "true") {
+                WebDriverWait wait = new WebDriverWait(driver, 2);
+                wait.until(ExpectedConditions.alertIsPresent());
+                Alert alert = driver.switchTo().alert();
+                alert.accept();
+            }
             waitFor {
                 js.doneLoading && js.dialogDoneLoading
             }

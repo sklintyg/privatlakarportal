@@ -1,6 +1,9 @@
+!3 Logga in som privatläkare
+| script | !-LoggaIn-! |
+| logga in som | private-practicioner-1 |
+
 !3 Gå till startsidan
 | script | Startsida |
-| gå till startsidan |
 | startsidan visas |
 
 !3 Visa användarvillkor
