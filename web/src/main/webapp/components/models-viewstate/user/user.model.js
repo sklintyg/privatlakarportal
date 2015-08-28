@@ -37,6 +37,9 @@ angular.module('privatlakareApp').factory('UserModel',
             get: function() {
                 return data;
             },
+            isRegistered: function() {
+                return data.status === 'NOT_AUTHORIZED' || data.status === 'AUTHORIZED' || data.status === 'WAITING_FOR_HOSP';
+            },
             fakeLogin: function() {
                 if (data.authenticationScheme === data.fakeSchemeId) {
                     $window.location = '/welcome.html';

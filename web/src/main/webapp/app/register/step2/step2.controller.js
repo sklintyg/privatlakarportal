@@ -1,7 +1,11 @@
 angular.module('privatlakareApp')
   .controller('Step2Ctrl', function ($scope, $state, $window,
-        RegisterViewStateService, WindowUnload) {
+        RegisterViewStateService, WindowUnload, UserModel) {
         'use strict';
+
+        if(UserModel.isRegistered()) {
+            $state.go('app.register.complete');
+        }
 
         // function to submit the form after all validation has occurred
         $scope.submitForm = function() {

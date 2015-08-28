@@ -5,8 +5,13 @@ angular.module('privatlakareApp')
 
         RegisterViewStateService.updateStep();
 
+        var user = UserModel.init();
+        if(UserModel.isRegistered()) {
+            $state.go('app.register.complete');
+        }
+
         var model = RegisterModel.init();
-        var privatLakareDetails = RegisterViewStateService.getRegisterDetailsTableDataFromModel(UserModel.get(), model);
+        var privatLakareDetails = RegisterViewStateService.getRegisterDetailsTableDataFromModel(user, model);
         $scope.uppgifter = privatLakareDetails.uppgifter;
         $scope.kontaktUppgifter = privatLakareDetails.kontaktUppgifter;
         $scope.viewState = RegisterViewStateService;
@@ -22,6 +27,7 @@ angular.module('privatlakareApp')
                 $state.go('app.register.complete');
                 RegisterViewStateService.loading.register = false;
                 RegisterViewStateService.errorMessage.register = null;
+                UserModel.get().status = successData.status;
                 RegisterModel.reset();
             }, function(errorData) {
                 RegisterViewStateService.loading.register = false;
