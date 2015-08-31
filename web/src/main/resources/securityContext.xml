@@ -123,8 +123,10 @@
     <!-- Other unauthenticated requests will be returned as http status 403. -->
     <!-- This will allow frontend to act correctly on ajax requests          -->
     <security:http entry-point-ref="http403ForbiddenEntryPoint">
+      <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
     </security:http>
 
     <security:authentication-manager alias="authenticationManager">
