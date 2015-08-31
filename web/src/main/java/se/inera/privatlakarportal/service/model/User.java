@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.service.model;
 
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.privatlakarportal.pu.model.PersonSvar;
 import se.inera.privatlakarportal.service.model.RegistrationStatus;
 
 /**
@@ -11,15 +12,19 @@ public class User {
     private String personalIdentityNumber;
     private String name;
     private boolean nameFromPuService;
+    private boolean nameUpdated;
     private String authenticationScheme;
+    private PersonSvar.Status personSvarStatus;
     private RegistrationStatus status;
 
-    public User(PrivatlakarUser privatlakarUser, RegistrationStatus status) {
+    public User(PrivatlakarUser privatlakarUser, PersonSvar.Status personSvarStatus, RegistrationStatus status, boolean nameUpdated) {
         personalIdentityNumber = privatlakarUser.getPersonalIdentityNumber();
         name = privatlakarUser.getName();
         nameFromPuService = privatlakarUser.isNameFromPuService();
         authenticationScheme = privatlakarUser.getAuthenticationScheme();
+        this.personSvarStatus = personSvarStatus;
         this.status = status;
+        this.nameUpdated = nameUpdated;
     }
 
     public String getPersonalIdentityNumber() {
@@ -34,11 +39,20 @@ public class User {
         return nameFromPuService;
     }
 
+    public boolean isNameUpdated() {
+        return nameUpdated;
+    }
+
     public String getAuthenticationScheme() {
         return authenticationScheme;
+    }
+
+    public PersonSvar.Status getPersonSvarStatus() {
+        return personSvarStatus;
     }
 
     public RegistrationStatus getStatus() {
         return status;
     }
+
 }

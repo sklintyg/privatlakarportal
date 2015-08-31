@@ -42,19 +42,6 @@ public class ElegUserDetailsService implements SAMLUserDetailsService {
                 privatlakarUser.setAuthenticationScheme(authnContextClassRef);
             }
 
-            try {
-                PersonSvar personSvar = puService.getPerson(personId);
-                if (personSvar.getStatus() == PersonSvar.Status.FOUND && personSvar.getPerson() != null) {
-                    String name = personSvar.getPerson().getFornamn() + " " + personSvar.getPerson().getEfternamn();
-                    privatlakarUser.updateNameFromPuService(name);
-                } else {
-                    LOG.warn("Person '{}' not found in puService", personId);
-                }
-            }
-            catch(RuntimeException e) {
-                LOG.error("Failed to contact puService");
-            }
-
             return privatlakarUser;
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {

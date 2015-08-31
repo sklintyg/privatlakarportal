@@ -12,6 +12,8 @@ angular.module('privatlakareApp').factory('UserModel',
             data.authenticationScheme = null;
             data.fakeSchemeId = 'urn:inera:privatlakarportal:eleg:fake';
             data.loggedIn = false;
+            data.nameFromPuService = false;
+            data.nameUpdated = false;
             return data;
         }
 
@@ -32,6 +34,8 @@ angular.module('privatlakareApp').factory('UserModel',
                 data.status = user.status;
                 data.authenticationScheme = user.authenticationScheme;
                 data.loggedIn = true;
+                data.nameFromPuService = user.nameFromPuService;
+                data.nameUpdated = user.nameUpdated;
                 $sessionStorage.user = data;
             },
             get: function() {

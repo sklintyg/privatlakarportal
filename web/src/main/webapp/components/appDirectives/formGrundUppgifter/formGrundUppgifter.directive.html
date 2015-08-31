@@ -1,10 +1,14 @@
 <div>
   <div pp-field="personnummer">
-    <span  id="personnummer">{{user.personnummer}}</span>
+    <span id="personnummer">{{user.personnummer}}</span>
   </div>
 
   <div pp-field="name">
     <span id="namn">{{user.name}}</span>
+  </div>
+
+  <div id="nytt_namn_information" ng-if="user.nameUpdated" class="alert alert-info">
+    Ditt namn har uppdaterats från folkbokföringen. För att det nya namnet ska användas i Webcert behöver du logga ut ur Webcert och sedan logga in igen.
   </div>
 
   <div pp-field="befattning">

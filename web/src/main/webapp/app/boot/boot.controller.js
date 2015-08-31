@@ -8,7 +8,14 @@ angular.module('privatlakareApp')
         $scope.$watch('user', function(newVal) {
             switch (newVal.status) {
             case 'NOT_STARTED':
-                $state.go('app.start');
+                if (newVal.nameFromPuService) {
+                    $state.go('app.start');
+                }
+                else {
+                    $state.go('app.error', {
+                        errorMessage:'Ett tekniskt fel har tyvärr uppstått och det går inte att hämta dina namnuppgifter från folkbokföringsregistret för tillfället. Du kan därför inte skapa ett konto för Webcert just nu. Prova igen om en stund.'
+                    });
+                }
                 break;
             case 'NOT_AUTHORIZED':
             case 'WAITING_FOR_HOSP':
