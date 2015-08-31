@@ -27,5 +27,5 @@ angular.module('privatlakareApp')
             });
 
         // Add browser dialog to ask if user wants to save before leaving if he closes the window on an edited form.
-        WindowUnload.bindUnload($scope);
+        WindowUnload.bindUnload($scope, RegisterViewStateService.windowUnloadWarningCondition);
     });

@@ -19,7 +19,7 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
                 save: false // minsida
             };
 
-            this.windowUnloadWarningCondition = { condition: false };
+            this.windowUnloadWarningCondition = { condition: true };
 
             // move to step 2 viewstateservice
             this.validPostnummer = false;
