@@ -124,6 +124,7 @@
     <!-- This will allow frontend to act correctly on ajax requests          -->
     <security:http entry-point-ref="http403ForbiddenEntryPoint">
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+      <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
     </security:http>
 
     <security:authentication-manager alias="authenticationManager">
