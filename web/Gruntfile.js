@@ -181,7 +181,7 @@ module.exports = function(grunt) {
             target: {
                 src: [
                     '<%= config.client %>/index.html',
-                    'karma.conf.js'
+                    'karma.conf.ci.js'
                 ],
                 ignorePath: '<%= config.client %>/',
                 exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/'],
@@ -342,7 +342,7 @@ module.exports = function(grunt) {
         // Test settings
         karma: {
             unit: {
-                configFile: 'karma.conf.js',
+                configFile: 'karma.conf.ci.js',
                 singleRun: true
             }
         },
