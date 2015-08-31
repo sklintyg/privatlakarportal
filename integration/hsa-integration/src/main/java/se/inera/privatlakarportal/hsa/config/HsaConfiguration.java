@@ -25,9 +25,10 @@ import java.security.cert.CertificateException;
 @Configuration
 @ComponentScan("se.inera.privatlakarportal.hsa.services")
 @Import(HsaStubConfiguration.class)
+@ImportResource("classpath:hsa-services-config.xml")
 public class HsaConfiguration {
 
-    @Value("${hsa.ws.service.logicaladdress}")
+/*    @Value("${hsa.ws.service.logicaladdress}")
     private String hsaLogicalAddress;
 
     @Value("${hsa.ws.services.url}")
@@ -105,6 +106,6 @@ public class HsaConfiguration {
         httpConduit.setTlsClientParameters(tlsClientParameters);
 
         return httpConduit;
-    }
+    }*/
 
 }
