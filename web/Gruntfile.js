@@ -78,7 +78,8 @@ module.exports = function(grunt) {
                     '<%= config.client %>/{app,components}/**/*.js',
                     '!<%= config.client %>/{app,components}/**/*.spec.js',
                     '!<%= config.client %>/{app,components}/**/*.mock.js',
-                    '!<%= config.client %>/app/app.main.js'],
+                    '!<%= config.client %>/app/app.main.js',
+                    '!<%= config.client %>/app/app.main.test.js'],
                 tasks: ['injector:scripts']
             },
             injectCss: {
@@ -398,6 +399,7 @@ module.exports = function(grunt) {
                     '<%= config.client %>/index.html': [
                         ['{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.js',
                             '!{<%= config.tmp %>,<%= config.client %>}/app/app.main.js',
+                            '!{<%= config.tmp %>,<%= config.client %>}/app/app.main.test.js',
                             '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.spec.js',
                             '!{<%= config.tmp %>,<%= config.client %>}/{app,components}/**/*.mock.js']
                     ]
