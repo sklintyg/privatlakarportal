@@ -22,6 +22,7 @@ module.exports = function(config) {
             'src/main/webapp/bower_components/angular-i18n/angular-locale_sv-se.js',
             'src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
             'src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
+            'src/main/webapp/bower_components/angular-deferred-bootstrap/angular-deferred-bootstrap.js',
             'src/main/webapp/bower_components/ngstorage/ngStorage.js',
             // endbower
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',

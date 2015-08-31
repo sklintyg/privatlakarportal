@@ -9,6 +9,17 @@ var app = angular.module('privatlakareApp', [
   'ui.bootstrap'
 ]);
 
+deferredBootstrapper.bootstrap({
+    element: document.body,
+    module: 'privatlakareApp',
+    resolve: {
+        APP_CONFIG: ['$http', function ($http) {
+            'use strict';
+            return $http.get('/api/config');
+        }]
+    }
+});
+
 app.value('networkConfig', {
     defaultTimeout: 1000, // prod: 30000
     regionTimeout: 1000, // prod: 30000
