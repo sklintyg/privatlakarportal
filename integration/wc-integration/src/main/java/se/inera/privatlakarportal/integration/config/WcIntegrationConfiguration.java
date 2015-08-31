@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import se.inera.privatlakarportal.integration.privatepractioner.services.GetPrivatePractitionerResponderImpl;
 import se.inera.privatlakarportal.integration.privatepractioner.services.ValidatePrivatePractitionerResponderImpl;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitioner.v1.rivtabp21.GetPrivatePractitionerResponderInterface;
@@ -19,6 +20,7 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 @ComponentScan({
     "se.inera.privatlakarportal.integration.privatepractioner",
     "se.inera.privatlakarportal.integration.terms"})
+@ImportResource("classpath:wc-services.xml")
 public class WcIntegrationConfiguration {
 
     @Value("${terms.ws.services.url}")
