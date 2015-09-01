@@ -11,12 +11,14 @@ angular.module('privatlakareApp')
                 RegisterModel.set(lakarData.registration);
                 $scope.registerModel = RegisterModel.get();
 
-                $scope.viewState.legitimeradYrkesgrupp =
-                    ObjectHelper.returnJoinedArrayOrNull(lakarData.hospInformation.hsaTitles);
-                $scope.viewState.specialitet =
-                    ObjectHelper.returnJoinedArrayOrNull(lakarData.hospInformation.specialityNames);
-                $scope.viewState.forskrivarkod =
-                    ObjectHelper.valueOrNull(lakarData.hospInformation.personalPrescriptionCode);
+                if(ObjectHelper.isDefined(lakarData.hospInformation)) {
+                    $scope.viewState.legitimeradYrkesgrupp =
+                        ObjectHelper.returnJoinedArrayOrNull(lakarData.hospInformation.hsaTitles);
+                    $scope.viewState.specialitet =
+                        ObjectHelper.returnJoinedArrayOrNull(lakarData.hospInformation.specialityNames);
+                    $scope.viewState.forskrivarkod =
+                        ObjectHelper.valueOrNull(lakarData.hospInformation.personalPrescriptionCode);
+                }
             } else {
                 $scope.registerModel = RegisterModel.reset();
                 $scope.viewState = RegisterViewStateService.reset();

@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').factory('RegisterModel',
     function($sessionStorage, $log,
-        RegisterViewStateService) {
+        RegisterViewStateService, ObjectHelper) {
         'use strict';
 
         var data = {};
@@ -47,10 +47,12 @@ angular.module('privatlakareApp').factory('RegisterModel',
         
         function _convertToViewModel(dto) {
             var viewModel = angular.copy(dto);
-            viewModel.registration.befattning = { id: viewModel.registration.befattning };
-            viewModel.registration.vardform = { id: viewModel.registration.vardform };
-            viewModel.registration.verksamhetstyp = { id: viewModel.registration.verksamhetstyp };
-            viewModel.registration.epost2 = viewModel.registration.epost;
+            if(ObjectHelper.isDefined(viewModel) && ObjectHelper.isDefined(viewModel.registration)) {
+                viewModel.registration.befattning = { id: viewModel.registration.befattning };
+                viewModel.registration.vardform = { id: viewModel.registration.vardform };
+                viewModel.registration.verksamhetstyp = { id: viewModel.registration.verksamhetstyp };
+                viewModel.registration.epost2 = viewModel.registration.epost;
+            }
             return viewModel;
         }
 

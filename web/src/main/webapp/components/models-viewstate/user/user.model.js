@@ -37,6 +37,23 @@ angular.module('privatlakareApp').factory('UserModel',
             get: function() {
                 return data;
             },
+            getStatusText: function() {
+                var statusText;
+                switch(data.status) {
+                case 'AUTHORIZED':
+                    statusText = 'Läkare';
+                    break;
+                case 'NOT_AUTHORIZED':
+                    statusText = 'Registrerad användare';
+                    break;
+                case 'WAITING_FOR_HOSP':
+                    statusText = 'Registrerad användare, väntar på godkännande';
+                    break;
+                default:
+                    statusText = 'Ej registrerad användare';
+                }
+                return statusText;
+            },
             isRegistered: function() {
                 return data.status === 'NOT_AUTHORIZED' || data.status === 'AUTHORIZED' || data.status === 'WAITING_FOR_HOSP';
             },

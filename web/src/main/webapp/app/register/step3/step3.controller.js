@@ -24,11 +24,21 @@ angular.module('privatlakareApp')
             RegisterProxy.registerPrivatlakare(model).then(function(successData) {
                 $log.debug('Registration complete - data:');
                 $log.debug(successData);
-                $state.go('app.register.complete');
                 RegisterViewStateService.loading.register = false;
                 RegisterViewStateService.errorMessage.register = null;
-                UserModel.get().status = successData.status;
+                user.status = successData.status;
                 RegisterModel.reset();
+
+                switch(user.status) {
+                case 'AUTHORIZED':
+                case 'NOT_AUTHORIZED':
+                    $state.go('app.register.complete');
+                    break;
+                case 'WAITING_FOR_HOSP':
+                    $state.go('app.register.waiting');
+                    break;
+                }
+
             }, function(errorData) {
                 RegisterViewStateService.loading.register = false;
                 RegisterViewStateService.errorMessage.register = 'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
