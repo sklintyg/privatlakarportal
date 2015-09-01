@@ -54,6 +54,9 @@ angular.module('privatlakareApp').factory('UserModel',
                 }
                 return statusText;
             },
+            hasApplicationPermission: function() {
+                return data.status === 'AUTHORIZED';
+            },
             isRegistered: function() {
                 return data.status === 'NOT_AUTHORIZED' || data.status === 'AUTHORIZED' || data.status === 'WAITING_FOR_HOSP';
             },

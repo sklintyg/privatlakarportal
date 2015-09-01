@@ -9,7 +9,8 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             this.errorMessage = {
                 register: null, // step 3
                 pasteEpost: false, // step 2
-                pasteEpost2: false // step 2
+                pasteEpost2: false, // step 2
+                noPermission: false // minsida
             };
 
             this.loading = {

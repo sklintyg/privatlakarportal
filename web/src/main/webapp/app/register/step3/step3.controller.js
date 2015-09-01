@@ -31,12 +31,15 @@ angular.module('privatlakareApp')
 
                 switch(user.status) {
                 case 'AUTHORIZED':
-                case 'NOT_AUTHORIZED':
                     $state.go('app.register.complete');
                     break;
+                case 'NOT_AUTHORIZED':
                 case 'WAITING_FOR_HOSP':
                     $state.go('app.register.waiting');
                     break;
+                default: // NOT_STARTED, UNKNOWN or other unwanted values like null or undefined
+                    RegisterViewStateService.errorMessage.register = 'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
+                    $log.debug('Invalid user status in response:' + user.status);
                 }
 
             }, function(errorData) {

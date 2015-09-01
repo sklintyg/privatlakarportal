@@ -2,6 +2,19 @@
 
   <h1 id="minsida" class="page-header">Min sida</h1>
 
+  <!--div alert-message alert-model="viewState.errorMessage.noPermission" alert-message-id="label.form.error.nopermission" alert-severity="danger"></div-->
+
+  <div ng-show="viewState.errorMessage.noPermission" class="alert alert-danger">
+    <p>
+      Du har inte behörighet att logga in i Webcert. Det kan bero på att:
+    </p>
+    <ul>
+      <li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.</li>
+      <li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li>
+      <li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. Kontakta Inera Nationell Kundservice för att ta reda på mer.</li>
+    </ul>
+  </div>
+
   <h2>Dina och verksamhetens uppgifter</h2>
   <div form-grund-uppgifter></div>
 
