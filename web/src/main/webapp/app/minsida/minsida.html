@@ -4,33 +4,48 @@
 
   <!--div alert-message alert-model="viewState.errorMessage.noPermission" alert-message-id="label.form.error.nopermission" alert-severity="danger"></div-->
 
-  <div ng-show="viewState.errorMessage.noPermission" class="alert alert-danger">
-    <p>
-      Du har inte behörighet att logga in i Webcert. Det kan bero på att:
-    </p>
-    <ul>
-      <li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.</li>
-      <li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li>
-      <li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. Kontakta Inera Nationell Kundservice för att ta reda på mer.</li>
-    </ul>
-  </div>
+  <div class="row">
+    <div class="col-md-7">
 
-  <h2>Dina och verksamhetens uppgifter</h2>
-  <div form-grund-uppgifter></div>
+      <div ng-show="viewState.errorMessage.noPermission" class="alert alert-danger">
+        <p>
+          Du har inte behörighet att logga in i Webcert. Det kan bero på att: </p>
+        <ul>
+          <li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl
+            upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.
+          </li>
+          <li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li>
+          <li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. Kontakta Inera Nationell
+            Kundservice
+            för att ta reda på mer.
+          </li>
+        </ul>
+      </div>
 
-  <h2>Verksamhetens kontaktuppgifter</h2>
-  <div form-kontakt-uppgifter></div>
+      <h2>Dina och verksamhetens uppgifter</h2>
+      <div class="box">
+        <div form-grund-uppgifter></div>
+      </div>
 
-  <h2>Socialstyrelsens uppgifter</h2>
-  <div form-social-uppgifter></div>
+      <h2>Verksamhetens kontaktuppgifter</h2>
+      <div class="box">
+        <div form-kontakt-uppgifter></div>
+      </div>
 
-  <div class="top-pad"></div>
+      <h2>Socialstyrelsens uppgifter</h2>
+      <div class="box">
+        <div form-social-uppgifter></div>
+      </div>
 
-  <div class="buttonbar section-line top-pad">
-    <div alert-message alert-model="viewState.errorMessage.save" alert-severity="danger"></div>
-    <button id="saveBtn" class="btn btn-success" ng-click="save()" ng-disabled="registerForm.$pristine">
-      <img ng-show="viewState.loading.save" ng-src="/assets/images/ajax-loader-small-green.gif"/> Spara
-    </button>
+      <div class="top-pad"></div>
+
+      <div class="buttonbar section-line top-pad-1">
+        <div alert-message alert-model="viewState.errorMessage.save" alert-severity="danger"></div>
+        <button id="saveBtn" class="btn btn-success" ng-click="save()" ng-disabled="registerForm.$pristine">
+          <img ng-show="viewState.loading.save" ng-src="/assets/images/ajax-loader-small-green.gif" /> Spara
+        </button>
+      </div>
+    </div>
   </div>
 
 </form>

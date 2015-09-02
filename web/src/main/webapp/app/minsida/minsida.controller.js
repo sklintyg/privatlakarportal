@@ -26,7 +26,7 @@ angular.module('privatlakareApp')
         }
 
         $scope.$watch('user', function(/*newVal*/) {
-            RegisterViewStateService.errorMessage.noPermission = UserModel.hasApplicationPermission();
+            RegisterViewStateService.errorMessage.noPermission = !UserModel.hasApplicationPermission();
         }, true);
 
         RegisterProxy.getPrivatlakare().then(function(lakarData) {

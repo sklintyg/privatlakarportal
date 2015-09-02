@@ -41,13 +41,9 @@ angular.module('privatlakareApp').factory('UserModel',
                 var statusText;
                 switch(data.status) {
                 case 'AUTHORIZED':
-                    statusText = 'Läkare';
-                    break;
                 case 'NOT_AUTHORIZED':
-                    statusText = 'Registrerad användare';
-                    break;
                 case 'WAITING_FOR_HOSP':
-                    statusText = 'Registrerad användare, väntar på godkännande';
+                    statusText = 'Privatläkare';
                     break;
                 default:
                     statusText = 'Ej registrerad användare';

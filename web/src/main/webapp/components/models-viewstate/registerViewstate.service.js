@@ -43,7 +43,7 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
                 { id: '203090', label: 'Läkare legitimerad, annan' }
             ];
             this.vardformList = [
-                { id: '01', label: 'Öppenvård (förvald)' },
+                { id: '01', label: 'Öppenvård' },
                 { id: '02', label: 'Slutenvård' },
                 { id: '03', label: 'Hemsjukvård' }
             ];

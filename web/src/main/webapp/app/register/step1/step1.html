@@ -1,13 +1,15 @@
 <form name="registerForm" ng-submit="submitForm()" novalidate>
 
   <p>
-    Ange information om dig själv och din verksamhet.
-  </p>
+    Ange information om dig själv och din verksamhet. </p>
 
-  <div class="box" id="step1">
-    <div form-grund-uppgifter></div>
+  <div class="row">
+    <div class="col-md-7">
+      <div class="box" id="step1">
+        <div form-grund-uppgifter></div>
+      </div>
+    </div>
   </div>
-
   <div class="buttonbar">
     <button id="continueBtn" type="submit" class="btn btn-success">Fortsätt</button>
     <button id="abortBtn" class="btn btn-secondary" ui-sref=".abort">Avbryt</button>

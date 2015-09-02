@@ -89,5 +89,8 @@ gretty {
         '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',
         '-Dprivatlakarportal.resources.folder=/' +projectDir + '/src/main/resources',
         '-XX:MaxPermSize=256M'
-     ]
+    ]
+    fastReload = true
+    inplaceMode = 'hard'
+    scanInterval = 0
 }
