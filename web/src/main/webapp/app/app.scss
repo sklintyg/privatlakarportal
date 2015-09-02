@@ -197,6 +197,10 @@ h5.inline-heading {
   padding-top: 20px;
 }
 
+.deferred-bootstrap-error div#boot-error {
+  display: block !important;
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'boot/boot.scss';
