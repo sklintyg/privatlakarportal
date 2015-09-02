@@ -1,5 +1,5 @@
 angular.module('privatlakareApp')
-    .controller('MainTermsCtrl', function($scope, $http, $templateCache, $window,
+    .controller('MainTermsCtrl', function($scope, $http, $templateCache, $window, $log,
         TermsProxy) {
         'use strict';
 
@@ -7,7 +7,8 @@ angular.module('privatlakareApp')
             $scope.terms = successData.text;
             $scope.version = successData.version;
         }, function(errorData) {
-
+            $log.debug('Failed to get terms.');
+            $log.debug(errorData);
         });
 
         $scope.dismiss = function() {

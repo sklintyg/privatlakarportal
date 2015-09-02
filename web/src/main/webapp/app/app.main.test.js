@@ -77,7 +77,7 @@ app.constant('datepickerPopupConfig', {
 // Inject language resources
 app.run(
     function($log, $rootScope, $window,
-        messageService, UserProxy, UserModel) {
+        messageService) {
         'use strict';
 
         $rootScope.lang = 'sv';

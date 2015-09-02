@@ -1,12 +1,13 @@
 angular.module('privatlakareApp')
-  .controller('Step3Ctrl', function ($scope, $log, $state, $window,
-        RegisterViewStateService, UserModel, RegisterModel, RegisterProxy, WindowUnload) {
+    .controller('Step3Ctrl',
+    function($scope, $log, $state, $window, RegisterViewStateService, UserModel, RegisterModel, RegisterProxy,
+        WindowUnload) {
         'use strict';
 
         RegisterViewStateService.updateStep();
 
         var user = UserModel.init();
-        if(UserModel.isRegistered()) {
+        if (UserModel.isRegistered()) {
             $state.go('app.register.complete');
         }
 
@@ -19,7 +20,7 @@ angular.module('privatlakareApp')
         $scope.registerModel = model;
 
         // Skapa konto button
-        $scope.createAccount = function(){
+        $scope.createAccount = function() {
             RegisterViewStateService.loading.register = true;
             RegisterProxy.registerPrivatlakare(model).then(function(successData) {
                 $log.debug('Registration complete - data:');
@@ -29,7 +30,7 @@ angular.module('privatlakareApp')
                 user.status = successData.status;
                 RegisterModel.reset();
 
-                switch(user.status) {
+                switch (user.status) {
                 case 'AUTHORIZED':
                     $state.go('app.register.complete');
                     break;
@@ -38,17 +39,19 @@ angular.module('privatlakareApp')
                     $state.go('app.register.waiting');
                     break;
                 default: // NOT_STARTED, UNKNOWN or other unwanted values like null or undefined
-                    RegisterViewStateService.errorMessage.register = 'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
+                    RegisterViewStateService.errorMessage.register =
+                        'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
                     $log.debug('Invalid user status in response:' + user.status);
                 }
 
             }, function(errorData) {
                 RegisterViewStateService.loading.register = false;
-                RegisterViewStateService.errorMessage.register = 'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
+                RegisterViewStateService.errorMessage.register =
+                    'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
                 $log.debug('Failed to register errorCode:' + errorData.errorCode + ' reason:' + errorData.message);
             });
         };
 
         // Add browser dialog to ask if user wants to save before leaving if he closes the window on an edited form.
         WindowUnload.bindUnload($scope, RegisterViewStateService.windowUnloadWarningCondition);
-  });
+    });
