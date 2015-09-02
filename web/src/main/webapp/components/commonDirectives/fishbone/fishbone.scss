@@ -16,7 +16,7 @@
     position: relative;
     float: left;
     height: 34px;
-    padding: 0 7px 0 19px;
+    padding: 0 20px 0 25px;
     margin: 0;
     font-size: 13px;
     line-height: 34px;
@@ -33,10 +33,9 @@
     color: #000;
     background: #e5e5e5;
 }
-.wizard ul li.wstep-completed span.chevron { border-left: 8px solid #e5e5e5 !important; }
 .wizard ul li:nth-child(1) {
     z-index: 10;
-    padding-left: 13px;
+    padding-left: 20px;
     border-radius: 4px 0 0 4px;
 }
 .wizard ul li:nth-child(2) {
@@ -53,6 +52,20 @@
     display: block;
     border: 17px solid transparent;
     border-right: 0;
-    border-left: 8px solid #F9F9F9;
+    border-left: 8px solid #DDD;
 }
-.wizard ul li.active span.chevron { border-left: 8px solid #008391; }
+.wizard ul li.active span.chevron { border-left-color: #008391; }
+.wizard ul li.wstep-completed span.chevron { border-left-color: #ccc; }
+
+.wizard ul li span.chevron:before {
+  border: 17px solid transparent;
+  border-left: 8px solid #F6F6F6;
+  border-right: 0;
+  content: "";
+  display: block;
+  position: absolute;
+  right: 1px;
+  top: -17px;
+}
+.wizard ul li.active span.chevron:before { border-left-color: #008391; }
+.wizard ul li.wstep-completed span.chevron:before { border-left-color: #e5e5e5; }
