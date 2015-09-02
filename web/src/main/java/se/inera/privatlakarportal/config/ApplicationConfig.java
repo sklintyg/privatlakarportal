@@ -8,7 +8,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @PropertySource({"file:${privatlakarportal.config.file}", "file:${credentials.file}"})
-@ImportResource({ "classpath:META-INF/cxf/cxf.xml",  "classpath:securityContext.xml"})
+@ImportResource({ "classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml"})
 public class ApplicationConfig {
 
     @Bean
