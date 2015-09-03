@@ -43,7 +43,9 @@ public class HsaWebServiceStub implements HsaWsResponderInterface {
 
     @Override
     public GetHospLastUpdateResponseType getHospLastUpdate(AttributedURIType logicalAddress, AttributedURIType id, GetHospLastUpdateType parameters) throws HsaWsFault {
-        return null;
+        GetHospLastUpdateResponseType response = new GetHospLastUpdateResponseType();
+        response.setLastUpdate(hsaServiceStub.getHospLastUpdate());
+        return response;
     }
 
     @Override
