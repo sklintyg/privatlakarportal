@@ -1,6 +1,6 @@
-angular.module('privatlakareApp').service('RegisterViewStateService',
-    function($state,
-        HospProxy, ObjectHelper) {
+angular.module('privatlakareApp').service('RegisterViewState',
+    function($state
+        ) {
         'use strict';
 
         this.reset = function() {
@@ -15,7 +15,6 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
 
             this.loading = {
                 register: false, // step 3
-                hosp: false, // step 3
                 region: false, // step 2
                 save: false // minsida
             };
@@ -27,11 +26,6 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
             this.kommunOptions = null;
             this.kommunSelectionMode = false;
             this.kommunSelected = false;
-
-            // Hosp info, move to social model, service for use in formSocialUppgifter directive
-            this.legitimeradYrkesgrupp = null;
-            this.specialitet = null;
-            this.forskrivarkod = null;
 
             // move to step 1 viewstate
             this.befattningList = [
@@ -79,30 +73,6 @@ angular.module('privatlakareApp').service('RegisterViewStateService',
                 return false;
             }
             return true;
-        };
-
-        // step 3 viewstate or even hosp service
-        this.decorateModelWithHospInfo = function() {
-
-            this.loading.hosp = true;
-            var viewState = this;
-
-            function processHospResult(hospInfo) {
-                viewState.loading.hosp = false;
-                if(!ObjectHelper.isDefined(hospInfo)) {
-                    viewState.errorMessage.hosp = 'Kunde inte hämta information från socialstyrelsen.';
-                    viewState.legitimeradYrkesgrupp = null;
-                    viewState.specialitet = null;
-                    viewState.forskrivarkod = null;
-                } else {
-                    viewState.errorMessage.hosp = null;
-                    viewState.legitimeradYrkesgrupp = ObjectHelper.returnJoinedArrayOrNull(hospInfo.hsaTitles);
-                    viewState.specialitet = ObjectHelper.returnJoinedArrayOrNull(hospInfo.specialityNames);
-                    viewState.forskrivarkod = ObjectHelper.valueOrNull(hospInfo.personalPrescriptionCode);
-                }
-            }
-
-            HospProxy.getHospInformation().then(processHospResult, processHospResult);
         };
 
         // step 3 viewstate

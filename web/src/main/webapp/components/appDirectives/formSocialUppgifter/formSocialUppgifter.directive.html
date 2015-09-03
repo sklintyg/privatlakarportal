@@ -1,13 +1,23 @@
 <div>
-  <table>
-    <tbody>
-    <tr ng-repeat="item in socialstyrelsenUppgifter">
-      <td class="table-label-col">{{item.name}}</td>
-      <td id="{{item.id}}" ng-class="{'locked' : item.locked}">{{item.value}}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div pp-spinner show-spinner="viewState.loading.hosp" label="common.label.loading">
+    <table>
+      <tbody>
+      <tr ng-repeat="item in viewState.socialstyrelsenUppgifter">
+        <td class="table-label-col">{{item.name}}</td>
+        <td id="{{item.id}}" ng-class="{'locked' : item.locked}">{{item.value}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
   <p class="top-pad-1">
-    <i>Uppgifterna är inhämtade från Socialstyrelsen.</i>
+      <span ng-switch>
+        <span ng-switch-when="viewState.errorMessage.hosp != null">
+          <i>Inga uppgifter har hämtats från Socialstyrelsens register för Hälso- och sjukvårdspersonal (HOSP), men du
+            kan fortsätta skapa ditt konto.</i>
+        </span>
+        <span ng-switch-default>
+          <i>Uppgifterna är inhämtade från Socialstyrelsen.</i>
+        </span>
+      </span>
   </p>
 </div>

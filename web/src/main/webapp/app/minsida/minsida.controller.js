@@ -1,10 +1,10 @@
 angular.module('privatlakareApp')
     .controller('MinsidaCtrl', function($scope, $state, $log, $window,
-        UserModel, RegisterModel, RegisterViewStateService, RegisterProxy, ObjectHelper, WindowUnload) {
+        UserModel, RegisterModel, RegisterViewState, RegisterProxy, ObjectHelper, WindowUnload) {
         'use strict';
         $scope.user = UserModel.init();
         $scope.registerModel = RegisterModel.reset();
-        $scope.viewState = RegisterViewStateService.reset();
+        $scope.viewState = RegisterViewState.reset();
 
         function updateState(lakarData) {
             if (ObjectHelper.isDefined(lakarData)) {
@@ -21,12 +21,12 @@ angular.module('privatlakareApp')
                 }
             } else {
                 $scope.registerModel = RegisterModel.reset();
-                $scope.viewState = RegisterViewStateService.reset();
+                $scope.viewState = RegisterViewState.reset();
             }
         }
 
         $scope.$watch('user', function(/*newVal*/) {
-            RegisterViewStateService.errorMessage.noPermission = !UserModel.hasApplicationPermission();
+            RegisterViewState.errorMessage.noPermission = !UserModel.hasApplicationPermission();
         }, true);
 
         RegisterProxy.getPrivatlakare().then(function(lakarData) {
@@ -39,20 +39,20 @@ angular.module('privatlakareApp')
         });
 
         $scope.save = function() {
-            RegisterViewStateService.loading.save = true;
+            RegisterViewState.loading.save = true;
             RegisterProxy.savePrivatlakare(RegisterModel.get()).then(function(/*successData*/) {
-                RegisterViewStateService.loading.save = false;
-                RegisterViewStateService.errorMessage.save = null;
+                RegisterViewState.loading.save = false;
+                RegisterViewState.errorMessage.save = null;
                 $scope.registerForm.$setPristine();
             }, function(errorData) {
-                RegisterViewStateService.loading.save = false;
-                RegisterViewStateService.errorMessage.save = 'Kunde inte spara ändringarna. Försök igen senare. (' + errorData.message + ')';
+                RegisterViewState.loading.save = false;
+                RegisterViewState.errorMessage.save = 'Kunde inte spara ändringarna. Försök igen senare. (' + errorData.message + ')';
             });
         };
 
         // Add browser dialog to ask if user wants to save before leaving if he closes the window on an edited form.
         $scope.$watch('registerForm.$dirty',  function(newVal) {
-            RegisterViewStateService.windowUnloadWarningCondition.condition = newVal;
+            RegisterViewState.windowUnloadWarningCondition.condition = newVal;
         });
-        WindowUnload.bindUnload($scope, RegisterViewStateService.windowUnloadWarningCondition);
+        WindowUnload.bindUnload($scope, RegisterViewState.windowUnloadWarningCondition);
     });

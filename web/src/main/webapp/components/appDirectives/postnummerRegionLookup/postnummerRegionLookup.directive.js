@@ -4,7 +4,7 @@
 angular.module('privatlakareApp').directive('postnummerRegionLookup',
 
         function($log, $timeout, $sessionStorage,
-            RegisterViewStateService, OmradeProxy, PostnummerHelper) {
+            OmradeProxy, PostnummerHelper) {
             'use strict';
 
             return {

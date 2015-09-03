@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').factory('RegisterModel',
     function($sessionStorage, $log,
-        RegisterViewStateService, ObjectHelper) {
+        RegisterViewState, ObjectHelper) {
         'use strict';
 
         var data = {};
@@ -21,7 +21,7 @@ angular.module('privatlakareApp').factory('RegisterModel',
             data.befattning = null;
             data.verksamhetensNamn = null;
             data.agarForm = 'Privat';
-            data.vardform = RegisterViewStateService.vardformList[0];
+            data.vardform = RegisterViewState.vardformList[0];
             data.verksamhetstyp = null;
             data.arbetsplatskod = null;
 
