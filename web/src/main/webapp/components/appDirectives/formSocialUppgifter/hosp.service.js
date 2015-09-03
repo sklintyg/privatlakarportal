@@ -4,6 +4,7 @@ angular.module('privatlakareApp').service('HospService',
         'use strict';
 
         this.bindScope = function(scope, hospViewState, hospModel) {
+            scope.viewState = hospViewState;
             scope.model = hospModel;
             scope.$watch('model', function(newVal) {
                 hospViewState.socialstyrelsenUppgifter = [

@@ -2,7 +2,7 @@
  * Form directive to show socialstyrelsenuppgifter
  */
 angular.module('privatlakareApp').directive('formSocialUppgifter',
-    function(HospViewState, HospModel) {
+    function(HospService, HospViewState, HospModel) {
         'use strict';
 
         return {
@@ -11,8 +11,8 @@ angular.module('privatlakareApp').directive('formSocialUppgifter',
             },
             controller: function($scope) {
                 var model = HospModel.init();
-                HospViewState.bindScope($scope, HospViewState, model);
-                HospViewState.loadHosp(HospViewState, model);
+                HospService.bindScope($scope, HospViewState, model);
+                HospService.loadHosp(HospViewState, model);
             },
             templateUrl: 'components/appDirectives/formSocialUppgifter/formSocialUppgifter.directive.html'
         };
