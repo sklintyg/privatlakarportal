@@ -43,6 +43,8 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 
+import javax.xml.ws.WebServiceException;
+
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
 
@@ -177,6 +179,45 @@ public class RegisterServiceImplTest {
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
         verify(hospPersonService).handleCertifier(eq("1912121212"), any(String.class));
+        assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
+    }
+
+    @Test
+    public void testCreateRegistrationKanEjKontaktaHSA1() {
+
+        PrivatlakareId privatlakareId = new PrivatlakareId();
+        privatlakareId.setId(1);
+        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+
+        when(hospPersonService.getHospPerson("1912121212")).thenThrow(new WebServiceException("Could not send message"));
+
+        Registration registration = createValidRegistration();
+        RegistrationStatus response = registerService.createRegistration(registration);
+
+        verify(privatlakareRepository).save(any(Privatlakare.class));
+        verify(hospPersonService).getHospPerson("1912121212");
+        verifyNoMoreInteractions(hospPersonService);
+        assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
+    }
+
+    @Test
+    public void testCreateRegistrationKanEjKontaktaHSA2() {
+
+        PrivatlakareId privatlakareId = new PrivatlakareId();
+        privatlakareId.setId(1);
+        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+
+        when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
+
+        when(hospPersonService.handleCertifier(eq("1912121212"), any(String.class))).thenThrow(new WebServiceException("Could not send message"));
+
+        Registration registration = createValidRegistration();
+        RegistrationStatus response = registerService.createRegistration(registration);
+
+        verify(privatlakareRepository).save(any(Privatlakare.class));
+        verify(hospPersonService).getHospPerson("1912121212");
+        verify(hospPersonService).handleCertifier(eq("1912121212"), any(String.class));
+        verifyNoMoreInteractions(hospPersonService);
         assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
     }
 

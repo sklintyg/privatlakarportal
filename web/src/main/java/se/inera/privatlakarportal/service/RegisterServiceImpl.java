@@ -16,6 +16,7 @@ import se.inera.privatlakarportal.service.model.*;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 
+import javax.xml.ws.WebServiceException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -155,15 +156,33 @@ public class RegisterServiceImpl<E> implements RegisterService {
         convertRegistrationToPrivatlakare(registration, privatlakare);
 
         // Lookup hospPerson in HSA
-        RegistrationStatus status;
-        GetHospPersonResponseType hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
+        RegistrationStatus status = getHospInformation(privatlakare);
+
+        privatlakareRepository.save(privatlakare);
+
+        return status;
+    }
+
+    private RegistrationStatus getHospInformation(Privatlakare privatlakare) {
+        GetHospPersonResponseType hospPersonResponse;
+        try {
+            hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
+        }
+        catch (WebServiceException e) {
+            LOG.error("Failed to call getHospPerson in HSA, this call will be retried at next hosp update cycle.");
+            return RegistrationStatus.WAITING_FOR_HOSP;
+        }
+
         if (hospPersonResponse == null) {
-            status = RegistrationStatus.WAITING_FOR_HOSP;
-            if (!hospPersonService.handleCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
-                throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.EXTERNAL_ERROR,
-                    "Failed to call handleCertifier in HSA");
+            try {
+                if (!hospPersonService.handleCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
+                    LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
+                }
             }
+            catch (WebServiceException e) {
+                LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
+            }
+            return RegistrationStatus.WAITING_FOR_HOSP;
         }
         else {
             Set<Specialitet> specialiteter = new HashSet<Specialitet>();
@@ -206,16 +225,14 @@ public class RegisterServiceImpl<E> implements RegisterService {
 
             privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
 
-            status = RegistrationStatus.NOT_AUTHORIZED;
             if (hospPersonResponse.getHsaTitles().getHsaTitle().contains(LAKARE)) {
                 privatlakare.setGodkandAnvandare(true);
-                status = RegistrationStatus.AUTHORIZED;
+                return RegistrationStatus.AUTHORIZED;
+            }
+            else {
+                return RegistrationStatus.NOT_AUTHORIZED;
             }
         }
-
-        privatlakareRepository.save(privatlakare);
-
-        return status;
     }
 
     @Override
