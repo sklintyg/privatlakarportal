@@ -42,10 +42,25 @@ describe('Controller: BootCtrl', function() {
         BootCtrl = $controller('BootCtrl', { $scope: scope });
         user = angular.copy(mockResponse.userModel);
         user.status = 'NOT_STARTED';
+        user.nameFromPuService = true;
         UserModel.set(user);
         $rootScope.$digest();
 
         expect($state.go).toHaveBeenCalledWith('app.start');
+    });
+
+    it('should be redirected to error page if not registered yet and unable to get name from pu serivce', function() {
+        spyOn($state, 'go').and.stub();
+        succeed = true;
+
+        BootCtrl = $controller('BootCtrl', { $scope: scope });
+        user = angular.copy(mockResponse.userModel);
+        user.status = 'NOT_STARTED';
+        user.nameFromPuService = false;
+        UserModel.set(user);
+        $rootScope.$digest();
+
+        expect($state.go).toHaveBeenCalledWith('app.error', { errorMessage : 'Ett tekniskt fel har tyvärr uppstått och det går inte att hämta dina namnuppgifter från folkbokföringsregistret för tillfället. Du kan därför inte skapa ett konto för Webcert just nu. Prova igen om en stund.' });
     });
 
     it('should be redirected to minsida page if registered but havent received läkarlegimitation yet', function() {

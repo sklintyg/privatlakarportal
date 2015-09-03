@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
                 privatlakarUser.updateNameFromPuService(name);
 
                 // Check if name has changed and update in database
-                if (!name.equals(privatlakare.getFullstandigtNamn())) {
+                if (privatlakare != null && !name.equals(privatlakare.getFullstandigtNamn())) {
                     LOG.info("Updated name for user '{}'", privatlakarUser.getPersonalIdentityNumber());
                     privatlakare.setFullstandigtNamn(name);
                     privatlakareRepository.save(privatlakare);
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         catch(RuntimeException e) {
-            LOG.error("Failed to contact puService");
+            LOG.error("Failed to contact puService", e);
             personSvarStatus = PersonSvar.Status.ERROR;
         }
 

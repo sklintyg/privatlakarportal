@@ -18,6 +18,14 @@ class RedigeraMinSida {
         return result
     }
 
+    public boolean uppdateratNamnInformationstextenVisas() {
+        boolean result
+        Browser.drive {
+            result = page.uppdateratNamnInformationstextenVisas()
+        }
+        return result
+    }
+
     public void sparaRegistrering() {
         Browser.drive {
             page.spara();

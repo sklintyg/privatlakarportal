@@ -5,12 +5,13 @@ import se.inera.privatlakarportal.spec.util.RestClientUtils
 
 import static groovyx.net.http.ContentType.JSON
 
-public class TaBortPrivatlakare extends RestClientFixture {
+public class BytNamnPrivatlakare extends RestClientFixture {
 
     def restClient = createRestClient()
 
     String id
-    String restPath = 'test/registration/remove/'
+    String namn
+    String restPath = 'test/registration/setname/'
     boolean responseStatus
 
     public void reset() {
@@ -18,8 +19,9 @@ public class TaBortPrivatlakare extends RestClientFixture {
 
     public void execute() {
         RestClientUtils.login(restClient)
-        def resp = restClient.delete(
+        def resp = restClient.post(
                 path: restPath + id,
+                body: namn,
                 requestContentType: JSON
         )
         responseStatus = resp.status

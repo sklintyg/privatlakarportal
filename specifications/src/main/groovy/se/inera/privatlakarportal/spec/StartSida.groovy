@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.spec
 
+import se.inera.privatlakarportal.page.ErrorPage
 import se.inera.privatlakarportal.page.StartPage
 import se.inera.privatlakarportal.page.TermsPage
 
@@ -9,6 +10,14 @@ class Startsida {
         Browser.drive {
             to StartPage
         }
+    }
+
+    public boolean felsidanVisas() {
+        boolean result
+        Browser.drive {
+            result = at ErrorPage
+        }
+        return result
     }
 
     public boolean startsidanVisas() {

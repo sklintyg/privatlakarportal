@@ -7,6 +7,8 @@ class MinSidaPage extends AbstractPage {
     static content = {
         sparaBtn { $("#saveBtn")}
 
+        uppdateratNamnInformationstext(required: false) { $("#nyttNamnInformation") }
+
         personnummer { $("#personnummer") }
         namn { $("#namn") }
         befattning { $("#befattning") }
@@ -94,5 +96,9 @@ class MinSidaPage extends AbstractPage {
     public String hamtaLegitimeradYrkesgrupp() { return legitimeradYrkesgrupp.text() }
     public String hamtaSpecialitet() { return specialitet.text() }
     public String hamtaForskrivarkod() { return forskrivarkod.text() }
+
+    public boolean uppdateratNamnInformationstextenVisas() {
+        return uppdateratNamnInformationstext.displayed
+    }
 
 }
