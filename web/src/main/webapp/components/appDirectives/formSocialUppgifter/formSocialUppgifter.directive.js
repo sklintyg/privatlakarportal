@@ -2,17 +2,23 @@
  * Form directive to show socialstyrelsenuppgifter
  */
 angular.module('privatlakareApp').directive('formSocialUppgifter',
-    function(HospService, HospViewState, HospModel) {
+    function(HospService, HospViewState, HospModel, ObjectHelper) {
         'use strict';
 
         return {
             restrict: 'A',
             scope: {
+                'autoload': '='
             },
             controller: function($scope) {
-                var model = HospModel.init();
-                HospService.bindScope($scope, HospViewState, model);
-                HospService.loadHosp(HospViewState, model);
+                $scope.viewState = HospViewState;
+                $scope.model = HospModel.init();
+                if(!ObjectHelper.isDefined($scope.autoload)) {
+                    $scope.autoload = false;
+                }
+                if($scope.autoload) {
+                    HospService.loadHosp(HospViewState, HospModel);
+                }
             },
             templateUrl: 'components/appDirectives/formSocialUppgifter/formSocialUppgifter.directive.html'
         };

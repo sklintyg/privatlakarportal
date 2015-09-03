@@ -1,6 +1,6 @@
 angular.module('privatlakareApp')
     .controller('MinsidaCtrl', function($scope, $state, $log, $window,
-        UserModel, RegisterModel, RegisterViewState, RegisterProxy, ObjectHelper, WindowUnload) {
+        UserModel, RegisterModel, RegisterViewState, RegisterProxy, ObjectHelper, WindowUnload, HospService, HospModel, HospViewState) {
         'use strict';
         $scope.user = UserModel.init();
         $scope.registerModel = RegisterModel.reset();
@@ -10,15 +10,8 @@ angular.module('privatlakareApp')
             if (ObjectHelper.isDefined(lakarData)) {
                 RegisterModel.set(lakarData.registration);
                 $scope.registerModel = RegisterModel.get();
-
-                if(ObjectHelper.isDefined(lakarData.hospInformation)) {
-                    $scope.viewState.legitimeradYrkesgrupp =
-                        ObjectHelper.returnJoinedArrayOrNull(lakarData.hospInformation.hsaTitles);
-                    $scope.viewState.specialitet =
-                        ObjectHelper.returnJoinedArrayOrNull(lakarData.hospInformation.specialityNames);
-                    $scope.viewState.forskrivarkod =
-                        ObjectHelper.valueOrNull(lakarData.hospInformation.personalPrescriptionCode);
-                }
+                HospModel.init();
+                HospService.updateHosp('update', HospViewState, HospModel, lakarData.hospInformation);
             } else {
                 $scope.registerModel = RegisterModel.reset();
                 $scope.viewState = RegisterViewState.reset();

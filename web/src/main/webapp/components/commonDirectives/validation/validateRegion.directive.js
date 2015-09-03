@@ -15,7 +15,7 @@ angular.module('privatlakareApp').directive('validateRegion',
 
                 // Validate kommun and lan
                 scope.$watch('regionModel', function(newVal) {
-                    if(!ObjectHelper.isDefined(newVal.kommun) || !ObjectHelper.isDefined(newVal.lan)) {
+                    if(!ObjectHelper.isDefined(newVal) || !ObjectHelper.isDefined(newVal.kommun) || !ObjectHelper.isDefined(newVal.lan)) {
                         ctrl.$setValidity('region', false);
                     } else {
                         ctrl.$setValidity('region', true);

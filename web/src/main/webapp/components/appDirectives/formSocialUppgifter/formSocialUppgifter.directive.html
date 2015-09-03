@@ -10,10 +10,13 @@
     </table>
   </div>
   <p class="top-pad-1">
-      <span ng-switch>
-        <span ng-switch-when="viewState.errorMessage.hosp != null">
+      <span ng-switch="viewState.errorMessage.hosp">
+        <span ng-switch-when="hosp.error.load">
           <i>Inga uppgifter har hämtats från Socialstyrelsens register för Hälso- och sjukvårdspersonal (HOSP), men du
             kan fortsätta skapa ditt konto.</i>
+        </span>
+        <span ng-switch-when="hosp.error.update">
+          <i>Inga uppgifter har hämtats från Socialstyrelsens register för Hälso- och sjukvårdspersonal (HOSP).</i>
         </span>
         <span ng-switch-default>
           <i>Uppgifterna är inhämtade från Socialstyrelsen.</i>
