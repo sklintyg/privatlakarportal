@@ -23,7 +23,6 @@ describe('Service: HospService', function() {
         HospViewState.reset();
         HospModel.init();
         HospModel.set(testModelNoHOSP);
-        HospService.bindScope($rootScope, HospViewState, HospModel.get());
     }));
 
     describe('loadHosp', function() {
@@ -39,7 +38,7 @@ describe('Service: HospService', function() {
                 };
             });
 
-            HospService.loadHosp(HospViewState, HospModel.get());
+            HospService.loadHosp(HospViewState, HospModel);
 
             var model = HospModel.get();
             expect(model.legitimeradYrkesgrupp).toBe('hsaTitle1, hsaTitle2');
@@ -59,7 +58,7 @@ describe('Service: HospService', function() {
                 };
             });
 
-            HospService.loadHosp(HospViewState, HospModel.get());
+            HospService.loadHosp(HospViewState, HospModel);
 
             var model = HospModel.get();
             expect(model.legitimeradYrkesgrupp).toBe(null);
