@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.unitils.reflectionassert.ReflectionAssert;
@@ -30,6 +32,8 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class IntegrationServiceTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(IntegrationServiceTest.class);
 
     @Mock
     private PrivatlakareRepository privatlakareRepository;
@@ -101,12 +105,50 @@ public class IntegrationServiceTest {
     public void testValidatePrivatePractitionerByHsaId() {
         ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(GODKAND_HSA_ID);
         assertEquals(ResultCodeEnum.OK, response.getResultCode());
+
+        // Startdates should NOT be updated to current time
+        Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
+        assertEquals(verifyHosPerson.getEnhet().getStartdatum(), privatlakare.getEnhetStartdatum());
+        assertEquals(verifyHosPerson.getEnhet().getVardgivare().getStartdatum(), privatlakare.getVardgivareStartdatum());
     }
 
     @Test
     public void testValidatePrivatePractitionerByPersonId() {
         ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(GODKAND_PERSON_ID);
         assertEquals(ResultCodeEnum.OK, response.getResultCode());
+
+        // Startdates should NOT be updated to current time
+        Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
+        assertEquals(verifyHosPerson.getEnhet().getStartdatum(), privatlakare.getEnhetStartdatum());
+        assertEquals(verifyHosPerson.getEnhet().getVardgivare().getStartdatum(), privatlakare.getVardgivareStartdatum());
+    }
+
+    @Test
+    public void testValidatePrivatePractitionerByHsaIdFirstLogin() {
+        Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
+        privatlakare.setEnhetStartdatum(null);
+        privatlakare.setVardgivareStartdatum(null);
+
+        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(GODKAND_HSA_ID);
+        assertEquals(ResultCodeEnum.OK, response.getResultCode());
+
+        // Startdates should be updated to current time
+        assertNotNull(privatlakare.getEnhetStartdatum());
+        assertNotNull(privatlakare.getVardgivareStartdatum());
+    }
+
+    @Test
+    public void testValidatePrivatePractitionerByPersonIdFirstLogin() {
+        Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
+        privatlakare.setEnhetStartdatum(null);
+        privatlakare.setVardgivareStartdatum(null);
+
+        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(GODKAND_PERSON_ID);
+        assertEquals(ResultCodeEnum.OK, response.getResultCode());
+
+        // Startdates should be updated to current time
+        assertNotNull(privatlakare.getEnhetStartdatum());
+        assertNotNull(privatlakare.getVardgivareStartdatum());
     }
 
     @Test
