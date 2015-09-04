@@ -41,6 +41,8 @@
         "$": true,
         "module": true,
         "inject": true,
-        "MODULE_CONFIG": true
+        "MODULE_CONFIG": true,
+        "document": true,
+        "deferredBootstrapper": true
     }
 }

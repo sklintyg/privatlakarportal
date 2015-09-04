@@ -12,7 +12,7 @@ describe('Controller: BootCtrl', function() {
             getUser: function() {
                 return {
                     then: function(onSuccess, onError) {
-                        if(succeed) {
+                        if (succeed) {
                             onSuccess(user);
                         } else {
                             onError(error);
@@ -60,7 +60,10 @@ describe('Controller: BootCtrl', function() {
         UserModel.set(user);
         $rootScope.$digest();
 
-        expect($state.go).toHaveBeenCalledWith('app.error', { errorMessage : 'Ett tekniskt fel har tyvärr uppstått och det går inte att hämta dina namnuppgifter från folkbokföringsregistret för tillfället. Du kan därför inte skapa ett konto för Webcert just nu. Prova igen om en stund.' });
+        expect($state.go).toHaveBeenCalledWith('app.error',
+            { errorMessage: 'Ett tekniskt fel har tyvärr uppstått och det går inte att hämta dina namnuppgifter ' +
+                'från folkbokföringsregistret för tillfället. Du kan därför inte skapa ett konto för Webcert just nu. ' +
+                'Prova igen om en stund.' });
     });
 
     it('should be redirected to minsida page if registered but havent received läkarlegimitation yet', function() {

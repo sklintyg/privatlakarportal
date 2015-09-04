@@ -1,6 +1,5 @@
 angular.module('privatlakareApp')
-    .controller('BootCtrl', function($scope, $timeout, $state, $window,
-        UserProxy, UserModel) {
+    .controller('BootCtrl', function($scope, $timeout, $state, $window, UserProxy, UserModel) {
         'use strict';
 
         $scope.user = UserModel.init();
@@ -13,7 +12,9 @@ angular.module('privatlakareApp')
                 }
                 else {
                     $state.go('app.error', {
-                        errorMessage:'Ett tekniskt fel har tyvärr uppstått och det går inte att hämta dina namnuppgifter från folkbokföringsregistret för tillfället. Du kan därför inte skapa ett konto för Webcert just nu. Prova igen om en stund.'
+                        errorMessage: 'Ett tekniskt fel har tyvärr uppstått och det går inte att hämta dina ' +
+                            'namnuppgifter från folkbokföringsregistret för tillfället. Du kan därför inte skapa ett ' +
+                            'konto för Webcert just nu. Prova igen om en stund.'
                     });
                 }
                 break;

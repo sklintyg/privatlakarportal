@@ -5,7 +5,7 @@ describe('Service: RegisterViewState', function() {
     beforeEach(angular.mock.module('privatlakareApp', function(/*$provide*/) {
     }));
 
-    var RegisterViewState, model, HospProxy, mockResponse, $rootScope, $httpBackend;
+    var RegisterViewState, HospProxy, mockResponse, $rootScope, $httpBackend;
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function(_$rootScope_, _$httpBackend_, _RegisterViewState_, _HospProxy_, _mockResponse_) {

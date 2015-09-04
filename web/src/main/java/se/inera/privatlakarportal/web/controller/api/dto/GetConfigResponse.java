@@ -1,7 +1,5 @@
 package se.inera.privatlakarportal.web.controller.api.dto;
 
-import javafx.scene.paint.Color;
-
 /**
  * Created by pebe on 2015-08-28.
  */
