@@ -4,6 +4,7 @@ import se.inera.privatlakarportal.page.RegisterStep1Page
 import se.inera.privatlakarportal.page.RegisterStep2Page
 import se.inera.privatlakarportal.page.RegisterStep3Page
 import se.inera.privatlakarportal.page.CompletePage
+import se.inera.privatlakarportal.page.WaitingForHospPage
 
 class Registrera {
 
@@ -75,6 +76,14 @@ class Registrera {
         boolean result
         Browser.drive {
             result = at CompletePage
+        }
+        return result
+    }
+
+    public boolean vantarSidanVisas() {
+        boolean result
+        Browser.drive {
+            result = at WaitingForHospPage
         }
         return result
     }
