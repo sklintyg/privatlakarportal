@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
@@ -16,11 +14,8 @@ import se.inera.privatlakarportal.service.model.*;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 
-import javax.xml.ws.WebServiceException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by pebe on 2015-06-26.
@@ -41,9 +36,7 @@ public class RegisterServiceImpl<E> implements RegisterService {
     private PrivatlakareIdRepository privatlakareidRepository;
 
     @Autowired
-    private HospPersonService hospPersonService;
-
-    private static final String LAKARE = "Läkare";
+    private HospUpdateService hospUpdateService;
 
     @Override
     @Transactional
@@ -101,23 +94,6 @@ public class RegisterServiceImpl<E> implements RegisterService {
 
     @Override
     @Transactional
-    public HospInformation getHospInformation() {
-        GetHospPersonResponseType response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
-
-        if (response == null) {
-            return null;
-        }
-
-        HospInformation hospInformation = new HospInformation();
-        hospInformation.setPersonalPrescriptionCode(response.getPersonalPrescriptionCode());
-        hospInformation.setSpecialityNames(response.getSpecialityNames().getSpecialityName());
-        hospInformation.setHsaTitles(response.getHsaTitles().getHsaTitle());
-
-        return hospInformation;
-    }
-
-    @Override
-    @Transactional
     public RegistrationStatus createRegistration(Registration registration) {
 
         if (registration == null || !registration.checkIsValid()) {
@@ -160,83 +136,11 @@ public class RegisterServiceImpl<E> implements RegisterService {
         convertRegistrationToPrivatlakare(registration, privatlakare);
 
         // Lookup hospPerson in HSA
-        RegistrationStatus status = getHospInformation(privatlakare);
+        RegistrationStatus status = hospUpdateService.updateHospInformation(privatlakare);
 
         privatlakareRepository.save(privatlakare);
 
         return status;
-    }
-
-    private RegistrationStatus getHospInformation(Privatlakare privatlakare) {
-        GetHospPersonResponseType hospPersonResponse;
-        try {
-            hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
-        }
-        catch (WebServiceException e) {
-            LOG.error("Failed to call getHospPerson in HSA, this call will be retried at next hosp update cycle.");
-            return RegistrationStatus.WAITING_FOR_HOSP;
-        }
-
-        if (hospPersonResponse == null) {
-            try {
-                if (!hospPersonService.handleCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
-                    LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
-                }
-            }
-            catch (WebServiceException e) {
-                LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
-            }
-            return RegistrationStatus.WAITING_FOR_HOSP;
-        }
-        else {
-            Set<Specialitet> specialiteter = new HashSet<Specialitet>();
-            if (hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() !=
-                hospPersonResponse.getSpecialityNames().getSpecialityName().size()) {
-                LOG.error("getHospPerson getSpecialityCodes count " +
-                        hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() +
-                        "doesn't match getSpecialityNames count '{}' != '{}'" +
-                        hospPersonResponse.getSpecialityNames().getSpecialityName().size());
-                throw new PrivatlakarportalServiceException(
-                        PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
-                        "Inconsistent data from HSA");
-            } else {
-                for (int i = 0; i < hospPersonResponse.getSpecialityCodes().getSpecialityCode().size(); i++) {
-                    specialiteter.add(new Specialitet(privatlakare,
-                            hospPersonResponse.getSpecialityNames().getSpecialityName().get(i),
-                            hospPersonResponse.getSpecialityCodes().getSpecialityCode().get(i)));
-                }
-            }
-            privatlakare.setSpecialiteter(specialiteter);
-
-            Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<LegitimeradYrkesgrupp>();
-            if (hospPersonResponse.getHsaTitles().getHsaTitle().size() !=
-                    hospPersonResponse.getTitleCodes().getTitleCode().size()) {
-                LOG.error("getHospPerson getHsaTitles count " +
-                        hospPersonResponse.getHsaTitles().getHsaTitle().size() +
-                        "doesn't match getTitleCodes count '{}' != '{}'" +
-                        hospPersonResponse.getTitleCodes().getTitleCode().size());
-                throw new PrivatlakarportalServiceException(
-                        PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
-                        "Inconsistent data from HSA");
-            } else {
-                for (int i = 0; i < hospPersonResponse.getHsaTitles().getHsaTitle().size(); i++) {
-                    legitimeradYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare,
-                            hospPersonResponse.getHsaTitles().getHsaTitle().get(i),
-                            hospPersonResponse.getTitleCodes().getTitleCode().get(i)));
-                }
-            }
-            privatlakare.setLegitimeradeYrkesgrupper(legitimeradYrkesgrupper);
-
-            privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
-
-            if (hospPersonResponse.getHsaTitles().getHsaTitle().contains(LAKARE)) {
-                privatlakare.setGodkandAnvandare(true);
-                return RegistrationStatus.AUTHORIZED;
-            }
-            else {
-                return RegistrationStatus.NOT_AUTHORIZED;
-            }
-        }
     }
 
     @Override
