@@ -20,6 +20,6 @@ public class ConfigController {
     @RequestMapping(value = "")
     public GetConfigResponse getConfig()
     {
-        return new GetConfigResponse(env.getProperty("webcert.host.url"));
+        return new GetConfigResponse(env.getProperty("webcert.host.url"), env.getProperty("webcert.start.url"));
     }
 }
