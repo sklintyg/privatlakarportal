@@ -16,7 +16,10 @@ angular.module('privatlakareApp').service('HospService',
 
         this.updateHosp = function(source, hospViewState, HospModel, hospInfo) {
             hospViewState.loading.hosp = false;
-            if(!ObjectHelper.isDefined(hospInfo) || !ObjectHelper.isDefined(hospInfo.personalPrescriptionCode)) {
+            if(!ObjectHelper.isDefined(hospInfo) ||
+                (!ObjectHelper.isDefined(hospInfo.personalPrescriptionCode) &&
+                    !ObjectHelper.isDefined(hospInfo.hsaTitles) &&
+                    !ObjectHelper.isDefined(hospInfo.specialityNames))) {
                 hospViewState.errorMessage.hosp = 'hosp.error.' + source;
                 HospModel.reset();
             } else {

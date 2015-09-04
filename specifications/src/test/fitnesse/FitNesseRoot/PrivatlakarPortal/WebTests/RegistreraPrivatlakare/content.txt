@@ -1,3 +1,7 @@
+| !-TaBortPrivatlakare-! |
+| id           | resultat? |
+| 199008252398 | true      |
+
 !3 Logga in
 | script | !-LoggaIn-! |
 | logga in som | private-practicioner-1 |
@@ -45,6 +49,17 @@
 | check | postort | NACKA |
 | check | kommun | NACKA |
 | check | lan | STOCKHOLM |
-| check | legitimeradYrkesgrupp | hsaTitle1, hsaTitle2 |
+| check | legitimeradYrkesgrupp | Läkare |
 | check | specialitet | specialityName1, specialityName2 |
 | check | forskrivarkod | 1234567 |
+| check | hospMeddelande | hospComplete |
+| check anvandarvillkor |
+| skapa konto |
+
+!3 Verifiera att vi hamnar på klar-sidan
+| script | Registrera |
+| klar sidan visas |
+
+| !-TaBortPrivatlakare-! |
+| id           | resultat? |
+| 199008252398 | true      |

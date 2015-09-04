@@ -3,6 +3,7 @@ package se.inera.privatlakarportal.spec
 import se.inera.privatlakarportal.page.RegisterStep1Page
 import se.inera.privatlakarportal.page.RegisterStep2Page
 import se.inera.privatlakarportal.page.RegisterStep3Page
+import se.inera.privatlakarportal.page.CompletePage
 
 class Registrera {
 
@@ -54,6 +55,26 @@ class Registrera {
         boolean result
         Browser.drive {
             result = at RegisterStep2Page
+        }
+        return result
+    }
+
+    public void checkAnvandarvillkor() {
+        Browser.drive {
+            page.checkAnvandarvillkor();
+        }
+    }
+
+    public void skapaKonto() {
+        Browser.drive {
+            page.skapaKonto();
+        }
+    }
+
+    public boolean klarSidanVisas() {
+        boolean result
+        Browser.drive {
+            result = at CompletePage
         }
         return result
     }
@@ -242,4 +263,11 @@ class Registrera {
         return result
     }
 
+    public String hospMeddelande() {
+        String result
+        Browser.drive {
+            result = page.hamtaHospMeddelandeId()
+        }
+        return result
+    }
 }

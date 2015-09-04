@@ -5,6 +5,7 @@ class RegisterStep3Page extends RegisterPage {
     static at = { $("#step3").isDisplayed() && doneLoading() }
 
     static content = {
+        godkannAnvandarvillkorCheck { $("#godkannvillkor") }
         registerBtn { $("#registerBtn")}
         backBtn(to: RegisterStep2Page, toWait:true) { $("#backBtn")}
         abortBtn(to: RegisterStep1AbortPage, toWait: true) { $("#abortBtn")}
@@ -29,9 +30,17 @@ class RegisterStep3Page extends RegisterPage {
         legitimeradYrkesgrupp { $("#legitimeradYrkesgrupp") }
         specialitet { $("#specialitet") }
         forskrivarkod { $("#forskrivarkod") }
+
+        hospMeddelandeLoad(required:false) { $("#hospLoad") }
+        hospMeddelandeUpdate(required:false) { $("#hospUpdate") }
+        hospMeddelandeComplete(required:false) { $("#hospComplete") }
     }
 
-    public void registreraMig() {
+    public void checkAnvandarvillkor() {
+        godkannAnvandarvillkorCheck.click()
+    }
+
+    public void skapaKonto() {
         registerBtn.click()
     }
 
@@ -63,4 +72,19 @@ class RegisterStep3Page extends RegisterPage {
     public String hamtaLegitimeradYrkesgrupp() { return legitimeradYrkesgrupp.text() }
     public String hamtaSpecialitet() { return specialitet.text() }
     public String hamtaForskrivarkod() { return forskrivarkod.text() }
+
+    public String hamtaHospMeddelandeId() {
+        if(hospMeddelandeLoad.isDisplayed())
+        {
+            return "hospLoad"
+        }
+        if(hospMeddelandeUpdate.isDisplayed())
+        {
+            return "hospUpdate"
+        }
+        if(hospMeddelandeComplete.isDisplayed())
+        {
+            return "hospComplete"
+        }
+    }
 }
