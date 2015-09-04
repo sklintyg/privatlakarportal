@@ -13,4 +13,6 @@ public interface HospUpdateService {
 
     public RegistrationStatus updateHospInformation(Privatlakare privatlakare);
 
+    public void updateHospInformation();
+
 }

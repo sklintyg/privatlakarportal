@@ -22,6 +22,11 @@ public class HsaServiceStub {
         hospLastUpdate = new LocalDateTime();
     }
 
+    public void removeHospPerson(String id) {
+        personMap.remove(id);
+        hospLastUpdate = new LocalDateTime();
+    }
+
     public LocalDateTime getHospLastUpdate() {
         return hospLastUpdate;
     }

@@ -5,8 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
+import se.inera.privatlakarportal.hsa.stub.HsaHospPerson;
+import se.inera.privatlakarportal.hsa.stub.HsaServiceStub;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.privatlakarportal.service.HospUpdateService;
 import se.inera.privatlakarportal.service.RegisterService;
 
 /**
@@ -24,6 +27,12 @@ public class TestController {
 
     @Autowired
     private PrivatlakareRepository privatlakareRepository;
+
+    @Autowired
+    private HsaServiceStub hsaServiceStub;
+
+    @Autowired
+    private HospUpdateService hospUpdateService;
 
     public TestController() {
         LOG.debug("TestController");
@@ -47,4 +56,18 @@ public class TestController {
         return true;
     }
 
+    @RequestMapping(value = "/hosp/add", method = RequestMethod.POST)
+    public void addHospPerson(@RequestBody HsaHospPerson hsaHospPerson) {
+        hsaServiceStub.addHospPerson(hsaHospPerson);
+    }
+
+    @RequestMapping(value = "/hosp/remove/{id}", method = RequestMethod.DELETE)
+    public void removeHospPerson(@PathVariable("id") String id) {
+        hsaServiceStub.removeHospPerson(id);
+    }
+
+    @RequestMapping(value = "/hosp/update", method = RequestMethod.POST)
+    public void updateHospInformation() {
+        hospUpdateService.updateHospInformation();
+    }
 }

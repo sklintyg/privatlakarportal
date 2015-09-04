@@ -73,6 +73,9 @@
   <beans profile="dev,pp-security-dev,pp-security-test">
     <security:http security="none" pattern="/welcome.html"/>
   </beans>
+  <beans profile="dev,testability-api">
+    <security:http security="none" pattern="/api/test/**"/>
+  </beans>
 
   <!-- =============================================================== -->
   <!-- The dev and pp-security-dev profiles only supports Fake login -->
