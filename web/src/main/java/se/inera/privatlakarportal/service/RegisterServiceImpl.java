@@ -82,13 +82,17 @@ public class RegisterServiceImpl<E> implements RegisterService {
         for(LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
             legitimeradeYrkesgrupper.add(legitimeradYrkesgrupp.getNamn());
         }
-        hospInformation.setHsaTitles(legitimeradeYrkesgrupper);
+        if (!legitimeradeYrkesgrupper.isEmpty()) {
+            hospInformation.setHsaTitles(legitimeradeYrkesgrupper);
+        }
 
         List<String> specialiteter = new ArrayList<String>();
         for(Specialitet specialitet : privatlakare.getSpecialiteter()) {
             specialiteter.add(specialitet.getNamn());
         }
-        hospInformation.setSpecialityNames(specialiteter);
+        if (!specialiteter.isEmpty()) {
+            hospInformation.setSpecialityNames(specialiteter);
+        }
 
         hospInformation.setPersonalPrescriptionCode(privatlakare.getForskrivarKod());
 
