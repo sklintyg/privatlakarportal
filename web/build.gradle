@@ -69,15 +69,19 @@ task assembleManifestClasspath() << {
 
 war.dependsOn assembleManifestClasspath
 
-task ('copyVersionProperties', type: Copy) {
-    from 'src/main/resources/version.properties'
-    into "$buildDir/classes"
-    filter(ReplaceTokens, tokens: [buildVersion: buildVersion, buildTime: buildTime, buildNumber: buildNumber])
+task createVersionPropertyFile(dependsOn: processResources) << {
+    def propertyFile = "${buildDir}/resources/main/version.properties"
+    ant.touch(file: propertyFile, mkdirs: "true")
+    ant.propertyfile(file: propertyFile) {
+        entry(key: 'buildVersion', default: buildVersion)
+        entry(key: 'buildTime', default: buildTime)
+        entry(key: 'buildNumber', default: buildNumber)
+    }
 }
 
-copyVersionProperties.dependsOn assembleManifestClasspath
+createVersionPropertyFile.dependsOn assembleManifestClasspath
 
-war.dependsOn copyVersionProperties
+war.dependsOn createVersionPropertyFile
 
 task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
     script = file('node_modules/bower/bin/bower')
