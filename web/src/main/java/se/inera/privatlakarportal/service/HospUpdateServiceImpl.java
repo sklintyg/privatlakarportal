@@ -64,7 +64,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         return hospInformation;
     }
 
-    @Scheduled(cron = "10 * * * * ?")
+    @Scheduled(cron = "${privatlakarportal.hospupdate.cron}")
     @Transactional
     public void updateHospInformation() {
 
