@@ -52,7 +52,7 @@
 | check | postort | NACKA |
 | check | kommun | NACKA |
 | check | lan | STOCKHOLM |
-| check | legitimeradYrkesgrupp | hsaTitle2, hsaTitle1 |
+| check | legitimeradYrkesgrupp | Läkare |
 | check | specialitet | specialityName2, specialityName1 |
 | check | forskrivarkod | 1234567 |
 
