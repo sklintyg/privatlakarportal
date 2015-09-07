@@ -68,7 +68,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     @Transactional
     public void updateHospInformation() {
 
-        LOG.info("Starting scheduled updateHospInformation");
+        LOG.debug("Starting scheduled updateHospInformation");
 
         // Get our last hosp update time from database
         HospUppdatering hospUppdatering = hospUppdateringRepository.findSingle();
