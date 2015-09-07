@@ -14,8 +14,8 @@ angular.module('privatlakareApp')
 
         $scope.$on('$stateChangeStart',
             function(event, toState/*, toParams, fromState, fromParams*/) {
-
-                if (!RegisterViewState.navigationAllowed(toState, $scope.registerForm.$valid)) {
+                var navigationAllowed = RegisterViewState.navigationAllowed(toState, $scope.registerForm.$valid);
+                if (!navigationAllowed) { // navigationAllowed can be null if we
                     event.preventDefault();
                     // transitionTo() promise will be rejected with
                     // a 'transition prevented' error

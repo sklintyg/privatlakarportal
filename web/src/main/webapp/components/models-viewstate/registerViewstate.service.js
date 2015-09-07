@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').service('RegisterViewState',
-    function($state
-        ) {
+    function($state,
+        ObjectHelper) {
         'use strict';
 
         this.reset = function() {
@@ -59,6 +59,10 @@ angular.module('privatlakareApp').service('RegisterViewState',
 
         // general step navigation
         this.getStepFromState = function(state) {
+            if(!ObjectHelper.isDefined(state.data)) {
+                return null;
+            }
+
             return state.data.step;
         };
 
@@ -69,6 +73,11 @@ angular.module('privatlakareApp').service('RegisterViewState',
         this.navigationAllowed = function(toState, formValid) {
             // Prevent user from navigating forwards if clicking the fishbone nav
             var toStep = this.getStepFromState(toState);
+
+            if(toStep === null) { // step number is N/A. allow navigation because it is outside the register flow.
+                return true;
+            }
+
             if (toStep > this.step + 1 || (toStep === this.step + 1 && !formValid)) {
                 return false;
             }

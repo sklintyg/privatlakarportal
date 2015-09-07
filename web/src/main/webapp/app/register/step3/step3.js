@@ -10,6 +10,6 @@ angular.module('privatlakareApp')
                         controller: 'Step3Ctrl'
                     }
                 },
-                data:{step:3}
+                data: { step:3 }
             });
     });
