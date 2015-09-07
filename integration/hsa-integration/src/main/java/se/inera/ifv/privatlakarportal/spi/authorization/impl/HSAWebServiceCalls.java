@@ -87,4 +87,14 @@ public class HSAWebServiceCalls {
         }
     }
 
+    public GetHospLastUpdateResponseType callGetHospLastUpdate(GetHospLastUpdateType parameters) {
+        try {
+            GetHospLastUpdateResponseType response = hsaWebServiceClient.getHospLastUpdate(logicalAddressHeader, messageId, parameters);
+            return response;
+        } catch (Throwable ex) {
+            LOG.error("Failed to call callGetHospLastUpdate");
+            Throwables.propagate(ex);
+            return null;
+        }
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import se.inera.privatlakarportal.common.integration.kodverk.Befattningar;
 import se.inera.privatlakarportal.common.integration.kodverk.Vardformer;
 import se.inera.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
+import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
@@ -82,7 +83,7 @@ public class IntegrationServiceImpl implements IntegrationService {
         if (privatlakare == null) {
             response.setResultCode(ResultCodeEnum.ERROR);
             response.setResultText("No private practitioner with hsa id: " + personHsaId + " exists.");
-        } else if (privatlakare.isGodkandAnvandare()) {
+        } else if (privatlakare.isGodkandAnvandare() && PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
             response.setResultCode(ResultCodeEnum.OK);
             // Check if this is the first time the user logins to Webcert after getting godkand status
             checkFirstLogin(privatlakare);
@@ -105,7 +106,7 @@ public class IntegrationServiceImpl implements IntegrationService {
         if (privatlakare == null) {
             response.setResultCode(ResultCodeEnum.ERROR);
             response.setResultText("No private practitioner with personal identity number: " + personalIdentityNumber + " exists.");
-        } else if (privatlakare.isGodkandAnvandare()) {
+        } else if (privatlakare.isGodkandAnvandare() && PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
             response.setResultCode(ResultCodeEnum.OK);
             // Check if this is the first time the user logins to Webcert after getting godkand status
             checkFirstLogin(privatlakare);

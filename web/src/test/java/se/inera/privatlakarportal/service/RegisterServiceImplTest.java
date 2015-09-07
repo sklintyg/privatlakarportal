@@ -2,7 +2,6 @@ package se.inera.privatlakarportal.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -25,23 +24,17 @@ import se.inera.ifv.hsawsresponder.v3.SpecialityCodesType;
 import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
 import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
-import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
-import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.Registration;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
-import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 
 import javax.xml.ws.WebServiceException;
 
@@ -55,7 +48,7 @@ public class RegisterServiceImplTest {
     private PrivatlakareIdRepository privatlakareidRepository;
 
     @Mock
-    private HospPersonService hospPersonService;
+    private HospUpdateService hospUpdateService;
 
     @Mock
     private UserService userService;
@@ -136,13 +129,12 @@ public class RegisterServiceImplTest {
         GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
         hospPersonResponse.getTitleCodes().getTitleCode().add("LK");
         hospPersonResponse.getHsaTitles().getHsaTitle().add("Läkare");
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(hospPersonResponse);
+        when(hospUpdateService.updateHospInformation(any(Privatlakare.class))).thenReturn(RegistrationStatus.AUTHORIZED);
 
         Registration registration = createValidRegistration();
         RegistrationStatus response = registerService.createRegistration(registration);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
-        verify(hospPersonService, times(0)).handleCertifier(any(String.class), any(String.class));
         assertEquals(response, RegistrationStatus.AUTHORIZED);
     }
 
@@ -153,13 +145,12 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(createGetHospPersonResponse());
+        when(hospUpdateService.updateHospInformation(any(Privatlakare.class))).thenReturn(RegistrationStatus.NOT_AUTHORIZED);
 
         Registration registration = createValidRegistration();
         RegistrationStatus response = registerService.createRegistration(registration);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
-        verify(hospPersonService, times(0)).handleCertifier(any(String.class), any(String.class));
         assertEquals(response, RegistrationStatus.NOT_AUTHORIZED);
     }
 
@@ -170,54 +161,12 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
-
-        when(hospPersonService.handleCertifier(eq("1912121212"), any(String.class))).thenReturn(true);
+        when(hospUpdateService.updateHospInformation(any(Privatlakare.class))).thenReturn(RegistrationStatus.WAITING_FOR_HOSP);
 
         Registration registration = createValidRegistration();
         RegistrationStatus response = registerService.createRegistration(registration);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
-        verify(hospPersonService).handleCertifier(eq("1912121212"), any(String.class));
-        assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
-    }
-
-    @Test
-    public void testCreateRegistrationKanEjKontaktaHSA1() {
-
-        PrivatlakareId privatlakareId = new PrivatlakareId();
-        privatlakareId.setId(1);
-        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
-
-        when(hospPersonService.getHospPerson("1912121212")).thenThrow(new WebServiceException("Could not send message"));
-
-        Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration);
-
-        verify(privatlakareRepository).save(any(Privatlakare.class));
-        verify(hospPersonService).getHospPerson("1912121212");
-        verifyNoMoreInteractions(hospPersonService);
-        assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
-    }
-
-    @Test
-    public void testCreateRegistrationKanEjKontaktaHSA2() {
-
-        PrivatlakareId privatlakareId = new PrivatlakareId();
-        privatlakareId.setId(1);
-        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
-
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
-
-        when(hospPersonService.handleCertifier(eq("1912121212"), any(String.class))).thenThrow(new WebServiceException("Could not send message"));
-
-        Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration);
-
-        verify(privatlakareRepository).save(any(Privatlakare.class));
-        verify(hospPersonService).getHospPerson("1912121212");
-        verify(hospPersonService).handleCertifier(eq("1912121212"), any(String.class));
-        verifyNoMoreInteractions(hospPersonService);
         assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
     }
 
@@ -233,7 +182,7 @@ public class RegisterServiceImplTest {
         RegistrationStatus response = registerService.createRegistration(registration);
 
         verifyNoMoreInteractions(privatlakareRepository);
-        verifyNoMoreInteractions(hospPersonService);
+        verifyNoMoreInteractions(hospUpdateService);
     }
 
     @Test
@@ -258,40 +207,6 @@ public class RegisterServiceImplTest {
 
         Registration registration = createValidRegistration();
         SaveRegistrationResponseStatus response = registerService.saveRegistration(registration);
-    }
-
-    @Test
-    public void getHospInformation() {
-
-        GetHospPersonResponseType hospPersonResponse = new GetHospPersonResponseType();
-        hospPersonResponse.setPersonalIdentityNumber("1912121212");
-        hospPersonResponse.setPersonalPrescriptionCode("0000000");
-        HsaTitlesType hasTitles = new HsaTitlesType();
-        hasTitles.getHsaTitle().add("Test title");
-        hospPersonResponse.setHsaTitles(hasTitles);
-        SpecialityNamesType specialityNamesType = new SpecialityNamesType();
-        specialityNamesType.getSpecialityName().add("Test speciality");
-        hospPersonResponse.setSpecialityNames(specialityNamesType);
-
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(hospPersonResponse);
-
-        HospInformation hospInformation = registerService.getHospInformation();
-
-        assertEquals(hospInformation.getPersonalPrescriptionCode(), "0000000");
-        assertEquals(hospInformation.getHsaTitles().size(), 1);
-        assertEquals(hospInformation.getHsaTitles().get(0), "Test title");
-        assertEquals(hospInformation.getSpecialityNames().size(), 1);
-        assertEquals(hospInformation.getSpecialityNames().get(0), "Test speciality");
-    }
-
-    @Test
-    public void getHospInformationNotInHosp() {
-
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
-
-        HospInformation hospInformation = registerService.getHospInformation();
-
-        assertNull(hospInformation);
     }
 
     @Test

@@ -10,6 +10,11 @@ import static groovyx.net.http.ContentType.JSON
 
 
 public class SkapaPrivatlakare extends RestClientFixture {
+
+    String personnummer;
+    String fornamn;
+    String efternamn;
+
     String befattning
     String verksamhetensNamn
     String agarForm
@@ -54,7 +59,10 @@ public class SkapaPrivatlakare extends RestClientFixture {
 	
     public void execute() {
         def restClient = createRestClient()
-        RestClientUtils.login(restClient);
+        if (personnummer && fornamn && efternamn)
+            RestClientUtils.login(restClient, fornamn, efternamn, personnummer);
+        else
+            RestClientUtils.login(restClient);
 
         // An updated name is needed to create a registration
         restClient.post(
