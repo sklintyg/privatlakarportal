@@ -201,7 +201,8 @@ h5.inline-heading {
   padding-top: 20px;
 }
 
-.deferred-bootstrap-error div#boot-error {
+.deferred-bootstrap-error div#boot-error,
+.deferred-bootstrap-loading div#boot-loading {
   display: block !important;
 }
 

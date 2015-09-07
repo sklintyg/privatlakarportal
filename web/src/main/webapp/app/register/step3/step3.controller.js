@@ -6,7 +6,7 @@ angular.module('privatlakareApp')
 
         RegisterViewState.updateStep();
 
-        var user = UserModel.init();
+        var user = UserModel.get();
         if (UserModel.isRegistered()) {
             $state.go('app.register.complete');
         }
