@@ -5,12 +5,12 @@
         "namn": {
             "fornamn": "Per Peter",
             "mellannamn": "Svensson",
-            "efternamn": "Pärsson"
+            "efternamn": "PÃ¤rsson"
         },
         "folkbokforingsadress": {
             "utdelningsadress2": "KUNGSGATAN 5",
             "postNr": 41234,
-            "postort": "GÖTEBORG"
+            "postort": "GÃ–TEBORG"
         }
     }
 }
