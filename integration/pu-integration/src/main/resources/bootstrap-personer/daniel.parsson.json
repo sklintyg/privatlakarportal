@@ -3,14 +3,14 @@
     "personpost": {
         "personId": "195206172339",
         "namn": {
-            "fornamn": "BjÃ¶rn Anders Daniel",
+            "fornamn": "Björn Anders Daniel",
             "mellannamn": "Annat",
-            "efternamn": "PÃ¤rsson"
+            "efternamn": "Pärsson"
         },
         "folkbokforingsadress": {
             "utdelningsadress2": "KUNGSGATAN 5",
             "postNr": 41234,
-            "postort": "GÃ–TEBORG"
+            "postort": "GÖTEBORG"
         }
     }
 }
