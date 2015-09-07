@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
@@ -33,8 +34,6 @@ import java.util.Set;
 public class HospUpdateServiceImpl implements HospUpdateService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HospUpdateServiceImpl.class);
-
-    private static final String LAKARE = "Läkare";
 
     @Autowired
     PrivatlakareRepository privatlakareRepository;
@@ -179,8 +178,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
             privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
 
-            if (hospPersonResponse.getHsaTitles().getHsaTitle().contains(LAKARE)) {
-                privatlakare.setGodkandAnvandare(true);
+            if (PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
                 return RegistrationStatus.AUTHORIZED;
             }
             else {

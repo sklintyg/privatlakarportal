@@ -121,6 +121,7 @@ public class RegisterServiceImpl<E> implements RegisterService {
 
         privatlakare.setPersonId(userService.getUser().getPersonalIdentityNumber());
         privatlakare.setFullstandigtNamn(userService.getUser().getName());
+        privatlakare.setGodkandAnvandare(true);
 
         // Generate next hsaId
         // Format: "SE" + ineras orgnr (inkl "sekelsiffror", alltså 165565594230) + "-" + "WEBCERT" + femsiffrigt löpnr.
