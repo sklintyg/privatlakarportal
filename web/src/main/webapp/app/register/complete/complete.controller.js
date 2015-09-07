@@ -1,5 +1,9 @@
 angular.module('privatlakareApp')
-  .controller('CompleteCtrl', function ($scope) {
-    'use strict';
-    $scope.message = 'Hello';
-  });
+    .controller('CompleteCtrl', function($scope, $window,
+        APP_CONFIG) {
+        'use strict';
+
+        $scope.goToApp = function() {
+            $window.location = APP_CONFIG.webcertStartUrl;
+        };
+    });
