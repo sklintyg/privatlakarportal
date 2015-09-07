@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
 @Configuration
@@ -19,11 +20,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setOrder(0);
         viewResolver.setViewClass(InternalResourceView.class);
         viewResolver.setPrefix("/");
         viewResolver.setSuffix(".html");
         return viewResolver;
+    }
 
+    @Bean
+    public ViewResolver jspViewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setOrder(1);
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
     }
 
     @Override

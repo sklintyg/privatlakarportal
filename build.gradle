@@ -2,9 +2,9 @@
 task loadConfiguration {
     def environment = null
     if (project.hasProperty('env')) {
-         environment = project.getProperty('env')
+        environment = project.getProperty('env')
     } else {
-         environment = "local"
+        environment = "local"
     }
     logger.quiet "Loading configuration for environment '$environment'."
     addProjectPropertiesFromFile(file("$rootDir/env-properties/${environment}/settings.properties"))
@@ -56,6 +56,10 @@ subprojects {
         springSecurityVersion = "3.2.5.RELEASE"
         springSecurityExtensionsVersion = "1.0.1.RELEASE"
         liquibaseVersion = "3.3.1"
+
+        setProperty("buildTime", getDate().toString())
+        setProperty("buildNumber", System.env.BUILD_NUMBER ? System.env.BUILD_NUMBER : "SNAPSHOT")
+        setProperty("buildVersion", System.env.BUILD_VERSION ? System.env.BUILD_VERSION : "1.0.0-SNAPSHOT")
     }
 }
 
@@ -73,7 +77,8 @@ private void addProjectPropertiesFromFile(propfile) {
     }
 }
 
-configure (subprojects.findAll { [
+configure (subprojects.findAll {
+    [
         'privatlakarportal-liquibase-runner',
         'privatlakarportal-web'
     ].contains(it.name) }) {

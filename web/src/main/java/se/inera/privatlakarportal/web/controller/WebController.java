@@ -6,12 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/")
 public class WebController {
 
-    @RequestMapping(method = GET)
+    @RequestMapping(value="/", method = GET)
     public String getIndexPage() {
         return "index";
     }
 
+    @RequestMapping(value="/version", method = GET)
+    public String getVersionPage() {
+        return "version";
+    }
 }

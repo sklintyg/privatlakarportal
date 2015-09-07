@@ -30,7 +30,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         webConfig.register(WebConfig.class);
         ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(webConfig));
         servlet.setLoadOnStartup(1);
-        servlet.addMapping("/*");
+        servlet.addMapping("/");
  
         // Spring security filter
         FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
