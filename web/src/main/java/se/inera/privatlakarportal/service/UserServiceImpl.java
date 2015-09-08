@@ -13,7 +13,7 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.pu.model.PersonSvar;
 import se.inera.privatlakarportal.pu.services.PUService;
-import se.inera.privatlakarportal.service.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.User;
 
 import javax.transaction.Transactional;

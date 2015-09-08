@@ -1,11 +1,8 @@
 package se.inera.privatlakarportal.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -24,19 +21,20 @@ import se.inera.ifv.hsawsresponder.v3.SpecialityCodesType;
 import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
 import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.privatlakarportal.hsa.services.HospPersonService;
+import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
-import se.inera.privatlakarportal.service.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.service.model.Registration;
 import static org.mockito.Mockito.*;
-
-import javax.xml.ws.WebServiceException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
@@ -46,6 +44,9 @@ public class RegisterServiceImplTest {
 
     @Mock
     private PrivatlakareIdRepository privatlakareidRepository;
+
+    @Mock
+    private HospPersonService hospPersonService;
 
     @Mock
     private HospUpdateService hospUpdateService;
@@ -223,5 +224,39 @@ public class RegisterServiceImplTest {
     @Test
     public void testRemoveNonExistingPrivatlakare() {
         assertFalse(registerService.removePrivatlakare("195206142597"));
+    }
+
+    @Test
+    public void getHospInformation() {
+
+        GetHospPersonResponseType hospPersonResponse = new GetHospPersonResponseType();
+        hospPersonResponse.setPersonalIdentityNumber("1912121212");
+        hospPersonResponse.setPersonalPrescriptionCode("0000000");
+        HsaTitlesType hasTitles = new HsaTitlesType();
+        hasTitles.getHsaTitle().add("Test title");
+        hospPersonResponse.setHsaTitles(hasTitles);
+        SpecialityNamesType specialityNamesType = new SpecialityNamesType();
+        specialityNamesType.getSpecialityName().add("Test speciality");
+        hospPersonResponse.setSpecialityNames(specialityNamesType);
+
+        when(hospPersonService.getHospPerson("1912121212")).thenReturn(hospPersonResponse);
+
+        HospInformation hospInformation = registerService.getHospInformation();
+
+        assertEquals(hospInformation.getPersonalPrescriptionCode(), "0000000");
+        assertEquals(hospInformation.getHsaTitles().size(), 1);
+        assertEquals(hospInformation.getHsaTitles().get(0), "Test title");
+        assertEquals(hospInformation.getSpecialityNames().size(), 1);
+        assertEquals(hospInformation.getSpecialityNames().get(0), "Test speciality");
+    }
+
+    @Test
+    public void getHospInformationNotInHosp() {
+
+        when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
+
+        HospInformation hospInformation = registerService.getHospInformation();
+
+        assertNull(hospInformation);
     }
 }

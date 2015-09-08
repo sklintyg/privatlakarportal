@@ -1,25 +1,22 @@
-package se.inera.privatlakarportal.service;
+package se.inera.privatlakarportal.hsa.services;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
-import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.model.Specialitet;
 import se.inera.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.service.model.HospInformation;
-import se.inera.privatlakarportal.service.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 
 import javax.transaction.Transactional;
 import javax.xml.ws.WebServiceException;
@@ -43,26 +40,6 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
     @Autowired
     HospPersonService hospPersonService;
-
-    @Autowired
-    private UserService userService;
-
-    @Override
-    @Transactional
-    public HospInformation getHospInformation() {
-        GetHospPersonResponseType response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
-
-        if (response == null) {
-            return null;
-        }
-
-        HospInformation hospInformation = new HospInformation();
-        hospInformation.setPersonalPrescriptionCode(response.getPersonalPrescriptionCode());
-        hospInformation.setSpecialityNames(response.getSpecialityNames().getSpecialityName());
-        hospInformation.setHsaTitles(response.getHsaTitles().getHsaTitle());
-
-        return hospInformation;
-    }
 
     @Scheduled(cron = "${privatlakarportal.hospupdate.cron}")
     @Transactional
@@ -116,6 +93,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         }
     }
 
+    @Override
     public RegistrationStatus updateHospInformation(Privatlakare privatlakare) {
         GetHospPersonResponseType hospPersonResponse;
         try {
@@ -138,9 +116,9 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             return RegistrationStatus.WAITING_FOR_HOSP;
         }
         else {
-            Set<Specialitet> specialiteter = new HashSet<Specialitet>();
+            Set<Specialitet> specialiteter = new HashSet<>();
             if (hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() !=
-                    hospPersonResponse.getSpecialityNames().getSpecialityName().size()) {
+                hospPersonResponse.getSpecialityNames().getSpecialityName().size()) {
                 LOG.error("getHospPerson getSpecialityCodes count " +
                         hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() +
                         "doesn't match getSpecialityNames count '{}' != '{}'" +
@@ -157,9 +135,9 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             }
             privatlakare.setSpecialiteter(specialiteter);
 
-            Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<LegitimeradYrkesgrupp>();
+            Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();
             if (hospPersonResponse.getHsaTitles().getHsaTitle().size() !=
-                    hospPersonResponse.getTitleCodes().getTitleCode().size()) {
+                hospPersonResponse.getTitleCodes().getTitleCode().size()) {
                 LOG.error("getHospPerson getHsaTitles count " +
                         hospPersonResponse.getHsaTitles().getHsaTitle().size() +
                         "doesn't match getTitleCodes count '{}' != '{}'" +
@@ -184,6 +162,22 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             else {
                 return RegistrationStatus.NOT_AUTHORIZED;
             }
+        }
+    }
+
+    @Override
+    @Transactional
+    public void checkForUpdatedHospInformation(Privatlakare privatlakare) {
+        LocalDateTime hospLastUpdate = hospPersonService.getHospLastUpdate();
+        if (privatlakare.getSenasteHospUppdatering() == null ||
+            privatlakare.getSenasteHospUppdatering().isBefore(hospLastUpdate)) {
+
+            LOG.debug("Hosp has been updated since last login for privlakare '{}'. Updating hosp information", privatlakare.getPersonId());
+
+            updateHospInformation(privatlakare);
+
+            privatlakare.setSenasteHospUppdatering(hospLastUpdate);
+            privatlakareRepository.save(privatlakare);
         }
     }
 }

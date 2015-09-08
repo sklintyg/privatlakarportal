@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.privatlakarportal.hsa.services.HospPersonService;
+import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
@@ -36,7 +40,26 @@ public class RegisterServiceImpl<E> implements RegisterService {
     private PrivatlakareIdRepository privatlakareidRepository;
 
     @Autowired
+    private HospPersonService hospPersonService;
+
+    @Autowired
     private HospUpdateService hospUpdateService;
+
+    @Override
+    public HospInformation getHospInformation() {
+        GetHospPersonResponseType response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
+
+        if (response == null) {
+            return null;
+        }
+
+        HospInformation hospInformation = new HospInformation();
+        hospInformation.setPersonalPrescriptionCode(response.getPersonalPrescriptionCode());
+        hospInformation.setSpecialityNames(response.getSpecialityNames().getSpecialityName());
+        hospInformation.setHsaTitles(response.getHsaTitles().getHsaTitle());
+
+        return hospInformation;
+    }
 
     @Override
     @Transactional

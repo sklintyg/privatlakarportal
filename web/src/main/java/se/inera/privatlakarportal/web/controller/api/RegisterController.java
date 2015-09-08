@@ -2,9 +2,9 @@ package se.inera.privatlakarportal.web.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import se.inera.privatlakarportal.service.HospUpdateService;
+import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.service.RegisterService;
-import se.inera.privatlakarportal.service.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.postnummer.PostnummerService;
@@ -46,7 +46,7 @@ public class RegisterController {
 
     @RequestMapping(value = "/hospInformation")
     public GetHospInformationResponse getHospInformation() {
-        return new GetHospInformationResponse(hospUpdateService.getHospInformation());
+        return new GetHospInformationResponse(registerService.getHospInformation());
     }
 
     @RequestMapping(value = "/omrade/{postnummer}")
