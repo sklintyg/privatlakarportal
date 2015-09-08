@@ -20,7 +20,7 @@
           - <span class="logged-in">{{user.name}}</span><br>
         <span class="pull-right">
           <span ng-show="userModel.isRegistered()"><a id="updateAccount" ng-click="updateAccount()">Ändra
-            uppgifter</a> | </span><a id="logoutLink" ng-click="logout()">Logga ut</a>
+            uppgifter</a> | </span><a href="{{logoutLocation}}" id="logoutLink">Logga ut</a>
         </span>
         </div>
       </div>

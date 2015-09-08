@@ -27,8 +27,10 @@ angular.module('privatlakareApp').controller('HeaderController',
                 $state.go('app.minsida');
             };
 
-            $scope.logout = function() {
-                UserModel.logout();
-            };
+            if (UserModel.get().authenticationScheme === UserModel.get().fakeSchemeId) {
+                $scope.logoutLocation = '/logout';
+            } else {
+                $scope.logoutLocation = '/saml/logout/';
+            }
         }
     );
