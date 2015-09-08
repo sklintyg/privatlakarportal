@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.service.model;
+package se.inera.privatlakarportal.common.model;
 
 /**
  * Created by pebe on 2015-08-25.

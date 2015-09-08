@@ -113,6 +113,10 @@ public class Privatlakare {
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
     private Set<Vardform> vardformer;
 
+    @Column(name = "SENASTE_HOSP_UPPDATERING", nullable = true)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime senasteHospUppdatering;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -399,5 +403,13 @@ public class Privatlakare {
             this.vardformer = new HashSet<Vardform>();
             this.vardformer.add(new Vardform(this, kod));
         }
+    }
+
+    public LocalDateTime getSenasteHospUppdatering() {
+        return senasteHospUppdatering;
+    }
+
+    public void setSenasteHospUppdatering(LocalDateTime senasteHospUppdatering) {
+        this.senasteHospUppdatering = senasteHospUppdatering;
     }
 }

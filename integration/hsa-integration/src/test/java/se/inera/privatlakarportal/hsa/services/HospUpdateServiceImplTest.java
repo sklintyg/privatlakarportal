@@ -1,24 +1,17 @@
-package se.inera.privatlakarportal.service;
+package se.inera.privatlakarportal.hsa.services;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.ifv.hsawsresponder.v3.*;
-import se.inera.privatlakarportal.auth.PrivatlakarUser;
-import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
-import se.inera.privatlakarportal.service.model.HospInformation;
-import se.inera.privatlakarportal.service.model.Registration;
-import se.inera.privatlakarportal.service.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 
 import javax.xml.ws.WebServiceException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
@@ -32,52 +25,18 @@ public class HospUpdateServiceImplTest {
     @Mock
     private HospPersonService hospPersonService;
 
-    @Mock
-    private UserService userService;
+/*    @Mock
+    private UserService userService;*/
 
     @InjectMocks
     private HospUpdateService hospUpdateService = new HospUpdateServiceImpl();
 
-    @Before
+/*    @Before
     public void setup() {
         PrivatlakarUser privatlakarUser = new PrivatlakarUser("1912121212", "Test User");
         privatlakarUser.updateNameFromPuService("Test User");
         when(userService.getUser()).thenReturn(privatlakarUser);
-    }
-
-    @Test
-    public void getHospInformation() {
-
-        GetHospPersonResponseType hospPersonResponse = new GetHospPersonResponseType();
-        hospPersonResponse.setPersonalIdentityNumber("1912121212");
-        hospPersonResponse.setPersonalPrescriptionCode("0000000");
-        HsaTitlesType hasTitles = new HsaTitlesType();
-        hasTitles.getHsaTitle().add("Test title");
-        hospPersonResponse.setHsaTitles(hasTitles);
-        SpecialityNamesType specialityNamesType = new SpecialityNamesType();
-        specialityNamesType.getSpecialityName().add("Test speciality");
-        hospPersonResponse.setSpecialityNames(specialityNamesType);
-
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(hospPersonResponse);
-
-        HospInformation hospInformation = hospUpdateService.getHospInformation();
-
-        assertEquals(hospInformation.getPersonalPrescriptionCode(), "0000000");
-        assertEquals(hospInformation.getHsaTitles().size(), 1);
-        assertEquals(hospInformation.getHsaTitles().get(0), "Test title");
-        assertEquals(hospInformation.getSpecialityNames().size(), 1);
-        assertEquals(hospInformation.getSpecialityNames().get(0), "Test speciality");
-    }
-
-    @Test
-    public void getHospInformationNotInHosp() {
-
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
-
-        HospInformation hospInformation = hospUpdateService.getHospInformation();
-
-        assertNull(hospInformation);
-    }
+    }*/
 
     @Test
     public void testUpdateHospInformationKanEjKontaktaHSA1() {

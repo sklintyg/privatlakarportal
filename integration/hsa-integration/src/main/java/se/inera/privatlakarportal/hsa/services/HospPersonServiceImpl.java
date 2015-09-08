@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import se.inera.ifv.hsawsresponder.v3.*;
 import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
+import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 @Service
 public class HospPersonServiceImpl implements HospPersonService {
@@ -16,6 +17,9 @@ public class HospPersonServiceImpl implements HospPersonService {
 
     @Autowired
     private HSAWebServiceCalls client;
+
+    @Autowired
+    PrivatlakareRepository privatlakareRepository;
 
     @Override
     public GetHospPersonResponseType getHospPerson(String personId) {
@@ -66,4 +70,5 @@ public class HospPersonServiceImpl implements HospPersonService {
 
         return response.getLastUpdate();
     }
+
 }

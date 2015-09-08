@@ -14,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.integration.privatepractioner.services.IntegrationServiceImpl;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
@@ -39,6 +40,9 @@ public class IntegrationServiceTest {
 
     @Mock
     private PrivatlakareRepository privatlakareRepository;
+
+    @Mock
+    private HospUpdateService hospUpdateService;
 
     @InjectMocks
     private IntegrationServiceImpl integrationService;

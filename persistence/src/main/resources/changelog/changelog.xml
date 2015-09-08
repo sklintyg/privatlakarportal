@@ -221,4 +221,12 @@
     </createTable>
   </changeSet>
 
+  <changeSet id="3" author="pb">
+    <addColumn tableName="PRIVATLAKARE">
+      <column name="SENASTE_HOSP_UPPDATERING" type="datetime">
+        <constraints nullable="true" />
+      </column>
+    </addColumn>
+  </changeSet>
+
 </databaseChangeLog>

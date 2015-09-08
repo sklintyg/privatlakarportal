@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.service;
 
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.*;
 
 /**
@@ -10,6 +11,8 @@ public interface RegisterService {
     RegistrationStatus createRegistration(Registration registration);
 
     SaveRegistrationResponseStatus saveRegistration(Registration registration);
+
+    HospInformation getHospInformation();
 
     RegistrationWithHospInformation getRegistration();
 

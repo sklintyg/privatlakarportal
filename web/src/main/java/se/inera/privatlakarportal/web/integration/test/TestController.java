@@ -9,7 +9,7 @@ import se.inera.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.privatlakarportal.hsa.stub.HsaServiceStub;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.service.HospUpdateService;
+import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.service.RegisterService;
 
 /**

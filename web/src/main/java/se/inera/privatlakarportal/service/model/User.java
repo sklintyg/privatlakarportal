@@ -2,7 +2,7 @@ package se.inera.privatlakarportal.service.model;
 
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.pu.model.PersonSvar;
-import se.inera.privatlakarportal.service.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 
 /**
  * Created by pebe on 2015-08-25.
