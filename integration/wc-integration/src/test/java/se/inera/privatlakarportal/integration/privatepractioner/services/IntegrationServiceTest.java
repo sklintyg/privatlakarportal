@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -125,6 +126,8 @@ public class IntegrationServiceTest {
         Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
         assertEquals(verifyHosPerson.getEnhet().getStartdatum(), privatlakare.getEnhetStartdatum());
         assertEquals(verifyHosPerson.getEnhet().getVardgivare().getStartdatum(), privatlakare.getVardgivareStartdatum());
+        // HospUpdateService should be called to verify that privatlakare still has lakarbehorighet
+        verify(hospUpdateService).checkForUpdatedHospInformation(privatlakare);
     }
 
     @Test
@@ -136,6 +139,8 @@ public class IntegrationServiceTest {
         Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
         assertEquals(verifyHosPerson.getEnhet().getStartdatum(), privatlakare.getEnhetStartdatum());
         assertEquals(verifyHosPerson.getEnhet().getVardgivare().getStartdatum(), privatlakare.getVardgivareStartdatum());
+        // HospUpdateService should be called to verify that privatlakare still has lakarbehorighet
+        verify(hospUpdateService).checkForUpdatedHospInformation(privatlakare);
     }
 
     @Test

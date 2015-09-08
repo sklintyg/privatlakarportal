@@ -10,7 +10,7 @@ public interface HospUpdateService {
 
     public void updateHospInformation();
 
-    RegistrationStatus updateHospInformation(Privatlakare privatlakare);
+    RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier);
 
     void checkForUpdatedHospInformation(Privatlakare privatlakare);
 }

@@ -160,7 +160,7 @@ public class RegisterServiceImpl<E> implements RegisterService {
         convertRegistrationToPrivatlakare(registration, privatlakare);
 
         // Lookup hospPerson in HSA
-        RegistrationStatus status = hospUpdateService.updateHospInformation(privatlakare);
+        RegistrationStatus status = hospUpdateService.updateHospInformation(privatlakare, true);
 
         privatlakareRepository.save(privatlakare);
 

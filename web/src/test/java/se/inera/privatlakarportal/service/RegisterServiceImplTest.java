@@ -39,6 +39,8 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
 
+    private final String PERSON_ID = "1912121212";
+
     @Mock
     private PrivatlakareRepository privatlakareRepository;
 
@@ -93,7 +95,7 @@ public class RegisterServiceImplTest {
 
     @Before
     public void setup() {
-        PrivatlakarUser privatlakarUser = new PrivatlakarUser("1912121212", "Test User");
+        PrivatlakarUser privatlakarUser = new PrivatlakarUser(PERSON_ID, "Test User");
         privatlakarUser.updateNameFromPuService("Test User");
         when(userService.getUser()).thenReturn(privatlakarUser);
     }
@@ -114,7 +116,7 @@ public class RegisterServiceImplTest {
         thrown.expect(PrivatlakarportalServiceException.class );
         thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS));
 
-        when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(new Privatlakare());
+        when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(new Privatlakare());
 
         Registration registration = createValidRegistration();
         RegistrationStatus response = registerService.createRegistration(registration);
@@ -130,7 +132,7 @@ public class RegisterServiceImplTest {
         GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
         hospPersonResponse.getTitleCodes().getTitleCode().add("LK");
         hospPersonResponse.getHsaTitles().getHsaTitle().add("Läkare");
-        when(hospUpdateService.updateHospInformation(any(Privatlakare.class))).thenReturn(RegistrationStatus.AUTHORIZED);
+        when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.AUTHORIZED);
 
         Registration registration = createValidRegistration();
         RegistrationStatus response = registerService.createRegistration(registration);
@@ -146,7 +148,7 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(hospUpdateService.updateHospInformation(any(Privatlakare.class))).thenReturn(RegistrationStatus.NOT_AUTHORIZED);
+        when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.NOT_AUTHORIZED);
 
         Registration registration = createValidRegistration();
         RegistrationStatus response = registerService.createRegistration(registration);
@@ -162,7 +164,7 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(hospUpdateService.updateHospInformation(any(Privatlakare.class))).thenReturn(RegistrationStatus.WAITING_FOR_HOSP);
+        when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.WAITING_FOR_HOSP);
 
         Registration registration = createValidRegistration();
         RegistrationStatus response = registerService.createRegistration(registration);
@@ -177,7 +179,7 @@ public class RegisterServiceImplTest {
         thrown.expect(PrivatlakarportalServiceException.class );
         thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM));
 
-        when(userService.getUser()).thenReturn(new PrivatlakarUser("1912121212", "Test User"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser(PERSON_ID, "Test User"));
 
         Registration registration = createValidRegistration();
         RegistrationStatus response = registerService.createRegistration(registration);
@@ -189,7 +191,7 @@ public class RegisterServiceImplTest {
     @Test
     public void testSavePrivatlakare() {
 
-        when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(new Privatlakare());
+        when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(new Privatlakare());
 
         Registration registration = createValidRegistration();
         SaveRegistrationResponseStatus response = registerService.saveRegistration(registration);
@@ -204,7 +206,7 @@ public class RegisterServiceImplTest {
         thrown.expect(PrivatlakarportalServiceException.class );
         thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.NOT_FOUND));
 
-        when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(null);
+        when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
 
         Registration registration = createValidRegistration();
         SaveRegistrationResponseStatus response = registerService.saveRegistration(registration);
@@ -212,13 +214,13 @@ public class RegisterServiceImplTest {
 
     @Test
     public void testRemovePrivatlakare() {
-        when(privatlakareRepository.findByPersonId("1912121212")).thenReturn(new Privatlakare());
+        when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(new Privatlakare());
 
         Registration registration = createValidRegistration();
 
         registerService.saveRegistration(registration);
 
-        assertTrue(registerService.removePrivatlakare("1912121212"));
+        assertTrue(registerService.removePrivatlakare(PERSON_ID));
     }
 
     @Test
@@ -230,7 +232,7 @@ public class RegisterServiceImplTest {
     public void getHospInformation() {
 
         GetHospPersonResponseType hospPersonResponse = new GetHospPersonResponseType();
-        hospPersonResponse.setPersonalIdentityNumber("1912121212");
+        hospPersonResponse.setPersonalIdentityNumber(PERSON_ID);
         hospPersonResponse.setPersonalPrescriptionCode("0000000");
         HsaTitlesType hasTitles = new HsaTitlesType();
         hasTitles.getHsaTitle().add("Test title");
@@ -239,7 +241,7 @@ public class RegisterServiceImplTest {
         specialityNamesType.getSpecialityName().add("Test speciality");
         hospPersonResponse.setSpecialityNames(specialityNamesType);
 
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(hospPersonResponse);
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse);
 
         HospInformation hospInformation = registerService.getHospInformation();
 
@@ -253,7 +255,7 @@ public class RegisterServiceImplTest {
     @Test
     public void getHospInformationNotInHosp() {
 
-        when(hospPersonService.getHospPerson("1912121212")).thenReturn(null);
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
 
         HospInformation hospInformation = registerService.getHospInformation();
 
