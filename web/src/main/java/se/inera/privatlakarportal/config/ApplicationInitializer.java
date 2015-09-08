@@ -23,7 +23,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(javax.servlet.ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.register(ApplicationConfig.class, PersistenceConfig.class, HsaConfiguration.class, PUConfiguration.class, WcIntegrationConfiguration.class, ServiceConfig.class);
+        appContext.register(ApplicationConfig.class, MailConfig.class, PersistenceConfig.class, HsaConfiguration.class, PUConfiguration.class, WcIntegrationConfiguration.class, ServiceConfig.class);
         servletContext.addListener(new ContextLoaderListener(appContext));
  
         AnnotationConfigWebApplicationContext webConfig = new AnnotationConfigWebApplicationContext();

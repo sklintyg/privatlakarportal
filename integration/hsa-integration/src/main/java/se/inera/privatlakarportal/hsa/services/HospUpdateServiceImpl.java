@@ -157,9 +157,11 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
 
             if (PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
+                // TODO: skicka notifieringsmail: success
                 return RegistrationStatus.AUTHORIZED;
             }
             else {
+                // TODO: skicka notifieringsmail: success
                 return RegistrationStatus.NOT_AUTHORIZED;
             }
         }
