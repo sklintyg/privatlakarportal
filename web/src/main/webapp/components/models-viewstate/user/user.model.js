@@ -60,7 +60,6 @@ angular.module('privatlakareApp').factory('UserModel',
                 }
             },
             logout: function() {
-                $sessionStorage.$reset();
                 if (data.authenticationScheme === data.fakeSchemeId) {
                     $window.location = '/logout';
                 } else {
