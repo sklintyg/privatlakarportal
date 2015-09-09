@@ -22,6 +22,7 @@ dependencies {
     compile "org.springframework:spring-webmvc:${springContextVersion}"
     compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
     compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecurityExtensionsVersion}"
+    compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile 'org.slf4j:slf4j-api:1.7.10'
