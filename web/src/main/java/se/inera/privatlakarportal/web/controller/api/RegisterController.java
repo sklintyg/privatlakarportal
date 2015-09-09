@@ -34,7 +34,7 @@ public class RegisterController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
     public CreateRegistrationResponse createRegistration(@RequestBody CreateRegistrationRequest request) {
-        RegistrationStatus status = registerService.createRegistration(request.getRegistration());
+        RegistrationStatus status = registerService.createRegistration(request.getRegistration(), request.getGodkantMedgivandeVersion());
         return new CreateRegistrationResponse(status);
     }
 

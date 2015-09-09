@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.service;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.persistence.model.*;
+import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.model.*;
@@ -19,14 +21,15 @@ import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnu
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by pebe on 2015-06-26.
- * @param <E>
  */
 @Service
-public class RegisterServiceImpl<E> implements RegisterService {
+public class RegisterServiceImpl implements RegisterService {
 
     private static final Logger LOG = LoggerFactory.getLogger(RegisterServiceImpl.class);
 
@@ -35,6 +38,9 @@ public class RegisterServiceImpl<E> implements RegisterService {
 
     @Autowired
     private PrivatlakareRepository privatlakareRepository;
+
+    @Autowired
+    private MedgivandeTextRepository medgivandeTextRepository;
 
     @Autowired
     private PrivatlakareIdRepository privatlakareidRepository;
@@ -117,13 +123,20 @@ public class RegisterServiceImpl<E> implements RegisterService {
 
     @Override
     @Transactional
-    public RegistrationStatus createRegistration(Registration registration) {
+    public RegistrationStatus createRegistration(Registration registration, Long godkantMedgivandeVersion) {
 
         if (registration == null || !registration.checkIsValid()) {
             LOG.error("createRegistration: CreateRegistrationRequest is not valid");
             throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
                     "CreateRegistrationRequest is not valid");
+        }
+
+        if (godkantMedgivandeVersion == null || godkantMedgivandeVersion <= 0) {
+            LOG.error("createRegistration: Not allowed to create registration without medgivande");
+            throw new PrivatlakarportalServiceException(
+                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                    "Not allowed to create registration without medgivande");
         }
 
         if (privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber()) != null) {
@@ -141,6 +154,20 @@ public class RegisterServiceImpl<E> implements RegisterService {
         }
 
         Privatlakare privatlakare = new Privatlakare();
+
+        MedgivandeText medgivandeText = medgivandeTextRepository.findOne(godkantMedgivandeVersion);
+        if (medgivandeText == null) {
+            LOG.error("createRegistration: Could not find medgivandetext with version '{}'", godkantMedgivandeVersion);
+            throw new PrivatlakarportalServiceException(
+                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                    "Could not find medgivandetext matching godkantMedgivandeVersion");
+        }
+        Medgivande medgivande = new Medgivande();
+        medgivande.setGodkandDatum(LocalDateTime.now());
+        medgivande.setMedgivandeText(medgivandeText);
+        medgivande.setPrivatlakare(privatlakare);
+        Set<Medgivande> medgivandeSet = new HashSet<>();
+        privatlakare.setMedgivande(medgivandeSet);
 
         privatlakare.setPersonId(userService.getUser().getPersonalIdentityNumber());
         privatlakare.setFullstandigtNamn(userService.getUser().getName());

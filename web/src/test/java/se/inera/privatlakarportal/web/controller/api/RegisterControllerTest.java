@@ -21,8 +21,9 @@ public class RegisterControllerTest {
     @Test
     public void testCreateRegistration() {
         CreateRegistrationRequest request = new CreateRegistrationRequest();
+        request.setGodkantMedgivandeVersion(1L);
         registerController.createRegistration(request);
 
-        verify(registerService).createRegistration(request.getRegistration());
+        verify(registerService).createRegistration(request.getRegistration(), 1L);
     }
 }

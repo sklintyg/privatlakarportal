@@ -23,8 +23,10 @@ import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.privatlakarportal.persistence.model.MedgivandeText;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
+import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
@@ -46,6 +48,9 @@ public class RegisterServiceImplTest {
 
     @Mock
     private PrivatlakareIdRepository privatlakareidRepository;
+
+    @Mock
+    private MedgivandeTextRepository medgivandeTextRepository;
 
     @Mock
     private HospPersonService hospPersonService;
@@ -98,6 +103,9 @@ public class RegisterServiceImplTest {
         PrivatlakarUser privatlakarUser = new PrivatlakarUser(PERSON_ID, "Test User");
         privatlakarUser.updateNameFromPuService("Test User");
         when(userService.getUser()).thenReturn(privatlakarUser);
+
+        MedgivandeText medgivandeText = new MedgivandeText();
+        when(medgivandeTextRepository.findOne(1L)).thenReturn(medgivandeText);
     }
 
     @Test
@@ -107,7 +115,7 @@ public class RegisterServiceImplTest {
         thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
 
         Registration registration = new Registration();
-        registerService.createRegistration(registration);
+        registerService.createRegistration(registration, 1L);
     }
 
     @Test
@@ -119,7 +127,7 @@ public class RegisterServiceImplTest {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(new Privatlakare());
 
         Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration);
+        RegistrationStatus response = registerService.createRegistration(registration, 1L);
     }
 
     @Test
@@ -135,10 +143,24 @@ public class RegisterServiceImplTest {
         when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.AUTHORIZED);
 
         Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration);
+        RegistrationStatus response = registerService.createRegistration(registration, 1L);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
         assertEquals(response, RegistrationStatus.AUTHORIZED);
+    }
+
+    @Test
+    public void testCreateRegistrationLakareUtanMedgivande() {
+
+        thrown.expect(PrivatlakarportalServiceException.class );
+        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
+
+        PrivatlakareId privatlakareId = new PrivatlakareId();
+        privatlakareId.setId(1);
+        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+
+        Registration registration = createValidRegistration();
+        RegistrationStatus response = registerService.createRegistration(registration, null);
     }
 
     @Test
@@ -151,7 +173,7 @@ public class RegisterServiceImplTest {
         when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.NOT_AUTHORIZED);
 
         Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration);
+        RegistrationStatus response = registerService.createRegistration(registration, 1L);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
         assertEquals(response, RegistrationStatus.NOT_AUTHORIZED);
@@ -167,7 +189,7 @@ public class RegisterServiceImplTest {
         when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.WAITING_FOR_HOSP);
 
         Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration);
+        RegistrationStatus response = registerService.createRegistration(registration, 1L);
 
         verify(privatlakareRepository).save(any(Privatlakare.class));
         assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
@@ -182,7 +204,7 @@ public class RegisterServiceImplTest {
         when(userService.getUser()).thenReturn(new PrivatlakarUser(PERSON_ID, "Test User"));
 
         Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration);
+        RegistrationStatus response = registerService.createRegistration(registration, 1L);
 
         verifyNoMoreInteractions(privatlakareRepository);
         verifyNoMoreInteractions(hospUpdateService);
