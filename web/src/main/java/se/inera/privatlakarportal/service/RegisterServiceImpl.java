@@ -45,6 +45,9 @@ public class RegisterServiceImpl<E> implements RegisterService {
     @Autowired
     private HospUpdateService hospUpdateService;
 
+    @Autowired 
+    MailService mailService;
+    
     @Override
     public HospInformation getHospInformation() {
         GetHospPersonResponseType response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
@@ -111,6 +114,8 @@ public class RegisterServiceImpl<E> implements RegisterService {
         }
 
         hospInformation.setPersonalPrescriptionCode(privatlakare.getForskrivarKod());
+        registration.setEpost("erik@ninjastille.net");
+        mailService.sendRegistrationStatusEmail(RegistrationStatus.AUTHORIZED, registration);
 
         return new RegistrationWithHospInformation(registration, hospInformation);
     }
