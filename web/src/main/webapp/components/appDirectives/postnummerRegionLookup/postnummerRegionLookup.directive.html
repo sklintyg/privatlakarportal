@@ -1,18 +1,18 @@
 <div pp-field="postnummer">
   <input type="text" id="postnummer" name="postnummer" ng-model="registerModel.postnummer" class='form-control'
          style='max-width: 6em' value="" required ng-maxlength="6" maxlength="6" popover-placement="right"
-         popover-trigger="focus" popover="Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag. Postort, kommun och län fylls i automatiskt."
+         popover-trigger="focus" popover="{{'label.form.postnummer.popover' | message}}"
       validate-region region-model="registerModel">
 </div>
 
 <div ng-show="viewState.kommunSelectionMode">
   <div class="alert alert-warning">
-    Uppgift om kommun har {{viewState.kommunHits}} träffar. Ange den kommun som är rätt.
+    {{kommunMoreHitsWarningText}}
   </div>
 </div>
-<div alert-message alert-model="viewState.errorMessage.region" alert-severity="danger"></div>
+<div alert-message alert-show="viewState.errorMessage.region" alert-severity="danger"></div>
 <div class="alert alert-warning" ng-show="viewState.validPostnummer && registerModel.postort == null && viewState.errorMessage.region == null">
-  <i>Inga träffar för postnummer {{registerModel.postnummer}}. Var vänlig kontrollera postnumret och försök igen.</i>
+  <i>{{kommunNoHitsWarningText}}</i>
 </div>
 
 <div>
@@ -35,8 +35,8 @@
         <div ng-if="viewState.kommunSelectionMode">
           <select required id="kommun" name="kommun" class="form-control" ng-model="viewState.kommunSelected"
                   ng-options="s.label for s in viewState.kommunOptions track by s.id" popover-placement="right"
-                  popover-trigger="focus" popover="Kommun där verksamheten finns.">
-            <option value="">Välj kommun</option>
+                  popover-trigger="focus" popover="{{'label.form.kommun.popover' | message}}">
+            <option value="">{{'label.form.kommun.option' | message}}</option>
           </select>
         </div>
       </div>

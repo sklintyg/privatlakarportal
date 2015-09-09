@@ -1,38 +1,23 @@
 <form name="registerForm" ng-submit="submitForm()" novalidate>
 
-  <h1 id="minsida" class="page-header">Min sida</h1>
-
-  <!--div alert-message alert-model="viewState.errorMessage.noPermission" alert-message-id="label.form.error.nopermission" alert-severity="danger"></div-->
+  <h1 id="minsida" class="page-header"><span message key="heading.mypage"></span></h1>
 
   <div class="row">
     <div class="col-md-7">
 
-      <div ng-show="viewState.errorMessage.noPermission" class="alert alert-danger">
-        <p>
-          Du har inte behörighet att logga in i Webcert. Det kan bero på att: </p>
-        <ul>
-          <li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl
-            upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.
-          </li>
-          <li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li>
-          <li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. Kontakta Inera Nationell
-            Kundservice
-            för att ta reda på mer.
-          </li>
-        </ul>
-      </div>
+      <div alert-message alert-show="viewState.errorMessage.noPermission" alert-message-id="label.form.error.nopermission" alert-severity="danger"></div>
 
-      <h2>Dina och verksamhetens uppgifter</h2>
+      <h2><span message key="label.form.grunduppgifter"></span></h2>
       <div class="box">
         <div form-grund-uppgifter></div>
       </div>
 
-      <h2>Verksamhetens kontaktuppgifter</h2>
+      <h2><span message key="label.form.kontaktuppgifter"></span></h2>
       <div class="box">
         <div form-kontakt-uppgifter></div>
       </div>
 
-      <h2>Socialstyrelsens uppgifter</h2>
+      <h2><span message key="label.form.socialuppgifter"></span></h2>
       <div class="box">
         <div form-social-uppgifter></div>
       </div>
@@ -40,11 +25,12 @@
       <div class="top-pad"></div>
 
       <div class="buttonbar section-line top-pad-1">
-        <div alert-message alert-model="viewState.errorMessage.save" alert-severity="danger"></div>
         <button id="saveBtn" class="btn btn-success" ng-click="save()" ng-disabled="registerForm.$pristine">
-          <img ng-show="viewState.loading.save" ng-src="/assets/images/ajax-loader-small-green.gif" /> Spara
+          <img ng-show="viewState.loading.save" ng-src="/assets/images/ajax-loader-small-green.gif" /> <span message key="common.save"></span>
         </button>
       </div>
+
+      <div alert-message alert-show="viewState.errorMessage.save" alert-severity="danger" class="top-pad"></div>
     </div>
   </div>
 

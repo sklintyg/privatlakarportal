@@ -2,23 +2,14 @@
   <div class="row">
     <div class="col-lg-12">
       <div id="waiting">
-        <h1 class="page-header">Väntar på uppgifter om läkarlegitimation</h1>
+        <h1 class="page-header"><span message key="label.waiting.header"></span></h1>
 
         <div class="alert alert-warning">
-          <p>Ditt konto är skapat.</p>
-          <p>Uppgifter om att du har läkarlegitimation behöver dock hämtas från
-          Socialstyrelsen. När uppgifterna har hämtats får du ett mejl till din registrerade mejladress om att du kan
-          börja använda Webcert.</p>
-          <p>Om uppgifter om din läkarlegitimation efter 10 dagar fortfarande inte kunnat hämtas hos Socialstyrelsen får
-            du ett mejl om detta. Du bör då kontakta Socialstyrelsen för att verifiera att dina legitimationsuppgifter
-            är korrekta. De uppgifter du har lämnat om dig själv och din verksamhet i Webcert är sparade. Du kan ändra
-            dem när du vill.</p>
-          <p>När du första gången går till Webcert för att skriva intyg måste du godkänna de villkor som gäller för att
-            använda tjänsten.</p>
+          <span message key="label.waiting.text"></span>
         </div>
         <div class="buttonbar">
-          <button id="goToMyPageBtn" class="btn btn-success" ui-sref="app.minsida">Gå till ditt konto</button>
-          <button id="logoutBtn" class="btn btn-secondary" ng-click="logout()">Logga ut</button>
+          <button id="goToMyPageBtn" class="btn btn-success" ui-sref="app.minsida"><span message key="label.waiting.gotoyouraccount"></span></button>
+          <button id="logoutBtn" class="btn btn-secondary" ng-click="logout()"><span message key="common.logout"></span></button>
         </div>
       </div>
     </div>
