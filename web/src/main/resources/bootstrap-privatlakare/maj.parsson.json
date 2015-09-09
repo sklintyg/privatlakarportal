@@ -1,14 +1,15 @@
 {
-    "personId": "197309069289",
-    "hsaId": "SE165565594230-WEBCERTBOOT2",
-    "fullstandigtNamn": "Nina greger",
-    "godkandAnvandare": true,
-    "enhetsId": "SE165565594230-WEBCERTBOOT2",
+    "personId": "192011189228",
+    "hsaId": "SE165565594230-WEBCERTBOOT3",
+    "fullstandigtNamn": "Maj Pärsson",
+    "forskrivarKod": "0000000",
+    "godkandAnvandare": false,
+    "enhetsId": "SE165565594230-WEBCERTBOOT3",
     "enhetsNamn": "TestEnhet",
     "arbetsplatsKod": "555",
     "agarform": "Privat",
     "postadress": "Gata 5",
-    "postnummer": "58216",
+    "postnummer": "13100",
     "postort": "Linköping",
     "telefonnummer": "444666777",
     "epost": "test@example.com",
@@ -16,7 +17,7 @@
     "enhetSlutDatum": "2015-09-01T00:00:00.000",
     "lan": "Östergötland",
     "kommun": "Linköping",
-    "vardgivareId": "SE165565594230-WEBCERTBOOT2",
+    "vardgivareId": "SE165565594230-WEBCERTBOOT3",
     "vardgivareNamn": "TestVardgivare",
     "vardgivareStartdatum": "2015-08-30T00:00:00.000",
     "vardgivareSlutdatum": "2015-08-01T00:00:00.000",
@@ -27,11 +28,19 @@
     ],
     "legitimeradeYrkesgrupper": [
         {
-            "kod": "ATLK",
-            "namn": "AT-läkare"
+            "kod": "LK",
+            "namn": "Läkare"
         }
     ],
     "specialiteter": [
+        {
+            "kod": "32",
+            "namn": "Klinisk fysiologi"
+        },
+        {
+            "kod": "74",
+            "namn": "Nukleärmedicin"
+        }
     ],
     "verksamhetstyper": [
         {

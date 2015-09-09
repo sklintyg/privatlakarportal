@@ -1,14 +1,14 @@
 <div pp-field="telefonnummer">
   <input type="text" id="telefonnummer" name="telefonnummer" ng-model="registerModel.telefonnummer" class='form-control'
          value="" required popover-placement="right" popover-trigger="focus"
-         popover="Telefonnummer fylls i med siffror 0-9, tillåtna tecken är +, - och mellanslag.">
+         popover="{{'label.form.telefonnummer.popover' | message}}">
 </div>
 
 <div pp-field="epost">
   <input type="email" id="epost" name="epost" ng-model="registerModel.epost" class='form-control'
          style='max-width: 20em' value="" required popover-placement="right" popover-trigger="focus"
          ng-paste="preventPaste($event, 'Epost')"
-         popover="Din e-postadress är viktig! Ange den e-postadress du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor.">
+         popover="{{'label.form.epost.popover' | message}}">
   <div alert-single alert-model="viewState.errorMessage.pasteEpost" alert-message-id="label.form.error.pastenotallowed"></div>
 </div>
 

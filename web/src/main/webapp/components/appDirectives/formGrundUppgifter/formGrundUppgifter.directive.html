@@ -8,13 +8,13 @@
   </div>
 
   <div id="nyttNamnInformation" ng-if="user.nameUpdated" class="alert alert-info">
-    Ditt namn har uppdaterats från folkbokföringens register. För att ditt nya namn ska användas i Webcert behöver du logga ut ur Webcert och sedan logga in igen.
+    <span message key="label.alert.pu"></span>
   </div>
 
   <div pp-field="befattning">
     <select required id="befattning" name="befattning" class="form-control" ng-model="registerModel.befattning"
             ng-options="s.label for s in viewState.befattningList track by s.id">
-      <option value="">Välj befattning</option>
+      <option value="">{{message.getProperty('label.form.befattning.valjbefattning')}}</option>
     </select>
   </div>
 
@@ -36,7 +36,7 @@
     <select required id="verksamhetstyp" name="verksamhetstyp" class="form-control"
             ng-model="registerModel.verksamhetstyp"
             ng-options="s.label for s in viewState.verksamhetstypList track by s.id">
-      <option value="">Välj verksamhetstyp</option>
+      <option value="">{{message.getProperty('label.form.verksamhetstyp.valjverksamhetstyp')}}</option>
     </select>
   </div>
 

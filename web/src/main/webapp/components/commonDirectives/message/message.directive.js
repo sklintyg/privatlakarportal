@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').directive('message',
-    [ '$log', '$rootScope', 'messageService',
-        function($log, $rootScope, messageService) {
+        function($log, $rootScope, $sce, $compile,
+            messageService) {
             'use strict';
 
             return {
@@ -40,8 +40,8 @@ angular.module('privatlakareApp').directive('message',
                         }
 
                         // now get the value to display..
-                        scope.resultValue = result;
+                        scope.resultValue = $compile($sce.trustAsHtml(result))(scope)[0];
                     });
                 }
             };
-        }]);
+        });

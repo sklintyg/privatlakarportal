@@ -1,6 +1,10 @@
-<div ng-show="alertModel != null">
+<div ng-show="alertShow">
   <div class="alert alert-{{alertSeverity}}">
-    {{alertModel}}
-    <!--span message key="{{alertMessageId}}"></span-->
+    <span ng-hide="alertMessageId">
+      {{alertShow}}
+    </span>
+    <span ng-show="alertMessageId">
+      <span message key="{{alertMessageId}}"></span>
+    </span>
   </div>
 </div>

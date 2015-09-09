@@ -9,7 +9,8 @@ angular.module('privatlakareApp').directive('alertMessage',
             return {
                 restrict: 'A',
                 scope: {
-                    'alertModel' : '=',
+                    'alertShow' : '=',
+                    'alertMessageId' : '@',
                     'alertSeverity' : '@'
                 },
                 templateUrl: 'components/commonDirectives/alertMessage/alertMessage.directive.html'
