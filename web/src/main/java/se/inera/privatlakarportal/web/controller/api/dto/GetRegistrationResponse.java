@@ -1,7 +1,7 @@
 package se.inera.privatlakarportal.web.controller.api.dto;
 
+import se.inera.privatlakarportal.common.model.Registration;
 import se.inera.privatlakarportal.service.model.HospInformation;
-import se.inera.privatlakarportal.service.model.Registration;
 
 /**
  * Created by pebe on 2015-08-06.

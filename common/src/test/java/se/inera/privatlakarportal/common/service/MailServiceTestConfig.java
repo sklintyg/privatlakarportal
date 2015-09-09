@@ -1,26 +1,28 @@
-package se.inera.privatlakarportal.service;
+package se.inera.privatlakarportal.common.service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import se.inera.privatlakarportal.service.mail.stub.JavaMailSenderAroundAdvice;
-import se.inera.privatlakarportal.service.mail.stub.MailStore;
+import se.inera.privatlakarportal.common.service.MailService;
+import se.inera.privatlakarportal.common.service.MailServiceImpl;
+import se.inera.privatlakarportal.common.service.stub.JavaMailSenderAroundAdvice;
+import se.inera.privatlakarportal.common.service.stub.MailStore;
 
 @Configuration
-@ComponentScan("se.inera.privatlakarportal.service.mail.stub")
+@Profile("dev")
 @EnableAspectJAutoProxy
-public class MailServiceImplTestConfig {
+public class MailServiceTestConfig {
 
     @Bean 
     public MailService mailService() {
         return new MailServiceImpl();
     }
 
-    // this bean will be injected into the OrderServiceTest class
     @Bean
     public JavaMailSender mailSender() {
         return new JavaMailSenderImpl();

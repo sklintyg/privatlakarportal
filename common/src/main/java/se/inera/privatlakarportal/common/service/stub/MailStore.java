@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.service.mail.stub;
+package se.inera.privatlakarportal.common.service.stub;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

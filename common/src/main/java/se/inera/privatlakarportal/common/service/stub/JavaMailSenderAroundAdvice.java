@@ -1,12 +1,12 @@
-package se.inera.privatlakarportal.service.mail.stub;
+package se.inera.privatlakarportal.common.service.stub;
 
 import javax.mail.internet.MimeMessage;
 
-import org.apache.cxf.common.util.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 /**
  * @author andreaskaltenbach
@@ -35,8 +35,6 @@ public class JavaMailSenderAroundAdvice {
         if (StringUtils.isEmpty(mailHost)) {
             for (Object argument : pjp.getArgs()) {
                 if (argument instanceof MimeMessage) {
-                    MimeMessage msg = (MimeMessage) argument;
-                    msg.writeTo(System.out);
                     mailStore.getMails().add(new OutgoingMail((MimeMessage) argument));
                     mailStore.waitToContinue();
                 }

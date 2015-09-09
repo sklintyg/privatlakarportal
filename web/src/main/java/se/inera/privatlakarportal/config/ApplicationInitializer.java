@@ -13,6 +13,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import se.inera.privatlakarportal.common.config.MailServiceConfig;
 import se.inera.privatlakarportal.hsa.config.HsaConfiguration;
 import se.inera.privatlakarportal.integration.config.WcIntegrationConfiguration;
 import se.inera.privatlakarportal.persistence.config.PersistenceConfig;
@@ -23,7 +25,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(javax.servlet.ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.register(ApplicationConfig.class, MailConfig.class, PersistenceConfig.class, HsaConfiguration.class, PUConfiguration.class, WcIntegrationConfiguration.class, ServiceConfig.class);
+        appContext.register(ApplicationConfig.class, PersistenceConfig.class, MailServiceConfig.class, HsaConfiguration.class, PUConfiguration.class, WcIntegrationConfiguration.class, ServiceConfig.class);
         servletContext.addListener(new ContextLoaderListener(appContext));
  
         AnnotationConfigWebApplicationContext webConfig = new AnnotationConfigWebApplicationContext();

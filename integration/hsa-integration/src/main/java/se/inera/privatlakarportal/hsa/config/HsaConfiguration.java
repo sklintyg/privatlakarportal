@@ -9,11 +9,14 @@ import org.apache.cxf.transports.http.configuration.ConnectionType;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
+
 import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
 import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
+import se.inera.privatlakarportal.common.config.MailServiceStubConfig;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.TrustManagerFactory;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyStore;
@@ -23,8 +26,8 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 @Configuration
-@ComponentScan("se.inera.privatlakarportal.hsa.services")
-@Import(HsaStubConfiguration.class)
+@ComponentScan({"se.inera.privatlakarportal.hsa.services", "se.inera.privatlakarportal.common.service"})
+@Import({HsaStubConfiguration.class, MailServiceStubConfig.class})
 @ImportResource("classpath:hsa-services-config.xml")
 public class HsaConfiguration {
 

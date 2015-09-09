@@ -1,6 +1,5 @@
 package se.inera.privatlakarportal.hsa.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.slf4j.Logger;
@@ -10,9 +9,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+
 import se.inera.privatlakarportal.hsa.stub.BootstrapBean;
 import se.inera.privatlakarportal.hsa.stub.HsaServiceStub;
 import se.inera.privatlakarportal.hsa.stub.HsaWebServiceStub;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 @Profile({"dev", "hsa-stub"})

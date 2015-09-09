@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.service;
+package se.inera.privatlakarportal.common.service;
 
 import java.io.File;
 import java.net.URI;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.service.model.Registration;
+import se.inera.privatlakarportal.persistence.model.Privatlakare;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -59,11 +59,12 @@ public class MailServiceImpl implements MailService {
 
     private static final String SUBJECT = "Registrering för Webcert";
 
-    private static final Logger LOG = LoggerFactory.getLogger(MailServiceImpl.class);
 
     private static final String BOTTOM_BODY_CONTENT = "<br/><br/><span><img src='cid:inera_logo'></span>";
 
     private static final String ENCODING = "text/html; charset=UTF-8";
+
+    private static final Logger LOG = LoggerFactory.getLogger(MailServiceImpl.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -74,24 +75,24 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Async
-    public void sendRegistrationStatusEmail(RegistrationStatus status, Registration registration) throws PrivatlakarportalServiceException {
-        LOG.info("Sending registration status email to {}", registration.getEpost());
+    public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) throws PrivatlakarportalServiceException {
+        LOG.info("Sending registration status email to {}", privatlakare.getEpost());
         try {
-            MimeMessage message = createMessage(status, registration);
+            MimeMessage message = createMessage(status, privatlakare);
             mailSender.send(message);
         } catch (MessagingException | PrivatlakarportalServiceException e) {
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, e.getMessage());
         }
     }
 
-    private MimeMessage createMessage(RegistrationStatus status, Registration registration) throws MessagingException, PrivatlakarportalServiceException {
+    private MimeMessage createMessage(RegistrationStatus status, Privatlakare privatlakare) throws MessagingException, PrivatlakarportalServiceException {
         MimeMessage message = mailSender.createMimeMessage();
         message.setHeader("Content-Type", ENCODING);
         message.setSubject(SUBJECT);
         message.setFrom(new InternetAddress(from));
         message.setContent(createHtmlBody(status), "UTF-8");
         message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress(registration.getEpost()));
+                new InternetAddress(privatlakare.getEpost()));
         return message;
     }
 

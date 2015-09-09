@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan("se.inera.privatlakarportal.web")
+@ComponentScan({"se.inera.privatlakarportal.web", "se.inera.privatlakarportal.common.service.stub"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.privatlakarportal.common.model.Registration;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.persistence.model.*;
@@ -45,9 +47,9 @@ public class RegisterServiceImpl<E> implements RegisterService {
     @Autowired
     private HospUpdateService hospUpdateService;
 
-    @Autowired 
-    MailService mailService;
-    
+    @Autowired
+    private MailService mailService;
+
     @Override
     public HospInformation getHospInformation() {
         GetHospPersonResponseType response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
@@ -114,8 +116,6 @@ public class RegisterServiceImpl<E> implements RegisterService {
         }
 
         hospInformation.setPersonalPrescriptionCode(privatlakare.getForskrivarKod());
-        registration.setEpost("erik@ninjastille.net");
-        mailService.sendRegistrationStatusEmail(RegistrationStatus.AUTHORIZED, registration);
 
         return new RegistrationWithHospInformation(registration, hospInformation);
     }
@@ -166,6 +166,8 @@ public class RegisterServiceImpl<E> implements RegisterService {
 
         // Lookup hospPerson in HSA
         RegistrationStatus status = hospUpdateService.updateHospInformation(privatlakare);
+
+        mailService.sendRegistrationStatusEmail(status, privatlakare);
 
         privatlakareRepository.save(privatlakare);
 

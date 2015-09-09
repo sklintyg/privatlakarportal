@@ -1,8 +1,8 @@
-package se.inera.privatlakarportal.service;
+package se.inera.privatlakarportal.common.service;
 
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.service.model.Registration;
+import se.inera.privatlakarportal.persistence.model.Privatlakare;
 
 public interface MailService {
 
@@ -17,5 +17,5 @@ public interface MailService {
      * @throws PrivatlakarportalServiceException
      *             @{link PrivatlakarportalServiceException}
      */
-    public void sendRegistrationStatusEmail(RegistrationStatus status, Registration registration) throws PrivatlakarportalServiceException;
+    public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) throws PrivatlakarportalServiceException;
 }

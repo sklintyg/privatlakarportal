@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.service.mail.stub;
+package se.inera.privatlakarportal.common.service.stub;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
