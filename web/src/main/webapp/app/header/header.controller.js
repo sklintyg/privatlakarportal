@@ -6,7 +6,7 @@ angular.module('privatlakareApp').controller('HeaderController',
             //Expose 'now' as a model property for the template to render as todays date
             $scope.today = new Date();
             $scope.userModel = UserModel;
-            $scope.user = UserModel.init();
+            $scope.user = UserModel.get();
             $scope.statusText = '';
 
             $scope.$watch('user', function(newVal) {
@@ -27,8 +27,10 @@ angular.module('privatlakareApp').controller('HeaderController',
                 $state.go('app.minsida');
             };
 
-            $scope.logout = function() {
-                UserModel.logout();
-            };
+            if (UserModel.get().authenticationScheme === UserModel.get().fakeSchemeId) {
+                $scope.logoutLocation = '/logout';
+            } else {
+                $scope.logoutLocation = '/saml/logout/';
+            }
         }
     );

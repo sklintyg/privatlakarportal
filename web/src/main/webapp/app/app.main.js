@@ -16,6 +16,10 @@ deferredBootstrapper.bootstrap({
         APP_CONFIG: ['$http', function ($http) {
             'use strict';
             return $http.get('/api/config');
+        }],
+        USER_DATA: ['$http', function ($http) {
+            'use strict';
+            return $http.get('/api/user');
         }]
     }
 });
@@ -88,7 +92,7 @@ app.constant('datepickerPopupConfig', {
 // Inject language resources
 app.run(
     function($log, $rootScope, $window,
-        messageService, UserProxy, UserModel) {
+        messageService, UserProxy, UserModel, USER_DATA) {
         'use strict';
 
         $rootScope.lang = 'sv';
@@ -96,11 +100,7 @@ app.run(
 
         // Get logged in user
         UserModel.init();
-        UserProxy.getUser().then(function(successData) {
-            UserModel.set(successData);
-        }, function() {
-            UserModel.fakeLogin();
-        });
+        UserModel.set(USER_DATA.user);
 
         /* jshint -W117 */
         messageService.addResources(ppMessages);// jshint ignore:line

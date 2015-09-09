@@ -14,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.integration.privatepractioner.services.IntegrationServiceImpl;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
@@ -23,8 +24,11 @@ import se.riv.infrastructure.directory.privatepractitioner.v1.ResultCodeEnum;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -38,11 +42,16 @@ public class IntegrationServiceTest {
     @Mock
     private PrivatlakareRepository privatlakareRepository;
 
+    @Mock
+    private HospUpdateService hospUpdateService;
+
     @InjectMocks
     private IntegrationServiceImpl integrationService;
 
     private static final String EJ_GODKAND_HSA_ID = "nonExistingId";
     private static final String EJ_GODKAND_PERSON_ID = "nonExistingId";
+    private static final String EJ_LAKARE_HSA_ID = "ejLakareHsaId";
+    private static final String EJ_LAKARE_PERSON_ID = "ejLakarePersonId";
     private static final String GODKAND_HSA_ID = "existingHsaId";
     private static final String GODKAND_PERSON_ID = "existingPersonId";
     private static final String FINNS_EJ_HSA_ID = "nonExistingHsaId";
@@ -60,6 +69,11 @@ public class IntegrationServiceTest {
         Privatlakare privatlakare_ej_godkand = objectMapper.readValue(res.getInputStream(), Privatlakare.class);
         privatlakare_ej_godkand.setGodkandAnvandare(false);
 
+        Privatlakare privatlakare_ej_lakare = objectMapper.readValue(res.getInputStream(), Privatlakare.class);
+        Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();
+        legitimeradYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare, "Dietist", "DT"));
+        privatlakare_ej_lakare.setLegitimeradeYrkesgrupper(legitimeradYrkesgrupper);
+
         res = new ClassPathResource("test_HosPerson.json");
         verifyHosPerson = objectMapper.readValue(res.getInputStream(), HoSPersonType.class);
 
@@ -69,6 +83,8 @@ public class IntegrationServiceTest {
         when(privatlakareRepository.findByPersonId(FINNS_EJ_PERSON_ID)).thenReturn(null);
         when(privatlakareRepository.findByHsaId(EJ_GODKAND_HSA_ID)).thenReturn(privatlakare_ej_godkand);
         when(privatlakareRepository.findByPersonId(EJ_GODKAND_PERSON_ID)).thenReturn(privatlakare_ej_godkand);
+        when(privatlakareRepository.findByHsaId(EJ_LAKARE_HSA_ID)).thenReturn(privatlakare_ej_lakare);
+        when(privatlakareRepository.findByPersonId(EJ_LAKARE_PERSON_ID)).thenReturn(privatlakare_ej_lakare);
     }
 
     @Test
@@ -110,6 +126,8 @@ public class IntegrationServiceTest {
         Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
         assertEquals(verifyHosPerson.getEnhet().getStartdatum(), privatlakare.getEnhetStartdatum());
         assertEquals(verifyHosPerson.getEnhet().getVardgivare().getStartdatum(), privatlakare.getVardgivareStartdatum());
+        // HospUpdateService should be called to verify that privatlakare still has lakarbehorighet
+        verify(hospUpdateService).checkForUpdatedHospInformation(privatlakare);
     }
 
     @Test
@@ -121,6 +139,8 @@ public class IntegrationServiceTest {
         Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
         assertEquals(verifyHosPerson.getEnhet().getStartdatum(), privatlakare.getEnhetStartdatum());
         assertEquals(verifyHosPerson.getEnhet().getVardgivare().getStartdatum(), privatlakare.getVardgivareStartdatum());
+        // HospUpdateService should be called to verify that privatlakare still has lakarbehorighet
+        verify(hospUpdateService).checkForUpdatedHospInformation(privatlakare);
     }
 
     @Test
@@ -164,6 +184,18 @@ public class IntegrationServiceTest {
     }
 
     @Test
+    public void testValidatePrivatePractitionerByHsaIdEjLakare() {
+        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(EJ_LAKARE_HSA_ID);
+        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+    }
+
+    @Test
+    public void testValidatePrivatePractitionerByPersonIdEjLakare() {
+        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(EJ_LAKARE_PERSON_ID);
+        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+    }
+
+    @Test
     public void testValidatePrivatePractitionerByHsaIdNonExisting() {
         ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(FINNS_EJ_HSA_ID);
         assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
@@ -173,24 +205,6 @@ public class IntegrationServiceTest {
     public void testValidatePrivatePractitionerByPersonIdNonExisting() {
         ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(FINNS_EJ_PERSON_ID);
         assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
-    }
-
-    private void verifyPrivatlakare(HoSPersonType hoSPersonType, Privatlakare privatlakare) {
-        assertEquals(privatlakare.getBefattningar().size(), hoSPersonType.getBefattning().size());
-        //assertEquals(hoSPersonType.getBefattning(), privatlakare.getBefattningar());
-        //assertEquals(hoSPersonType.getEnhet(), privatlakare.get());
-        assertEquals(privatlakare.getForskrivarKod(), hoSPersonType.getForskrivarkod());
-        assertEquals(privatlakare.getFullstandigtNamn(), hoSPersonType.getFullstandigtNamn());
-        assertEquals(privatlakare.getHsaId(), hoSPersonType.getHsaId().getExtension());
-        assertEquals(privatlakare.getLegitimeradeYrkesgrupper().size(), hoSPersonType.getLegitimeradYrkesgrupp().size());
-        //assertEquals(hoSPersonType.getLegitimeradYrkesgrupp(), privatlakare.getLegitimeradeYrkesgrupper());
-        assertEquals(privatlakare.getPersonId(), hoSPersonType.getPersonId().getExtension());
-        assertEquals(privatlakare.getSpecialiteter().size(), hoSPersonType.getSpecialitet().size());
-        for (Specialitet specialitet : privatlakare.getSpecialiteter()) {
-//            assertThat("Specialitet matches", );
-        }
-        //assertEquals(hoSPersonType.getSpecialitet(), privatlakare.getSpecialiteter());
-//        assertThat(hoSPersonType.getSpecialitet(), IsIterableContainingInAnyOrder());
     }
 
 }

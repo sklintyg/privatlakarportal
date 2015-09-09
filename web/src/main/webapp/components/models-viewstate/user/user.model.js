@@ -1,11 +1,10 @@
 angular.module('privatlakareApp').factory('UserModel',
-    function($window, $sessionStorage) {
+    function($window) {
         'use strict';
 
         var data = {};
 
         function _reset() {
-            $sessionStorage.user = null;
             data.name = null;
             data.status = null;
             data.personnummer = null;
@@ -21,10 +20,6 @@ angular.module('privatlakareApp').factory('UserModel',
 
             reset: _reset,
             init: function() {
-                if($sessionStorage.user) {
-                    data = $sessionStorage.user;
-                    return data;
-                }
                 return _reset();
             },
 
@@ -36,7 +31,6 @@ angular.module('privatlakareApp').factory('UserModel',
                 data.loggedIn = true;
                 data.nameFromPuService = user.nameFromPuService;
                 data.nameUpdated = user.nameUpdated;
-                $sessionStorage.user = data;
             },
             get: function() {
                 return data;
@@ -66,7 +60,6 @@ angular.module('privatlakareApp').factory('UserModel',
                 }
             },
             logout: function() {
-                $sessionStorage.$reset();
                 if (data.authenticationScheme === data.fakeSchemeId) {
                     $window.location = '/logout';
                 } else {

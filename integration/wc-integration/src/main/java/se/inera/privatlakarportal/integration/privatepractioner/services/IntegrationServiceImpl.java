@@ -1,11 +1,15 @@
 package se.inera.privatlakarportal.integration.privatepractioner.services;
 
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.inera.privatlakarportal.common.integration.kodverk.Befattningar;
 import se.inera.privatlakarportal.common.integration.kodverk.Vardformer;
 import se.inera.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
+import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
+import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
@@ -24,8 +28,13 @@ import javax.transaction.Transactional;
 @Service
 public class IntegrationServiceImpl implements IntegrationService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(IntegrationServiceImpl.class);
+
     @Autowired
     PrivatlakareRepository privatlakareRepository;
+
+    @Autowired
+    HospUpdateService hospUpdateService;
 
     @Override
     @Transactional
@@ -82,13 +91,16 @@ public class IntegrationServiceImpl implements IntegrationService {
         if (privatlakare == null) {
             response.setResultCode(ResultCodeEnum.ERROR);
             response.setResultText("No private practitioner with hsa id: " + personHsaId + " exists.");
-        } else if (privatlakare.isGodkandAnvandare()) {
-            response.setResultCode(ResultCodeEnum.OK);
-            // Check if this is the first time the user logins to Webcert after getting godkand status
-            checkFirstLogin(privatlakare);
         } else {
-            response.setResultCode(ResultCodeEnum.ERROR);
-            response.setResultText("Private practitioner with hsa id: " + personHsaId + " is not authorized to use webcert.");
+            hospUpdateService.checkForUpdatedHospInformation(privatlakare);
+            if (privatlakare.isGodkandAnvandare() && PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
+                response.setResultCode(ResultCodeEnum.OK);
+                // Check if this is the first time the user logins to Webcert after getting godkand status
+                checkFirstLogin(privatlakare);
+            } else {
+                response.setResultCode(ResultCodeEnum.ERROR);
+                response.setResultText("Private practitioner with hsa id: " + personHsaId + " is not authorized to use webcert.");
+            }
         }
 
         return response;
@@ -105,13 +117,16 @@ public class IntegrationServiceImpl implements IntegrationService {
         if (privatlakare == null) {
             response.setResultCode(ResultCodeEnum.ERROR);
             response.setResultText("No private practitioner with personal identity number: " + personalIdentityNumber + " exists.");
-        } else if (privatlakare.isGodkandAnvandare()) {
-            response.setResultCode(ResultCodeEnum.OK);
-            // Check if this is the first time the user logins to Webcert after getting godkand status
-            checkFirstLogin(privatlakare);
         } else {
-            response.setResultCode(ResultCodeEnum.ERROR);
-            response.setResultText("Private practitioner with personal identity number: " + personalIdentityNumber + " is not authorized to use webcert.");
+            hospUpdateService.checkForUpdatedHospInformation(privatlakare);
+            if (privatlakare.isGodkandAnvandare() && PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
+                response.setResultCode(ResultCodeEnum.OK);
+                // Check if this is the first time the user logins to Webcert after getting godkand status
+                checkFirstLogin(privatlakare);
+            } else {
+                response.setResultCode(ResultCodeEnum.ERROR);
+                response.setResultText("Private practitioner with personal identity number: " + personalIdentityNumber + " is not authorized to use webcert.");
+            }
         }
 
         return response;

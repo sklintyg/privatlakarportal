@@ -209,4 +209,24 @@
 
   </changeSet>
 
+  <changeSet id="2" author="pb">
+    <!-- table to store time of last hosp update -->
+    <createTable tableName="HOSP_UPPDATERING">
+      <column name="ID" type="bigint">
+        <constraints primaryKey="true" unique="true" nullable="false" />
+      </column>
+      <column name="SENASTE_HOSP_UPPDATERING" type="datetime">
+        <constraints nullable="true" />
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="3" author="pb">
+    <addColumn tableName="PRIVATLAKARE">
+      <column name="SENASTE_HOSP_UPPDATERING" type="datetime">
+        <constraints nullable="true" />
+      </column>
+    </addColumn>
+  </changeSet>
+
 </databaseChangeLog>

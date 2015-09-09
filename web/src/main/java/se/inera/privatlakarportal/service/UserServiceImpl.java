@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.pu.model.PersonSvar;
 import se.inera.privatlakarportal.pu.services.PUService;
-import se.inera.privatlakarportal.service.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.User;
 
 import javax.transaction.Transactional;
@@ -51,6 +52,9 @@ public class UserServiceImpl implements UserService {
             status = RegistrationStatus.NOT_STARTED;
         }
         else if (!privatlakare.isGodkandAnvandare()) {
+            status = RegistrationStatus.NOT_AUTHORIZED;
+        }
+        else if (!PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
             status = RegistrationStatus.WAITING_FOR_HOSP;
         }
         else {

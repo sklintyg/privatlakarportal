@@ -1,6 +1,6 @@
 package se.inera.privatlakarportal.web.controller.api.dto;
 
-import se.inera.privatlakarportal.service.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 
 public class CreateRegistrationResponse {
 

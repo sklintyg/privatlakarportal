@@ -39,12 +39,12 @@ describe('Controller: BootCtrl', function() {
         spyOn($state, 'go').and.stub();
         succeed = true;
 
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
         user = angular.copy(mockResponse.userModel);
         user.status = 'NOT_STARTED';
         user.nameFromPuService = true;
         UserModel.set(user);
-        $rootScope.$digest();
+
+        BootCtrl = $controller('BootCtrl', { $scope: scope });
 
         expect($state.go).toHaveBeenCalledWith('app.start');
     });
@@ -53,12 +53,12 @@ describe('Controller: BootCtrl', function() {
         spyOn($state, 'go').and.stub();
         succeed = true;
 
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
         user = angular.copy(mockResponse.userModel);
         user.status = 'NOT_STARTED';
         user.nameFromPuService = false;
         UserModel.set(user);
-        $rootScope.$digest();
+
+        BootCtrl = $controller('BootCtrl', { $scope: scope });
 
         expect($state.go).toHaveBeenCalledWith('app.error',
             { errorMessage: 'Ett tekniskt fel har tyvärr uppstått och det går inte att hämta dina namnuppgifter ' +
@@ -73,8 +73,8 @@ describe('Controller: BootCtrl', function() {
         user = angular.copy(mockResponse.userModel);
         user.status = 'WAITING_FOR_HOSP';
         UserModel.set(user);
+
         BootCtrl = $controller('BootCtrl', { $scope: scope });
-        $rootScope.$digest();
 
         expect($state.go).toHaveBeenCalledWith('app.minsida');
     });
@@ -83,11 +83,11 @@ describe('Controller: BootCtrl', function() {
         spyOn($state, 'go').and.stub();
         succeed = true;
 
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
         user = angular.copy(mockResponse.userModel);
         user.status = 'AUTHORIZED';
         UserModel.set(user);
-        $rootScope.$digest();
+
+        BootCtrl = $controller('BootCtrl', { $scope: scope });
 
         expect($state.go).toHaveBeenCalledWith('app.minsida');
     });

@@ -2,7 +2,7 @@ angular.module('privatlakareApp')
     .controller('MinsidaCtrl', function($scope, $state, $log, $window,
         UserModel, RegisterModel, RegisterViewState, RegisterProxy, ObjectHelper, WindowUnload, HospService, HospModel, HospViewState) {
         'use strict';
-        $scope.user = UserModel.init();
+        $scope.user = UserModel.get();
         $scope.registerModel = RegisterModel.reset();
         $scope.viewState = RegisterViewState.reset();
 
