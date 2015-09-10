@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.integration.privatepractioner.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +15,8 @@ import org.springframework.core.io.Resource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.integration.privatepractioner.services.IntegrationServiceImpl;
 import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
@@ -45,6 +46,9 @@ public class IntegrationServiceTest {
     @Mock
     private HospUpdateService hospUpdateService;
 
+    @Mock
+    private DateHelperService dateHelperService;
+
     @InjectMocks
     private IntegrationServiceImpl integrationService;
 
@@ -63,7 +67,7 @@ public class IntegrationServiceTest {
     public void setup() throws IOException {
         ObjectMapper objectMapper = new CustomObjectMapper();
 
-        Resource res = new ClassPathResource("test_Privatlakare.json");
+        Resource res = new ClassPathResource("IntegrationServiceTest/test_Privatlakare.json");
         Privatlakare privatlakare = objectMapper.readValue(res.getInputStream(), Privatlakare.class);
 
         Privatlakare privatlakare_ej_godkand = objectMapper.readValue(res.getInputStream(), Privatlakare.class);
@@ -74,7 +78,7 @@ public class IntegrationServiceTest {
         legitimeradYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare, "Dietist", "DT"));
         privatlakare_ej_lakare.setLegitimeradeYrkesgrupper(legitimeradYrkesgrupper);
 
-        res = new ClassPathResource("test_HosPerson.json");
+        res = new ClassPathResource("IntegrationServiceTest/test_HosPerson.json");
         verifyHosPerson = objectMapper.readValue(res.getInputStream(), HoSPersonType.class);
 
         when(privatlakareRepository.findByHsaId(GODKAND_HSA_ID)).thenReturn(privatlakare);
@@ -85,6 +89,8 @@ public class IntegrationServiceTest {
         when(privatlakareRepository.findByPersonId(EJ_GODKAND_PERSON_ID)).thenReturn(privatlakare_ej_godkand);
         when(privatlakareRepository.findByHsaId(EJ_LAKARE_HSA_ID)).thenReturn(privatlakare_ej_lakare);
         when(privatlakareRepository.findByPersonId(EJ_LAKARE_PERSON_ID)).thenReturn(privatlakare_ej_lakare);
+
+        when(dateHelperService.now()).thenReturn(LocalDateTime.parse("2015-09-09"));
     }
 
     @Test

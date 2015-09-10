@@ -22,6 +22,7 @@ dependencies {
     compile "org.springframework:spring-webmvc:${springContextVersion}"
     compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
     compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecurityExtensionsVersion}"
+    compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile 'org.slf4j:slf4j-api:1.7.10'
@@ -35,6 +36,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile "org.springframework:spring-test:${springContextVersion}"
+    testCompile 'org.unitils:unitils-core:3.3'
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 }

@@ -6,13 +6,16 @@ angular.module('privatlakareApp').factory('TermsProxy',
             /*
              * Get user data for logged in user
              */
-            function _getTerms() {
+            function _getTerms(termsType) {
                 var fnName = 'getTerms';
                 $log.debug(fnName);
 
                 var promise = $q.defer();
 
-                var restPath = '/api/terms/webcert';
+                var restPath = '/api/terms';
+                if (termsType) {
+                    restPath += '/' + termsType;
+                }
                 $log.debug('REST call: ' + fnName + ' ' + restPath);
                 $http.get(restPath, { timeout: networkConfig.defaultTimeout }).success(function(data) {
                     $log.debug(restPath + ' - got data:');

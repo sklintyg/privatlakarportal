@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.persistence.model.*;
+import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.model.*;
@@ -19,14 +21,15 @@ import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnu
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by pebe on 2015-06-26.
- * @param <E>
  */
 @Service
-public class RegisterServiceImpl<E> implements RegisterService {
+public class RegisterServiceImpl implements RegisterService {
 
     private static final Logger LOG = LoggerFactory.getLogger(RegisterServiceImpl.class);
 
@@ -37,6 +40,9 @@ public class RegisterServiceImpl<E> implements RegisterService {
     private PrivatlakareRepository privatlakareRepository;
 
     @Autowired
+    private MedgivandeTextRepository medgivandeTextRepository;
+
+    @Autowired
     private PrivatlakareIdRepository privatlakareidRepository;
 
     @Autowired
@@ -44,6 +50,9 @@ public class RegisterServiceImpl<E> implements RegisterService {
 
     @Autowired
     private HospUpdateService hospUpdateService;
+
+    @Autowired
+    private DateHelperService dateHelperService;
 
     @Override
     public HospInformation getHospInformation() {
@@ -76,7 +85,7 @@ public class RegisterServiceImpl<E> implements RegisterService {
         registration.setAgarForm(privatlakare.getAgarform());
         registration.setArbetsplatskod(privatlakare.getArbetsplatsKod());
         // Detta fält plus några till längre ner kan ha flera värden enligt informationsmodellen men implementeras som bara ett värde.
-        if (privatlakare.getBefattningar().size() > 0) {
+        if (privatlakare.getBefattningar() != null && privatlakare.getBefattningar().size() > 0) {
             registration.setBefattning(privatlakare.getBefattningar().iterator().next().getKod());
         }
         registration.setEpost(privatlakare.getEpost());
@@ -85,29 +94,33 @@ public class RegisterServiceImpl<E> implements RegisterService {
         registration.setPostnummer(privatlakare.getPostnummer());
         registration.setPostort(privatlakare.getPostort());
         registration.setTelefonnummer(privatlakare.getTelefonnummer());
-        if (privatlakare.getVardformer().size() > 0) {
+        if (privatlakare.getVardformer() != null && privatlakare.getVardformer().size() > 0) {
             registration.setVardform(privatlakare.getVardformer().iterator().next().getKod());
         }
         registration.setVerksamhetensNamn(privatlakare.getVardgivareNamn());
-        if (privatlakare.getVerksamhetstyper().size() > 0) {
+        if (privatlakare.getVerksamhetstyper() != null && privatlakare.getVerksamhetstyper().size() > 0) {
             registration.setVerksamhetstyp(privatlakare.getVerksamhetstyper().iterator().next().getKod());
         }
 
         HospInformation hospInformation = new HospInformation();
-        List<String> legitimeradeYrkesgrupper = new ArrayList<String>();
-        for(LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
-            legitimeradeYrkesgrupper.add(legitimeradYrkesgrupp.getNamn());
-        }
-        if (!legitimeradeYrkesgrupper.isEmpty()) {
-            hospInformation.setHsaTitles(legitimeradeYrkesgrupper);
+        if (privatlakare.getLegitimeradeYrkesgrupper() != null) {
+            List<String> legitimeradeYrkesgrupper = new ArrayList<String>();
+            for (LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
+                legitimeradeYrkesgrupper.add(legitimeradYrkesgrupp.getNamn());
+            }
+            if (!legitimeradeYrkesgrupper.isEmpty()) {
+                hospInformation.setHsaTitles(legitimeradeYrkesgrupper);
+            }
         }
 
-        List<String> specialiteter = new ArrayList<String>();
-        for(Specialitet specialitet : privatlakare.getSpecialiteter()) {
-            specialiteter.add(specialitet.getNamn());
-        }
-        if (!specialiteter.isEmpty()) {
-            hospInformation.setSpecialityNames(specialiteter);
+        if (privatlakare.getSpecialiteter() != null) {
+            List<String> specialiteter = new ArrayList<String>();
+            for (Specialitet specialitet : privatlakare.getSpecialiteter()) {
+                specialiteter.add(specialitet.getNamn());
+            }
+            if (!specialiteter.isEmpty()) {
+                hospInformation.setSpecialityNames(specialiteter);
+            }
         }
 
         hospInformation.setPersonalPrescriptionCode(privatlakare.getForskrivarKod());
@@ -117,7 +130,7 @@ public class RegisterServiceImpl<E> implements RegisterService {
 
     @Override
     @Transactional
-    public RegistrationStatus createRegistration(Registration registration) {
+    public RegistrationStatus createRegistration(Registration registration, Long godkantMedgivandeVersion) {
 
         if (registration == null || !registration.checkIsValid()) {
             LOG.error("createRegistration: CreateRegistrationRequest is not valid");
@@ -126,13 +139,20 @@ public class RegisterServiceImpl<E> implements RegisterService {
                     "CreateRegistrationRequest is not valid");
         }
 
+        if (godkantMedgivandeVersion == null || godkantMedgivandeVersion <= 0) {
+            LOG.error("createRegistration: Not allowed to create registration without medgivande");
+            throw new PrivatlakarportalServiceException(
+                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                    "Not allowed to create registration without medgivande");
+        }
+
         if (privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber()) != null) {
             LOG.error("createRegistration: Registration already exists");
             throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS,
                     "Registration already exists");
         }
-        
+
         if (!userService.getUser().isNameFromPuService()) {
             LOG.error("createRegistration: Not allowed to create registration without updated name from PU-service");
             throw new PrivatlakarportalServiceException(
@@ -141,6 +161,21 @@ public class RegisterServiceImpl<E> implements RegisterService {
         }
 
         Privatlakare privatlakare = new Privatlakare();
+
+        MedgivandeText medgivandeText = medgivandeTextRepository.findOne(godkantMedgivandeVersion);
+        if (medgivandeText == null) {
+            LOG.error("createRegistration: Could not find medgivandetext with version '{}'", godkantMedgivandeVersion);
+            throw new PrivatlakarportalServiceException(
+                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                    "Could not find medgivandetext matching godkantMedgivandeVersion");
+        }
+        Medgivande medgivande = new Medgivande();
+        medgivande.setGodkandDatum(dateHelperService.now());
+        medgivande.setMedgivandeText(medgivandeText);
+        medgivande.setPrivatlakare(privatlakare);
+        Set<Medgivande> medgivandeSet = new HashSet<>();
+        medgivandeSet.add(medgivande);
+        privatlakare.setMedgivande(medgivandeSet);
 
         privatlakare.setPersonId(userService.getUser().getPersonalIdentityNumber());
         privatlakare.setFullstandigtNamn(userService.getUser().getName());

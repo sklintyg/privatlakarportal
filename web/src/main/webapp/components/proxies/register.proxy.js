@@ -75,12 +75,12 @@ angular.module('privatlakareApp').factory('RegisterProxy',
             /*
              * Register a privatlakare
              */
-            function _registerPrivatlakare(registerModel) {
+            function _registerPrivatlakare(registerModel, godkantMedgivandeVersion) {
 
                 var promise = $q.defer();
 
                 // Create flat dto from model to send to backend
-                var dto = RegisterModel.convertToDTO(registerModel);
+                var dto = RegisterModel.convertToDTO(registerModel, godkantMedgivandeVersion);
                 $log.debug('registerPrivatlakare dto:');
                 $log.debug(dto);
 

@@ -40,7 +40,8 @@
     <div class="col-md-7">
       <div class="form-group checkbox">
         <label class="top-pad">
-          <input type="checkbox" id="godkannvillkor" name="godkannvillkor" ng-model="model.godkannvillkor"> Jag medger <a ui-sref=".terms">behandling av mina och verksamhetens uppgifter</a>.<!--span message key="label.godkannvillkor"></span-->
+          <input type="checkbox" id="godkannvillkor" name="godkannvillkor" ng-model="viewState.godkannvillkor"> Jag
+          medger <a id="termsLink" ui-sref=".terms({termsData:terms})">behandling av mina och verksamhetens uppgifter</a>.<!--span message key="label.godkannvillkor"></span-->
         </label>
       </div>
     </div>
@@ -48,7 +49,7 @@
 
   <div class="buttonbar">
     <button id="registerBtn" class="btn btn-success" ng-click="createAccount()"
-            ng-disabled="!model.godkannvillkor">
+            ng-disabled="!viewState.godkannvillkor">
       <img ng-show="viewState.loading.register" ng-src="/assets/images/ajax-loader-small-green.gif"/> <span message key="label.createaccount"></span>
     </button>
     <button id="backBtn" class="btn btn-info" ui-sref="app.register.step2"><span message key="common.goback"></span></button>

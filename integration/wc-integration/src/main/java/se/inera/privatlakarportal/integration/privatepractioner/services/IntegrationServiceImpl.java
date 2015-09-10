@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import se.inera.privatlakarportal.common.integration.kodverk.Befattningar;
 import se.inera.privatlakarportal.common.integration.kodverk.Vardformer;
 import se.inera.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
+import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.persistence.model.*;
@@ -35,6 +36,9 @@ public class IntegrationServiceImpl implements IntegrationService {
 
     @Autowired
     HospUpdateService hospUpdateService;
+
+    @Autowired
+    DateHelperService dateHelperService;
 
     @Override
     @Transactional
@@ -133,7 +137,7 @@ public class IntegrationServiceImpl implements IntegrationService {
     }
 
     private void checkFirstLogin(Privatlakare privatlakare) {
-        LocalDateTime localDateTime = new LocalDateTime();
+        LocalDateTime localDateTime = dateHelperService.now();
         // If startdatum is not set, set current time as startdatum for privatlakare
         if (privatlakare.getEnhetStartdatum() == null || privatlakare.getVardgivareStartdatum() == null) {
             privatlakare.setEnhetStartdatum(localDateTime);

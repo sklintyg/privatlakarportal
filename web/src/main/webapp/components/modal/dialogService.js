@@ -1,5 +1,5 @@
 angular.module('privatlakareApp').factory('dialogService',
-    function($modal, $timeout, $window) {
+    function($animate, $modal, $rootScope, $timeout, $window) {
         'use strict';
 
         var _modal = null;
@@ -33,6 +33,9 @@ angular.module('privatlakareApp').factory('dialogService',
                     if (modalDialog && modalDialog.hasClass('in')) {
                         modalDialog.one('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd',
                             callback);
+                        $animate.on('leave', $('.modal'), function() {
+                            $window.dialogDoneLoading = true;
+                        });
                     } else {
                         $timeout(waitForModalToExistAndRunCallbackWhenTransitionIsDone, 100);
                     }
@@ -43,6 +46,12 @@ angular.module('privatlakareApp').factory('dialogService',
             }, function() {
                 // Failed to open the modal -> finished loading
                 callback();
+            });
+
+            modal.result.then(function() {
+                $window.dialogDoneLoading = false;
+            }, function() {
+                $window.dialogDoneLoading = false;
             });
         }
 

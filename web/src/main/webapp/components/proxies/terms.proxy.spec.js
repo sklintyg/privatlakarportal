@@ -26,7 +26,7 @@ describe('Proxy: TermsProxy', function() {
 
             $httpBackend.expectGET('/api/terms/webcert').respond(mockResponse.termsOK);
 
-            TermsProxy.getTerms().then(onSuccess, onError);
+            TermsProxy.getTerms('webcert').then(onSuccess, onError);
             $httpBackend.flush();
             // promises are resolved/dispatched only on next $digest cycle
             $rootScope.$apply();

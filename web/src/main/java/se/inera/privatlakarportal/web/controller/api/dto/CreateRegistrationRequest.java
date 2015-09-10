@@ -6,6 +6,8 @@ public class CreateRegistrationRequest {
 
     Registration registration;
 
+    Long godkantMedgivandeVersion;
+
     public CreateRegistrationRequest() {
     }
 
@@ -15,5 +17,13 @@ public class CreateRegistrationRequest {
 
     public void setRegistration(Registration registration) {
         this.registration = registration;
+    }
+
+    public Long getGodkantMedgivandeVersion() {
+        return godkantMedgivandeVersion;
+    }
+
+    public void setGodkantMedgivandeVersion(Long godkantMedgivandeVersion) {
+        this.godkantMedgivandeVersion = godkantMedgivandeVersion;
     }
 }

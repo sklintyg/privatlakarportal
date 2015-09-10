@@ -11,6 +11,8 @@ import static groovyx.net.http.ContentType.JSON
 
 public class SkapaPrivatlakare extends RestClientFixture {
 
+    String godkantMedgivandeVersion;
+
     String personnummer;
     String fornamn;
     String efternamn;
@@ -101,6 +103,7 @@ public class SkapaPrivatlakare extends RestClientFixture {
         if(postort) privatlakare.registration.postort = postort;
         if(kommun) privatlakare.registration.kommun = kommun;
         if(lan) privatlakare.registration.lan = lan;
+        if(godkantMedgivandeVersion) privatlakare.godkantMedgivandeVersion = godkantMedgivandeVersion;
 
         JsonOutput.toJson(privatlakare)
     }

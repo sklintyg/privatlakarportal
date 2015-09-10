@@ -27,11 +27,19 @@ angular.module('privatlakareApp')
             .state('app.start.terms', {
                 url: 'terms',
                 onEnter: openTerms,
-                onExit: closeTerms
+                onExit: closeTerms,
+                params: {
+                    terms: null,
+                    termsData: null
+                }
             }).state('app.register.step3.terms', {
                 url: 'terms',
                 onEnter: openTerms,
-                onExit: closeTerms
+                onExit: closeTerms,
+                params: {
+                    terms: null,
+                    termsData: null
+                }
             });
 
     });
