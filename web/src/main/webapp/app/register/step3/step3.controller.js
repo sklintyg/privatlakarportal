@@ -1,6 +1,6 @@
 angular.module('privatlakareApp')
     .controller('Step3Ctrl',
-    function($scope, $log, $state, $window, RegisterViewState, UserModel, RegisterModel, RegisterProxy,
+    function($scope, $log, $state, $window, RegisterViewState, UserModel, RegisterModel, RegisterProxy, TermsProxy,
         WindowUnload) {
         'use strict';
 
@@ -21,7 +21,13 @@ angular.module('privatlakareApp')
         // Skapa konto button
         $scope.createAccount = function() {
             RegisterViewState.loading.register = true;
-            RegisterProxy.registerPrivatlakare(model).then(function(successData) {
+
+            var godkantMedgivandeVersion = null;
+            if (RegisterViewState.godkannvillkor) {
+                godkantMedgivandeVersion = $scope.terms.version;
+            }
+
+            RegisterProxy.registerPrivatlakare(model, godkantMedgivandeVersion).then(function(successData) {
                 $log.debug('Registration complete - data:');
                 $log.debug(successData);
                 RegisterViewState.loading.register = false;
@@ -50,6 +56,18 @@ angular.module('privatlakareApp')
                 $log.debug('Failed to register errorCode:' + errorData.errorCode + ' reason:' + errorData.message);
             });
         };
+
+        // Retrieve terms
+        TermsProxy.getTerms().then(function(successData) {
+            $scope.terms = {
+                text : successData.text,
+                date : successData.date,
+                version : successData.version
+            };
+        }, function(errorData) {
+            $log.debug('Failed to get terms.');
+            $log.debug(errorData);
+        });
 
         // Add browser dialog to ask if user wants to save before leaving if he closes the window on an edited form.
         WindowUnload.bindUnload($scope, RegisterViewState.windowUnloadWarningCondition);
