@@ -62,8 +62,8 @@ var ppMessages = {
         'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett kontot i Webcert.',
         'label.start.1': 'Du lämnar uppgifter om dig själv och din verksamhet. Uppgifterna behövs för att du ska kunna använda alla funktioner i Webcert.',
         'label.start.2': 'Din yrkeslegitimation verifieras automatiskt mot Socialstyrelsens register över legitimerad hälso- och sjukvårdspersonal (HOSP).',
-        'label.start.3': 'Du loggar in i Webcert och godkänner <a id="termsLink" ui-sref=".terms">Webcerts användarvillkor</a> (endast första gången).',
-        'label.start.4': 'Du börjar använda Webcert.',
+        'label.start.3': 'Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms">Webcerts användarvillkor</a> (endast första gången).',
+        'label.start.4': 'Du kan börja använda Webcert.',
 
         // Register
         'register.label.grundinformation': 'Grundinformation',
@@ -128,7 +128,7 @@ var ppMessages = {
         'label.form.epost2.error.confirmemail': 'E-postadressen är inte identisk med ovanstående angiven e-post.',
 
         'label.form.adress': 'Postadress',
-        'label.form.adress.help': 'Ange den postadress som du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor. Postadressen är även nödvändig för Ineras eventuella fakturering för användning av Webcert.',
+        'label.form.adress.help': 'Ange den postadress (såsom gatuadress eller boxadress) som du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor. Postadressen är även nödvändig för Ineras eventuella fakturering för användning av Webcert.',
         'label.form.adress.error.required': 'Postadress måste anges innan du kan fortsätta.',
 
         'label.form.postnummer': 'Postnummer',
