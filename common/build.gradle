@@ -23,8 +23,6 @@ dependencies {
     compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
     compile "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
 
-    compile 'org.antlr:stringtemplate:4.0'
-
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile 'org.aspectj:aspectjweaver:1.6.11'

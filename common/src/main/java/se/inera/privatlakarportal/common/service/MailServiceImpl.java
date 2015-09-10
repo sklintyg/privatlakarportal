@@ -32,32 +32,26 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 
 @Service
 public class MailServiceImpl implements MailService {
+    @Value("${mail.from}")
+    private String from;
 
-    private static final String AUTHORIZED_BODY =
-            "<span>Hej,</span><br/><br/> " +
-                    "<span>" +
-                    "Dina uppgifter har fortfarande inte kunnat hämtas från Socialstyrelsen." +
-                    "Du bör kontakta Socialstyrelsen för att verifiera att dina legitimationsuppgifter är korrekta" +
-                    "</span>";
+    @Value("${mail.content.approved.body}")
+    private String approvedBody;
 
-    private static final String NOT_AUTHORIZED_BODY =
-            "<span>Hej,</span><br/><br/>" +
-                    "<span>" +
-                    "Dina uppgifter har hämtats från Socialstyrelsen, men behörighet att använda Webcert saknas tyvärr." +
-                    "<br/><br/>" +
-                    "Det kan bero på att du enligt Socialstyrelsen inte är legitimerad läkare, kontakta i så fall Socialstyrelsen." +
-                    "<br/><br/>" +
-                    "Det kan också bero på att Inera AB har beslutat att stänga av tjänsten, kontakta i så fall Inera AB för mer information." +
-                    "</span>";
+    @Value("${mail.content.rejected.body}")
+    private String notApprovedBody;
 
-    private static final String WAITING_FOR_HOSP_BODY =
-            "<span>Hej,</span>" +
-                    "<br/><br/>" +
-                    "<span>Dina uppgifter har tyvärr fortfarande inte kunnat hämtats från Socialstyrelsen." +
-                    " Du bör kontakta Socialstyrelsen för att verifiera att dina legitimationsuppgifter är korrekta." +
-                    "</span>";
+    @Value("${mail.content.pending.body}")
+    private String awaitingHospBody;
 
-    private static final String SUBJECT = "Registrering för Webcert";
+    @Value("${mail.content.approved.subject}")
+    private String approvedSubject;
+
+    @Value("${mail.content.rejected.subject}")
+    private String notApprovedSubject;
+
+    @Value("${mail.content.pending.subject}")
+    private String awaitingHospSubject;
 
 
     private static final String BOTTOM_BODY_CONTENT = "<br/><br/><span><img src='cid:inera_logo'></span>";
@@ -68,10 +62,6 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private JavaMailSender mailSender;
-
-    @Value("${mail.from}")
-    private String from;
-
 
     @Override
     @Async
@@ -88,43 +78,49 @@ public class MailServiceImpl implements MailService {
     private MimeMessage createMessage(RegistrationStatus status, Privatlakare privatlakare) throws MessagingException, PrivatlakarportalServiceException {
         MimeMessage message = mailSender.createMimeMessage();
         message.setHeader("Content-Type", ENCODING);
-        message.setSubject(SUBJECT);
         message.setFrom(new InternetAddress(from));
-        message.setContent(createHtmlBody(status), "UTF-8");
         message.addRecipient(Message.RecipientType.TO,
                 new InternetAddress(privatlakare.getEpost()));
+
+        buildEmailContent(message, status);
         return message;
     }
 
-    private Multipart createHtmlBody(RegistrationStatus status) throws MessagingException, PrivatlakarportalServiceException {
+    private void buildEmailContent(MimeMessage message, RegistrationStatus status) throws MessagingException, PrivatlakarportalServiceException {
         Multipart content = new MimeMultipart("related");
         BodyPart body = new MimeBodyPart();
-        String htmlString = null;
+        String subjectString = null; 
+        String htmlBodyString = null;
 
+        // Set correct content and subject depending on status
         switch (status) {
         case AUTHORIZED:
-            htmlString = AUTHORIZED_BODY;
+            subjectString = approvedSubject;
+            htmlBodyString = approvedBody;
             break;
         case NOT_AUTHORIZED:
-            htmlString = NOT_AUTHORIZED_BODY;
+            subjectString = notApprovedSubject;
+            htmlBodyString = notApprovedBody;
             break;
         case NOT_STARTED:
             // TODO: What happens here?
             break;
         case WAITING_FOR_HOSP:
-            htmlString = WAITING_FOR_HOSP_BODY;
+            subjectString = awaitingHospSubject;
+            htmlBodyString = awaitingHospBody;
             break;
         default:
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
                     "Something unforseen happened while sending registration verification email.");
         }
 
-        htmlString += BOTTOM_BODY_CONTENT;
-        body.setContent(htmlString, ENCODING);
+        htmlBodyString += BOTTOM_BODY_CONTENT;
+        body.setContent(htmlBodyString, ENCODING);
         content.addBodyPart(body);
 
         File logo = new File(getLogo());
 
+        // Add attachment and markup for logo 
         MimeBodyPart iconBodyPart = new MimeBodyPart();
         DataSource iconDataSource = new FileDataSource(logo);
         iconBodyPart.setDataHandler(new DataHandler(iconDataSource));
@@ -133,7 +129,8 @@ public class MailServiceImpl implements MailService {
         iconBodyPart.addHeader("Content-Type", "image/png");
         content.addBodyPart(iconBodyPart);
 
-        return content;
+        message.setContent(content, "UTF-8");
+        message.setSubject(subjectString, "UTF-8");
     }
 
     private URI getLogo() {

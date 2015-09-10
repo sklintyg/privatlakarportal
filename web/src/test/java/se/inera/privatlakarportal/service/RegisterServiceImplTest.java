@@ -1,9 +1,12 @@
 package se.inera.privatlakarportal.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -21,6 +24,11 @@ import se.inera.ifv.hsawsresponder.v3.SpecialityCodesType;
 import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
 import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.model.Registration;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
@@ -28,13 +36,8 @@ import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
-import se.inera.privatlakarportal.common.model.Registration;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
@@ -53,6 +56,9 @@ public class RegisterServiceImplTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private MailService mailService;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

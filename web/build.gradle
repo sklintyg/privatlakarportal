@@ -106,6 +106,7 @@ gretty {
     jvmArgs = [
         '-Dspring.profiles.active=dev',
         '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties',
+        '-Dprivatlakarportal.mailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
         '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',
         '-Dprivatlakarportal.resources.folder=/' +projectDir + '/src/main/resources',
         '-XX:MaxPermSize=256M'

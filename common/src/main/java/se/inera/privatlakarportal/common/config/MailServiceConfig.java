@@ -7,18 +7,23 @@ import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import se.inera.privatlakarportal.common.service.MailService;
+import se.inera.privatlakarportal.common.service.MailServiceImpl;
+
 @Configuration
-@Profile("!dev")
-@PropertySource({"file:${privatlakarportal.config.file}", "classpath:default.properties"})
+@Profile({"!dev", "mail-test"})
+@PropertySource({"file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}", "classpath:default.properties"})
 @EnableAsync
 public class MailServiceConfig implements AsyncConfigurer{
 
@@ -67,6 +72,11 @@ public class MailServiceConfig implements AsyncConfigurer{
         return mailSender;
     }
 
+    @Bean
+    public MailService mailService() {
+        return new MailServiceImpl(); 
+    }
+
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
@@ -83,4 +93,8 @@ public class MailServiceConfig implements AsyncConfigurer{
         return new SimpleAsyncUncaughtExceptionHandler();
     }
 
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+       return new PropertySourcesPlaceholderConfigurer();
+    }
 }

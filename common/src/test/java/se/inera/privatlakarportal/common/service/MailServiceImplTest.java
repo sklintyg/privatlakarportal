@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import se.inera.privatlakarportal.common.config.MailServiceStubConfig;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.common.service.stub.MailStore;
 import se.inera.privatlakarportal.common.service.stub.OutgoingMail;
@@ -51,7 +50,7 @@ public class MailServiceImplTest {
         OutgoingMail oneMail = mailStore.getMails().get(0);
         assertEquals(1, mailStore.getMails().size());
         assertEquals("test@test.com", oneMail.getRecipients().get(0));
-        assertEquals("Registrering för Webcert", oneMail.getSubject());
+        assertEquals("Webcert är klar att användas", oneMail.getSubject());
     }
 
     @After
