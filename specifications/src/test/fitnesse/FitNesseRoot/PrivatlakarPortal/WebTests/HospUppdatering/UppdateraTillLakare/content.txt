@@ -5,6 +5,9 @@
 | id           | resultat? |
 | 195206172339 | true      |
 
+| script | !-RegistreringsMail-! | 
+| rensaMailStubbe |
+
 | script | !-HospUppdatering-! |
 | ta bort hosp information | 195206172339|
 
@@ -29,6 +32,12 @@
 !3 Verifiera att läkarbehörighet blivit satt
 | script | !-HospUppdatering-! |
 | har lakarbehorighet |
+
+!3 Verifiera att mail med registreringsstatus gått iväg till användaren
+| script | !-RegistreringsMail-! | 
+| mailHarSkickats | 195206172339 |
+| check | mailInnehåll | Registration klar  |
+| check | mailMottaget | true |
 
 !3 Ta bort testdata
 | !-TaBortPrivatlakare-! |

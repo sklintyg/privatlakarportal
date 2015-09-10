@@ -17,19 +17,9 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 @Service
 public class MailServiceStub implements MailService {
 
-    private static final String AUTHORIZED_BODY =
-            "Hej, Dina uppgifter har fortfarande inte kunnat hämtas från Socialstyrelsen." +
-            "Du bör kontakta Socialstyrelsen för att verifiera att dina legitimationsuppgifter är korrekta";
-
-    private static final String NOT_AUTHORIZED_BODY =
-            "Hej, Dina uppgifter har hämtats från Socialstyrelsen, men behörighet att använda Webcert saknas tyvärr." + 
-            "Det kan bero på att du enligt Socialstyrelsen inte är legitimerad läkare, kontakta i så fall Socialstyrelsen." +
-            "Det kan också bero på att Inera AB har beslutat att stänga av tjänsten, kontakta i så fall Inera AB för mer information.";
-
-    private static final String WAITING_FOR_HOSP_BODY =
-            "Hej, Dina uppgifter har tyvärr fortfarande inte kunnat hämtats från Socialstyrelsen." +
-            "Du bör kontakta Socialstyrelsen för att verifiera att dina legitimationsuppgifter är korrekta.";
-
+    private static final String AUTHORIZED_BODY = "Registration klar";
+    private static final String NOT_AUTHORIZED_BODY = "Saknar behörighet";
+    private static final String WAITING_FOR_HOSP_BODY = "Väntar på hosp-information";
     private static final Logger LOG = LoggerFactory.getLogger(MailServiceStub.class);
 
     @Autowired

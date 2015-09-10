@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author andreaskaltenbach
  */
 @RestController
-@RequestMapping("/stub/mails")
+@RequestMapping("/api/stub/mails")
 @Profile({"dev","testability-api"})
 public class MailStubController {
 

@@ -1,6 +1,10 @@
+!Rensa testdata
 | !-TaBortPrivatlakare-! |
 | id           | resultat? |
 | 195206172339 | true      |
+
+| script | !-RegistreringsMail-! |
+| rensaMailStubbe | 
 
 !3 Logga in
 | script | !-LoggaIn-! |
@@ -59,6 +63,12 @@
 !3 Verifiera att vi hamnar på väntar på hosp-uppgifter-sidan
 | script | Registrera |
 | vantar sidan visas |
+
+!3 Verifiera att mail med "Väntar på hosp-information" mottagits | 
+| script | !-RegistreringsMail-! |
+| mailHarSkickats | 195206172339 | 
+| check | mailMottaget | true | 
+| check | mailInnehåll | Väntar på hosp-information | 
 
 | !-TaBortPrivatlakare-! |
 | id           | resultat? |
