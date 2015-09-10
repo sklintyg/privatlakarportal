@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource("classpath:test.properties")
+@PropertySource("classpath:config/test.properties")
 public class PersistenceConfigTest {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInTest() {

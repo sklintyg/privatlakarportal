@@ -1,7 +1,6 @@
 package se.inera.privatlakarportal.service;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.persistence.model.*;
@@ -51,6 +51,9 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private HospUpdateService hospUpdateService;
 
+    @Autowired
+    private DateHelperService dateHelperService;
+
     @Override
     public HospInformation getHospInformation() {
         GetHospPersonResponseType response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
@@ -82,7 +85,7 @@ public class RegisterServiceImpl implements RegisterService {
         registration.setAgarForm(privatlakare.getAgarform());
         registration.setArbetsplatskod(privatlakare.getArbetsplatsKod());
         // Detta fält plus några till längre ner kan ha flera värden enligt informationsmodellen men implementeras som bara ett värde.
-        if (privatlakare.getBefattningar().size() > 0) {
+        if (privatlakare.getBefattningar() != null && privatlakare.getBefattningar().size() > 0) {
             registration.setBefattning(privatlakare.getBefattningar().iterator().next().getKod());
         }
         registration.setEpost(privatlakare.getEpost());
@@ -91,29 +94,33 @@ public class RegisterServiceImpl implements RegisterService {
         registration.setPostnummer(privatlakare.getPostnummer());
         registration.setPostort(privatlakare.getPostort());
         registration.setTelefonnummer(privatlakare.getTelefonnummer());
-        if (privatlakare.getVardformer().size() > 0) {
+        if (privatlakare.getVardformer() != null && privatlakare.getVardformer().size() > 0) {
             registration.setVardform(privatlakare.getVardformer().iterator().next().getKod());
         }
         registration.setVerksamhetensNamn(privatlakare.getVardgivareNamn());
-        if (privatlakare.getVerksamhetstyper().size() > 0) {
+        if (privatlakare.getVerksamhetstyper() != null && privatlakare.getVerksamhetstyper().size() > 0) {
             registration.setVerksamhetstyp(privatlakare.getVerksamhetstyper().iterator().next().getKod());
         }
 
         HospInformation hospInformation = new HospInformation();
-        List<String> legitimeradeYrkesgrupper = new ArrayList<String>();
-        for(LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
-            legitimeradeYrkesgrupper.add(legitimeradYrkesgrupp.getNamn());
-        }
-        if (!legitimeradeYrkesgrupper.isEmpty()) {
-            hospInformation.setHsaTitles(legitimeradeYrkesgrupper);
+        if (privatlakare.getLegitimeradeYrkesgrupper() != null) {
+            List<String> legitimeradeYrkesgrupper = new ArrayList<String>();
+            for (LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
+                legitimeradeYrkesgrupper.add(legitimeradYrkesgrupp.getNamn());
+            }
+            if (!legitimeradeYrkesgrupper.isEmpty()) {
+                hospInformation.setHsaTitles(legitimeradeYrkesgrupper);
+            }
         }
 
-        List<String> specialiteter = new ArrayList<String>();
-        for(Specialitet specialitet : privatlakare.getSpecialiteter()) {
-            specialiteter.add(specialitet.getNamn());
-        }
-        if (!specialiteter.isEmpty()) {
-            hospInformation.setSpecialityNames(specialiteter);
+        if (privatlakare.getSpecialiteter() != null) {
+            List<String> specialiteter = new ArrayList<String>();
+            for (Specialitet specialitet : privatlakare.getSpecialiteter()) {
+                specialiteter.add(specialitet.getNamn());
+            }
+            if (!specialiteter.isEmpty()) {
+                hospInformation.setSpecialityNames(specialiteter);
+            }
         }
 
         hospInformation.setPersonalPrescriptionCode(privatlakare.getForskrivarKod());
@@ -145,7 +152,7 @@ public class RegisterServiceImpl implements RegisterService {
                     PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS,
                     "Registration already exists");
         }
-        
+
         if (!userService.getUser().isNameFromPuService()) {
             LOG.error("createRegistration: Not allowed to create registration without updated name from PU-service");
             throw new PrivatlakarportalServiceException(
@@ -163,10 +170,11 @@ public class RegisterServiceImpl implements RegisterService {
                     "Could not find medgivandetext matching godkantMedgivandeVersion");
         }
         Medgivande medgivande = new Medgivande();
-        medgivande.setGodkandDatum(LocalDateTime.now());
+        medgivande.setGodkandDatum(dateHelperService.now());
         medgivande.setMedgivandeText(medgivandeText);
         medgivande.setPrivatlakare(privatlakare);
         Set<Medgivande> medgivandeSet = new HashSet<>();
+        medgivandeSet.add(medgivande);
         privatlakare.setMedgivande(medgivandeSet);
 
         privatlakare.setPersonId(userService.getUser().getPersonalIdentityNumber());

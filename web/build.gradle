@@ -36,6 +36,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile "org.springframework:spring-test:${springContextVersion}"
+    testCompile 'org.unitils:unitils-core:3.3'
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 }
