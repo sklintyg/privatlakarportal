@@ -54,6 +54,11 @@
 | check | forskrivarkod | 1234567 |
 | check | hospMeddelande | hospComplete |
 | check anvandarvillkor |
+| visa användarvillkor |
+| användarvillkoren visas |
+| stäng användarvillkoren |
+| vanta | 1 |
+| registrering steg3 sidan visas |
 | skapa konto |
 
 !3 Verifiera att vi hamnar på klar-sidan

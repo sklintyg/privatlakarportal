@@ -58,16 +58,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
-    @Bean
-    public MappingJackson2HttpMessageConverter jsonConverter() {
-        final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setObjectMapper(new CustomObjectMapper());
-        return converter;
-    }
-
     @Override
-    public void configureMessageConverters(final List<HttpMessageConverter<?>> converters) {
-        converters.add(0, jsonConverter());
+    public void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {
+        for(HttpMessageConverter converter : converters) {
+            if (converter instanceof MappingJackson2HttpMessageConverter) {
+                MappingJackson2HttpMessageConverter jsonConverter = (MappingJackson2HttpMessageConverter) converter;
+                jsonConverter.setObjectMapper(new CustomObjectMapper());
+            }
+        }
     }
 
 }

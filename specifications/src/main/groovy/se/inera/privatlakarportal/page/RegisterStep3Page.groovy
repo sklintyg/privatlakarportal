@@ -9,6 +9,7 @@ class RegisterStep3Page extends RegisterPage {
         registerBtn { $("#registerBtn")}
         backBtn(to: RegisterStep2Page, toWait:true) { $("#backBtn")}
         abortBtn(to: RegisterStep1AbortPage, toWait: true) { $("#abortBtn")}
+        termsLink(to: RegisterTermsPage, toWait: true) { $("#termsLink")}
 
         personnummer { $("#personnummer") }
         namn { $("#namn") }
@@ -87,4 +88,9 @@ class RegisterStep3Page extends RegisterPage {
             return "hospComplete"
         }
     }
+
+    public void visaAnvändarvillkoren() {
+        termsLink.click();
+    }
+
 }
