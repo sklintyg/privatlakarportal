@@ -90,12 +90,11 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                 RegistrationStatus status = updateHospInformation(privatlakare, true);
                 LOG.info("updateHospInformation returned status '{}'", status);
 
-                mailService.sendRegistrationStatusEmail(status, privatlakare);
-
                 // Check if information has been updated
                 if (status == RegistrationStatus.AUTHORIZED ||
                     status == RegistrationStatus.NOT_AUTHORIZED) {
                     privatlakareRepository.save(privatlakare);
+                    mailService.sendRegistrationStatusEmail(status, privatlakare);
                 }
             }
         }

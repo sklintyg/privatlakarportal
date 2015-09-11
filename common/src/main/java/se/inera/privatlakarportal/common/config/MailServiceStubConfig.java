@@ -9,7 +9,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.service.stub.MailServiceStub;
-import se.inera.privatlakarportal.common.service.stub.MailStore;
 import se.inera.privatlakarportal.common.service.stub.MailStubStore;
 
 @Configuration

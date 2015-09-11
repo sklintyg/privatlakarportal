@@ -7,7 +7,6 @@ import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
@@ -22,7 +21,7 @@ import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.service.MailServiceImpl;
 
 @Configuration
-@Profile({"!dev", "mail-test"})
+@Profile("!dev")
 @PropertySource({"file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}", "classpath:default.properties"})
 @EnableAsync
 public class MailServiceConfig implements AsyncConfigurer{

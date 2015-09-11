@@ -32,6 +32,7 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 
 @Service
 public class MailServiceImpl implements MailService {
+
     @Value("${mail.from}")
     private String from;
 
@@ -53,6 +54,7 @@ public class MailServiceImpl implements MailService {
     @Value("${mail.content.pending.subject}")
     private String awaitingHospSubject;
 
+    private static final String INERA_LOGO = "inera_logo.png";
 
     private static final String BOTTOM_BODY_CONTENT = "<br/><br/><span><img src='cid:inera_logo'></span>";
 
@@ -136,10 +138,10 @@ public class MailServiceImpl implements MailService {
     private URI getLogo() {
         URI logoUri = null;
         try {
-            logoUri = Thread.currentThread().getContextClassLoader().getResource("inera_logo.png").toURI();
+            logoUri = Thread.currentThread().getContextClassLoader().getResource(INERA_LOGO).toURI();
         } catch (URISyntaxException e) {
             LOG.error("Unable to find logo for use in email");
-            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, "File not found on server (inera_logo.png");
+            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, "File not found on server" + INERA_LOGO);
         }
         return logoUri;
     }
