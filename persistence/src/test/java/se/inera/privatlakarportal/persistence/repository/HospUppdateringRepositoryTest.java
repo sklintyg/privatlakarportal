@@ -1,8 +1,5 @@
 package se.inera.privatlakarportal.persistence.repository;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
 import org.joda.time.LocalDateTime;
@@ -17,8 +14,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import se.inera.privatlakarportal.persistence.config.PersistenceConfig;
 import se.inera.privatlakarportal.persistence.config.PersistenceConfigTest;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.repository.util.PrivatelakareTestUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class, classes = {PersistenceConfigTest.class,PersistenceConfig.class})
