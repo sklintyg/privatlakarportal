@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -105,6 +106,7 @@ public class Privatlakare {
     private Set<LegitimeradYrkesgrupp> legitimeradeYrkesgrupper;
 
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
+    @OrderBy(value = "namn ASC")
     private Set<Specialitet> specialiteter;
 
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
