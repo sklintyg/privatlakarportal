@@ -34,6 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PrivatlakarUser getUser() {
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            return null;
+        }
         return (PrivatlakarUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
