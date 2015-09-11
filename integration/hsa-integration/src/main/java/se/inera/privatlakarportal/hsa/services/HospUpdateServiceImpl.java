@@ -87,7 +87,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
                 LOG.info("Checking privatlakare '{}' for updated hosp information", privatlakare.getPersonId());
 
-                RegistrationStatus status = updateHospInformation(privatlakare);
+                RegistrationStatus status = updateHospInformation(privatlakare, true);
                 LOG.info("updateHospInformation returned status '{}'", status);
 
                 mailService.sendRegistrationStatusEmail(status, privatlakare);
@@ -102,7 +102,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     }
 
     @Override
-    public RegistrationStatus updateHospInformation(Privatlakare privatlakare) {
+    public RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier) {
         GetHospPersonResponseType hospPersonResponse;
         try {
             hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
@@ -113,13 +113,14 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         }
 
         if (hospPersonResponse == null) {
-            try {
-                if (!hospPersonService.handleCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
+            if (shouldRegisterInCertifier) {
+                try {
+                    if (!hospPersonService.handleCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
+                        LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
+                    }
+                } catch (WebServiceException e) {
                     LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
                 }
-            }
-            catch (WebServiceException e) {
-                LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
             }
             return RegistrationStatus.WAITING_FOR_HOSP;
         }
@@ -178,16 +179,21 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     @Override
     @Transactional
     public void checkForUpdatedHospInformation(Privatlakare privatlakare) {
-        LocalDateTime hospLastUpdate = hospPersonService.getHospLastUpdate();
-        if (privatlakare.getSenasteHospUppdatering() == null ||
-            privatlakare.getSenasteHospUppdatering().isBefore(hospLastUpdate)) {
+        try {
+            LocalDateTime hospLastUpdate = hospPersonService.getHospLastUpdate();
+            if (privatlakare.getSenasteHospUppdatering() == null ||
+                    privatlakare.getSenasteHospUppdatering().isBefore(hospLastUpdate)) {
 
-            LOG.debug("Hosp has been updated since last login for privlakare '{}'. Updating hosp information", privatlakare.getPersonId());
+                LOG.debug("Hosp has been updated since last login for privlakare '{}'. Updating hosp information", privatlakare.getPersonId());
 
-            updateHospInformation(privatlakare);
+                updateHospInformation(privatlakare, false);
 
-            privatlakare.setSenasteHospUppdatering(hospLastUpdate);
-            privatlakareRepository.save(privatlakare);
+                privatlakare.setSenasteHospUppdatering(hospLastUpdate);
+                privatlakareRepository.save(privatlakare);
+            }
+        }
+        catch(WebServiceException e) {
+            LOG.error("Failed to getHospLastUpdate from HSA in checkForUpdatedHospInformation for privatlakare '{}'", privatlakare.getPersonId());
         }
     }
 }

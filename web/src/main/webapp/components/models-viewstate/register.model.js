@@ -34,6 +34,7 @@ angular.module('privatlakareApp').factory('RegisterModel',
             data.postort = null;
             data.kommun = null;
             data.lan = null;
+
             return data;
         }
 
@@ -56,13 +57,15 @@ angular.module('privatlakareApp').factory('RegisterModel',
             return viewModel;
         }
 
-        function _convertToDTO(viewModel) {
+        function _convertToDTO(viewModel, godkantMedgivandeVersion) {
             var dto = { registration: angular.copy(viewModel) };
             if(dto.registration.befattning === null || dto.registration.vardform === null || dto.registration.verksamhetstyp === null) {
                 $log.debug('_convertToDTO - invalid state. befattning, vardform or verksamhetstyp is null');
                 return null;
             }
-
+            if (godkantMedgivandeVersion) {
+                dto.godkantMedgivandeVersion = godkantMedgivandeVersion;
+            }
             dto.registration.befattning = dto.registration.befattning.id;
             dto.registration.vardform = dto.registration.vardform.id;
             dto.registration.verksamhetstyp = dto.registration.verksamhetstyp.id;

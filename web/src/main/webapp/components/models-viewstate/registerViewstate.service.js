@@ -54,6 +54,9 @@ angular.module('privatlakareApp').service('RegisterViewState',
                 { id: '20', label: 'Övrig medicinsk serviceverksamhet' }
             ];
 
+            // move to step 3 viewstate
+            this.godkannvillkor = false;
+
             return this;
         };
 

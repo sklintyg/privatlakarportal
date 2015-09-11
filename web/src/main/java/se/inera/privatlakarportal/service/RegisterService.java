@@ -9,7 +9,7 @@ import se.inera.privatlakarportal.service.model.*;
  */
 public interface RegisterService {
 
-    RegistrationStatus createRegistration(Registration registration);
+    RegistrationStatus createRegistration(Registration registration, Long godkantMedgivandeVersion);
 
     SaveRegistrationResponseStatus saveRegistration(Registration registration);
 

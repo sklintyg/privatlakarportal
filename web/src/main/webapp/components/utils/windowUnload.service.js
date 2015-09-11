@@ -13,14 +13,14 @@ angular.module('privatlakareApp').factory('WindowUnload',
 
                     if (!ObjectHelper.isDefined(conditionObject.condition)) {
                         $log.debug('WindowUnload.bindUnload - form not available - skipping dialog.');
-                        return null;
+                        return;
                     }
 
                     if (conditionObject.condition) {
 
                         if (!UserModel.get().loggedIn) {
                             $log.debug('WindowUnload.bindUnload - not logged in - skipping dialog.');
-                            return null;
+                            return;
                         }
 
                         var message = 'Om du väljer "Lämna sidan" sparas inte dina inmatade uppgifter. ' +
@@ -33,7 +33,6 @@ angular.module('privatlakareApp').factory('WindowUnload',
                         }
                         return message;
                     }
-                    return null;
                 };
 
                 $scope.$on('$destroy', function() {

@@ -2,7 +2,7 @@
     "personId": "197309069289",
     "hsaId": "SE165565594230-WEBCERTBOOT2",
     "fullstandigtNamn": "Nina greger",
-    "godkandAnvandare": false,
+    "godkandAnvandare": true,
     "enhetsId": "SE165565594230-WEBCERTBOOT2",
     "enhetsNamn": "TestEnhet",
     "arbetsplatsKod": "555",
@@ -26,6 +26,10 @@
         }
     ],
     "legitimeradeYrkesgrupper": [
+        {
+            "kod": "ATLK",
+            "namn": "AT-läkare"
+        }
     ],
     "specialiteter": [
     ],

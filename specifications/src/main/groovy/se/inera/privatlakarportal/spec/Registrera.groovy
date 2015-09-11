@@ -4,6 +4,7 @@ import se.inera.privatlakarportal.page.RegisterStep1Page
 import se.inera.privatlakarportal.page.RegisterStep2Page
 import se.inera.privatlakarportal.page.RegisterStep3Page
 import se.inera.privatlakarportal.page.CompletePage
+import se.inera.privatlakarportal.page.TermsPage
 import se.inera.privatlakarportal.page.WaitingForHospPage
 
 class Registrera {
@@ -279,4 +280,32 @@ class Registrera {
         }
         return result
     }
+
+    public void visaAnvändarvillkor() {
+        Browser.drive {
+            page.visaAnvändarvillkoren()
+        }
+    }
+
+    public boolean användarvillkorenVisas() {
+        boolean result
+        Browser.drive {
+            result = at TermsPage
+        }
+        return result
+    }
+
+    public void stängAnvändarvillkoren() {
+        Browser.drive {
+            page.dismissDialog()
+        }
+    }
+
+    def vanta(int sekunder) {
+        Browser.drive {
+            Thread.sleep(sekunder * 1000)
+        }
+        true
+    }
+
 }

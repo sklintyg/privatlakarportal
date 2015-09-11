@@ -117,6 +117,9 @@ public class Privatlakare {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime senasteHospUppdatering;
 
+    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL)
+    private Set<Medgivande> medgivande;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -411,5 +414,13 @@ public class Privatlakare {
 
     public void setSenasteHospUppdatering(LocalDateTime senasteHospUppdatering) {
         this.senasteHospUppdatering = senasteHospUppdatering;
+    }
+
+    public Set<Medgivande> getMedgivande() {
+        return medgivande;
+    }
+
+    public void setMedgivande(Set<Medgivande> medgivande) {
+        this.medgivande = medgivande;
     }
 }

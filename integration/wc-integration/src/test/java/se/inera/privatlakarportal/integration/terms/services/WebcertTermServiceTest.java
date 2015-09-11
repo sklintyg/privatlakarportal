@@ -17,13 +17,13 @@ import static org.mockito.Mockito.when;
  * Created by pebe on 2015-08-25.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class TermServiceTest {
+public class WebcertTermServiceTest {
 
     @Mock
     private TermsWebServiceCalls client;
 
     @InjectMocks
-    private TermsServiceImpl termsService;
+    private WebcertTermsServiceImpl webcertTermsService;
 
     @Test
     public void getTerms() {
@@ -34,7 +34,7 @@ public class TermServiceTest {
         getPrivatePractitionerTermsResponseType.setAvtal(avtalType);
         when(client.getPrivatePractitionerTerms()).thenReturn(getPrivatePractitionerTermsResponseType);
 
-        Terms terms = termsService.getTerms();
+        Terms terms = webcertTermsService.getTerms();
         assertEquals("TestText", terms.getText());
         assertEquals(42, terms.getVersion());
     }
@@ -44,7 +44,7 @@ public class TermServiceTest {
         GetPrivatePractitionerTermsResponseType getPrivatePractitionerTermsResponseType = new GetPrivatePractitionerTermsResponseType();
         when(client.getPrivatePractitionerTerms()).thenReturn(getPrivatePractitionerTermsResponseType);
 
-        Terms terms = termsService.getTerms();
+        Terms terms = webcertTermsService.getTerms();
         assertEquals("TestText", terms.getText());
         assertEquals(42, terms.getVersion());
     }

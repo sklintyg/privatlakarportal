@@ -15,9 +15,9 @@ import javax.xml.ws.WebServiceException;
  * Created by pebe on 2015-08-25.
  */
 @Service
-public class TermsServiceImpl implements TermsService {
+public class WebcertTermsServiceImpl implements WebcertTermsService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TermsServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WebcertTermsService.class);
 
     @Autowired
     private TermsWebServiceCalls client;

@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * Created by pebe on 2015-09-07.
  */
 @Configuration
-@ComponentScan({"se.inera.privatlakarportal.service"})
+@ComponentScan("se.inera.privatlakarportal.service, se.inera.privatlakarportal.common.service")
 @EnableScheduling
 public class ServiceConfig {
 }
