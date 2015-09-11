@@ -1,6 +1,10 @@
+!3 Rensa testdata
 | !-TaBortPrivatlakare-! |
 | id           | resultat? |
 | 199008252398 | true      |
+
+| script | !-RegistreringsMail-! | 
+| rensaMailStubbe |
 
 !3 Logga in
 | script | !-LoggaIn-! |
@@ -64,6 +68,13 @@
 !3 Verifiera att vi hamnar på klar-sidan
 | script | Registrera |
 | klar sidan visas |
+
+!3 Verifiera att registreringsmail mottagits 
+| script | !-RegistreringsMail-! | 
+| mailHarSkickats | 199008252398 |
+| check | mailMottaget | true |
+| check | mailInnehåll | Registration klar | 
+
 
 | !-TaBortPrivatlakare-! |
 | id           | resultat? |

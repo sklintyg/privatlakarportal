@@ -1,5 +1,10 @@
 package se.inera.privatlakarportal.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,22 +13,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.model.Registration;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.common.service.DateHelperService;
+import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.persistence.model.*;
+import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.privatlakarportal.persistence.model.Medgivande;
+import se.inera.privatlakarportal.persistence.model.MedgivandeText;
+import se.inera.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
+import se.inera.privatlakarportal.persistence.model.Specialitet;
 import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.service.model.*;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import se.inera.privatlakarportal.service.model.HospInformation;
+import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
+import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 
 /**
  * Created by pebe on 2015-06-26.
@@ -50,6 +59,9 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Autowired
     private HospUpdateService hospUpdateService;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private DateHelperService dateHelperService;
@@ -196,6 +208,8 @@ public class RegisterServiceImpl implements RegisterService {
 
         // Lookup hospPerson in HSA
         RegistrationStatus status = hospUpdateService.updateHospInformation(privatlakare, true);
+
+        mailService.sendRegistrationStatusEmail(status, privatlakare);
 
         privatlakareRepository.save(privatlakare);
 

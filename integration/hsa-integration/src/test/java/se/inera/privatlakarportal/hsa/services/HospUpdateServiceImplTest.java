@@ -1,28 +1,37 @@
 package se.inera.privatlakarportal.hsa.services;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+
+import javax.xml.ws.WebServiceException;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.inera.ifv.hsawsresponder.v3.*;
+
+import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
+import se.inera.ifv.hsawsresponder.v3.SpecialityCodesType;
+import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
+import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.persistence.model.Specialitet;
 import se.inera.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-
-import javax.xml.ws.WebServiceException;
-
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
 
 /**
  * Created by pebe on 2015-09-04.
@@ -41,6 +50,9 @@ public class HospUpdateServiceImplTest {
 
     @Mock
     private HospUppdateringRepository hospUppdateringRepository;
+
+    @Mock
+    private MailService mailService;
 
     @InjectMocks
     private HospUpdateService hospUpdateService = new HospUpdateServiceImpl();

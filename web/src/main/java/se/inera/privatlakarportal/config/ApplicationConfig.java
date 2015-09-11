@@ -8,8 +8,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Configuration
-@PropertySource({"file:${privatlakarportal.config.file}", "file:${credentials.file}", "classpath:version.properties"})
-@ImportResource({ "classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml"})
+@PropertySource({ "file:${privatlakarportal.config.file}", "file:${credentials.file}", "classpath:version.properties"})
+@ImportResource({ "classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml" })
 public class ApplicationConfig {
 
     @Bean
@@ -18,10 +18,10 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public ResourceBundleMessageSource messageSource() {  
-        ResourceBundleMessageSource source = new ResourceBundleMessageSource();  
-        source.setBasename("version");  
-        source.setUseCodeAsDefaultMessage(true);  
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+        source.setBasename("version");
+        source.setUseCodeAsDefaultMessage(true);
         return source;
     }
 }

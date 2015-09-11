@@ -1,29 +1,15 @@
 package se.inera.privatlakarportal.hsa.config;
 
-import org.apache.cxf.configuration.jsse.TLSClientParameters;
-import org.apache.cxf.configuration.security.FiltersType;
-import org.apache.cxf.jaxws.JaxWsClientProxy;
-import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.apache.cxf.transport.http.HTTPConduit;
-import org.apache.cxf.transports.http.configuration.ConnectionType;
-import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
-import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.TrustManagerFactory;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
+import se.inera.privatlakarportal.common.config.MailServiceConfig;
+import se.inera.privatlakarportal.common.config.MailServiceStubConfig;
 
 @Configuration
-@ComponentScan("se.inera.privatlakarportal.hsa.services")
+@ComponentScan({"se.inera.privatlakarportal.hsa.services", "se.inera.privatlakarportal.common.config"})
 @Import(HsaStubConfiguration.class)
 @ImportResource("classpath:hsa-services-config.xml")
 public class HsaConfiguration {

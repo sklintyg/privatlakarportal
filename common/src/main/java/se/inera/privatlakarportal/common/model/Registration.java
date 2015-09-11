@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.service.model;
+package se.inera.privatlakarportal.common.model;
 
 import org.apache.commons.lang.StringUtils;
 

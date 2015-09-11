@@ -1,5 +1,7 @@
 package se.inera.privatlakarportal.service.model;
 
+import se.inera.privatlakarportal.common.model.Registration;
+
 /**
  * Created by pebe on 2015-08-17.
  */

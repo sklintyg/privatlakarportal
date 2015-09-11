@@ -6,9 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
@@ -20,6 +22,7 @@ import se.inera.privatlakarportal.common.model.RegistrationStatus;
 
 import javax.transaction.Transactional;
 import javax.xml.ws.WebServiceException;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,6 +43,9 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
     @Autowired
     HospPersonService hospPersonService;
+
+    @Autowired
+    MailService mailService;
 
     @Scheduled(cron = "${privatlakarportal.hospupdate.cron}")
     @Transactional
@@ -88,6 +94,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                 if (status == RegistrationStatus.AUTHORIZED ||
                     status == RegistrationStatus.NOT_AUTHORIZED) {
                     privatlakareRepository.save(privatlakare);
+                    mailService.sendRegistrationStatusEmail(status, privatlakare);
                 }
             }
         }
@@ -158,9 +165,11 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
 
             if (PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
+                // TODO: skicka notifieringsmail: success
                 return RegistrationStatus.AUTHORIZED;
             }
             else {
+                // TODO: skicka notifieringsmail: success
                 return RegistrationStatus.NOT_AUTHORIZED;
             }
         }

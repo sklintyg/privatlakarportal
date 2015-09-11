@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.service;
 
+import se.inera.privatlakarportal.common.model.Registration;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.*;
 

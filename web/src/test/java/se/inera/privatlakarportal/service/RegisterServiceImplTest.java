@@ -1,10 +1,16 @@
 package se.inera.privatlakarportal.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+
+import java.io.IOException;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
@@ -16,34 +22,39 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import org.springframework.core.io.ClassPathResource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
+
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
 import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.privatlakarportal.common.model.Registration;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.common.service.DateHelperService;
+import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.persistence.model.*;
+import se.inera.privatlakarportal.persistence.model.Befattning;
+import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.privatlakarportal.persistence.model.Medgivande;
+import se.inera.privatlakarportal.persistence.model.MedgivandeText;
+import se.inera.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
+import se.inera.privatlakarportal.persistence.model.Specialitet;
+import se.inera.privatlakarportal.persistence.model.Vardform;
+import se.inera.privatlakarportal.persistence.model.Verksamhetstyp;
 import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.service.model.Registration;
-
-import java.io.IOException;
-
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
@@ -67,6 +78,9 @@ public class RegisterServiceImplTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private MailService mailService;
 
     @Mock
     private DateHelperService dateHelperService;
