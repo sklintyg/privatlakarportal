@@ -1,6 +1,5 @@
 angular.module('privatlakareApp').factory('TermsModel',
-    function($sessionStorage, $log,
-        RegisterViewState, ObjectHelper) {
+    function($sessionStorage) {
         'use strict';
 
         var data = {};
