@@ -21,7 +21,6 @@ import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.service.MailServiceImpl;
 
 @Configuration
-@Profile("!dev")
 @PropertySource({"file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}", "classpath:default.properties"})
 @EnableAsync
 public class MailServiceConfig implements AsyncConfigurer{
