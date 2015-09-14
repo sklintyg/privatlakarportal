@@ -124,7 +124,7 @@ app.run(
         });
 
         $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams) {
+            function(event, toState, toParams, fromState/*, fromParams*/) {
                 $window.doneLoading = false;
 
                 if (toState.data && angular.isFunction(toState.data.rule)) {
