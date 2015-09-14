@@ -94,7 +94,7 @@ var ppMessages = {
         'label.form.verksamhetensnamn.error.required': 'Verksamhetens namn måste anges innan du kan fortsätta.',
 
         'label.form.agarform': 'Ägarform',
-        'label.form.agarform.help': 'Ange verksamhetens ägarform enligt Hälso- och sjukvårdens adressregister, HSA. ”Privat” är förvalt och informationen går inte att ändra.',
+        'label.form.agarform.help': 'Ägarformen "Privat" är förvald och kan inte ändras. Ägarformen följer kodverket för HSA (Hälso- och sjukvårdens adressregister).',
 
         'label.form.vardform': 'Vårdform',
         'label.form.vardform.help': 'Ange verksamhetens huvudsakliga vårdform enligt definition i Socialstyrelsens termbank.',
