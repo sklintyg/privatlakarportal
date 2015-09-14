@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.common.service;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -138,7 +139,7 @@ public class MailServiceImpl implements MailService {
     private URI getLogo() {
         URI logoUri = null;
         try {
-            logoUri = Thread.currentThread().getContextClassLoader().getResource(INERA_LOGO).toURI();
+            logoUri = this.getClass().getClassLoader().getResource(INERA_LOGO).toURI();
         } catch (URISyntaxException e) {
             LOG.error("Unable to find logo for use in email");
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, "File not found on server" + INERA_LOGO);
