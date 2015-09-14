@@ -1,7 +1,8 @@
 package se.inera.privatlakarportal.common.service;
 
 import java.io.File;
-import java.net.URI;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 import javax.activation.DataHandler;
@@ -17,6 +18,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.cxf.attachment.ByteDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,11 +123,17 @@ public class MailServiceImpl implements MailService {
         body.setContent(htmlBodyString, ENCODING);
         content.addBodyPart(body);
 
-        File logo = new File(getLogo());
-
         // Add attachment and markup for logo 
         MimeBodyPart iconBodyPart = new MimeBodyPart();
-        DataSource iconDataSource = new FileDataSource(logo);
+
+        DataSource iconDataSource = null;
+
+        try {
+            iconDataSource = new ByteDataSource(getLogo());
+        } catch (IOException e) {
+            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
+                    "Internal I/O-error while building email.");
+        }
         iconBodyPart.setDataHandler(new DataHandler(iconDataSource));
         iconBodyPart.setDisposition(Part.INLINE);
         iconBodyPart.setContentID("<inera_logo>");
@@ -135,16 +144,12 @@ public class MailServiceImpl implements MailService {
         message.setSubject(subjectString, "UTF-8");
     }
 
-    private URI getLogo() {
-        URI logoUri = null;
-        try {
-            logoUri = Thread.currentThread().getContextClassLoader().getResource(INERA_LOGO).toURI();
-            LOG.debug("Got uri {} when attempting to read INERA_LOGO", logoUri);
-        } catch (URISyntaxException e) {
-            LOG.error("Unable to find logo for use in email");
-            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, "File not found on server" + INERA_LOGO);
-        }
-        return logoUri;
+    private byte[] getLogo() throws IOException {
+        InputStream is = null;
+        is = Thread.currentThread().getContextClassLoader().getResourceAsStream(INERA_LOGO);
+        byte[] bytes = IOUtils.toByteArray(is);
+        LOG.debug("Getting file as bytes");
+        return bytes;
     }
 
 }
