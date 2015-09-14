@@ -56,6 +56,10 @@ node {
 
 war {
     from 'build/webapp'
+    from ('../common/src/main/resources/') {
+        include 'inera_logo.png'
+        into '/'
+    }
 }
 
 
