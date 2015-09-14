@@ -14,8 +14,12 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.util.PrivatelakareTestUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.junit.Assert.assertArrayEquals;
+import static org.springframework.util.CollectionUtils.toArray;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class, classes = {PersistenceConfigTest.class,PersistenceConfig.class})
@@ -55,7 +59,7 @@ public class PrivatlakareRepositoryTest  {
 
         assertThat(read.getBefattningar(), is(equalTo(saved.getBefattningar())));
         assertThat(read.getLegitimeradeYrkesgrupper(), is(equalTo(saved.getLegitimeradeYrkesgrupper())));
-        assertThat(read.getSpecialiteter(), is(equalTo(saved.getSpecialiteter())));
+        assertArrayEquals(read.getSpecialiteter().toArray(), saved.getSpecialiteter().toArray());
         assertThat(read.getVerksamhetstyper(), is(equalTo(saved.getVerksamhetstyper())));
         assertThat(read.getVardformer(), is(equalTo(saved.getVardformer())));
     }

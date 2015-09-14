@@ -23,6 +23,7 @@ import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import javax.transaction.Transactional;
 import javax.xml.ws.WebServiceException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -124,7 +125,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             return RegistrationStatus.WAITING_FOR_HOSP;
         }
         else {
-            Set<Specialitet> specialiteter = new HashSet<>();
+            List<Specialitet> specialiteter = new ArrayList<>();
             if (hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() !=
                 hospPersonResponse.getSpecialityNames().getSpecialityName().size()) {
                 LOG.error("getHospPerson getSpecialityCodes count " +

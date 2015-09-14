@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.persistence.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -106,8 +107,8 @@ public class Privatlakare {
     private Set<LegitimeradYrkesgrupp> legitimeradeYrkesgrupper;
 
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
-    @OrderBy(value = "namn ASC")
-    private Set<Specialitet> specialiteter;
+    @OrderBy("namn ASC")
+    private List<Specialitet> specialiteter;
 
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
     private Set<Verksamhetstyp> verksamhetstyper;
@@ -358,11 +359,11 @@ public class Privatlakare {
         this.legitimeradeYrkesgrupper = legitimeradeYrkesgrupper;
     }
 
-    public Set<Specialitet> getSpecialiteter() {
+    public List<Specialitet> getSpecialiteter() {
         return specialiteter;
     }
 
-    public void setSpecialiteter(Set<Specialitet> specialiteter) {
+    public void setSpecialiteter(List<Specialitet> specialiteter) {
         this.specialiteter = specialiteter;
     }
 

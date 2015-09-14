@@ -1,6 +1,8 @@
 package se.inera.privatlakarportal.persistence.repository.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.joda.time.LocalDateTime;
@@ -62,7 +64,7 @@ public class PrivatelakareTestUtil {
         legitimeradeYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare, "LegitimeradYrkesgrupp kod 2", "LegitimeradYrkesgrupp namn 2"));
         privatlakare.setLegitimeradeYrkesgrupper(legitimeradeYrkesgrupper);
 
-        Set<Specialitet> specialiteter = new HashSet<Specialitet>();
+        List<Specialitet> specialiteter = new ArrayList<Specialitet>();
         specialiteter.add(new Specialitet(privatlakare, "Specialitet kod 1", "Specialitet namn 1"));
         specialiteter.add(new Specialitet(privatlakare, "Specialitet kod 2", "Specialitet namn 2"));
         privatlakare.setSpecialiteter(specialiteter);
