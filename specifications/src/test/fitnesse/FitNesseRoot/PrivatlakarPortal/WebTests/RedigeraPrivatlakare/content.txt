@@ -53,7 +53,7 @@
 | check | kommun | NACKA |
 | check | lan | STOCKHOLM |
 | check | legitimeradYrkesgrupp | Läkare |
-| check | specialitet | specialityName2, specialityName1 |
+| check | specialitet | specialityName1, specialityName2 |
 | check | forskrivarkod | 1234567 |
 
 !3 Ta bort läkaren

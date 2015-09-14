@@ -1,5 +1,5 @@
+|PrivatlakarPortal.WebTests.RedigeraPrivatlakare||12:10:26 Mon, Sep 14, 2015|
 |PrivatlakarPortal.WebTests.RegistreraPrivatlakare||14:40:40 Thu, Sep 10, 2015|
-|PrivatlakarPortal.WebTests.RedigeraPrivatlakare||10:51:01 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.PersonUppgifter.UppdateraNamnOmNyaPersonUppgifterFinns||10:50:51 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.HospUppdatering.UppdateraTillLakare||10:47:49 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.RegistreraPrivatlakareUtanHospInformation||14:55:30 Fri, Sep 04, 2015|
