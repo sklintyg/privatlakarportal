@@ -5,6 +5,7 @@ import javax.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class MailServiceStub implements MailService {
     private static final String WAITING_FOR_HOSP_BODY = "Väntar på hosp-information";
     private static final Logger LOG = LoggerFactory.getLogger(MailServiceStub.class);
 
-    @Autowired
+    @Autowired(required=false)
     private MailStubStore mailStore;
 
     @Override

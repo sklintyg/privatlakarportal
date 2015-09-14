@@ -5,11 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 
-import se.inera.privatlakarportal.common.config.MailServiceConfig;
-
 @Configuration
-@ComponentScan({"se.inera.privatlakarportal.hsa.services"})
-@Import({HsaStubConfiguration.class, MailServiceConfig.class})
+@ComponentScan({"se.inera.privatlakarportal.hsa.services", "se.inera.privatlakarportal.common.config"})
+@Import(HsaStubConfiguration.class)
 @ImportResource("classpath:hsa-services-config.xml")
 public class HsaConfiguration {
 
