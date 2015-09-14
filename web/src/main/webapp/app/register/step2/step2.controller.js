@@ -1,10 +1,15 @@
 angular.module('privatlakareApp')
   .controller('Step2Ctrl', function ($scope, $state, $window,
-        RegisterViewState, WindowUnload, UserModel) {
+        RegisterModel, RegisterViewState, WindowUnload, UserModel) {
         'use strict';
 
         if(UserModel.isRegistered()) {
             $state.go('app.register.complete');
+        }
+
+        if (!RegisterModel.validForStep2()) {
+            $state.go('app.register.step1');
+            return;
         }
 
         // function to submit the form after all validation has occurred

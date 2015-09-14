@@ -9,6 +9,12 @@ angular.module('privatlakareApp')
         var user = UserModel.get();
         if (UserModel.isRegistered()) {
             $state.go('app.register.complete');
+            return;
+        }
+
+        if (!RegisterModel.validForStep3()) {
+            $state.go('app.register.step2');
+            return;
         }
 
         var model = RegisterModel.init();

@@ -31,6 +31,15 @@ angular.module('privatlakareApp')
                 params: {
                     terms: null,
                     termsData: null
+                },
+                data: {
+                    rule: function(fromState) {
+                        if (fromState.name !== 'app.start') {
+                            return {
+                                to: 'app.start'
+                            };
+                        }
+                    }
                 }
             }).state('app.register.step3.terms', {
                 url: 'terms',
@@ -39,6 +48,15 @@ angular.module('privatlakareApp')
                 params: {
                     terms: null,
                     termsData: null
+                },
+                data: {
+                    rule: function(fromState) {
+                        if (fromState.name !== 'app.register.step3') {
+                            return {
+                                to: 'app.register.step3'
+                            };
+                        }
+                    }
                 }
             });
 

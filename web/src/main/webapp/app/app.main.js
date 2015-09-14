@@ -91,7 +91,7 @@ app.constant('datepickerPopupConfig', {
 
 // Inject language resources
 app.run(
-    function($log, $rootScope, $window,
+    function($log, $rootScope, $state, $window,
         messageService, UserProxy, UserModel, USER_DATA) {
         'use strict';
 
@@ -124,8 +124,16 @@ app.run(
         });
 
         $rootScope.$on('$stateChangeStart',
-            function(/*event, toState, toParams, fromState, fromParams*/){
+            function(event, toState, toParams, fromState, fromParams) {
                 $window.doneLoading = false;
+
+                if (toState.data && angular.isFunction(toState.data.rule)) {
+                    var result = toState.data.rule(fromState);
+                    if (result && result.to) {
+                        event.preventDefault();
+                        $state.go(result.to, result.params);
+                    }
+                }
             });
 
         $rootScope.$on('$stateNotFound',

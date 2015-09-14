@@ -72,14 +72,25 @@ angular.module('privatlakareApp').factory('RegisterModel',
             delete dto.registration.epost2;
             return dto;
         }
-        
+
+        function _validForStep2() {
+            return data.befattning && data.verksamhetensNamn && data.agarForm && data.vardform  && data.verksamhetstyp;
+        }
+
+        function _validForStep3() {
+            return _validForStep2() && data.telefonnummer && data.epost && data.epost2 && data.epost === data.epost2 &&
+                data.adress && data.postnummer && data.postort && data.kommun && data.lan;
+        }
+
         return {
             init: _init,
             reset: _reset,
             set: _set,
             get: _get,
             convertToViewModel: _convertToViewModel,
-            convertToDTO: _convertToDTO
+            convertToDTO: _convertToDTO,
+            validForStep2: _validForStep2,
+            validForStep3: _validForStep3
         };
     }
 );
