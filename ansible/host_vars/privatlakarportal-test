@@ -2,7 +2,7 @@
 # file: host_vars/privatlakarportal-test
 
 # Spring profiles
-profiles: test,pp-security-test
+profiles: test,pp-security-test,hsa-stub
 
 # Configuration repository
 environment_name: "test"
