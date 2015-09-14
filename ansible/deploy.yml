@@ -3,9 +3,9 @@
 - hosts: privatlakarportal-tomcat
   sudo: yes 
   vars:
-    # repo - values: snapshot or release
-    repo: snapshots
-    version: 1.0.0-SNAPSHOT
+    # repo - values: snapshots or releases
+    repo: releases
+    version: 1.0.0-b18
     config_version: master
 
   roles:

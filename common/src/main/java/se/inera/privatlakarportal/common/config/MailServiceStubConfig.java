@@ -12,7 +12,7 @@ import se.inera.privatlakarportal.common.service.stub.MailServiceStub;
 import se.inera.privatlakarportal.common.service.stub.MailStubStore;
 
 @Configuration
-@Profile("dev")
+@Profile({"dev", "testability-api"})
 @PropertySource("classpath:default.properties")
 public class MailServiceStubConfig {
 
