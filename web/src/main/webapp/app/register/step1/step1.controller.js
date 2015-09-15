@@ -3,6 +3,8 @@ angular.module('privatlakareApp')
         RegisterViewState, WindowUnload, UserModel) {
         'use strict';
 
+        $scope.focusBefattning = true;
+
         if(UserModel.isRegistered()) {
             $state.go('app.register.complete');
         }

@@ -3,6 +3,8 @@ angular.module('privatlakareApp')
         RegisterModel, RegisterViewState, WindowUnload, UserModel) {
         'use strict';
 
+        $scope.focusTelefonnummer = true;
+
         if(UserModel.isRegistered()) {
             $state.go('app.register.complete');
         }
