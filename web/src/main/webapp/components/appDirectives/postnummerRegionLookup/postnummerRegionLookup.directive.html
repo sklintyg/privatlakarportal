@@ -6,11 +6,6 @@
          maxlength="6">
 </div>
 
-<div ng-show="viewState.kommunSelectionMode">
-  <div class="alert alert-warning">
-    {{kommunMoreHitsWarningText}}
-  </div>
-</div>
 <div alert-message alert-show="viewState.errorMessage.region" alert-severity="danger"></div>
 <div class="alert alert-warning" ng-show="viewState.validPostnummer && registerModel.postort == null && viewState.errorMessage.region == null">
   <i>{{kommunNoHitsWarningText}}</i>
