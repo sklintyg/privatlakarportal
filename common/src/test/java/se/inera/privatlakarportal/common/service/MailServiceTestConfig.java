@@ -43,13 +43,13 @@ public class MailServiceTestConfig {
     private String port;
 
     @Value("${mail.smtps.auth}")
-    private String smtpsAuth;
+    private boolean smtpsAuth;
 
     @Value("${mail.smtps.starttls.enable}")
-    private String smtpsStarttlsEnable;
+    private boolean smtpsStarttlsEnable;
 
     @Value("${mail.smtps.debug}")
-    private String smtpsDebug;
+    private boolean smtpsDebug;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -79,11 +79,11 @@ public class MailServiceTestConfig {
         }
 
         Properties javaMailProperties = new Properties();
-        javaMailProperties.setProperty("mail.smtps.auth", smtpsAuth);
-        javaMailProperties.setProperty("mail.smtps.starttls.enable", smtpsStarttlsEnable);
-        javaMailProperties.setProperty("mail.smtps.debug", smtpsDebug);
+        javaMailProperties.put("mail.smtps.auth", smtpsAuth);
+        javaMailProperties.put("mail.smtps.starttls.enable", smtpsStarttlsEnable);
+        javaMailProperties.put("mail.smtps.debug", smtpsDebug);
         if (protocol.equals("smtps")) {
-            javaMailProperties.setProperty("mail.smtp.socketFactory.fallback", "true");
+            javaMailProperties.put("mail.smtp.socketFactory.fallback", true);
         }
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;

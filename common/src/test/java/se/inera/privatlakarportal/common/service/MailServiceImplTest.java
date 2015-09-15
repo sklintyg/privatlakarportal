@@ -1,6 +1,8 @@
 package se.inera.privatlakarportal.common.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import javax.mail.MessagingException;
 
@@ -8,6 +10,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,12 +36,27 @@ public class MailServiceImplTest {
     @Autowired
     private MailService mailService;
 
+    @Value("${mail.username}")
+    private String username;
+
+    @Value("${mail.password}")
+    private String password;
+
+    @Value("${mail.smtps.auth}")
+    private boolean smtpsAuth;
+
     private Privatlakare createTestRegistration() {
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setPostadress("Testadress");
         privatlakare.setAgarform("Testägarform");
         privatlakare.setEpost("test@test.com");
         return privatlakare;
+    }
+
+    @Test
+    public void testMailProperties() {
+        assertTrue(!password.isEmpty());
+        assertFalse(smtpsAuth);
     }
 
     @Test
