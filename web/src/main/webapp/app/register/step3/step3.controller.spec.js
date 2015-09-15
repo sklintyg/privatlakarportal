@@ -3,6 +3,7 @@ describe('Controller: Step3Ctrl', function() {
 
     // load the controller's module
     beforeEach(module('privatlakareApp', function($provide) {
+        $provide.value('APP_CONFIG', {});
         $provide.value('$state', {current:{data:{step:3}}, go:function(){}});
     }));
     var Step3Ctrl, scope;

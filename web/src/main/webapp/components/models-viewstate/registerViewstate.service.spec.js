@@ -2,7 +2,8 @@ describe('Service: RegisterViewState', function() {
     'use strict';
 
     // Load the module and mock away everything that is not necessary.
-    beforeEach(angular.mock.module('privatlakareApp', function(/*$provide*/) {
+    beforeEach(angular.mock.module('privatlakareApp', function($provide) {
+        $provide.value('APP_CONFIG', {});
     }));
 
     var RegisterViewState, HospProxy, mockResponse, $rootScope, $httpBackend;

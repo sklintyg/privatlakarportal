@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').service('RegisterViewState',
     function($state,
-        ObjectHelper) {
+        APP_CONFIG, ObjectHelper) {
         'use strict';
 
         this.reset = function() {
@@ -27,32 +27,21 @@ angular.module('privatlakareApp').service('RegisterViewState',
             this.kommunSelectionMode = false;
             this.kommunSelected = false;
 
+            function processListOptions(data) {
+                var list = [];
+                angular.forEach(data, function(value, key) {
+                    this.push({
+                        'id':key,
+                        'label':value
+                    });
+                }, list);
+                return list;
+            }
+
             // move to step 1 viewstate
-            this.befattningList = [
-                { id: '201011', label: 'Distriktsläkare/Specialist allmänmedicin' },
-                { id: '201012', label: 'Skolläkare' },
-                { id: '201013', label: 'Företagsläkare' },
-                { id: '202010', label: 'Specialistläkare' },
-                { id: '203010', label: 'Läkare legitimerad, specialiseringstjänstgöring' },
-                { id: '203090', label: 'Läkare legitimerad, annan' }
-            ];
-            this.vardformList = [
-                { id: '01', label: 'Öppenvård' },
-                { id: '02', label: 'Slutenvård' },
-                { id: '03', label: 'Hemsjukvård' }
-            ];
-            this.verksamhetstypList = [
-                { id: '10', label: 'Barn- och ungdomsverksamhet' },
-                { id: '11', label: 'Medicinsk verksamhet' },
-                { id: '12', label: 'Laboratorieverksamhet' },
-                { id: '13', label: 'Opererande verksamhet' },
-                { id: '14', label: 'Övrig medicinsk verksamhet' },
-                { id: '15', label: 'Primärvårdsverksamhet' },
-                { id: '16', label: 'Psykiatrisk verksamhet' },
-                { id: '17', label: 'Radiologisk verksamhet' },
-                { id: '18', label: 'Tandvårdsverksamhet' },
-                { id: '20', label: 'Övrig medicinsk serviceverksamhet' }
-            ];
+            this.befattningList = processListOptions(APP_CONFIG.befattningar);
+            this.vardformList = processListOptions(APP_CONFIG.vardformer);
+            this.verksamhetstypList = processListOptions(APP_CONFIG.verksamhetstyper);
 
             // move to step 3 viewstate
             this.godkannvillkor = false;

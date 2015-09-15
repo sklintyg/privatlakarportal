@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.common.integration.kodverk;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,26 +14,27 @@ public class Verksamhetstyper {
     public static final String VERKSAMHETSTYP_VERSION = "4.1";
 
     static private Map<String, String> verksamhetstyper;
+    static {
+        Map<String, String> map = new HashMap<>();
+        map.put("10", "Barn- och ungdomsverksamhet");
+        map.put("11", "Medicinsk verksamhet");
+        map.put("12", "Laboratorieverksamhet");
+        map.put("13", "Opererande verksamhet");
+        map.put("14", "Övrig medicinsk verksamhet");
+        map.put("15", "Primärvårdsverksamhet");
+        map.put("16", "Psykiatrisk verksamhet");
+        map.put("17", "Radiologisk verksamhet");
+        map.put("18", "Tandvårdsverksamhet");
+        map.put("20", "Övrig medicinsk serviceverksamhet");
+        verksamhetstyper = Collections.unmodifiableMap(map);
+    }
 
     public static String getDisplayName(String code) {
-        if (verksamhetstyper == null) {
-            init();
-        }
         return verksamhetstyper.get(code);
     }
 
-    private static void init() {
-        verksamhetstyper = new HashMap<String, String>();
-        verksamhetstyper.put("10", "Barn- och ungdomsverksamhet");
-        verksamhetstyper.put("11", "Medicinsk verksamhet");
-        verksamhetstyper.put("12", "Laboratorieverksamhet");
-        verksamhetstyper.put("13", "Opererande verksamhet");
-        verksamhetstyper.put("14", "Övrig medicinsk verksamhet");
-        verksamhetstyper.put("15", "Primärvårdsverksamhet");
-        verksamhetstyper.put("16", "Psykiatrisk verksamhet");
-        verksamhetstyper.put("17", "Radiologisk verksamhet");
-        verksamhetstyper.put("18", "Tandvårdsverksamhet");
-        verksamhetstyper.put("20", "Övrig medicinsk serviceverksamhet");
+    public static Map<String, String> getVerksamhetstyper() {
+        return verksamhetstyper;
     }
 }
 

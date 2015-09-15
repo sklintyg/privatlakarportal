@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import se.inera.privatlakarportal.common.integration.kodverk.Befattningar;
+import se.inera.privatlakarportal.common.integration.kodverk.Vardformer;
+import se.inera.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
 import se.inera.privatlakarportal.web.controller.api.dto.GetConfigResponse;
 
 /**
@@ -19,6 +22,11 @@ public class ConfigController {
     @RequestMapping(value = "")
     public GetConfigResponse getConfig()
     {
-        return new GetConfigResponse(env.getProperty("webcert.host.url"), env.getProperty("webcert.start.url"));
+        return new GetConfigResponse(
+            env.getProperty("webcert.host.url"),
+            env.getProperty("webcert.start.url"),
+            Befattningar.getBefattningar(),
+            Vardformer.getVardformer(),
+            Verksamhetstyper.getVerksamhetstyper());
     }
 }

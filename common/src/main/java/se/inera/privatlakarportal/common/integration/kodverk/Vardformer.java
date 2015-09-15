@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.common.integration.kodverk;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,19 +13,20 @@ public class Vardformer {
     public static final String VARDFORM_OID = "1.2.752.129.2.2.1.13";
     public static final String VARDFORM_VERSION = "3.0";
 
-    static private Map<String, String> vardformer;
+    private static final Map<String, String> vardformer;
+    static {
+        Map<String, String> map = new HashMap<>();
+        map.put("01", "Öppenvård (förvald)");
+        map.put("02", "Slutenvård");
+        map.put("03", "Hemsjukvård");
+        vardformer = Collections.unmodifiableMap(map);
+    }
 
     public static String getDisplayName(String code) {
-        if (vardformer == null) {
-            init();
-        }
         return vardformer.get(code);
     }
 
-    private static void init() {
-        vardformer = new HashMap<String, String>();
-        vardformer.put("01", "Öppenvård (förvald)");
-        vardformer.put("02", "Slutenvård");
-        vardformer.put("03", "Hemsjukvård");
+    public static Map<String, String> getVardformer() {
+        return vardformer;
     }
 }

@@ -2,7 +2,9 @@ describe('Controller: RegisterAbortCtrl', function() {
     'use strict';
 
     // load the controller's module
-    beforeEach(module('privatlakareApp'));
+    beforeEach(module('privatlakareApp', function($provide) {
+        $provide.value('APP_CONFIG', {});
+    }));
 
     var RegisterAbortCtrl, scope, UserModel, RegisterModel;
 
