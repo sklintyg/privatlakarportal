@@ -33,7 +33,7 @@ public class PostnummerServiceTest {
         public void initialize(ConfigurableApplicationContext applicationContext) {
             MutablePropertySources propertySources = applicationContext.getEnvironment().getPropertySources();
             MockPropertySource mockEnvVars = new MockPropertySource()
-                .withProperty("postnummer.file", "classpath:/PostnummerService/rec2LK_example.csv")
+                .withProperty("postnummer.file", "classpath:/rec2LK_example.csv")
                 .withProperty("postnummer.encoding", "ISO-8859-1");
             propertySources.replace(StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME, mockEnvVars);
         }
