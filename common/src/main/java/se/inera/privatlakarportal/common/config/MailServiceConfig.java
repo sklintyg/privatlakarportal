@@ -62,7 +62,7 @@ public class MailServiceConfig implements AsyncConfigurer {
         mailSender.setProtocol(protocol);
 
         if (!port.isEmpty()) {
-            mailSender.setPort(Integer.getInteger(port));
+            mailSender.setPort(Integer.parseInt(port));
         }
         if (!username.isEmpty()) {
             mailSender.setUsername(username);
