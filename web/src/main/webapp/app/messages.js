@@ -113,7 +113,7 @@ var ppMessages = {
 
         'label.form.telefonnummer': 'Telefonnummer',
         'label.form.telefonnummer.help': 'Ange det telefonnummer där du vill bli kontaktad om mottagaren av intyget behöver nå dig för kompletterade frågor.',
-        'label.form.telefonnummer.popover': 'Telefonnummer fylls i med siffror 0-9, tillåtna tecken är +, - och mellanslag.',
+        'label.form.telefonnummer.popover': 'Telefonnummer fylls i med siffror 0-9.',
         'label.form.telefonnummer.error.required': 'Telefonnummer måste anges innan du kan fortsätta.',
 
         'label.form.epost': 'E-postadress',
