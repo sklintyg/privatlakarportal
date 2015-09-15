@@ -50,8 +50,8 @@ grunt {
 
 node {
     version = '0.12.4'
-    npmVersion = '2.10.1'
     download = true
+    distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
 }
 
 war {
