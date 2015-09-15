@@ -8,7 +8,6 @@ import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -21,9 +20,9 @@ import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.service.MailServiceImpl;
 
 @Configuration
-@PropertySource({"file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}", "classpath:default.properties"})
+@PropertySource({ "file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}", "classpath:default.properties" })
 @EnableAsync
-public class MailServiceConfig implements AsyncConfigurer{
+public class MailServiceConfig implements AsyncConfigurer {
 
     @Value("${mail.host}")
     private String mailHost;
@@ -33,15 +32,18 @@ public class MailServiceConfig implements AsyncConfigurer{
 
     @Value("${mail.username}")
     private String username;
-    
+
     @Value("${mail.password}")
     private String password;
 
     @Value("${mail.from}")
     private String from;
-    
+
     @Value("${mail.defaultEncoding}")
     private String defaultEncoding;
+
+    @Value("${mail.port}")
+    private String port;
 
     @Value("${mail.smtps.auth}")
     private String smtpsAuth;
@@ -58,23 +60,21 @@ public class MailServiceConfig implements AsyncConfigurer{
         mailSender.setHost(mailHost);
         mailSender.setDefaultEncoding(defaultEncoding);
         mailSender.setProtocol(protocol);
-        if (username != null) {
+
+        if (!port.isEmpty()) {
+            mailSender.setPort(Integer.getInteger(port));
+        }
+        if (!username.isEmpty()) {
             mailSender.setUsername(username);
         }
-        if (password != null) {
+        if (!password.isEmpty()) {
             mailSender.setPassword(password);
         }
 
         Properties javaMailProperties = new Properties();
-        if (smtpsAuth != null) {
-            javaMailProperties.setProperty("mail.smtps.auth", smtpsAuth);
-        }
-        if (smtpsStarttlsEnable != null) {
-            javaMailProperties.setProperty("mail.smtps.starttls.enable", smtpsStarttlsEnable);
-        }
-        if (smtpsDebug != null) {
-            javaMailProperties.setProperty("mail.smtps.debug", smtpsDebug);
-        }
+        javaMailProperties.setProperty("mail.smtps.auth", smtpsAuth);
+        javaMailProperties.setProperty("mail.smtps.starttls.enable", smtpsStarttlsEnable);
+        javaMailProperties.setProperty("mail.smtps.debug", smtpsDebug);
         if (protocol.equals("smtps")) {
             javaMailProperties.setProperty("mail.smtp.socketFactory.fallback", "true");
         }
@@ -84,7 +84,7 @@ public class MailServiceConfig implements AsyncConfigurer{
 
     @Bean
     public MailService mailService() {
-        return new MailServiceImpl(); 
+        return new MailServiceImpl();
     }
 
     @Override
@@ -105,6 +105,6 @@ public class MailServiceConfig implements AsyncConfigurer{
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-       return new PropertySourcesPlaceholderConfigurer();
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }
