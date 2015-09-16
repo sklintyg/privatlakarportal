@@ -2,7 +2,8 @@
   <input type="text" id="postnummer" name="postnummer" ng-model="registerModel.postnummer" class='form-control'
          style='max-width: 6em' value="" required ng-maxlength="6" maxlength="6" popover-placement="right"
          popover-trigger="focus" popover="{{'label.form.postnummer.popover' | message}}"
-      validate-region region-model="registerModel">
+         validate-region region-model="registerModel"
+         maxlength="6">
 </div>
 
 <div ng-show="viewState.kommunSelectionMode">
