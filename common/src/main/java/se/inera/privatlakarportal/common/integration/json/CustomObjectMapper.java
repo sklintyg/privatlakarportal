@@ -13,7 +13,7 @@ import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 public class CustomObjectMapper extends ObjectMapper {
 
     public CustomObjectMapper() {
-        setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        setSerializationInclusion(JsonInclude.Include.ALWAYS);
         configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         registerModule(new Module());
