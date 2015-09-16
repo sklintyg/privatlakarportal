@@ -1,6 +1,5 @@
 angular.module('privatlakareApp').factory('UserModel',
-    function($window,
-        messageService, APP_CONFIG) {
+    function($window) {
         'use strict';
 
         var data = {};
@@ -67,36 +66,12 @@ angular.module('privatlakareApp').factory('UserModel',
                     $window.location = '/saml/logout/';
                 }
             },
-            getExitLink : function(fromStateName, toStateName){
-                var exitLink = {
-                    name: '',
-                    link: ''
-                };
-
-                if(toStateName !== 'app.minsida') {
-                    exitLink.name = messageService.getProperty('label.header.changeaccount');
-                    exitLink.link = '/#/minsida';
+            getLogoutLocation: function() {
+                if (data.authenticationScheme === data.fakeSchemeId) {
+                    return '/logout';
                 } else {
-                    switch(data.status) {
-                    case 'AUTHORIZED':
-                        if(fromStateName === 'app.register.complete')
-                        { // TEST THIS FLOW
-                            exitLink.name = messageService.getProperty('label.header.backtocomplete');
-                            exitLink.link = '/#/registrera/klar';
-                        } else {
-                            exitLink.name = messageService.getProperty('label.header.backtoapp');
-                            exitLink.link = APP_CONFIG.webcertStartUrl;
-                        }
-                        break;
-                    case 'NOT_AUTHORIZED':
-                    case 'WAITING_FOR_HOSP':
-                        exitLink.name = messageService.getProperty('label.header.backtocomplete');
-                        exitLink.link = '/#/registrera/vanta';
-                        break;
-                    }
+                    return '/saml/logout/';
                 }
-
-                return exitLink;
             }
         };
     }
