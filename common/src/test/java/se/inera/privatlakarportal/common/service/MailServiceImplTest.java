@@ -36,6 +36,9 @@ public class MailServiceImplTest {
     @Autowired
     private MailService mailService;
 
+    @Value("${mail.port}")
+    private String port;
+    
     @Value("${mail.username}")
     private String username;
 
@@ -57,6 +60,7 @@ public class MailServiceImplTest {
     public void testMailProperties() {
         assertTrue(!password.isEmpty());
         assertFalse(smtpsAuth);
+        assertEquals(25, Integer.parseInt(port));
     }
 
     @Test

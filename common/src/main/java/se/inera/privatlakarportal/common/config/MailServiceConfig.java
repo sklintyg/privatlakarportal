@@ -3,6 +3,8 @@ package se.inera.privatlakarportal.common.config;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +22,7 @@ import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.service.MailServiceImpl;
 
 @Configuration
-@PropertySource({ "file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}", "classpath:default.properties" })
+@PropertySource({"file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}"})
 @EnableAsync
 public class MailServiceConfig implements AsyncConfigurer {
 
@@ -54,25 +56,31 @@ public class MailServiceConfig implements AsyncConfigurer {
     @Value("${mail.smtps.debug}")
     private boolean smtpsDebug;
 
+    private static final Logger LOG = LoggerFactory.getLogger(MailServiceConfig.class);
+
     @Bean
     public JavaMailSender mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        int intPort = Integer.parseInt(port);
         mailSender.setHost(mailHost);
         mailSender.setDefaultEncoding(defaultEncoding);
         mailSender.setProtocol(protocol);
-        mailSender.setPort(intPort);
-        mailSender.setUsername(username.isEmpty() ? "default" : username);
-        mailSender.setPassword(password.isEmpty() ? "default" : password);
+        mailSender.setPort(Integer.parseInt(port));
+        if(username != null && !username.isEmpty()) {
+            mailSender.setUsername(username);
+        }
+        if (password != null && !password.isEmpty()) {
+            mailSender.setPassword(password);
+        }
 
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail."+protocol+".auth", smtpsAuth);
-        javaMailProperties.put("mail."+protocol+".port", intPort);
+        javaMailProperties.put("mail."+protocol+".port", Integer.parseInt(port));
         javaMailProperties.put("mail."+protocol+".starttls.enable", smtpsStarttlsEnable);
         javaMailProperties.put("mail."+protocol+".debug", smtpsDebug);
         javaMailProperties.put("mail."+protocol+".socketFactory.fallback", true);
 
         mailSender.setJavaMailProperties(javaMailProperties);
+        LOG.info("Mailsender initialized with: [port: {}, protocol: {}, host: {}]", port, protocol, mailHost);
         return mailSender;
     }
 
