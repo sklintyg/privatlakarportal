@@ -1,9 +1,10 @@
----
-# file: host_vars/privatlakarportal-test
-
 # Spring profiles
 profiles: test,pp-security-test
 
 # Configuration repository
 environment_name: "test"
 config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
+
+# Tomcat
+tomcat_service: tomcat-priv
+tomcat_home: "{{ inera_root }}/{{ tomcat_service }}"
