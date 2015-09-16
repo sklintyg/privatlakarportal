@@ -4,7 +4,7 @@
 angular.module('privatlakareApp').directive('formKontaktUppgifter',
 
         function($log, $timeout, $sessionStorage,
-            RegisterViewState) {
+            FormKontaktUppgifterViewState) {
             'use strict';
 
             return {
@@ -12,9 +12,10 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                 transclude: true,
                 scope: true,
                 controller: function($scope) {
+                    $scope.viewState = FormKontaktUppgifterViewState;
                     $scope.preventPaste = function(e, fieldName){
                         e.preventDefault();
-                        RegisterViewState.errorMessage['paste'+fieldName] = true;
+                        FormKontaktUppgifterViewState.errorMessage['paste'+fieldName] = true;
                         return false;
                     };
                 },

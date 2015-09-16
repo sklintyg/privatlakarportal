@@ -1,12 +1,11 @@
 angular.module('privatlakareApp')
   .controller('Step2Ctrl', function ($scope, $state, $window,
-        RegisterModel, RegisterViewState, WindowUnload, UserModel) {
+        RegisterModel, RegisterNavigationService, Step2ViewState, UserModel, WindowUnload) {
         'use strict';
-
-        $scope.focusTelefonnummer = true;
 
         if(UserModel.isRegistered()) {
             $state.go('app.register.complete');
+            return;
         }
 
         if (!RegisterModel.validForStep2()) {
@@ -14,25 +13,23 @@ angular.module('privatlakareApp')
             return;
         }
 
+        $scope.focusTelefonnummer = true;
+        $scope.viewState = Step2ViewState;
+
         // function to submit the form after all validation has occurred
         $scope.submitForm = function() {
             $state.go('app.register.step3');
         };
 
         $scope.$on('$stateChangeStart',
-            function(event, toState/*, toParams, fromState, fromParams*/) {
-                if (!RegisterViewState.navigationAllowed(toState, $scope.registerForm.$valid)) {
+            function(event, toState, toParams, fromState) {
+                if (!RegisterNavigationService.navigationAllowed(toState, fromState, $scope.registerForm.$valid)) {
                     event.preventDefault();
                     // transitionTo() promise will be rejected with
                     // a 'transition prevented' error
                 }
             });
 
-        $scope.$on('$stateChangeSuccess',
-            function(/*event, toState, toParams, fromState, fromParams*/) {
-                RegisterViewState.updateStep();
-            });
-
         // Add browser dialog to ask if user wants to save before leaving if he closes the window on an edited form.
-        WindowUnload.bindUnload($scope, RegisterViewState.windowUnloadWarningCondition);
+        WindowUnload.bindUnload($scope);
     });

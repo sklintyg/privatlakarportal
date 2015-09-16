@@ -1,10 +1,8 @@
 angular.module('privatlakareApp')
     .controller('Step3Ctrl',
-    function($scope, $log, $state, $window, RegisterViewState, UserModel, RegisterModel, RegisterProxy, TermsProxy,
-        WindowUnload) {
+    function($scope, $log, $state, $window, UserModel, RegisterModel, RegisterProxy, Step3ViewState,
+        TermsProxy, WindowUnload) {
         'use strict';
-
-        RegisterViewState.updateStep();
 
         var user = UserModel.get();
         if (UserModel.isRegistered()) {
@@ -18,26 +16,26 @@ angular.module('privatlakareApp')
         }
 
         var model = RegisterModel.init();
-        var privatLakareDetails = RegisterViewState.getRegisterDetailsTableDataFromModel(user, model);
+        var privatLakareDetails = Step3ViewState.getRegisterDetailsTableDataFromModel(user, model);
         $scope.uppgifter = privatLakareDetails.uppgifter;
         $scope.kontaktUppgifter = privatLakareDetails.kontaktUppgifter;
-        $scope.viewState = RegisterViewState;
+        $scope.viewState = Step3ViewState;
         $scope.registerModel = model;
 
         // Skapa konto button
         $scope.createAccount = function() {
-            RegisterViewState.loading.register = true;
+            Step3ViewState.loading.register = true;
 
             var godkantMedgivandeVersion = null;
-            if (RegisterViewState.godkannvillkor) {
+            if (Step3ViewState.godkannvillkor) {
                 godkantMedgivandeVersion = $scope.terms.version;
             }
 
             RegisterProxy.registerPrivatlakare(model, godkantMedgivandeVersion).then(function(successData) {
                 $log.debug('Registration complete - data:');
                 $log.debug(successData);
-                RegisterViewState.loading.register = false;
-                RegisterViewState.errorMessage.register = null;
+                Step3ViewState.loading.register = false;
+                Step3ViewState.errorMessage.register = null;
                 user.status = successData.status;
                 RegisterModel.reset();
 
@@ -50,14 +48,14 @@ angular.module('privatlakareApp')
                     $state.go('app.register.waiting');
                     break;
                 default: // NOT_STARTED, UNKNOWN or other unwanted values like null or undefined
-                    RegisterViewState.errorMessage.register =
+                    Step3ViewState.errorMessage.register =
                         'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
                     $log.debug('Invalid user status in response:' + user.status);
                 }
 
             }, function(errorData) {
-                RegisterViewState.loading.register = false;
-                RegisterViewState.errorMessage.register =
+                Step3ViewState.loading.register = false;
+                Step3ViewState.errorMessage.register =
                     'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
                 $log.debug('Failed to register errorCode:' + errorData.errorCode + ' reason:' + errorData.message);
             });
@@ -76,5 +74,5 @@ angular.module('privatlakareApp')
         });
 
         // Add browser dialog to ask if user wants to save before leaving if he closes the window on an edited form.
-        WindowUnload.bindUnload($scope, RegisterViewState.windowUnloadWarningCondition);
+        WindowUnload.bindUnload($scope);
     });

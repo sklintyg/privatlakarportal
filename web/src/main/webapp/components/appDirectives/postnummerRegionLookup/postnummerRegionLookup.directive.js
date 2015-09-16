@@ -4,17 +4,18 @@
 angular.module('privatlakareApp').directive('postnummerRegionLookup',
 
     function($log, $timeout, $sessionStorage,
-        OmradeProxy, PostnummerHelper, messageService, ObjectHelper) {
+        OmradeProxy, PostnummerHelper, PostnummerRegionLookupViewState, messageService, ObjectHelper) {
         'use strict';
 
         return {
             restrict: 'A',
             scope: {
                 registerForm: '=',
-                registerModel: '=',
-                viewState: '='
+                registerModel: '='
             },
             controller: function($scope) {
+
+                $scope.viewState = PostnummerRegionLookupViewState;
 
                 function setKommunSelected(value) {
                     $sessionStorage.kommunSelected = value;

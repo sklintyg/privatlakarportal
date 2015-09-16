@@ -1,14 +1,14 @@
 angular.module('privatlakareApp')
-    .controller('RegisterAbortCtrl', function($scope, $sessionStorage, UserModel, RegisterModel, RegisterViewState) {
+    .controller('RegisterAbortCtrl', function($scope, $sessionStorage, UserModel, RegisterModel, WindowUnload) {
         'use strict';
 
         $scope.dismiss = function() {
-            RegisterViewState.windowUnloadWarningCondition.condition = true;
+            WindowUnload.enable();
             $scope.$dismiss();
         };
 
         $scope.abort = function() {
-            RegisterViewState.windowUnloadWarningCondition.condition = false;
+            WindowUnload.disable();
             $sessionStorage.registerModel = RegisterModel.reset();
             UserModel.logout();
         };

@@ -1,22 +1,23 @@
 angular.module('privatlakareApp').factory('WindowUnload',
-    function($window, $log, UserModel, ObjectHelper) {
+    function($window, $log, UserModel) {
         'use strict';
 
         return {
-            bindUnload: function($scope, conditionObject) {
+            enable: function() {
+                this.enabled = true;
+            },
+            disable: function() {
+                this.enabled = false;
+            },
+            bindUnload: function($scope) {
 
-                if (!ObjectHelper.isDefined(conditionObject)) {
-                    conditionObject = { condition: true };
-                }
+                this.enable();
+
+                var windowUnload = this;
 
                 $window.onbeforeunload = function(event) {
 
-                    if (!ObjectHelper.isDefined(conditionObject.condition)) {
-                        $log.debug('WindowUnload.bindUnload - form not available - skipping dialog.');
-                        return;
-                    }
-
-                    if (conditionObject.condition) {
+                    if (windowUnload.enabled) {
 
                         if (!UserModel.get().loggedIn) {
                             $log.debug('WindowUnload.bindUnload - not logged in - skipping dialog.');
