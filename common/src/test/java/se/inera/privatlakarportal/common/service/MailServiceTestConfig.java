@@ -40,7 +40,7 @@ public class MailServiceTestConfig {
     private String defaultEncoding;
 
     @Value("${mail.port}")
-    private int port;
+    private String port;
 
     @Value("${mail.smtps.auth}")
     private boolean smtpsAuth;
@@ -64,10 +64,11 @@ public class MailServiceTestConfig {
     @Bean
     public JavaMailSender mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        int intPort = Integer.parseInt(port);
         mailSender.setHost(mailHost);
         mailSender.setDefaultEncoding(defaultEncoding);
         mailSender.setProtocol(protocol);
-        mailSender.setPort(port);
+        mailSender.setPort(intPort);
 
         if (!username.isEmpty()) {
             mailSender.setUsername(username);
@@ -77,7 +78,7 @@ public class MailServiceTestConfig {
         }
 
         Properties javaMailProperties = new Properties();
-        javaMailProperties.put("mail."+protocol+".port", port);
+        javaMailProperties.put("mail."+protocol+".port", intPort);
         javaMailProperties.put("mail."+protocol+".auth", smtpsAuth);
         javaMailProperties.put("mail."+protocol+".starttls.enable", smtpsStarttlsEnable);
         javaMailProperties.put("mail."+protocol+".debug", smtpsDebug);
