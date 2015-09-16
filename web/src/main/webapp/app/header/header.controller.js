@@ -1,6 +1,6 @@
 angular.module('privatlakareApp').controller('HeaderController',
         function($scope, $window, $state, $log,
-            UserModel) {
+            UserModel, LinkBuilder) {
             'use strict';
 
             //Expose 'now' as a model property for the template to render as todays date
@@ -15,6 +15,11 @@ angular.module('privatlakareApp').controller('HeaderController',
                 $scope.statusText = UserModel.getStatusText();
             }, true);
 
+            $scope.$on('$stateChangeSuccess',
+                function(event, toState, toParams, fromState/*, fromParams*/) {
+                    $scope.exitLink = LinkBuilder.getExitLink(fromState.name, toState.name, UserModel.get().status);
+                });
+
             /**
              * Private functions
              */
@@ -23,14 +28,6 @@ angular.module('privatlakareApp').controller('HeaderController',
              * Exposed scope interaction functions
              */
 
-            $scope.updateAccount = function() {
-                $state.go('app.minsida');
-            };
-
-            if (UserModel.get().authenticationScheme === UserModel.get().fakeSchemeId) {
-                $scope.logoutLocation = '/logout';
-            } else {
-                $scope.logoutLocation = '/saml/logout/';
-            }
+            $scope.logoutLocation = UserModel.getLogoutLocation();
         }
     );

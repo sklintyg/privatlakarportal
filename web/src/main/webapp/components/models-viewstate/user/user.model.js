@@ -65,6 +65,13 @@ angular.module('privatlakareApp').factory('UserModel',
                 } else {
                     $window.location = '/saml/logout/';
                 }
+            },
+            getLogoutLocation: function() {
+                if (data.authenticationScheme === data.fakeSchemeId) {
+                    return '/logout';
+                } else {
+                    return '/saml/logout/';
+                }
             }
         };
     }

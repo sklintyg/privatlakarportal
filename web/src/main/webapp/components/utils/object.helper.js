@@ -6,6 +6,9 @@ angular.module('privatlakareApp').factory('ObjectHelper',
             isDefined: function(value) {
                 return value !== null && typeof value !== 'undefined';
             },
+            isEmpty: function(value) {
+                return value === null || typeof value === 'undefined' || value === '';
+            },
             returnJoinedArrayOrNull: function(value) {
                 return value !== null && value !== undefined ? value.join(', ') : null;
             },
