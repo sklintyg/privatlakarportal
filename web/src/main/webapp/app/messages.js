@@ -149,6 +149,8 @@ var ppMessages = {
         'label.form.kommun.morehits': 'Uppgift om kommun har ${hits} träffar. Ange den kommun som är rätt.',
         'label.form.kommun.nohits': 'Inga träffar för postnummer ${postnummer}. Var vänlig kontrollera postnumret och försök igen.',
         'label.form.kommun.error.required': 'Kommun måste väljas innan du kan fortsätta.',
+        'label.form.kommun.error.general': 'Ett tekniskt fel har uppstått. Postnumret kunde inte hämtas. Prova igen senare.',
+        'label.form.kommun.error.toomanydigits': 'Felaktigt format på postnumret. Ange postnummer med 5 siffror på formaten XXXXX eller XXX XX.',
 
         'label.form.lan': 'Län',
         'label.form.lan.help': 'Län där verksamheten finns. Uppgift om län går inte att ändra.',

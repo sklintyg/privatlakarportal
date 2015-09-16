@@ -7,7 +7,7 @@
 </div>
 
 <div alert-message alert-show="viewState.errorMessage.region" alert-severity="danger"></div>
-<div class="alert alert-warning" ng-show="viewState.validPostnummer && registerModel.postort == null && viewState.errorMessage.region == null">
+<div class="alert alert-warning" ng-show="viewState.validPostnummer && registerModel.postort == null && viewState.errorMessage.region == null && kommunNoHitsWarningText != null">
   <i>{{kommunNoHitsWarningText}}</i>
 </div>
 

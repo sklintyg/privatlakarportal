@@ -3,7 +3,8 @@
  */
 angular.module('privatlakareApp').directive('postnummerRegionLookup',
 
-    function($log, $timeout, $sessionStorage, OmradeProxy, PostnummerHelper, messageService) {
+    function($log, $timeout, $sessionStorage,
+        OmradeProxy, PostnummerHelper, messageService, ObjectHelper) {
         'use strict';
 
         return {
@@ -21,8 +22,7 @@ angular.module('privatlakareApp').directive('postnummerRegionLookup',
                 }
 
                 function clearRegionData() {
-                    $scope.kommunNoHitsWarningText = messageService.getProperty('label.form.kommun.nohits',
-                        {'postnummer': $scope.registerModel.postnummer});
+                    $scope.kommunNoHitsWarningText = null;
                     $scope.registerModel.postort = null;
                     $scope.registerModel.kommun = null;
                     setKommunSelected(null);
@@ -62,9 +62,11 @@ angular.module('privatlakareApp').directive('postnummerRegionLookup',
                             $scope.viewState.loading.region = false;
                             $scope.viewState.errorMessage.region = null;
 
-                            if (regionList === null) {
+                            if (!ObjectHelper.isDefined(regionList)) {
                                 $log.debug('No region was found for postnummer:' + postnummer);
                                 clearRegionData();
+                                $scope.kommunNoHitsWarningText = messageService.getProperty('label.form.kommun.nohits',
+                                    {'postnummer': $scope.registerModel.postnummer});
                             } else {
                                 $sessionStorage.cachedRegionList = angular.copy(regionList);
                                 updateRegionView(regionList);
@@ -73,8 +75,7 @@ angular.module('privatlakareApp').directive('postnummerRegionLookup',
                         }, function(errorData) {
                             $log.debug('Failed to get omradeList: ' + errorData);
                             $scope.viewState.loading.region = false;
-                            $scope.viewState.errorMessage.region = 'Ett tekniskt fel har uppstått.' +
-                                ' Postnumret kunde inte hämtas. Prova igen senare.';
+                            $scope.viewState.errorMessage.region = messageService.getProperty('label.form.kommun.error.general');
                             clearRegionData();
                         });
 
@@ -82,6 +83,11 @@ angular.module('privatlakareApp').directive('postnummerRegionLookup',
                     } else {
                         $scope.viewState.validPostnummer = false;
                         clearRegionData();
+                        if(postnummer && postnummer.length > 5) {
+                            $scope.viewState.errorMessage.region = messageService.getProperty('label.form.kommun.error.toomanydigits');
+                        } else {
+                            $scope.viewState.errorMessage.region = null;
+                        }
                     }
                 }
 

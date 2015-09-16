@@ -29,7 +29,7 @@ angular.module('privatlakareApp').factory('OmradeProxy',
                             $log.debug('registration/omrade - got data:');
                             $log.debug(data);
 
-                            if(typeof data.omradeList !== 'undefined') {
+                            if(typeof data !== 'undefined') {
                                 promise.resolve(data.omradeList);
                             } else {
                                 $log.debug('JSON response syntax error. omradeList property required. Rejected.');
