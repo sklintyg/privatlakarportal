@@ -15,6 +15,11 @@ angular.module('privatlakareApp').controller('HeaderController',
                 $scope.statusText = UserModel.getStatusText();
             }, true);
 
+            $scope.$on('$stateChangeSuccess',
+                function(event, toState/*, toParams*/, fromState/*, fromParams*/) {
+                    $scope.exitLink = UserModel.getExitLink(fromState.name, toState.name);
+                });
+
             /**
              * Private functions
              */
@@ -23,10 +28,7 @@ angular.module('privatlakareApp').controller('HeaderController',
              * Exposed scope interaction functions
              */
 
-            $scope.updateAccount = function() {
-                $state.go('app.minsida');
-            };
-
+            $scope.logoutLocation = '';
             if (UserModel.get().authenticationScheme === UserModel.get().fakeSchemeId) {
                 $scope.logoutLocation = '/logout';
             } else {
