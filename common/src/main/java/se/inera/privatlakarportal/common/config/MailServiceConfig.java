@@ -43,7 +43,7 @@ public class MailServiceConfig implements AsyncConfigurer {
     private String defaultEncoding;
 
     @Value("${mail.port}")
-    private String port;
+    private int port;
 
     @Value("${mail.smtps.auth}")
     private boolean smtpsAuth;
@@ -60,24 +60,17 @@ public class MailServiceConfig implements AsyncConfigurer {
         mailSender.setHost(mailHost);
         mailSender.setDefaultEncoding(defaultEncoding);
         mailSender.setProtocol(protocol);
-
-        if (!port.isEmpty()) {
-            mailSender.setPort(Integer.parseInt(port));
-        }
-        if (!username.isEmpty()) {
-            mailSender.setUsername(username);
-        }
-        if (!password.isEmpty()) {
-            mailSender.setPassword(password);
-        }
+        mailSender.setPort(port);
+        mailSender.setUsername(username.isEmpty() ? "default" : username);
+        mailSender.setPassword(password.isEmpty() ? "default" : password);
 
         Properties javaMailProperties = new Properties();
-        javaMailProperties.put("mail.smtps.auth", smtpsAuth);
-        javaMailProperties.put("mail.smtps.starttls.enable", smtpsStarttlsEnable);
-        javaMailProperties.put("mail.smtps.debug", smtpsDebug);
-        if (protocol.equals("smtps")) {
-            javaMailProperties.put("mail.smtp.socketFactory.fallback", true);
-        }
+        javaMailProperties.put("mail."+protocol+".auth", smtpsAuth);
+        javaMailProperties.put("mail."+protocol+".port", port);
+        javaMailProperties.put("mail."+protocol+".starttls.enable", smtpsStarttlsEnable);
+        javaMailProperties.put("mail."+protocol+".debug", smtpsDebug);
+        javaMailProperties.put("mail."+protocol+".socketFactory.fallback", true);
+
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;
     }
