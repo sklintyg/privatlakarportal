@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -68,9 +69,11 @@ public class MailServiceImpl implements MailService {
     @Override
     @Async
     public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) throws PrivatlakarportalServiceException {
-        LOG.info("Sending registration status email to {}", privatlakare.getEpost());
         try {
+            LOG.info("Sending registration status email to {}", privatlakare.getEpost());
             MimeMessage message = createMessage(status, privatlakare);
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            message.saveChanges();
             mailSender.send(message);
         } catch (MessagingException | PrivatlakarportalServiceException e) {
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, e.getMessage());
