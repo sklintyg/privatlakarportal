@@ -3,17 +3,11 @@ package se.inera.privatlakarportal.common.service;
 import java.io.IOException;
 import java.io.InputStream;
 
-//import javax.activation.DataHandler;
 import javax.activation.DataSource;
-//import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-//import javax.mail.Multipart;
-//import javax.mail.Part;
 import javax.mail.internet.InternetAddress;
-//import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-//import javax.mail.internet.MimeMultipart;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.cxf.attachment.ByteDataSource;
@@ -60,8 +54,6 @@ public class MailServiceImpl implements MailService {
 
     private static final String BOTTOM_BODY_CONTENT = "<br/><br/><span><img src='cid:inera_logo'></span>";
 
-    //private static final String ENCODING = "text/html; charset=UTF-8";
-
     private static final Logger LOG = LoggerFactory.getLogger(MailServiceImpl.class);
 
     @Autowired
@@ -93,8 +85,6 @@ public class MailServiceImpl implements MailService {
 
     private void buildEmailContent(MimeMessage message, RegistrationStatus status) throws MessagingException, PrivatlakarportalServiceException {
        
-        // Multipart content = new MimeMultipart();
-        // BodyPart body = new MimeBodyPart();
         String subjectString = null;
         String htmlBodyString = null;
 
@@ -121,11 +111,6 @@ public class MailServiceImpl implements MailService {
         }
 
         htmlBodyString += BOTTOM_BODY_CONTENT;
-//        body.setContent(htmlBodyString, ENCODING);
-//        content.addBodyPart(body);
-
-        // Add attachment and markup for logo
-        // MimeBodyPart iconBodyPart = new MimeBodyPart();
 
         DataSource iconDataSource = null;
 
@@ -135,19 +120,12 @@ public class MailServiceImpl implements MailService {
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
                     "Internal I/O-error while building email.");
         }
-        // iconBodyPart.setDataHandler(new DataHandler(iconDataSource));
-        // iconBodyPart.setDisposition(Part.INLINE);
-        // iconBodyPart.setContentID("<inera_logo>");
-        // iconBodyPart.addHeader("Content-Type", "image/png");
-        // content.addBodyPart(iconBodyPart);
 
         //Use mimeHelper to set content
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.addInline("<inera_logo>", iconDataSource);
         helper.setText(htmlBodyString, true);
-        // message.setContent(content, ENCODING);
-
-        message.setSubject(subjectString, "UTF-8");
+        helper.setSubject(subjectString);
     }
 
     private byte[] getLogo() throws IOException {
