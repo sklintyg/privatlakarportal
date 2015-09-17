@@ -3,18 +3,18 @@ package se.inera.privatlakarportal.common.service;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.activation.DataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.cxf.attachment.ByteDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -67,13 +67,13 @@ public class MailServiceImpl implements MailService {
             MimeMessage message = createMessage(status, privatlakare);
             message.saveChanges();
             mailSender.send(message);
-        } catch (MessagingException | PrivatlakarportalServiceException | MailException e) {
+        } catch (MessagingException | PrivatlakarportalServiceException | MailException | IOException e) {
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, e.getMessage());
         }
     }
 
     private MimeMessage createMessage(RegistrationStatus status, Privatlakare privatlakare) throws MessagingException,
-            PrivatlakarportalServiceException {
+            PrivatlakarportalServiceException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO,
@@ -83,7 +83,7 @@ public class MailServiceImpl implements MailService {
         return message;
     }
 
-    private void buildEmailContent(MimeMessage message, RegistrationStatus status) throws MessagingException, PrivatlakarportalServiceException {
+    private void buildEmailContent(MimeMessage message, RegistrationStatus status) throws MessagingException, PrivatlakarportalServiceException, IOException {
        
         String subjectString = null;
         String htmlBodyString = null;
@@ -112,20 +112,12 @@ public class MailServiceImpl implements MailService {
 
         htmlBodyString += BOTTOM_BODY_CONTENT;
 
-        DataSource iconDataSource = null;
-
-        try {
-            iconDataSource = new ByteDataSource(getLogo());
-        } catch (IOException e) {
-            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
-                    "Internal I/O-error while building email.");
-        }
-
         //Use mimeHelper to set content
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "ISO-8859-1");
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.setSubject(subjectString);
-        helper.addInline("inera_logo", iconDataSource);
         helper.setText(htmlBodyString, true);
+        final InputStreamSource imageSource = new ByteArrayResource(getLogo());
+        helper.addInline("inera_logo", imageSource, "image/png");
     }
 
     private byte[] getLogo() throws IOException {
