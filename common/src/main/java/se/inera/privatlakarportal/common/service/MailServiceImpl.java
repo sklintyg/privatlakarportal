@@ -122,10 +122,10 @@ public class MailServiceImpl implements MailService {
         }
 
         //Use mimeHelper to set content
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.addInline("<inera_logo>", iconDataSource);
-        helper.setText(htmlBodyString, true);
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "ISO-8859-1");
         helper.setSubject(subjectString);
+        helper.addInline("inera_logo", iconDataSource);
+        helper.setText(htmlBodyString, true);
     }
 
     private byte[] getLogo() throws IOException {
