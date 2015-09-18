@@ -46,6 +46,7 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'jacoco'
 
     sourceCompatibility = "1.7"
     targetCompatibility = "1.7"
@@ -60,6 +61,17 @@ subprojects {
         setProperty("buildTime", getDate().toString())
         setProperty("buildNumber", System.env.BUILD_NUMBER ? System.env.BUILD_NUMBER : "SNAPSHOT")
         setProperty("buildVersion", System.env.BUILD_VERSION ? System.env.BUILD_VERSION : "1.0.0-SNAPSHOT")
+    }
+    
+    jacoco {
+        toolVersion = "0.7.1.201405082137"
+    }
+    jacocoTestReport {
+        reports {
+            xml.enabled false
+            csv.enabled false
+            html.destination "${buildDir}/jacocoHtml"
+        }
     }
 }
 
