@@ -16,6 +16,8 @@ def getDate() {
     return formattedDate
 }
 
+apply plugin: 'sonar-runner'
+
 allprojects {
 
     group = 'se.inera.privatlakarportal'
@@ -41,6 +43,22 @@ allprojects {
             maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/" }
             jcenter()
         }
+    }
+    
+    sonarRunner {
+        sonarProperties {
+            property "sonar.jacoco.reportPath", "$buildDir/jacoco/test.exec"
+        }
+    }
+}
+
+sonarRunner {
+    sonarProperties {
+        property "sonar.projectName", projectName
+        property "sonar.projectKey", projectId
+
+        // Address of SonarQube server
+        property "sonar.host.url", "https://build-inera.nordicmedtest.se/sonar"
     }
 }
 
