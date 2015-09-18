@@ -15,6 +15,8 @@ angular.module('privatlakareApp').directive('formGrundUppgifter',
                 },
                 controller: function($scope) {
 
+                    $scope.focusBefattning = true;
+
                     if(!ObjectHelper.isDefined($scope.registerModel) || !ObjectHelper.isDefined($scope.user)) {
                         $log.debug('formGrundUppgifter requires parameters register-model and user');
                     }

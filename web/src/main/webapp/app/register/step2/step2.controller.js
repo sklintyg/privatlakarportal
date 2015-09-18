@@ -13,8 +13,6 @@ angular.module('privatlakareApp')
             return;
         }
 
-        $scope.focusTelefonnummer = true;
-
         // function to submit the form after all validation has occurred
         $scope.submitForm = function() {
             $state.go('app.register.step3');

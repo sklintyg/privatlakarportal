@@ -16,6 +16,8 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                 },
                 controller: function($scope) {
 
+                    $scope.focusTelefonnummer = true;
+                    $scope.viewState = FormKontaktUppgifterViewState;
                     if(!ObjectHelper.isDefined($scope.registerModel) || !ObjectHelper.isDefined($scope.viewState)) {
                         $log.debug('formKontaktUppgifter requires parameters register-model and view-state');
                     }
