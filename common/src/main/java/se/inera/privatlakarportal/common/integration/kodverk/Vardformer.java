@@ -16,7 +16,7 @@ public class Vardformer {
     private static final Map<String, String> vardformer;
     static {
         Map<String, String> map = new HashMap<>();
-        map.put("01", "Öppenvård (förvald)");
+        map.put("01", "Öppenvård");
         map.put("02", "Slutenvård");
         map.put("03", "Hemsjukvård");
         vardformer = Collections.unmodifiableMap(map);
