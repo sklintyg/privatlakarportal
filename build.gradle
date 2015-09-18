@@ -65,7 +65,7 @@ sonarRunner {
         // Database config
         property "sonar.jdbc.url", "jdbc:mysql://localhost:3306/sonar"
         property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
-        property "sonar.jdbc.username", "inera"
+        property "sonar.jdbc.username", "sonar"
         property "sonar.jdbc.password", sonarPassword
     }
 }
