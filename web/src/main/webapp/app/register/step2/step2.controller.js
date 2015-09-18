@@ -1,6 +1,6 @@
 angular.module('privatlakareApp')
   .controller('Step2Ctrl', function ($scope, $state, $window,
-        RegisterModel, RegisterNavigationService, Step2ViewState, UserModel, WindowUnload) {
+        RegisterModel, RegisterNavigationService, UserModel, WindowUnload) {
         'use strict';
 
         if(UserModel.isRegistered()) {
@@ -14,7 +14,6 @@ angular.module('privatlakareApp')
         }
 
         $scope.focusTelefonnummer = true;
-        $scope.viewState = Step2ViewState;
 
         // function to submit the form after all validation has occurred
         $scope.submitForm = function() {

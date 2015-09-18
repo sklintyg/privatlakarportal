@@ -1,6 +1,6 @@
 angular.module('privatlakareApp')
     .controller('Step1Ctrl', function($scope, $state, $window,
-        RegisterNavigationService, Step1ViewState, WindowUnload, UserModel) {
+        RegisterNavigationService, WindowUnload, UserModel) {
         'use strict';
 
         if(UserModel.isRegistered()) {
@@ -9,7 +9,6 @@ angular.module('privatlakareApp')
         }
 
         $scope.focusBefattning = true;
-        $scope.viewState = Step1ViewState;
 
         // function to submit the form after all validation has occurred
         $scope.submitForm = function() {
