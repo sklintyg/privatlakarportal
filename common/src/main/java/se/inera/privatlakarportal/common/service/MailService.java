@@ -7,13 +7,13 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 public interface MailService {
 
     /**
-     * sendRegistrationStatusEmail is used for notifying users about pending status of their registration via the
+     * sendRegistrationStatusEmail is used for notifying users about the pending status of their registration via the
      * specified email address.
      * 
      * @param status
      *            {@link RegistrationStatus} Used to determine what email to send.
      * @param registration
-     *            @{link Registration} Registration details such as email address.
+     *            @{link Privatlakare} object with details such as email address.
      * @throws PrivatlakarportalServiceException
      *             @{link PrivatlakarportalServiceException}
      */

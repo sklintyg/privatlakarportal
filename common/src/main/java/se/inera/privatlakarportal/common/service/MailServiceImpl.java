@@ -68,6 +68,7 @@ public class MailServiceImpl implements MailService {
             message.saveChanges();
             mailSender.send(message);
         } catch (MessagingException | PrivatlakarportalServiceException | MailException | IOException e) {
+            LOG.error("Error while sending registration status email with message {}", e.getMessage(), e);
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, e.getMessage());
         }
     }
