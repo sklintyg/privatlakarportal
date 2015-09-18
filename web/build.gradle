@@ -55,7 +55,7 @@ node {
 }
 
 war {
-    from 'build/webapp'
+    webAppDirName = 'build/webapp'
 }
 
 
@@ -99,7 +99,7 @@ task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
 }
 
 grunt_build.dependsOn bowerInstall
-build.dependsOn grunt_build
+war.dependsOn grunt_build
 
 gretty {
     httpPort = 8090

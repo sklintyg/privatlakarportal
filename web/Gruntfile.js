@@ -315,12 +315,10 @@ module.exports = function(grunt) {
                         cwd: '<%= config.client %>',
                         dest: '<%= config.dist %>',
                         src: [
-                            '*.{ico,png,txt}',
+                            'assets/**/*',
                             'bower_components/**/*',
-                            //            'assets/images/{,*/}*.{webp}',
-                            'assets/images/**/*',
-                            'assets/fonts/**/*',
-                            'index.html'
+                            'WEB-INF/**/*',
+                            '*.*'
                         ]
                     },
                     {
