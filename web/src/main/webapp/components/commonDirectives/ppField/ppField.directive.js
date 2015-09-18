@@ -7,10 +7,15 @@ angular.module('privatlakareApp').directive('ppField',
             'use strict';
 
             return {
+                require: '^form',
                 restrict: 'A',
                 transclude: true,
-                scope: true,
-                controller: function($scope, $element, $attrs) {
+                scope: {
+
+                },
+                link: function($scope, $element, $attrs, FormController) {
+
+                    $scope.registerForm = FormController;
 
                     $scope.controlName = $attrs.ppField;
                     $scope.showHelp = messageService.propertyExists('label.form.' + $scope.controlName + '.help');

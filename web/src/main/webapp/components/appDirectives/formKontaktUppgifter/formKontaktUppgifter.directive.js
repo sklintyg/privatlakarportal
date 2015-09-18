@@ -4,14 +4,21 @@
 angular.module('privatlakareApp').directive('formKontaktUppgifter',
 
         function($log, $timeout, $sessionStorage,
-            FormKontaktUppgifterViewState) {
+            RegisterViewState, ObjectHelper, FormKontaktUppgifterViewState) {
             'use strict';
 
             return {
                 restrict: 'A',
                 transclude: true,
-                scope: true,
+                scope: {
+                    'registerModel': '=',
+                    'viewState': '='
+                },
                 controller: function($scope) {
+
+                    if(!ObjectHelper.isDefined($scope.registerModel) || !ObjectHelper.isDefined($scope.viewState)) {
+                        $log.debug('formKontaktUppgifter requires parameters register-model and view-state');
+                    }
                     $scope.viewState = FormKontaktUppgifterViewState;
                     $scope.preventPaste = function(e, fieldName){
                         e.preventDefault();

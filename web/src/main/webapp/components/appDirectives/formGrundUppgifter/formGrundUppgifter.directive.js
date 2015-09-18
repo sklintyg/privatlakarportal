@@ -2,14 +2,23 @@
  * Form directive to enter grunduppgifter
  */
 angular.module('privatlakareApp').directive('formGrundUppgifter',
-        function(FormGrundUppgifterViewState, messageService) {
+        function($log,
+            FormGrundUppgifterViewState, messageService, ObjectHelper) {
             'use strict';
 
             return {
                 restrict: 'A',
                 transclude: true,
-                scope: true,
+                scope: {
+                    'user': '=',
+                    'registerModel': '='
+                },
                 controller: function($scope) {
+
+                    if(!ObjectHelper.isDefined($scope.registerModel) || !ObjectHelper.isDefined($scope.user)) {
+                        $log.debug('formGrundUppgifter requires parameters register-model and user');
+                    }
+
                     $scope.message = messageService;
                     $scope.viewState = FormGrundUppgifterViewState;
                 },
