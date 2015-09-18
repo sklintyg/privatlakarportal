@@ -59,6 +59,14 @@ sonarRunner {
 
         // Address of SonarQube server
         property "sonar.host.url", "https://build-inera.nordicmedtest.se/sonar"
+
+        ext.sonarPassword = System.properties['sonarPassword']
+
+        // Database config
+        property "sonar.jdbc.url", "jdbc:mysql://localhost:3306/sonar"
+        property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
+        property "sonar.jdbc.username", "inera"
+        property "sonar.jdbc.password", sonarPassword
     }
 }
 
