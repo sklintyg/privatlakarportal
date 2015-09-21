@@ -8,17 +8,18 @@ angular.module('privatlakareApp').directive('validateConfirmEmail',
 
             return {
                 restrict: 'A',
-                require: 'ngModel',
+                require: ['^form', 'ngModel'],
                 scope: {
                     validateConfirmEmail: '='
                 },
                 link: function(scope, elem, attrs, ctrl){
-                    var formName = elem.parents('form').attr('name');
-                    scope.controller = ctrl;
-                    scope.equality = scope.$parent[formName][attrs.validateConfirmEmail];
-                    scope.$watch('[controller.$viewValue, equality.$viewValue]', function(newVal){
+                    var form = ctrl[0];
+                    var model = ctrl[1];
+                    scope.epostCtrl = form.epost;
+                    scope.epost2Ctrl = model;
+                    scope.$watch('[epostCtrl.$viewValue, epost2Ctrl.$viewValue]', function(newVal){
                         if(newVal[0] && newVal[1]){
-                            ctrl.$setValidity('confirmEmail', newVal[0] === newVal[1]);
+                            ctrl[1].$setValidity('confirmEmail', newVal[0] === newVal[1]);
                         }
                     });
                 }

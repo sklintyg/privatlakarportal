@@ -3,8 +3,8 @@
  */
 angular.module('privatlakareApp').directive('formKontaktUppgifter',
 
-        function($log, $timeout, $sessionStorage,
-            RegisterViewState, ObjectHelper, FormKontaktUppgifterViewState) {
+        function($log, $timeout, $sessionStorage, $state,
+            ObjectHelper, FormKontaktUppgifterViewState) {
             'use strict';
 
             return {
@@ -16,10 +16,12 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                 },
                 controller: function($scope) {
 
-                    $scope.focusTelefonnummer = true;
-                    $scope.viewState = FormKontaktUppgifterViewState;
                     if(!ObjectHelper.isDefined($scope.registerModel) || !ObjectHelper.isDefined($scope.viewState)) {
                         $log.debug('formKontaktUppgifter requires parameters register-model and view-state');
+                    }
+
+                    if($state.current.name !== 'app.minsida') {
+                        $scope.focusTelefonnummer = true;
                     }
                     $scope.viewState = FormKontaktUppgifterViewState;
                     $scope.preventPaste = function(e, fieldName){

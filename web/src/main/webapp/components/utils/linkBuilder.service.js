@@ -11,7 +11,7 @@ angular.module('privatlakareApp').factory('LinkBuilder',
                 };
 
                 if (toStateName === 'app.minsida') {
-                    if (ObjectHelper.isEmpty(fromStateName)) {
+                    if (ObjectHelper.isEmpty(fromStateName) || fromStateName === 'app.boot') {
                         // If we had no valid state before we came from an external site, assuming webcert for now.
                         exitLink.name = messageService.getProperty('label.header.backtoapp');
                         exitLink.link = APP_CONFIG.webcertStartUrl;
