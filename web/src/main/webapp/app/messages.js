@@ -18,6 +18,8 @@ var ppMessages = {
         'common.send': 'Skicka',
         'common.copy': 'Kopiera',
         'common.delete': 'Radera',
+        'common.print': 'Skriv ut',
+        'common.close': 'Stäng',
         'common.sign.intyg': 'Signera intyget',
         'common.date': 'Datum',
         'common.when': 'När?',

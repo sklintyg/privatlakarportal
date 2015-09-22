@@ -2,7 +2,7 @@ angular.module('privatlakareApp')
     .config(function($stateProvider) {
         'use strict';
 
-        function openTerms($stateParams, $state, dialogService) {
+        function openPortalTerms($stateParams, $state, dialogService) {
 
             $('body').addClass('modalprinter');
 
@@ -13,21 +13,25 @@ angular.module('privatlakareApp')
                 windowClass: 'modal-terms'
             }).result.finally(function() { //jshint ignore:line
                 $('body').removeClass('modalprinter');
-                if ($state.current.url === 'terms') {
-                    $state.go('^');
-                }
+                    if ($state.current.url === 'terms') {
+                        $state.go('^');
+                    }
             });
         }
 
-        function closeTerms(dialogService) {
+        function closePortalTerms(dialogService) {
             dialogService.close();
         }
 
         $stateProvider
             .state('app.start.terms', {
-                url: 'terms',
-                onEnter: openTerms,
-                onExit: closeTerms,
+                url: '/terms',
+                views: {
+                    'dialogs@': {
+                        templateUrl: '/app/terms/terms.main.html',
+                        controller: 'MainTermsCtrl'
+                    }
+                },
                 params: {
                     terms: null,
                     termsData: null
@@ -43,8 +47,8 @@ angular.module('privatlakareApp')
                 }
             }).state('app.register.step3.terms', {
                 url: 'terms',
-                onEnter: openTerms,
-                onExit: closeTerms,
+                onEnter: openPortalTerms,
+                onExit: closePortalTerms,
                 params: {
                     terms: null,
                     termsData: null

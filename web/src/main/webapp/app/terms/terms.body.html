@@ -1,0 +1,8 @@
+<div style="overflow-y:hidden;" pp-spinner label="common.label.loading" show-spinner="loading">
+  <img class="pull-left" style="padding-bottom: 20px" src="/assets/images/webcert_black.png" />
+  <p style="clear:left;padding-bottom:50px;color:#535353">
+    <span id="termsVersion" style="padding-left:20px;padding-right:30px">Version: {{options.terms.version}}</span>
+    <span id="termsDatum">Datum: {{options.terms.date | date : "yyyy-MM-dd"}}</span></p>
+  <h1 style="color: black;font-size: 2em">Användarvillkor för Webcert</h1>
+  <p id="termsModal" style="clear:left;padding-bottom: 10px" ng-bind-html="options.terms.text"></p>
+</div>
