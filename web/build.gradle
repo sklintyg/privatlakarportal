@@ -40,6 +40,8 @@ dependencies {
     testCompile 'org.unitils:unitils-core:3.3'
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    providedCompile 'jstl:jstl:1.2'
+
 
 
 }

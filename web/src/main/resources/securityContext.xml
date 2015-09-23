@@ -21,9 +21,7 @@
   <security:http security="none" pattern="/monitoring/**"/>
   <security:http security="none" pattern="/version.jsp"/>
   <security:http security="none" pattern="/favicon.ico"/>
-  <security:http security="none" pattern="/error_403.html"/>
-  <security:http security="none" pattern="/error_404.html"/>
-  <security:http security="none" pattern="/error_500.html"/>
+  <security:http security="none" pattern="/error.jsp"/>
 
   <!-- Logger for SAML messages and events -->
   <bean id="samlLogger" class="org.springframework.security.saml.log.SAMLDefaultLogger">
@@ -49,11 +47,11 @@
     <property name="exceptionMappings">
       <props>
         <prop key="org.springframework.security.authentication.BadCredentialsException">
-          /error.html?reason=login.failed
+          /error.jsp?reason=login.failed
         </prop>
       </props>
     </property>
-    <property name="defaultFailureUrl" value="/error.html?reason=login.failed"/>
+    <property name="defaultFailureUrl" value="/error.jsp?reason=login.failed"/>
   </bean>
 
   <bean id="http403ForbiddenEntryPoint"
@@ -402,7 +400,7 @@
     <!-- Handler for successful logout -->
     <bean id="successLogoutHandler"
           class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
-      <property name="defaultTargetUrl" value="/error.html?reason=logout"/>
+      <property name="defaultTargetUrl" value="/error.jsp?reason=logout"/>
     </bean>
   </beans>
 </beans>
