@@ -1,43 +1,36 @@
 angular.module('privatlakareApp').factory('wcModalService',
-    function($rootScope, $timeout, $window, $modal, $templateCache, $http, $q, $log) {
+    function($rootScope, $timeout, $window, $modal, $templateCache, $http, $q) {
         'use strict';
 
-        var modalInstance = null;
-        var contentLoaded = false;
+        function loadTemplates(modal, modalBodyTemplateUrl) {
+            function getTemplatePromise(options) {
+                return options.template ? $q.when(options.template) :
+                    $http.get(angular.isFunction(options.templateUrl) ? (options.templateUrl)() : options.templateUrl,
+                        {cache: $templateCache}).then(function (result) {
+                            return result.data;
+                        });
+            }
 
-        function getTemplatePromise(options) {
-            return options.template ? $q.when(options.template) :
-                $http.get(angular.isFunction(options.templateUrl) ? (options.templateUrl)() : options.templateUrl,
-                    {cache: $templateCache}).then(function (result) {
-                        return result.data;
-                    });
-        }
-
-        function modalBodyHeight(modal){
-            $timeout(function(){
-                var header = angular.element('.modal-header').outerHeight();
-                var footer = angular.element('.modal-footer').outerHeight();
-                var modalcontent = angular.element('.modal-content').height();
-                var modalBodyElement = angular.element('.modal-body');
-                var modalHeight = angular.element(document).height();
-                var modalBody = modalHeight - header - footer - 110;
-                $log.info('header:' + header + ',footer:' + footer + ',modal:' + modalHeight + ',modalcontent:' +
-                    modalcontent + ',modalBody:' + modalBody + ',contentLoaded:' + contentLoaded);
-
-                if(contentLoaded || header === null || footer === null || modalcontent === null || modalBodyElement === null) {
-                    $log.info('content or DOM was not loaded yet. waiting...');
-                } else {
-                    modalBodyElement.height(modalBody);
-                    modalBodyElement.css('overflow-y', modal.bodyOverflowY);
-                }
+            var def = $q.defer();
+            var templatePromise = def.promise;
+            getTemplatePromise({templateUrl:modal.templateUrl}).then(function(modalTemplate){
+                getTemplatePromise({templateUrl:modalBodyTemplateUrl}).then(function(modalBody){
+                    // the compiling is done in ui bootstrap
+                    // so lets just replace the placeholder in the modal templates html with that
+                    // of the modal body
+                    var res = modalTemplate.replace('<!-- modalBody -->', modalBody);
+                    modal.template = res;
+                    modal.templateUrl = undefined;
+                    def.resolve();
+                });
             });
+
+            return templatePromise;
         }
 
-        function open($scope, modal)
-        {
+        function createModal($scope, modal) {
             $scope.modal = modal;
-
-            modalInstance = $modal.open(
+            return $modal.open(
                 {
                     backdrop: 'static',
                     keyboard: false,
@@ -59,56 +52,11 @@ angular.module('privatlakareApp').factory('wcModalService',
                     minWidth: modal.minWidth,
                     minHeight: modal.minHeight
                 });
-
-            modalInstance.result.then(function ()
-                {
-                    $log.info('Modal closed at: ' + new Date());
-                },
-                function ()
-                {
-                    $log.info('Modal dismissed at: ' + new Date());
-                });
-
-            modalInstance.rendered.then(function() {
-                $log.info('Modal rendered at: ' + new Date());
-                modalBodyHeight(modal);
-            }, function() {
-                $log.info('Modal failed render? at: ' + new Date());
-            });
-
-            $scope.close = function($event){
-                if ($event) {
-                    $event.preventDefault();
-                }
-                modalInstance.dismiss('cancel');
-            };
-
-            $scope.cancel = function($event)
-            {
-                if ($event) {
-                    $event.preventDefault();
-                }
-                modalInstance.dismiss('cancel');
-            };
-
-            return modalInstance;
         }
 
-        function _open(options, $scope){
-
-            var modalInstance = null;
-
-            if($scope === undefined) {
-                $scope = $rootScope.$new();
-            }
-
-            if(options === undefined){
-                return;
-            }
-
+        function createBootstrapModalOptions(options) {
             var contentTemplate = 'components/commonDirectives/modal/wcModal.content.html',
                 windowTemplate = 'components/commonDirectives/modal/wcModal.window.html';
-
             var modal = {
                 controller: options.controller,
                 titleId : options.titleId,
@@ -149,48 +97,24 @@ angular.module('privatlakareApp').factory('wcModalService',
                 }
             }
 
-            modal.buttonAction = function(index){
-                modal.buttons[index].clickFn();
-            };
+            return modal;
+        }
 
-            if(modal !== undefined && modal.bodyOverflowY !== undefined) {
-                var w = angular.element($window);
-                w.bind('resize', function() {
-                    modalBodyHeight(modal);
-                });
+        function _open(options, $scope){
+
+            if($scope === undefined) {
+                $scope = $rootScope.$new();
             }
 
-            var def = $q.defer();
-            var templatePromise = def.promise;
-            getTemplatePromise({templateUrl:modal.templateUrl}).then(function(modalTemplate){
-                getTemplatePromise({templateUrl:options.modalBodyTemplateUrl}).then(function(modalBody){
-                    // the compiling is done in ui bootstrap
-                    // so lets just replace the placeholder in the modal templates html with that
-                    // of the modal body
-                    var res = modalTemplate.replace('<!-- modalBody -->', modalBody);
-                    modal.template = res;
-                    modal.templateUrl = undefined;
-                    def.resolve();
-                });
-            });
+            if(options === undefined){
+                return;
+            }
 
-            templatePromise.then(function(){
-                $log.info('bodyOuterStyle: ' + modal.bodyOuterStyle);
-                modalInstance = open($scope, modal);
+            var modalInstance = null;
+            var bootstrapModalOptions = createBootstrapModalOptions(options);
+            loadTemplates(bootstrapModalOptions, options.modalBodyTemplateUrl).then(function(){
+                modalInstance = createModal($scope, bootstrapModalOptions);
                 options.modalInstance = modalInstance;
-                if(modal !== undefined && modal.bodyOverflowY !== undefined){
-                    modalBodyHeight(modal);
-                }
-
-                options.contentLoadedPromise.then(function() {
-                    $log.info('modal content loaded. updating size.');
-                    contentLoaded = true;
-                    if(modal !== undefined && modal.bodyOverflowY !== undefined){
-                        modalBodyHeight(modal);
-                    }
-                }, function() {
-                    $log.info('failed to load modal content');
-                });
             });
 
             return modalInstance;

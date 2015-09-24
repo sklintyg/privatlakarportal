@@ -1,4 +1,4 @@
-angular.module('privatlakareApp').factory('TermsModel',
+angular.module('privatlakareApp').factory('AppTermsModalModel',
     function($sessionStorage) {
         'use strict';
 
@@ -16,7 +16,25 @@ angular.module('privatlakareApp').factory('TermsModel',
 
         function _reset() {
             data.modalInstance = null;
-            data.options = null;
+            data.options = {
+                controller: 'MainTermsCtrl',
+                modalBodyTemplateUrl: 'app/terms/terms.body.html',
+                titleId: 'label.appvillkor',
+                extraDlgClass: undefined,
+                width: '600px',
+                height: '90%',
+                maxWidth: '600px',
+                maxHeight: undefined,
+                minWidth: undefined,
+                minHeight: undefined,
+                contentHeight: '100%',
+                contentOverflowY: undefined,
+                contentMinHeight: undefined,
+                bodyOverflowY: 'scroll',
+                buttons: [],
+                showClose: false
+            };
+
             return data;
         }
 
