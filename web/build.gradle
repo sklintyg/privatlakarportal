@@ -56,11 +56,15 @@ node {
     distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
 }
 
-war {
-    webAppDirName = 'build/webapp'
+if (project.hasProperty('privatlakarportal.useMinifiedJavaScript')) {
+    war {
+        webAppDirName = 'build/webapp'
+    }
+    war.dependsOn grunt_build
 }
-
-
+else {
+    war.dependsOn grunt_build_no_minify
+}
 
 task assembleManifestClasspath() << {
     war {
@@ -101,7 +105,6 @@ task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
 }
 
 grunt_build.dependsOn bowerInstall
-war.dependsOn grunt_build
 
 gretty {
     httpPort = 8090

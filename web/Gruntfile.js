@@ -504,6 +504,17 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.registerTask('build_no_minify', [
+        'clean:dist',
+        'jshint',
+        'injector:sass',
+        'sass',
+        'injector:scripts',
+        'injector:css',
+        'wiredep',
+        'karma'
+    ]);
+
     grunt.registerTask('build', [
         'clean:dist',
         'jshint',
