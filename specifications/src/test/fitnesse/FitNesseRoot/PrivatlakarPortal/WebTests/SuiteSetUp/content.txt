@@ -9,7 +9,7 @@
 | property | value |
 | geb.build.baseUrl |  ${baseUrl} |
 | privatlakarportal.baseUrl| ${baseUrl} |
-| geb.env | chrome |
+| geb.env | ${seleniumDriver} |
 
 | script | Browser |
 | öppna |

@@ -1,6 +1,6 @@
 ext {
     // Versions used for maintaining dependencies
-    seleniumVersion = '2.42.2'
+    seleniumVersion = '2.47.1'
     phantomJsVersion = '1.1.0'
 }
 
@@ -16,7 +16,8 @@ fitnesse {
     root = "FitNesseRoot"
     workingDir = "src/test/fitnesse"
     extraProperties = [
-        baseUrl: baseUrl
+        baseUrl: baseUrl,
+        seleniumDriver: seleniumDriver
     ]
     wikiStartPage = "PrivatlakarPortal.WebTests"
 
@@ -40,6 +41,8 @@ dependencies {
     // geb
     compile 'org.codehaus.geb:geb-core:0.7.2'
     compile 'org.codehaus.geb:geb-spock:0.7.2'
+
+    fitnesse "org.fitnesse:fitnesse:20150814"
 
     compile "org.fitnesse:fitnesse:20140901"
     compile "org.codehaus.groovy:groovy-all:2.4.0"
