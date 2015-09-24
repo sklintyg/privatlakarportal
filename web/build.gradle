@@ -105,6 +105,7 @@ task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
 }
 
 grunt_build.dependsOn bowerInstall
+grunt_build_no_minify.dependsOn bowerInstall
 
 gretty {
     httpPort = 8090
