@@ -1,10 +1,10 @@
+|PrivatlakarPortal.WebTests.AnvandarVillkor||10:45:18 Thu, Sep 24, 2015|
 |PrivatlakarPortal.WebTests.RedigeraPrivatlakare||12:10:26 Mon, Sep 14, 2015|
 |PrivatlakarPortal.WebTests.RegistreraPrivatlakare||14:40:40 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.PersonUppgifter.UppdateraNamnOmNyaPersonUppgifterFinns||10:50:51 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.HospUppdatering.UppdateraTillLakare||10:47:49 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.RegistreraPrivatlakareUtanHospInformation||14:55:30 Fri, Sep 04, 2015|
 |PrivatlakarPortal.WebTests.PersonUppgifter.StoppaRegistreringOmPersonUppgifterEjKanHamtas||11:09:29 Wed, Sep 02, 2015|
-|PrivatlakarPortal.WebTests.AnvandarVillkor||15:51:58 Thu, Aug 27, 2015|
 |PrivatlakarPortal.WebTests.SuiteSetUp||12:51:56 Tue, Aug 25, 2015|
 |PrivatlakarPortal||10:50:36 Tue, Aug 25, 2015|
 |FirefoxSuite||14:47:56 Tue, Jun 16, 2015|

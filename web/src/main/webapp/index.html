@@ -25,7 +25,6 @@
 <link rel="stylesheet" href="app/vendor-override.css">
 <link rel="stylesheet" href="components/commonDirectives/alertMessage/alertMessage.css">
 <link rel="stylesheet" href="components/commonDirectives/alertSingle/alertSingle.css">
-<link rel="stylesheet" href="components/modal/modal.css">
 <!-- endinjector -->
 <!-- endbuild -->
 </head>
@@ -39,7 +38,7 @@
     <div class="container" id="boot-loading" style="display:none">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="page-header ng-scope">Privatläkarportalen laddas...</h1>
+          <h1 class="page-header ng-scope">Var vänlig vänta, laddar...</h1>
           <img aria-labelledby="loading-message" src="/assets/images/ajax-loader.gif" />
         </div>
       </div>
@@ -138,6 +137,7 @@
   <script src="components/commonDirectives/message/message.filter.js"></script>
   <script src="components/commonDirectives/message/message.service.js"></script>
   <script src="components/commonDirectives/modal/wcModal.directive.js"></script>
+  <script src="components/commonDirectives/modal/wcModal.service.js"></script>
   <script src="components/commonDirectives/ppField/ppField.directive.js"></script>
   <script src="components/commonDirectives/ppFocusMe/ppFocusMe.directive.js"></script>
   <script src="components/commonDirectives/ppSpinner/ppSpinner.directive.js"></script>
@@ -146,7 +146,7 @@
   <script src="components/commonDirectives/validation/validateRegion.directive.js"></script>
   <script src="components/mock/mockResponse.js"></script>
   <script src="components/modal/dialogService.js"></script>
-  <script src="components/modal/modal.service.js"></script>
+  <script src="components/models-viewstate/appTermsModal.model.js"></script>
   <script src="components/models-viewstate/register.model.js"></script>
   <script src="components/models-viewstate/terms.model.js"></script>
   <script src="components/models-viewstate/user/user.model.js"></script>

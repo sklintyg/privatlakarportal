@@ -69,6 +69,8 @@ var ppMessages = {
         'label.start.3': 'Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms">Webcerts användarvillkor</a> (endast första gången).',
         'label.start.4': 'Du kan börja använda Webcert.',
 
+        'label.appvillkor': 'Godkännande av användarvillkor',
+
         // Register
         'register.label.grundinformation': 'Grundinformation',
         'register.label.kontaktuppgifter': 'Kontaktuppgifter i verksamheten',
