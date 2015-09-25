@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.privatlakarportal.integration.terms.stub.TermsWebServiceStub;
 
 @Configuration
-@Profile({"dev"})
+@Profile({"dev", "wc-stub"})
 public class TermsStubConfiguration {
 
     private static final Logger LOG = LoggerFactory.getLogger(TermsStubConfiguration.class);

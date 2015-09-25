@@ -1,5 +1,5 @@
 # Spring profiles
-profiles: test,pp-security-test,hsa-stub
+profiles: test,pp-security-test,hsa-stub,wc-stub
 
 # Configuration repository
 environment_name: "test"
