@@ -55,7 +55,7 @@ if (project.hasProperty('runSonar')) {
             property "sonar.projectKey", projectId
 
             // Address of SonarQube server
-            property "sonar.host.url", "http://localhost:9000"
+            property "sonar.host.url", "https://build-inera.nordicmedtest.se/sonar"
 
             ext.sonarPassword = System.properties['sonarPassword']
 
