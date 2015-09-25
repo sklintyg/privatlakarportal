@@ -2,10 +2,6 @@ package se.inera.privatlakarportal.spec.util
 
 import groovyx.net.http.RESTClient
 
-/**
- *
- * @author andreaskaltenbach
- */
 class RestClientFixture {
     String baseUrl = System.getProperty("privatlakarportal.baseUrl") + "/api/"
     
@@ -23,7 +19,7 @@ class RestClientFixture {
      */
     static def createRestClient(String url) {
         def restClient = new RESTClient(url)
-        //restClient.ignoreSSLIssues()
+        restClient.ignoreSSLIssues()
         restClient
     }
 }
