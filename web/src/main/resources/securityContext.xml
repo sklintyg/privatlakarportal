@@ -103,6 +103,9 @@
             <constructor-arg index="0" value="/" />
           </bean>
           <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+            <constructor-arg index="0" value="/index.html" />
+          </bean>
+          <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
             <constructor-arg index="0" value="/saml/**" />
           </bean>
         </list>
