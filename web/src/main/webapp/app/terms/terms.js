@@ -2,6 +2,7 @@ angular.module('privatlakareApp')
     .config(function($stateProvider) {
         'use strict';
 
+        /*
         function openPortalTerms($stateParams, $state, dialogService) {
 
             $('body').addClass('modalprinter');
@@ -21,26 +22,27 @@ angular.module('privatlakareApp')
 
         function closePortalTerms(dialogService) {
             dialogService.close();
-        }
+        }*/
 
-        function printTerms($window, $timeout, content) {
+        function printTerms($window, $timeout, $filter, messageService, content) {
             var head = '<!DOCTYPE html><html>' +
                 '<head>' +
                 '<link rel="stylesheet" href="/app/app.css" media="print">' +
-                '<title>Användarvillkor för Webcert</title>' +
+                '<title>'+ messageService.getProperty(content.titleId) +'</title>' +
                 '</head>';
 
-            var body = '<body onload="window.print()">' +
-                '<img class="pull-left" style="padding-bottom: 20px" src="/assets/images/webcert_black.png" />' +
-                '<p style="clear:left;padding-bottom:50px;color:#535353">' +
+            var body = '<body onload="window.print()">';
+            if(content.logoImage !== undefined && content.logoImage !== null) {
+                body += '<img class="pull-left" style="padding-bottom: 20px" src="/assets/images/'+ content.logoImage + '" />';
+            }
+            body += '<p style="clear:left;padding-bottom:50px;color:#535353">' +
                 '<span style="padding-left:20px;padding-right:30px">Version: ' +
-                content.version + '</span>' +
-                '<span>Datum: ' + content.datum + '</span></p>' +
-                '<h1 style="color: black;font-size: 2em">Användarvillkor för Webcert</h1>' +
-                '<p style="clear:left;padding-bottom: 10px">' + content.text + '</p>' +
+                content.terms.termsModel.version + '</span>' +
+                '<span>Datum: ' + $filter('date')(content.terms.termsModel.date, 'yyyy-MM-dd') + '</span></p>' +
+                '<h1 style="color: black;font-size: 2em">' + messageService.getProperty(content.titleId) + '</h1>' +
+                '<p style="clear:left;padding-bottom: 10px">' + content.terms.termsModel.text + '</p>' +
                 '<p style="clear:left;color:#535353;padding-top:50px">' + content.absUrl + '</p>' +
                 '</body>';
-
             var footer = '</html>';
 
             var template = head + body + footer;
@@ -72,16 +74,13 @@ angular.module('privatlakareApp')
             return true;
         }
 
-        function openExternalAppTerms($state, $window, $timeout, wcModalService, AppTermsModalModel) {
-
+        function openTerms(modalModel, $state, $timeout, $filter, $window, wcModalService, messageService) {
             function popState() {
                 if ($state.current.url === '/terms') {
                     $state.go('^');
                 }
             }
 
-            var modalModel = AppTermsModalModel.init();
-            modalModel.options.controller = 'MainTermsCtrl';
             modalModel.options.buttons = [
                 {
                     name: 'close',
@@ -98,7 +97,7 @@ angular.module('privatlakareApp')
                     text: 'common.print',
                     id: 'printBtn',
                     clickFn: function($modalInstance, content) {
-                        printTerms($window, $timeout, content);
+                        printTerms($window, $timeout, $filter, messageService, content);
                     }
                 }
             ];
@@ -106,7 +105,21 @@ angular.module('privatlakareApp')
             modalModel.modalInstance = wcModalService.open(modalModel.options);
         }
 
-        function closeExternalAppTerms(AppTermsModalModel) {
+        function openExternalAppTerms($state, $timeout, $filter, $window, wcModalService, AppTermsModalModel, messageService) {
+            var modalModel = AppTermsModalModel.init();
+            modalModel.options.controller = 'WebcertTermsCtrl';
+            modalModel.options.titleId = 'label.modal.title.webcertvillkor';
+            openTerms(modalModel, $state, $timeout, $filter, $window, wcModalService, messageService);
+        }
+
+        function openPortalTerms($state, $timeout, $filter, $window, wcModalService, AppTermsModalModel, messageService) {
+            var modalModel = AppTermsModalModel.init();
+            modalModel.options.controller = 'PortalTermsCtrl';
+            modalModel.options.titleId = 'label.modal.title.portalvillkor';
+            openTerms(modalModel, $state, $timeout, $filter, $window, wcModalService, messageService);
+        }
+
+        function closeTerms(AppTermsModalModel) {
             var modal = AppTermsModalModel.get().modalInstance;
             if(modal) {
                 modal.dismiss('cancel');
@@ -117,7 +130,7 @@ angular.module('privatlakareApp')
             .state('app.start.terms', {
                 url: '/terms',
                 onEnter: openExternalAppTerms,
-                onExit: closeExternalAppTerms,
+                onExit: closeTerms,
                 params: {
                     terms: null,
                     termsData: null
@@ -132,9 +145,9 @@ angular.module('privatlakareApp')
                     }
                 }
             }).state('app.register.step3.terms', {
-                url: 'terms',
+                url: '/terms',
                 onEnter: openPortalTerms,
-                onExit: closePortalTerms,
+                onExit: closeTerms,
                 params: {
                     terms: null,
                     termsData: null
@@ -149,5 +162,4 @@ angular.module('privatlakareApp')
                     }
                 }
             });
-
     });

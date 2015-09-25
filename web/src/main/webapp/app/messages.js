@@ -69,7 +69,8 @@ var ppMessages = {
         'label.start.3': 'Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms">Webcerts användarvillkor</a> (endast första gången).',
         'label.start.4': 'Du kan börja använda Webcert.',
 
-        'label.appvillkor': 'Godkännande av användarvillkor',
+        'label.modal.title.webcertvillkor': 'Godkännande av användarvillkor',
+        'label.modal.content.title.webcertvillkor': 'Användarvillkor för Webcert',
 
         // Register
         'register.label.grundinformation': 'Grundinformation',
@@ -164,6 +165,9 @@ var ppMessages = {
         'label.step3intro': 'Kontrollera att sammanfattningen av din information stämmer innan du går vidare. Du kan justera de uppgifter som du själv har angett. Information hämtad från din e-legitimation och från Socialstyrelsens register går inte att redigera.',
         'label.godkannvillkor': 'Jag medger <a ui-sref=".terms">behandling av mina och verksamhetens uppgifter</a>.',
         'label.createaccount': 'Skapa konto',
+
+        'label.modal.title.portalvillkor': 'Godkännande av villkor för lagring av uppgifter',
+        'label.modal.content.title.portalvillkor': 'Villkor för lagring av uppgifter',
 
         // Complete
         'label.complete.header': 'Ditt konto är skapat',
