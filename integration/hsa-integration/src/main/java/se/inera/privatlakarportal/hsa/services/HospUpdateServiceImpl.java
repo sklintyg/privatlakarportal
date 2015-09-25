@@ -48,6 +48,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     @Autowired
     MailService mailService;
 
+    @Override
     @Scheduled(cron = "${privatlakarportal.hospupdate.cron}")
     @Transactional
     public void updateHospInformation() {

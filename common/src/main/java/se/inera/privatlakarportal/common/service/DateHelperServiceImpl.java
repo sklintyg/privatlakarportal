@@ -12,6 +12,7 @@ public class DateHelperServiceImpl implements DateHelperService {
     /*
      * Used for mocking now() in unit tests
      */
+    @Override
     public LocalDateTime now() {
         return LocalDateTime.now();
     }

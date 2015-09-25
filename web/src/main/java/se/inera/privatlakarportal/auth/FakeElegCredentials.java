@@ -1,11 +1,15 @@
 package se.inera.privatlakarportal.auth;
 
+import java.io.Serializable;
+
 /**
  * Fake container for approx. CGI SAML ticket attributes.
  *
  * Created by eriklupander on 2015-06-16.
  */
-public class FakeElegCredentials {
+public class FakeElegCredentials implements Serializable {
+
+    private static final long serialVersionUID = -463449872733458242L;
 
     // Subject_SerialNumber
     private String personId;
@@ -15,8 +19,6 @@ public class FakeElegCredentials {
 
     // Subject_Surname
     private String lastName;
-
-    private boolean privatLakare;
 
     public String getPersonId() {
         return personId;
@@ -42,11 +44,4 @@ public class FakeElegCredentials {
         this.lastName = lastName;
     }
 
-    public boolean isPrivatLakare() {
-        return privatLakare;
-    }
-
-    public void setPrivatLakare(boolean privatLakare) {
-        this.privatLakare = privatLakare;
-    }
 }

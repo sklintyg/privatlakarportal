@@ -64,6 +64,7 @@ public class PUServiceImpl implements PUService {
         }
     }
 
+    @Override
     @VisibleForTesting
     @CacheEvict(value = "personCache", allEntries = true)
     public void clearCache() {

@@ -29,6 +29,15 @@ public class Omrade {
                lan.equals(other.lan);
     }
 
+    @Override
+    public int hashCode() {
+        int result = postnummer.hashCode();
+        result = 31 * result + postort.hashCode();
+        result = 31 * result + kommun.hashCode();
+        result = 31 * result + lan.hashCode();
+        return result;
+    }
+
     public String getPostnummer() {
         return postnummer;
     }
