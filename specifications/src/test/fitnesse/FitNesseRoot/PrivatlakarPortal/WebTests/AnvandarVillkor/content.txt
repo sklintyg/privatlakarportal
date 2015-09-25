@@ -14,4 +14,9 @@
 !3 Stäng användarvillkor
 | script | Startsida |
 | stäng användarvillkoren |
+
+| script | Registrera |
+| vanta | 1 |
+
+| script | Startsida |
 | startsidan visas |

@@ -1,5 +1,5 @@
 angular.module('privatlakareApp')
-    .controller('PortalTermsCtrl', function($scope, $http, $state, $templateCache, $window, $log, $location, $q, $timeout,
+    .controller('WebcertTermsCtrl', function($scope, $http, $state, $templateCache, $window, $log, $location, $q, $timeout,
         $modalInstance, TermsModel, TermsProxy, TermsService, ModalViewService) {
         'use strict';
 
@@ -7,8 +7,8 @@ angular.module('privatlakareApp')
         $scope.content = {
             terms: terms,
             absUrl: $location.absUrl(),
-            titleId: 'label.modal.content.title.portalvillkor',
-            logoImage: null
+            titleId: 'label.modal.content.title.webcertvillkor',
+            logoImage: 'webcert_black.png'
         };
         ModalViewService.decorateModalScope($scope, $modalInstance, terms.termsPromise);
     });
