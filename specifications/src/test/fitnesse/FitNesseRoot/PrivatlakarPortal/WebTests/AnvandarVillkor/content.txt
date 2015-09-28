@@ -1,3 +1,8 @@
+!3 Rensa testdata
+| !-TaBortPrivatlakare-! |
+| id           | resultat? |
+| 199008252398 | true      |
+
 !3 Logga in som privatläkare
 | script | !-LoggaIn-! |
 | logga in som | private-practicioner-1 |
