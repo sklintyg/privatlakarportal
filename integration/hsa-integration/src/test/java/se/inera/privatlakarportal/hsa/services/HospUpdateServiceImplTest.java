@@ -9,6 +9,9 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.xml.ws.WebServiceException;
 
@@ -236,6 +239,37 @@ public class HospUpdateServiceImplTest {
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
 
         hospUpdateService.checkForUpdatedHospInformation(privatlakare);
+    }
+
+    @Test
+    public void testCheckForUpdatedHospInformationTillbakadragenLakarbehorighet() {
+        // Haft läkarbehörighet innan.
+        Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setPersonId(PERSON_ID);
+        privatlakare.setForskrivarKod("7777777");
+        Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();
+        legitimeradYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare, "Läkare", "LK"));
+        privatlakare.setLegitimeradeYrkesgrupper(legitimeradYrkesgrupper);
+        List<Specialitet> specialiteter = new ArrayList<>();
+        specialiteter.add(new Specialitet(privatlakare, "Specialitet", "12"));
+        privatlakare.setSpecialiteter(specialiteter);
+        privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+
+        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDateTime.parse("2015-09-05"));
+
+        // Läkarbehörigheten är borttagen ur HSA
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
+
+        hospUpdateService.checkForUpdatedHospInformation(privatlakare);
+
+        verify(hospPersonService).getHospLastUpdate();
+        verify(hospPersonService).getHospPerson(PERSON_ID);
+        verifyNoMoreInteractions(hospPersonService);
+        verify(privatlakareRepository).save(privatlakare);
+
+        assertEquals(0, privatlakare.getLegitimeradeYrkesgrupper().size());
+        assertEquals(0, privatlakare.getSpecialiteter().size());
+        assertEquals(null, privatlakare.getForskrivarKod());
     }
 
     private GetHospPersonResponseType createGetHospPersonResponse() {

@@ -37,4 +37,13 @@ class HospUppdatering extends RestClientFixture {
         )
         resp.data.hospInformation != null && resp.data.hospInformation.hsaTitles != null && resp.data.hospInformation.hsaTitles.contains("Läkare")
     }
+
+    public String loggaInGenomWebcert(String personId) {
+        def restClient = createRestClient()
+        def resp = restClient.post(
+            path: 'test/webcert/validatePrivatePractitioner/' + personId,
+            requestContentType: JSON
+        )
+        resp.data.resultCode
+    }
 }

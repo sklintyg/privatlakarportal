@@ -100,27 +100,27 @@ public class Privatlakare {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime vardgivareSlutdatum;
 
-    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Befattning> befattningar;
 
-    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LegitimeradYrkesgrupp> legitimeradeYrkesgrupper;
 
-    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("namn ASC")
     private List<Specialitet> specialiteter;
 
-    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Verksamhetstyp> verksamhetstyper;
 
-    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Vardform> vardformer;
 
     @Column(name = "SENASTE_HOSP_UPPDATERING", nullable = true)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime senasteHospUppdatering;
 
-    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Medgivande> medgivande;
 
     @Override

@@ -1,4 +1,5 @@
 |PrivatlakarPortal.WebTests.AnvandarVillkor||17:37:15 Fri, Sep 25, 2015|
+|PrivatlakarPortal.WebTests.HospUppdatering.TillbakadragenLakarbehorighet||10:24:32 Mon, Sep 28, 2015|
 |PrivatlakarPortal.WebTests.SuiteSetUp||14:00:30 Thu, Sep 24, 2015|
 |PrivatlakarPortal.WebTests.RedigeraPrivatlakare||12:10:26 Mon, Sep 14, 2015|
 |PrivatlakarPortal.WebTests.RegistreraPrivatlakare||14:40:40 Thu, Sep 10, 2015|

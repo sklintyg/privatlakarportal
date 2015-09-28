@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 import se.inera.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.privatlakarportal.hsa.stub.HsaServiceStub;
+import se.inera.privatlakarportal.integration.privatepractioner.services.IntegrationService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.service.RegisterService;
+import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
 /**
  * Created by pebe on 2015-09-02.
@@ -34,8 +36,11 @@ public class TestController {
     @Autowired
     private HospUpdateService hospUpdateService;
 
+    @Autowired
+    private IntegrationService integrationService;
+
     public TestController() {
-        LOG.debug("TestController");
+        LOG.error("testability-api enabled. DO NOT USE IN PRODUCTION");
     }
 
     @RequestMapping(value = "/registration/remove/{id}", method = RequestMethod.DELETE)
@@ -69,5 +74,10 @@ public class TestController {
     @RequestMapping(value = "/hosp/update", method = RequestMethod.POST)
     public void updateHospInformation() {
         hospUpdateService.updateHospInformation();
+    }
+
+    @RequestMapping(value = "/webcert/validatePrivatePractitioner/{id}", method = RequestMethod.POST)
+    public ValidatePrivatePractitionerResponseType validatePrivatePractitioner(@PathVariable("id") String id) {
+        return integrationService.validatePrivatePractitionerByPersonId(id);
     }
 }

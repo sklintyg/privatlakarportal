@@ -123,6 +123,10 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                     LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
                 }
             }
+            privatlakare.setLegitimeradeYrkesgrupper(new HashSet<LegitimeradYrkesgrupp>());
+            privatlakare.setSpecialiteter(new ArrayList<Specialitet>());
+            privatlakare.setForskrivarKod(null);
+
             return RegistrationStatus.WAITING_FOR_HOSP;
         }
         else {
