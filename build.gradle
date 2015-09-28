@@ -76,22 +76,20 @@ subprojects {
     apply plugin: 'java'
     if (project.hasProperty('runSonar')) {
         apply plugin: 'jacoco'
-        
+
         jacoco {
             toolVersion = "0.7.1.201405082137"
         }
         jacocoTestReport {
+
+            additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+            classDirectories =  files(sourceSets.main.output)
+            sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+
             reports {
                 xml.enabled false
                 csv.enabled false
                 html.destination "${buildDir}/jacocoHtml"
-            }
-            afterEvaluate {
-                classDirectories = files(classDirectories.files.collect {
-                    fileTree(dir: it,
-                            exclude: ['integration/hsa-integration/generatedSource/**',
-                                'integration/pu-integration/generatedSource/**'])
-                })
             }
         }
     }
@@ -109,15 +107,6 @@ subprojects {
         setProperty("buildTime", getDate().toString())
         setProperty("buildNumber", System.env.BUILD_NUMBER ? System.env.BUILD_NUMBER : "SNAPSHOT")
         setProperty("buildVersion", System.env.BUILD_VERSION ? System.env.BUILD_VERSION : "1.0.0-SNAPSHOT")
-    }
-
-    sourceSets {
-        integrationTest {
-            java.srcDir file('src/integTest/java')
-            resources.srcDir file('src/integTest/resources')
-            compileClasspath = sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
-            runtimeClasspath = output + compileClasspath
-        }
     }
 }
 
