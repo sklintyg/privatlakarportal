@@ -13,6 +13,11 @@ angular.module('privatlakareApp').directive('alertMessage',
                     'alertMessageId' : '@',
                     'alertSeverity' : '@'
                 },
+                controller: function($scope) {
+                    if($scope.alertShow === undefined) {
+                        $scope.alertShow = true;
+                    }
+                },
                 templateUrl: 'components/commonDirectives/alertMessage/alertMessage.directive.html'
             };
         }]);

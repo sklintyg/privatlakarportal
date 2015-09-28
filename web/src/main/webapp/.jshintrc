@@ -43,6 +43,7 @@
         "inject": true,
         "MODULE_CONFIG": true,
         "document": true,
-        "deferredBootstrapper": true
+        "deferredBootstrapper": true,
+        "navigator": true
     }
 }

@@ -1,5 +1,5 @@
 angular.module('privatlakareApp').factory('ModalViewService',
-    function($window, $state, $log, $timeout, $document) {
+    function($window, $state, $log, $timeout) {
         'use strict';
 
         function getWindowSize() {
@@ -40,7 +40,7 @@ angular.module('privatlakareApp').factory('ModalViewService',
                 var footer = angular.element('.modal-footer').outerHeight();
                 var modalcontent = angular.element('.modal-content').height();
                 var modalBodyElement = angular.element('.modal-body');
-                var modalHeight = getWindowSize()().height; //angular.element($document).height();
+                var modalHeight = getWindowSize()().height;
 
                 if(header === null || footer === null || modalcontent === null || modalBodyElement === null) {
                     $log.info('content or DOM was not loaded yet. waiting...');
@@ -59,11 +59,9 @@ angular.module('privatlakareApp').factory('ModalViewService',
             });
         }
 
-        function _decorateModalScope($scope, $modalInstance, termsPromise) {
+        function _decorateModalScope($scope, $modalInstance) {
 
-            termsPromise.then(function() {
-                _updateModalBodyHeight($scope.modal);
-            });
+            _updateModalBodyHeight($scope.modal);
 
             $scope.close = function($event){
                 if ($event) {

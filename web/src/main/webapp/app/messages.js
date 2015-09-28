@@ -32,7 +32,7 @@ var ppMessages = {
         // wc-common-directives-resources
         'nav.label.loggedinas': 'Inloggad som:',
 
-        // Common errors
+        // Shared common errors between intygstjänster applications
         'common.error.unknown': '<strong>Tekniskt fel.</strong>',
         'common.error.authorization_problem': '<strong>Behörighet saknas.</strong><br>Du saknar behörighet att använda denna resurs.',
         'common.error.cantconnect': '<strong>Kunde inte kontakta servern.</strong>',
@@ -55,6 +55,12 @@ var ppMessages = {
         'common.error.save.concurrent_modification': '<strong>Kan inte spara utkastet. Utkastet har ändrats av en annan användare medan du arbetat på samma utkast.</strong><br>Ladda om sidan och försök igen. Utkastet ändrades av: ${name}',
         'common.error.save.unknown_internal_problem': '<strong>Tappade anslutningen till servern.</strong><br>Det går för tillfället inte att spara ändringar.',
         'common.error.save.invalid_state': '<strong>Tekniskt fel.</strong><br>Intyget kunde inte laddas korrekt. (invalid_state).',
+
+        // General form errors
+        'label.form.error.pastenotallowed': 'Du måste ange e-postadresserna genom att skriva in dem.',
+        'label.form.error.nopermission': '<p>Du har inte behörighet att logga in i Webcert. Det kan bero på att: </p><ul><li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.</li><li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li><li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. Kontakta Inera Nationell Kundservice för att ta reda på mer.</li></ul>',
+
+        'label.villkor.error.cantload': 'Kunde inte hämta villkoren. Försök igen senare. Kontakta Inera Nationell Kundservice om felet kvarstår.',
 
         // Header
         'label.header.changeaccount': 'Ändra uppgifter',
@@ -180,11 +186,7 @@ var ppMessages = {
         'label.waiting.gotoyouraccount': 'Gå till ditt konto',
 
         // Min sida
-        'heading.mypage': 'Min sida',
-
-        // General errors
-        'label.form.error.pastenotallowed': 'Du måste ange e-postadresserna genom att skriva in dem.',
-        'label.form.error.nopermission': '<p>Du har inte behörighet att logga in i Webcert. Det kan bero på att: </p><ul><li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.</li><li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li><li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. Kontakta Inera Nationell Kundservice för att ta reda på mer.</li></ul>'
+        'heading.mypage': 'Min sida'
     },
     'en': {
         'common.ok': 'OK',
