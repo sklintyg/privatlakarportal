@@ -29,6 +29,7 @@ import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
 import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.common.service.MailService;
+import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
@@ -91,8 +92,8 @@ public class HospUpdateServiceImplTest {
         verify(privatlakareRepository).save(privatlakare);
     }
 
-    @Test
-    public void testUpdateHospInformationKanEjKontaktaHSA1() {
+    @Test(expected = HospUpdateFailedToContactHsaException.class)
+    public void testUpdateHospInformationKanEjKontaktaHSA1() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setPersonId(PERSON_ID);
@@ -107,7 +108,7 @@ public class HospUpdateServiceImplTest {
     }
 
     @Test
-    public void testUpdateHospInformationKanEjKontaktaHSA2() {
+    public void testUpdateHospInformationKanEjKontaktaHSA2() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setPersonId(PERSON_ID);
@@ -125,7 +126,7 @@ public class HospUpdateServiceImplTest {
     }
 
     @Test
-    public void testUpdateHospInformationEjLakare() {
+    public void testUpdateHospInformationEjLakare() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setPersonId(PERSON_ID);
@@ -139,7 +140,7 @@ public class HospUpdateServiceImplTest {
     }
 
     @Test
-    public void testUpdateHospInformationEjIHosp() {
+    public void testUpdateHospInformationEjIHosp() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setPersonId(PERSON_ID);
@@ -155,7 +156,7 @@ public class HospUpdateServiceImplTest {
     }
 
     @Test
-    public void testUpdateHospInformationLakare() {
+    public void testUpdateHospInformationLakare() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setPersonId(PERSON_ID);
@@ -208,6 +209,7 @@ public class HospUpdateServiceImplTest {
         verifyNoMoreInteractions(hospPersonService);
         verify(privatlakareRepository).save(privatlakare);
 
+        assertEquals(LocalDateTime.parse("2015-09-05"), privatlakare.getSenasteHospUppdatering());
         assertEquals(1, privatlakare.getLegitimeradeYrkesgrupper().size());
         LegitimeradYrkesgrupp l = privatlakare.getLegitimeradeYrkesgrupper().iterator().next();
         assertEquals("DT", l.getKod());
@@ -226,6 +228,8 @@ public class HospUpdateServiceImplTest {
 
         when(hospPersonService.getHospLastUpdate()).thenThrow(new WebServiceException("Could not send message"));
         hospUpdateService.checkForUpdatedHospInformation(privatlakare);
+
+        assertEquals(LocalDateTime.parse("2015-09-01"), privatlakare.getSenasteHospUppdatering());
     }
 
     @Test
@@ -239,6 +243,8 @@ public class HospUpdateServiceImplTest {
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
 
         hospUpdateService.checkForUpdatedHospInformation(privatlakare);
+
+        assertEquals(LocalDateTime.parse("2015-09-01"), privatlakare.getSenasteHospUppdatering());
     }
 
     @Test
@@ -267,9 +273,41 @@ public class HospUpdateServiceImplTest {
         verifyNoMoreInteractions(hospPersonService);
         verify(privatlakareRepository).save(privatlakare);
 
+        assertEquals(LocalDateTime.parse("2015-09-05"), privatlakare.getSenasteHospUppdatering());
         assertEquals(0, privatlakare.getLegitimeradeYrkesgrupper().size());
         assertEquals(0, privatlakare.getSpecialiteter().size());
         assertEquals(null, privatlakare.getForskrivarKod());
+    }
+
+    @Test
+    public void testCheckForUpdatedHospInformationTillbakadragenLakarbehorighetKanEjKontaktaHSA() {
+        // Haft läkarbehörighet innan.
+        Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setPersonId(PERSON_ID);
+        privatlakare.setForskrivarKod("7777777");
+        Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();
+        legitimeradYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare, "Läkare", "LK"));
+        privatlakare.setLegitimeradeYrkesgrupper(legitimeradYrkesgrupper);
+        List<Specialitet> specialiteter = new ArrayList<>();
+        specialiteter.add(new Specialitet(privatlakare, "Specialitet", "12"));
+        privatlakare.setSpecialiteter(specialiteter);
+        privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+
+        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDateTime.parse("2015-09-05"));
+
+        // Läkarbehörigheten är borttagen ur HSA
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException());
+
+        hospUpdateService.checkForUpdatedHospInformation(privatlakare);
+
+        // Om det ej gick att kontakta HSA ska datumet för lasthospupdate inte ändras.
+        verify(hospPersonService).getHospLastUpdate();
+        verify(hospPersonService).getHospPerson(PERSON_ID);
+        verifyNoMoreInteractions(hospPersonService);
+        verifyNoMoreInteractions(hospUppdateringRepository);
+        verifyNoMoreInteractions(privatlakareRepository);
+
+        assertEquals(LocalDateTime.parse("2015-09-01"), privatlakare.getSenasteHospUppdatering());
     }
 
     private GetHospPersonResponseType createGetHospPersonResponse() {

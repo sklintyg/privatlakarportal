@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.hsa.services;
 
+import com.google.common.base.Throwables;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnu
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
+import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
@@ -88,29 +90,33 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             for(Privatlakare privatlakare : privatlakareList) {
 
                 LOG.info("Checking privatlakare '{}' for updated hosp information", privatlakare.getPersonId());
+                try {
+                    RegistrationStatus status = updateHospInformation(privatlakare, true);
+                    LOG.info("updateHospInformation returned status '{}'", status);
 
-                RegistrationStatus status = updateHospInformation(privatlakare, true);
-                LOG.info("updateHospInformation returned status '{}'", status);
-
-                // Check if information has been updated
-                if (status == RegistrationStatus.AUTHORIZED ||
-                    status == RegistrationStatus.NOT_AUTHORIZED) {
-                    privatlakareRepository.save(privatlakare);
-                    mailService.sendRegistrationStatusEmail(status, privatlakare);
+                    // Check if information has been updated
+                    if (status == RegistrationStatus.AUTHORIZED ||
+                            status == RegistrationStatus.NOT_AUTHORIZED) {
+                        privatlakareRepository.save(privatlakare);
+                        mailService.sendRegistrationStatusEmail(status, privatlakare);
+                    }
+                }
+                catch(HospUpdateFailedToContactHsaException e) {
                 }
             }
         }
     }
 
     @Override
-    public RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier) {
+    public RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier)
+            throws HospUpdateFailedToContactHsaException {
         GetHospPersonResponseType hospPersonResponse;
         try {
             hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
         }
         catch (WebServiceException e) {
             LOG.error("Failed to call getHospPerson in HSA, this call will be retried at next hosp update cycle.");
-            return RegistrationStatus.WAITING_FOR_HOSP;
+            throw new HospUpdateFailedToContactHsaException(e);
         }
 
         if (hospPersonResponse == null) {
@@ -191,10 +197,13 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
                 LOG.debug("Hosp has been updated since last login for privlakare '{}'. Updating hosp information", privatlakare.getPersonId());
 
-                updateHospInformation(privatlakare, false);
-
-                privatlakare.setSenasteHospUppdatering(hospLastUpdate);
-                privatlakareRepository.save(privatlakare);
+                try {
+                    updateHospInformation(privatlakare, false);
+                    privatlakare.setSenasteHospUppdatering(hospLastUpdate);
+                    privatlakareRepository.save(privatlakare);
+                }
+                catch(HospUpdateFailedToContactHsaException e) {
+                }
             }
         }
         catch(WebServiceException e) {

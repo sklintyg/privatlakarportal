@@ -39,6 +39,7 @@ import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.privatlakarportal.persistence.model.Befattning;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.privatlakarportal.persistence.model.Medgivande;
@@ -168,7 +169,7 @@ public class RegisterServiceImplTest {
     }
 
     @Test
-    public void testCreateRegistrationLakare() throws IOException {
+    public void testCreateRegistrationLakare() throws IOException, HospUpdateFailedToContactHsaException {
 
         PrivatlakareId privatlakareId = new PrivatlakareId();
         privatlakareId.setId(1);
@@ -218,7 +219,7 @@ public class RegisterServiceImplTest {
 
 
     @Test
-    public void testCreateRegistrationEjLakare() {
+    public void testCreateRegistrationEjLakare() throws HospUpdateFailedToContactHsaException {
 
         PrivatlakareId privatlakareId = new PrivatlakareId();
         privatlakareId.setId(1);
@@ -234,7 +235,7 @@ public class RegisterServiceImplTest {
     }
 
     @Test
-    public void testCreateRegistrationEjIHosp() {
+    public void testCreateRegistrationEjIHosp() throws HospUpdateFailedToContactHsaException {
 
         PrivatlakareId privatlakareId = new PrivatlakareId();
         privatlakareId.setId(1);

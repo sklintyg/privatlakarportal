@@ -21,6 +21,7 @@ import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.privatlakarportal.persistence.model.Medgivande;
 import se.inera.privatlakarportal.persistence.model.MedgivandeText;
@@ -207,7 +208,12 @@ public class RegisterServiceImpl implements RegisterService {
         convertRegistrationToPrivatlakare(registration, privatlakare);
 
         // Lookup hospPerson in HSA
-        RegistrationStatus status = hospUpdateService.updateHospInformation(privatlakare, true);
+        RegistrationStatus status = null;
+        try {
+            status = hospUpdateService.updateHospInformation(privatlakare, true);
+        } catch (HospUpdateFailedToContactHsaException e) {
+            status = RegistrationStatus.WAITING_FOR_HOSP;
+        }
 
         mailService.sendRegistrationStatusEmail(status, privatlakare);
 

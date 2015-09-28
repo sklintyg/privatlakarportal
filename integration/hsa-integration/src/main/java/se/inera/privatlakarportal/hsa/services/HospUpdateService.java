@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.hsa.services;
 
+import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
 
@@ -10,7 +11,8 @@ public interface HospUpdateService {
 
     public void updateHospInformation();
 
-    RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier);
+    RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier)
+            throws HospUpdateFailedToContactHsaException;
 
     void checkForUpdatedHospInformation(Privatlakare privatlakare);
 }
