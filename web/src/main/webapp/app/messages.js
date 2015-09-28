@@ -166,8 +166,8 @@ var ppMessages = {
         'label.godkannvillkor': 'Jag medger <a ui-sref=".terms">behandling av mina och verksamhetens uppgifter</a>.',
         'label.createaccount': 'Skapa konto',
 
-        'label.modal.title.portalvillkor': 'Godkännande av villkor för lagring av uppgifter',
-        'label.modal.content.title.portalvillkor': 'Villkor för lagring av uppgifter',
+        'label.modal.title.portalvillkor': 'Godkännande av lagring och hämtning av uppgifter',
+        'label.modal.content.title.portalvillkor': 'Medgivande av villkor för lagring och hämtning av uppgifter',
 
         // Complete
         'label.complete.header': 'Ditt konto är skapat',

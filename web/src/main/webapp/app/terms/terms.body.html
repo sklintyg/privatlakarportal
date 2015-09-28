@@ -2,8 +2,8 @@
   <div ng-if="content.logoImage">
     <img class="pull-left" style="padding-bottom: 20px" ng-src="assets/images/{{content.logoImage}}" />
   </div>
-  <p style="clear:left;padding-bottom:50px;color:#535353">
-    <span id="termsVersion" style="padding-left:20px;padding-right:30px">Version: {{content.terms.termsModel.version}}</span>
+  <p style="clear:left;padding-top:20px;padding-bottom:20px;color:#535353">
+    <span id="termsVersion" style="padding-right:30px">Version: {{content.terms.termsModel.version}}</span><br>
     <span id="termsDatum">Datum: {{content.terms.termsModel.date | date : "yyyy-MM-dd"}}</span></p>
   <h1 style="color: black;font-size: 2em"><span message key="{{content.titleId}}"></span></h1>
   <p id="termsModal" style="clear:left;padding-bottom: 10px" ng-bind-html="content.terms.termsModel.text"></p>

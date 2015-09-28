@@ -35,9 +35,9 @@ angular.module('privatlakareApp')
             if(content.logoImage !== undefined && content.logoImage !== null) {
                 body += '<img class="pull-left" style="padding-bottom: 20px" src="/assets/images/'+ content.logoImage + '" />';
             }
-            body += '<p style="clear:left;padding-bottom:50px;color:#535353">' +
-                '<span style="padding-left:20px;padding-right:30px">Version: ' +
-                content.terms.termsModel.version + '</span>' +
+            body += '<p style="clear:left;padding-top:20px;padding-bottom:20px;color:#535353">' +
+                '<span style="padding-right:30px">Version: ' +
+                content.terms.termsModel.version + '</span><br>' +
                 '<span>Datum: ' + $filter('date')(content.terms.termsModel.date, 'yyyy-MM-dd') + '</span></p>' +
                 '<h1 style="color: black;font-size: 2em">' + messageService.getProperty(content.titleId) + '</h1>' +
                 '<p style="clear:left;padding-bottom: 10px">' + content.terms.termsModel.text + '</p>' +
