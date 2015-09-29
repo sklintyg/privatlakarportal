@@ -8,7 +8,7 @@ angular.module('privatlakareApp')
                 terms: terms,
                 absUrl: $location.absUrl(),
                 titleId: 'label.modal.content.title.webcertvillkor',
-                logoImage: 'webcert_black.png'
+                logoImage: 'assets/images/webcert_black.png'
             };
             ModalViewService.decorateModalScope($scope, $modalInstance);
         });

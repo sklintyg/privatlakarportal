@@ -12,7 +12,7 @@ angular.module('privatlakareApp').factory('TermsService',
 
             var body = '<body onload="window.print()">';
             if(content.logoImage !== undefined && content.logoImage !== null) {
-                body += '<img class="pull-left" style="padding-bottom: 20px" src="/assets/images/'+ content.logoImage + '" />';
+                body += '<img class="pull-left" style="padding-bottom: 20px" src="assets/images/'+ content.logoImage + '" />';
             }
             body += '<p style="clear:left;padding-top:20px;padding-bottom:20px;color:#535353">' +
                 '<span style="padding-right:30px">Version: ' +

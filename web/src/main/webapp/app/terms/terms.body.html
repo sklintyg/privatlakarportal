@@ -6,7 +6,7 @@
     </div>
     <div ng-switch-when="true">
       <div ng-if="content.logoImage">
-        <img class="pull-left" style="padding-bottom: 20px" ng-src="assets/images/{{content.logoImage}}" />
+        <img class="pull-left" style="padding-bottom: 20px" ng-src="{{content.logoImage}}" />
       </div>
       <p style="clear:left;padding-top:20px;padding-bottom:20px;color:#535353">
         <span id="termsVersion" style="padding-right:30px">Version: {{content.terms.termsModel.version}}</span><br>
