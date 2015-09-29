@@ -20,7 +20,7 @@ import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepositor
 
 @Service
 @Profile({"dev", "pp-init-data"})
-@DependsOn("initDb")
+@DependsOn("dbUpdate")
 public class MedgivandeBootstrapBean {
     private static final Logger LOG = LoggerFactory.getLogger(MedgivandeBootstrapBean.class);
 

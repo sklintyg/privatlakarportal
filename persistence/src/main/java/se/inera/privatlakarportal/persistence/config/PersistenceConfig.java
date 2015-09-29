@@ -120,7 +120,7 @@ public class PersistenceConfig {
         return transactionManager;
     }
 
-    @Bean
+    @Bean(name = "dbUpdate")
     @Profile("dev")
     SpringLiquibase initDb(DataSource dataSource) {
         SpringLiquibase springLiquibase = new SpringLiquibase();
@@ -129,7 +129,7 @@ public class PersistenceConfig {
         return springLiquibase;
     }
 
-    @Bean
+    @Bean(name = "dbUpdate")
     @Profile("!dev")
     DbChecker checkDb(DataSource dataSource) {
         DbChecker dbChecker = new DbChecker(dataSource, "changelog/changelog.xml");

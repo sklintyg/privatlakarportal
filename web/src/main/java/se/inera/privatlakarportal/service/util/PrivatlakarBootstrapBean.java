@@ -21,7 +21,7 @@ import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 @Service
 @Profile({"dev", "pp-init-data"})
-@DependsOn("initDb")
+@DependsOn("dbUpdate")
 public class PrivatlakarBootstrapBean {
     private static final Logger LOG = LoggerFactory.getLogger(PrivatlakarBootstrapBean.class);
 
