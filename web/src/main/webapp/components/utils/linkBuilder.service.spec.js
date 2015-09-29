@@ -42,7 +42,7 @@ describe('Service: LinkBuilder', function() {
         });
         it('should link to webcert if user came from webcert', function() {
             var exitLink = LinkBuilder.getExitLink('', 'app.minsida', 'NOT_AUTHORIZED');
-            expect(exitLink.name).toBe('Tillbaka till Webcert');
+            expect(exitLink.name).toBe('Tillbaka');
             expect(exitLink.link).toBe('starturl');
         });
     });
