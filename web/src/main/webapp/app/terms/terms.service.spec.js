@@ -60,7 +60,7 @@ describe('Service: TermsService', function() {
         it('should call the wcModalService to open a dialog', function() {
             spyOn($window, 'open').and.returnValue({
                 window: { focus: function() {}},
-                document: { write: function() {}, close: function() {}},
+                document: { write: function() {}, open: function() {}, close: function() {}},
                 close: function() {},
                 open: function() {}
             });
