@@ -2,7 +2,7 @@ package se.inera.privatlakarportal.page
 
 class MinSidaPage extends AbstractPage {
     static url = "/#/minsida"
-    static at = { $("#minsida").isDisplayed() }
+    static at = { doneLoading() && $("#minsida").isDisplayed() }
 
     static content = {
         sparaBtn { $("#saveBtn")}

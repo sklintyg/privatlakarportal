@@ -2,7 +2,7 @@ package se.inera.privatlakarportal.page
 
 class RegisterStep1Page extends RegisterPage {
     static url = "/#/registrera/steg1"
-    static at = { $("#step1").isDisplayed() }
+    static at = { doneLoading() && $("#step1").isDisplayed() }
 
     static content = {
         continueBtn(to: RegisterStep2Page, toWait:true) { $("#continueBtn")}

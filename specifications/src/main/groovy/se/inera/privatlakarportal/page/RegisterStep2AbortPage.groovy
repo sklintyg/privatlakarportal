@@ -2,7 +2,7 @@ package se.inera.privatlakarportal.page
 
 class RegisterStep2AbortPage extends RegisterStep2Page {
     static url = "/#/registrera/steg2/avbryt"
-    static at = { title == "Privatläkarportalen" }
+    static at = { doneLoading() && title == "Privatläkarportalen" }
 
     static content = {
         abortConfirmBtn { $("#abortConfirmBtn")}

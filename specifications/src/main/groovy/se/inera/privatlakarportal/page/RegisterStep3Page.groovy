@@ -2,7 +2,7 @@ package se.inera.privatlakarportal.page
 
 class RegisterStep3Page extends RegisterPage {
     static url = "/#/registrera/steg3"
-    static at = { $("#step3").isDisplayed() && doneLoading() }
+    static at = { doneLoading() && $("#step3").isDisplayed() && doneLoading() }
 
     static content = {
         godkannAnvandarvillkorCheck { $("#godkannvillkor") }
