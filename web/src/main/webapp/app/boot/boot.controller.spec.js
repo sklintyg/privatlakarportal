@@ -49,7 +49,7 @@ describe('Controller: BootCtrl', function() {
         expect($state.go).toHaveBeenCalledWith('app.start');
     });
 
-    it('should be redirected to error page if not registered yet and unable to get name from pu serivce', function() {
+    it('should be redirected to error page if not registered yet and unable to get name from pu service', function() {
         spyOn($state, 'go').and.stub();
         succeed = true;
 

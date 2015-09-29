@@ -24,7 +24,7 @@ angular.module('privatlakareApp').factory('TermsProxy',
                     if(typeof data.terms !== 'undefined') {
                         promise.resolve(data.terms);
                     } else {
-                        $log.debug('JSON response syntax error. user property required. Rejected.');
+                        $log.debug('JSON response syntax error. terms property required. Rejected.');
                         promise.reject(null);
                     }
                 }).error(function(data, status) {
