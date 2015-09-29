@@ -65,7 +65,7 @@ var ppMessages = {
         // Header
         'label.header.changeaccount': 'Ändra uppgifter',
         'label.header.backtocomplete': 'Tillbaka',
-        'label.header.backtoapp': 'Tillbaka till Webcert',
+        'label.header.backtoapp': 'Tillbaka',
 
         // Start
         'label.start.header': 'Skapa konto i Webcert för privatläkare',
