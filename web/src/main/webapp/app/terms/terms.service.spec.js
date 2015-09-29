@@ -6,24 +6,29 @@ describe('Service: TermsService', function() {
         $provide.value('$state', { params: { terms: null, termsData: null }});
     }));
 
-    var TermsService, mockResponse, $rootScope, $httpBackend, $state;
+    var $rootScope, $httpBackend, $state, wcModalService, $window, AppTermsModalModel, TermsModel, TermsService, mockResponse;
     
     // Initialize the controller and a mock scope
-
-    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _TermsService_, _mockResponse_, _$state_) {
+    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _TermsService_, _mockResponse_, _$state_, _AppTermsModalModel_, _wcModalService_, _$window_, _TermsModel_) {
         $httpBackend = _$httpBackend_;
         $rootScope = _$rootScope_;
         mockResponse = _mockResponse_;
         TermsService = _TermsService_;
         $state = _$state_;
+        AppTermsModalModel = _AppTermsModalModel_;
+        TermsModel = _TermsModel_;
+        wcModalService = _wcModalService_;
+        $window = _$window_;
     }));
 
     describe('openTerms', function() {
         it('should call the wcModalService to open a dialog', function() {
-
+            spyOn(wcModalService, 'open').and.stub();
+            var modalModel = AppTermsModalModel.init();
+            TermsService.openTerms(modalModel);
+            expect(wcModalService.open).toHaveBeenCalled();
         });
     });
-
     describe('loadTerms', function() {
         it('should fetch terms from webcert if stateparams.terms are set to "webcert"', function() {
             $httpBackend.expectGET('/api/terms/webcert').respond(200, { terms: {}});
@@ -51,4 +56,24 @@ describe('Service: TermsService', function() {
             $rootScope.$apply();
         });
     });
+   describe('printTerms', function() {
+        it('should call the wcModalService to open a dialog', function() {
+            spyOn($window, 'open').and.returnValue({
+                window: { focus: function() {}},
+                document: { write: function() {}, close: function() {}},
+                close: function() {},
+                open: function() {}
+            });
+            var content = {
+                terms: { termsModel: TermsModel.init() },
+                absUrl: 'url',
+                titleId: 'label.modal.content.title.portalvillkor',
+                logoImage: null
+            };
+
+            TermsService.printTerms(content);
+            expect($window.open).toHaveBeenCalled();
+        });
+    });
+
 });
