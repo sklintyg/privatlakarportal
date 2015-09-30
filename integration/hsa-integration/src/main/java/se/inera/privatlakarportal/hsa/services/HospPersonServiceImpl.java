@@ -40,26 +40,6 @@ public class HospPersonServiceImpl implements HospPersonService {
     }
 
     @Override
-    public boolean handleCertifier(String personId, String certifierId) {
-
-        LOG.debug("Getting handleCertifier for certifierId '{}'", certifierId);
-
-        HandleCertifierType parameters = new HandleCertifierType();
-        parameters.setPersonalIdentityNumber(personId);
-        parameters.setAddToCertifiers(true);
-        parameters.setCertifierId(certifierId);
-
-        HandleCertifierResponseType response = client.callHandleCertifier(parameters);
-
-        if (!response.getResult().equals("OK")) {
-            LOG.error("handleCertifier returned result '{}' for certifierId '{}'", response.getResult(), certifierId);
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
     public LocalDateTime getHospLastUpdate() {
 
         LOG.debug("Calling getHospLastUpdate");
@@ -69,6 +49,36 @@ public class HospPersonServiceImpl implements HospPersonService {
         GetHospLastUpdateResponseType response = client.callGetHospLastUpdate(parameters);
 
         return response.getLastUpdate();
+    }
+
+    @Override
+    public boolean addToCertifier(String personId, String certifierId) {
+        return handleCertifier(true, personId, certifierId, null);
+    }
+
+    @Override
+    public boolean removeFromCertifier(String personId, String certifierId, String reason) {
+        return handleCertifier(false, personId, certifierId, reason);
+    }
+
+    private boolean handleCertifier(boolean add, String personId, String certifierId, String reason) {
+
+        LOG.debug("Calling handleCertifier for certifierId '{}'", certifierId);
+
+        HandleCertifierType parameters = new HandleCertifierType();
+        parameters.setPersonalIdentityNumber(personId);
+        parameters.setAddToCertifiers(add);
+        parameters.setCertifierId(certifierId);
+        parameters.setReason(reason);
+
+        HandleCertifierResponseType response = client.callHandleCertifier(parameters);
+
+        if (!response.getResult().equals("OK")) {
+            LOG.error("handleCertifier returned result '{}' for certifierId '{}'", response.getResult(), certifierId);
+            return false;
+        }
+
+        return true;
     }
 
 }

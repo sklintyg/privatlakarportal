@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -23,10 +24,12 @@ public class Medgivande {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEDGIVANDE_VERSION", nullable = false)
+    @JsonBackReference(value = "medgivandeText")
     private MedgivandeText medgivandeText;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRIVATLAKARE_ID", nullable = false)
+    @JsonBackReference
     private Privatlakare privatlakare;
 
     @Override

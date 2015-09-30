@@ -12,14 +12,14 @@
     "postort": "Linköping",
     "telefonnummer": "444666777",
     "epost": "test@example.com",
-    "enhetStartdatum": "2015-09-30T00:00:00.000",
-    "enhetSlutDatum": "2015-09-01T00:00:00.000",
+    "enhetStartdatum": null,
+    "enhetSlutDatum": null,
     "lan": "Östergötland",
     "kommun": "Linköping",
     "vardgivareId": "SE165565594230-WEBCERTBOOT2",
     "vardgivareNamn": "TestVardgivare",
-    "vardgivareStartdatum": "2015-08-30T00:00:00.000",
-    "vardgivareSlutdatum": "2015-08-01T00:00:00.000",
+    "vardgivareStartdatum": null,
+    "vardgivareSlutdatum": null,
     "befattningar": [
         {
             "kod": "202010"
@@ -42,5 +42,6 @@
         {
             "kod": "01"
         }
-    ]
+    ],
+    "registreringsdatum": "2020-01-01T00:00:00.000"
 }

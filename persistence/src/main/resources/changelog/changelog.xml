@@ -276,4 +276,12 @@
 
   </changeSet>
 
+  <changeSet id="5" author="pb">
+    <addColumn tableName="PRIVATLAKARE">
+      <column name="REGISTRERINGSDATUM" type="datetime">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
+
 </databaseChangeLog>

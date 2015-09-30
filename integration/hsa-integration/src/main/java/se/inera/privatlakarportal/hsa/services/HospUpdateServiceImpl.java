@@ -1,6 +1,5 @@
 package se.inera.privatlakarportal.hsa.services;
 
-import com.google.common.base.Throwables;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +85,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             hospUppdateringRepository.save(hospUppdatering);
 
             // Find privatlakare without hospinformation
-            List<Privatlakare> privatlakareList = privatlakareRepository.findWithoutLakarBehorighet();
+            List<Privatlakare> privatlakareList = privatlakareRepository.findNeverHadLakarBehorighet();
             for(Privatlakare privatlakare : privatlakareList) {
 
                 LOG.info("Checking privatlakare '{}' for updated hosp information", privatlakare.getPersonId());
@@ -122,7 +121,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         if (hospPersonResponse == null) {
             if (shouldRegisterInCertifier) {
                 try {
-                    if (!hospPersonService.handleCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
+                    if (!hospPersonService.addToCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
                         LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
                     }
                 } catch (WebServiceException e) {

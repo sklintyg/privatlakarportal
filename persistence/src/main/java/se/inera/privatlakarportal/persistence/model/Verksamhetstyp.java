@@ -1,5 +1,7 @@
 package se.inera.privatlakarportal.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 /**
@@ -15,6 +17,7 @@ public class Verksamhetstyp {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRIVATLAKARE_ID", nullable = false)
+    @JsonBackReference
     private Privatlakare privatlakare;
 
     @Column(name = "KOD", nullable = false)

@@ -10,21 +10,23 @@ import se.inera.privatlakarportal.persistence.model.*;
 
 public class PrivatelakareTestUtil {
 
-    public static Privatlakare buildPrivatlakare() {
+    public static Privatlakare buildPrivatlakare(String personId, int hsaCounter, boolean isLakare) {
         return buildPrivatlakare(
-            "191212121212",
-            "SE000000000000-WEBCERT00001",
+            personId,
+            "SE000000000000-WEBCERT0000"+hsaCounter,
             "Tolvan Tolvansson",
             "test@example.com",
             "4444444444",
             "postadress",
             "postnummer",
-            "postort");
+            "postort",
+            "2015-08-01",
+            isLakare);
     }
 
     public static Privatlakare buildPrivatlakare(
             String personId, String hsaId, String fullstandigtNamn, String epost, String telefonnummer,
-            String postadress, String postnummer, String postort) {
+            String postadress, String postnummer, String postort, String registreringsdatum, boolean isLakare) {
         Privatlakare privatlakare = new Privatlakare();
 
         privatlakare.setPersonId(personId);
@@ -46,13 +48,17 @@ public class PrivatelakareTestUtil {
 
         privatlakare.setEnhetsId(hsaId);
         privatlakare.setEnhetsNamn("Enhetsnamn");
-        privatlakare.setEnhetStartdatum(LocalDateTime.parse("2015-06-01"));
-        privatlakare.setEnhetSlutDatum(LocalDateTime.parse("2015-06-02"));
+        if (isLakare) {
+            privatlakare.setEnhetStartdatum(LocalDateTime.parse("2015-06-01"));
+            privatlakare.setEnhetSlutDatum(LocalDateTime.parse("2015-06-02"));
+        }
 
         privatlakare.setVardgivareId(hsaId);
         privatlakare.setVardgivareNamn("Vardgivarnamn");
-        privatlakare.setVardgivareStartdatum(LocalDateTime.parse("2015-06-03"));
-        privatlakare.setVardgivareSlutdatum(LocalDateTime.parse("2015-06-04"));
+        if (isLakare) {
+            privatlakare.setVardgivareStartdatum(LocalDateTime.parse("2015-06-03"));
+            privatlakare.setVardgivareSlutdatum(LocalDateTime.parse("2015-06-04"));
+        }
 
         Set<Befattning> befattningar = new HashSet<Befattning>();
         befattningar.add(new Befattning(privatlakare, "Befattning kod 1"));
@@ -60,8 +66,9 @@ public class PrivatelakareTestUtil {
         privatlakare.setBefattningar(befattningar);
 
         Set<LegitimeradYrkesgrupp> legitimeradeYrkesgrupper = new HashSet<LegitimeradYrkesgrupp>();
-        legitimeradeYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare, "LegitimeradYrkesgrupp kod 1", "LegitimeradYrkesgrupp namn 1"));
-        legitimeradeYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare, "LegitimeradYrkesgrupp kod 2", "LegitimeradYrkesgrupp namn 2"));
+        if (isLakare) {
+            legitimeradeYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare, "Läkare", "LK"));
+        }
         privatlakare.setLegitimeradeYrkesgrupper(legitimeradeYrkesgrupper);
 
         List<Specialitet> specialiteter = new ArrayList<Specialitet>();
@@ -78,6 +85,8 @@ public class PrivatelakareTestUtil {
         vardformer.add(new Vardform(privatlakare, "Vardform 1"));
         vardformer.add(new Vardform(privatlakare, "Vardform 2"));
         privatlakare.setVardformer(vardformer);
+
+        privatlakare.setRegistreringsdatum(LocalDateTime.parse(registreringsdatum));
 
         return privatlakare;
     }

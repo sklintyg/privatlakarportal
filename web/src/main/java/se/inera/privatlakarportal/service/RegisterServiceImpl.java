@@ -190,6 +190,7 @@ public class RegisterServiceImpl implements RegisterService {
         medgivandeSet.add(medgivande);
         privatlakare.setMedgivande(medgivandeSet);
 
+        privatlakare.setRegistreringsdatum(dateHelperService.now());
         privatlakare.setPersonId(userService.getUser().getPersonalIdentityNumber());
         privatlakare.setFullstandigtNamn(userService.getUser().getName());
         privatlakare.setGodkandAnvandare(true);

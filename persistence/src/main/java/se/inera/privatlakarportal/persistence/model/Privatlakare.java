@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
@@ -100,19 +101,24 @@ public class Privatlakare {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime vardgivareSlutdatum;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Befattning> befattningar;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LegitimeradYrkesgrupp> legitimeradeYrkesgrupper;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("namn ASC")
     private List<Specialitet> specialiteter;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Verksamhetstyp> verksamhetstyper;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Vardform> vardformer;
 
@@ -120,8 +126,13 @@ public class Privatlakare {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime senasteHospUppdatering;
 
+    @JsonManagedReference
     @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Medgivande> medgivande;
+
+    @Column(name = "REGISTRERINGSDATUM", nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime registreringsdatum;
 
     @Override
     public boolean equals(Object o) {
@@ -425,5 +436,13 @@ public class Privatlakare {
 
     public void setMedgivande(Set<Medgivande> medgivande) {
         this.medgivande = medgivande;
+    }
+
+    public LocalDateTime getRegistreringsdatum() {
+        return registreringsdatum;
+    }
+
+    public void setRegistreringsdatum(LocalDateTime registreringsdatum) {
+        this.registreringsdatum = registreringsdatum;
     }
 }

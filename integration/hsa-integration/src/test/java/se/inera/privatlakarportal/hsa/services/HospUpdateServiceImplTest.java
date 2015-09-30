@@ -73,7 +73,7 @@ public class HospUpdateServiceImplTest {
         privatlakare.setPersonId(PERSON_ID);
         ArrayList list = new ArrayList();
         list.add(privatlakare);
-        when(privatlakareRepository.findWithoutLakarBehorighet()).thenReturn(list);
+        when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
         GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
         hospPersonResponse.getTitleCodes().getTitleCode().add("DT");
@@ -115,12 +115,12 @@ public class HospUpdateServiceImplTest {
 
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
 
-        when(hospPersonService.handleCertifier(eq(PERSON_ID), any(String.class))).thenThrow(new WebServiceException("Could not send message"));
+        when(hospPersonService.addToCertifier(eq(PERSON_ID), any(String.class))).thenThrow(new WebServiceException("Could not send message"));
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
         verify(hospPersonService).getHospPerson(PERSON_ID);
-        verify(hospPersonService).handleCertifier(eq(PERSON_ID), any(String.class));
+        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
         verifyNoMoreInteractions(hospPersonService);
         assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
     }
@@ -135,7 +135,7 @@ public class HospUpdateServiceImplTest {
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
-        verify(hospPersonService, times(0)).handleCertifier(any(String.class), any(String.class));
+        verify(hospPersonService, times(0)).addToCertifier(any(String.class), any(String.class));
         assertEquals(response, RegistrationStatus.NOT_AUTHORIZED);
     }
 
@@ -147,11 +147,11 @@ public class HospUpdateServiceImplTest {
 
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
 
-        when(hospPersonService.handleCertifier(eq(PERSON_ID), any(String.class))).thenReturn(true);
+        when(hospPersonService.addToCertifier(eq(PERSON_ID), any(String.class))).thenReturn(true);
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
-        verify(hospPersonService).handleCertifier(eq(PERSON_ID), any(String.class));
+        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
         assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
     }
 
@@ -168,7 +168,7 @@ public class HospUpdateServiceImplTest {
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
-        verify(hospPersonService, times(0)).handleCertifier(any(String.class), any(String.class));
+        verify(hospPersonService, times(0)).addToCertifier(any(String.class), any(String.class));
         assertEquals(response, RegistrationStatus.AUTHORIZED);
     }
 

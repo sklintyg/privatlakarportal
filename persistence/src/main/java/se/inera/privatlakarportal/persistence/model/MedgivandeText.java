@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -25,6 +26,7 @@ public class MedgivandeText {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime datum;
 
+    @JsonManagedReference(value = "medgivandeText")
     @OneToMany(mappedBy="medgivandeText", cascade = CascadeType.ALL)
     private Set<Medgivande> medgivande;
 

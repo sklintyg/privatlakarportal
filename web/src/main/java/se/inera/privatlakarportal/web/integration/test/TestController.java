@@ -1,5 +1,6 @@
 package se.inera.privatlakarportal.web.integration.test;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import se.inera.privatlakarportal.integration.privatepractioner.services.Integra
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.privatlakarportal.service.CleanupService;
 import se.inera.privatlakarportal.service.RegisterService;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
@@ -39,8 +41,17 @@ public class TestController {
     @Autowired
     private IntegrationService integrationService;
 
+    @Autowired
+    private CleanupService cleanupService;
+
     public TestController() {
         LOG.error("testability-api enabled. DO NOT USE IN PRODUCTION");
+    }
+
+    @RequestMapping(value = "/registration/{id}", method = RequestMethod.GET)
+    public @ResponseBody
+    Privatlakare getPrivatlakare(@PathVariable("id") String personId) {
+        return privatlakareRepository.findByPersonId(personId);
     }
 
     @RequestMapping(value = "/registration/remove/{id}", method = RequestMethod.DELETE)
@@ -61,6 +72,18 @@ public class TestController {
         return true;
     }
 
+    @RequestMapping(value = "/registration/setregistrationdate/{id}", method = RequestMethod.POST)
+    public boolean setRegistrationDatePrivatlakare(@PathVariable("id") String personId, @RequestBody String date) {
+        Privatlakare privatlakare = privatlakareRepository.findByPersonId(personId);
+        if (privatlakare == null) {
+            LOG.error("Unable to find privatlakare with personId '{}'", personId);
+            return false;
+        }
+        privatlakare.setRegistreringsdatum(LocalDateTime.parse(date));
+        privatlakareRepository.save(privatlakare);
+        return true;
+    }
+
     @RequestMapping(value = "/hosp/add", method = RequestMethod.POST)
     public void addHospPerson(@RequestBody HsaHospPerson hsaHospPerson) {
         hsaServiceStub.addHospPerson(hsaHospPerson);
@@ -74,6 +97,11 @@ public class TestController {
     @RequestMapping(value = "/hosp/update", method = RequestMethod.POST)
     public void updateHospInformation() {
         hospUpdateService.updateHospInformation();
+    }
+
+    @RequestMapping(value = "/cleanup/trigger", method = RequestMethod.POST)
+    public void startCleanup() {
+        cleanupService.cleanupPrivatlakare();
     }
 
     @RequestMapping(value = "/webcert/validatePrivatePractitioner/{id}", method = RequestMethod.POST)

@@ -1,8 +1,9 @@
 {
-    "personId": "191212121212",
+    "privatlakareId": "id1",
+    "personId": "personId1",
     "hsaId": "SE165565594230-WEBCERT00001",
     "fullstandigtNamn": "Test User",
-    "forskrivarKod": "0000000",
+    "forskrivarKod": null,
     "godkandAnvandare": true,
     "enhetsId": "SE165565594230-WEBCERT00001",
     "enhetsNamn": "Test verksamhet",
@@ -13,35 +14,21 @@
     "postort": "Test postort",
     "telefonnummer": "123456789",
     "epost": "test@example.com",
-    "enhetStartdatum": "2015-09-30T00:00:00.000",
+    "enhetStartdatum": null,
     "enhetSlutDatum": null,
     "lan": "Test län",
     "kommun": "Test kommun",
     "vardgivareId": "SE165565594230-WEBCERT00001",
     "vardgivareNamn": "Test verksamhet",
-    "vardgivareStartdatum": "2015-08-30T00:00:00.000",
+    "vardgivareStartdatum": null,
     "vardgivareSlutdatum": null,
     "befattningar": [
         {
             "kod": "201010"
         }
     ],
-    "legitimeradeYrkesgrupper": [
-        {
-            "kod": "LK",
-            "namn": "Läkare"
-        }
-    ],
-    "specialiteter": [
-        {
-            "kod": "32",
-            "namn": "Klinisk fysiologi"
-        },
-        {
-            "kod": "74",
-            "namn": "Nukleärmedicin"
-        }
-    ],
+    "legitimeradeYrkesgrupper": null,
+    "specialiteter": null,
     "verksamhetstyper": [
         {
             "kod": "10"
@@ -62,5 +49,5 @@
             }
         }
     ],
-    "registreringsdatum": "2015-09-09"
+    "registreringsdatum" : "2014-01-01"
 }

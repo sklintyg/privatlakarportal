@@ -32,7 +32,7 @@ public class LaggTillHospInformation extends RestClientFixture {
     protected createPayload() {
         def hospInformation = [
             "personalIdentityNumber": personNummer,
-            "personalPrescriptionCode": "1111111",
+            "personalPrescriptionCode": "1234567",
             "educationCodes":[],
             "restrictions":[],
             "restrictionCodes":[],
@@ -45,6 +45,8 @@ public class LaggTillHospInformation extends RestClientFixture {
         if (lakarbehorighet) {
             hospInformation.titleCodes = ["LK"];
             hospInformation.hsaTitles = ["Läkare"];
+            hospInformation.specialityCodes = ["32","74"];
+            hospInformation.specialityNames = ["Klinisk fysiologi","Nukleärmedicin"];
         }
         JsonOutput.toJson(hospInformation)
     }
