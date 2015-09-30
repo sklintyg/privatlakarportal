@@ -13,11 +13,6 @@ public class Terms {
     public Terms() {
     }
 
-    public Terms(String text, int version) {
-        this.text = text;
-        this.version = version;
-    }
-
     public Terms(String text, long version, LocalDateTime date) {
         this.text = text;
         this.version = version;

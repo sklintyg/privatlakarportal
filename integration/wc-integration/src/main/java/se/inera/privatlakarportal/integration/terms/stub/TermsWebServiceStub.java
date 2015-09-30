@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.integration.terms.stub;
 
 import org.apache.commons.io.FileUtils;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class TermsWebServiceStub implements GetPrivatePractitionerTermsResponder
 
         AvtalType avtalType = new AvtalType();
         avtalType.setAvtalVersion(1);
-        //avtalType.setAvtalDatum(); // Coming soon..
+        avtalType.setAvtalVersionDatum(LocalDateTime.parse("2015-09-30"));
 
         String fileEncoding = "UTF-8";
         String fileUrl = "classpath:bootstrap-webcertvillkor/webcertvillkor.html";
