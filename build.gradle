@@ -50,7 +50,6 @@ if (project.hasProperty('runSonar')) {
     sonarRunner {
         sonarProperties {
             property "sonar.jacoco.reportPath", "$buildDir/jacoco/test.exec"
-
             property "sonar.projectName", projectName
             property "sonar.projectKey", projectId
 
@@ -65,8 +64,31 @@ if (project.hasProperty('runSonar')) {
             property "sonar.jdbc.username", "sonar"
             property "sonar.jdbc.password", sonarPassword
 
-            //Exclude generated sources
-            property "sonar.exclusions", "file:**/generatedSource/**"
+            //Exclusions
+            property "sonar.exclusions", [
+                "file:**/generatedSource/**",
+                "src/main/java/se/inera/privatlakarportal/**/config/**",
+                "**/utils/**",
+                "**/stub/**",
+                "**/exception/**",
+                "**/test/**",
+                "**/liquibase/**",
+                "**/adapter/**",
+                "src/test/**/*",
+                "src/main/java/se/inera/privatlakarportal/common/integration/**"
+                ]
+
+            //Skip these projects entirely
+            project(":privatlakarportal-specifications") {
+                sonarRunner {
+                    skipProject = true
+                }
+            }
+            project(":privatlakarportal-liquibase-runner") {
+                sonarRunner {
+                    skipProject = true
+                }
+            }
         }
     }
     
@@ -81,10 +103,9 @@ subprojects {
             toolVersion = "0.7.1.201405082137"
         }
         jacocoTestReport {
-
-            additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+            
             classDirectories =  files(sourceSets.main.output)
-            sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+            sourceDirectories = files(sourceSets.main.allJava.srcDirs)
 
             reports {
                 xml.enabled false
@@ -92,6 +113,7 @@ subprojects {
                 html.destination "${buildDir}/jacocoHtml"
             }
         }
+        
     }
 
     sourceCompatibility = "1.7"
