@@ -68,12 +68,14 @@ if (project.hasProperty('runSonar')) {
             property "sonar.exclusions", [
                 "file:**/generatedSource/**",
                 "src/main/java/se/inera/privatlakarportal/**/config/**",
-                "**/utils/**",
+                "**/util*/**",
                 "**/stub/**",
                 "**/exception/**",
+                "**/*Exception*.java",
                 "**/test/**",
                 "**/liquibase/**",
                 "**/adapter/**",
+                "**/controller/**",
                 "src/test/**/*",
                 "src/main/java/se/inera/privatlakarportal/common/integration/**"
                 ]
