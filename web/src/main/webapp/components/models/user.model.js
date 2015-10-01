@@ -26,6 +26,14 @@ angular.module('privatlakareApp').factory('UserModel',
             set: function(user) {
                 data.name = user.name;
                 data.personnummer = user.personalIdentityNumber;
+
+                if(typeof data.personnummer === 'string') {
+                    var dashIndex = data.personnummer.length-4;
+                    if(data.personnummer.charAt(dashIndex - 1) !== '-') {
+                        data.personnummer = data.personnummer.slice(0, dashIndex) + '-' + data.personnummer.slice(dashIndex);
+                    }
+                }
+
                 data.status = user.status;
                 data.authenticationScheme = user.authenticationScheme;
                 data.loggedIn = true;

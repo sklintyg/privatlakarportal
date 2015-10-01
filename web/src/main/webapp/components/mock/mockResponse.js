@@ -26,8 +26,27 @@ angular.module('privatlakareApp').value('mockResponse', {
         {'postnummer':'13155','postort':'NACKA','kommun':'STOCKHOLM','lan':'STOCKHOLM'},
         {'postnummer':'13155','postort':'NACKA','kommun':'NACKA','lan':'STOCKHOLM'}
     ],
-    'userOK': {'user':{'namn':'Oskar Johansson','status':'NOT_STARTED'}},
-    'userModel': {'namn':'Oskar Johansson','status':'NOT_STARTED'},
+    'userOK': { user: {
+            'namn':'Oskar Johansson',
+            'status':'NOT_STARTED',
+            'personalIdentityNumber': '191212121212',
+            'authenticationScheme': 'urn:inera:privatlakarportal:eleg:fake',
+            'fakeSchemeId': 'urn:inera:privatlakarportal:eleg:fake',
+            'loggedIn': false,
+            'nameFromPuService': false,
+            'nameUpdated': false
+        }
+    },
+    'userModel': {
+        'namn':'Oskar Johansson',
+        'status':'NOT_STARTED',
+        'personalIdentityNumber': '191212121212',
+        'authenticationScheme': 'urn:inera:privatlakarportal:eleg:fake',
+        'fakeSchemeId': 'urn:inera:privatlakarportal:eleg:fake',
+        'loggedIn': false,
+        'nameFromPuService': false,
+        'nameUpdated': false
+    },
     'termsOK': {'terms':{'text':'Användaravtal placeholder','version':0}},
     'termsModel': {'text':'Användaravtal placeholder','version':0}
 });
