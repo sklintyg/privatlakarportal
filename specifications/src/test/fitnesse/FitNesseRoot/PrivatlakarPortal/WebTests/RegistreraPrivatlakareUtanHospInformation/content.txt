@@ -38,7 +38,7 @@
 !3 Verifiera registrering sida 3
 | script | Registrera |
 | registrering steg3 sidan visas |
-| check | personnummer | 195206172339 |
+| check | personnummer | 19520617-2339 |
 | check | namn | Björn Anders Daniel Pärsson |
 | check | befattning | Specialistläkare |
 | check | verksamhetensnamn | Fitnesse verksamhet |

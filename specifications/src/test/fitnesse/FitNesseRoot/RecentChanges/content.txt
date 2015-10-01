@@ -1,13 +1,13 @@
+|PrivatlakarPortal.WebTests.RegistreraPrivatlakareUtanHospInformation||11:17:25 Thu, Oct 01, 2015|
+|PrivatlakarPortal.WebTests.RegistreraPrivatlakare||11:15:49 Thu, Oct 01, 2015|
+|PrivatlakarPortal.WebTests.RedigeraPrivatlakare||11:15:35 Thu, Oct 01, 2015|
 |PrivatlakarPortal.WebTests.RensaPrivatlakare||09:19:22 Thu, Oct 01, 2015|
 |PrivatlakarPortal.RensaPrivatlakare||08:36:14 Thu, Oct 01, 2015|
 |PrivatlakarPortal.WebTests.AnvandarVillkor||17:37:15 Fri, Sep 25, 2015|
 |PrivatlakarPortal.WebTests.HospUppdatering.TillbakadragenLakarbehorighet||10:24:32 Mon, Sep 28, 2015|
 |PrivatlakarPortal.WebTests.SuiteSetUp||14:00:30 Thu, Sep 24, 2015|
-|PrivatlakarPortal.WebTests.RedigeraPrivatlakare||12:10:26 Mon, Sep 14, 2015|
-|PrivatlakarPortal.WebTests.RegistreraPrivatlakare||14:40:40 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.PersonUppgifter.UppdateraNamnOmNyaPersonUppgifterFinns||10:50:51 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.HospUppdatering.UppdateraTillLakare||10:47:49 Thu, Sep 10, 2015|
-|PrivatlakarPortal.WebTests.RegistreraPrivatlakareUtanHospInformation||14:55:30 Fri, Sep 04, 2015|
 |PrivatlakarPortal.WebTests.PersonUppgifter.StoppaRegistreringOmPersonUppgifterEjKanHamtas||11:09:29 Wed, Sep 02, 2015|
 |PrivatlakarPortal||10:50:36 Tue, Aug 25, 2015|
 |FirefoxSuite||14:47:56 Tue, Jun 16, 2015|
