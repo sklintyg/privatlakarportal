@@ -73,7 +73,7 @@ public class HospPersonServiceImpl implements HospPersonService {
 
         HandleCertifierResponseType response = client.callHandleCertifier(parameters);
 
-        if (!response.getResult().equals("OK")) {
+        if (!"OK".equals(response.getResult())) {
             LOG.error("handleCertifier returned result '{}' for certifierId '{}'", response.getResult(), certifierId);
             return false;
         }

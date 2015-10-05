@@ -32,14 +32,6 @@ public class HospUppdatering {
         this.senasteHospUppdatering = senasteHospUppdatering;
     }
 
-    private Long getId() {
-        return id;
-    }
-
-    private void setId(Long id) {
-        this.id = id;
-    }
-
     public LocalDateTime getSenasteHospUppdatering() {
         return senasteHospUppdatering;
     }

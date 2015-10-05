@@ -65,19 +65,15 @@ if (project.hasProperty('runSonar')) {
             property "sonar.jdbc.password", sonarPassword
 
             //Exclusions
+            property "sonar.test.exclusions", "src/test/**"
+
             property "sonar.exclusions", [
                 "file:**/generatedSource/**",
                 "src/main/java/se/inera/privatlakarportal/**/config/**",
-                "**/util*/**",
                 "**/stub/**",
                 "**/exception/**",
                 "**/*Exception*.java",
-                "**/test/**",
-                "**/liquibase/**",
-                "**/adapter/**",
-                "**/controller/**",
-                "src/test/**/*",
-                "src/main/java/se/inera/privatlakarportal/common/integration/**"
+                "**/*Fake*.java",
                 ]
 
             //Skip these projects entirely

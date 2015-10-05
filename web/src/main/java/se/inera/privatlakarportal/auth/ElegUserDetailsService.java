@@ -8,10 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Component;
+
 import se.inera.privatlakarportal.pu.services.PUService;
 
 
@@ -27,7 +27,7 @@ public class ElegUserDetailsService implements SAMLUserDetailsService {
     PUService puService;
 
     @Override
-    public Object loadUserBySAML(SAMLCredential samlCredential) throws UsernameNotFoundException {
+    public Object loadUserBySAML(SAMLCredential samlCredential) {
         try {
             String personId = getAuthenticationAttribute(samlCredential, CgiElegAssertion.PERSON_ID_ATTRIBUTE);
             String fornamn = getAuthenticationAttribute(samlCredential, CgiElegAssertion.FORNAMN_ATTRIBUTE);
@@ -42,10 +42,10 @@ public class ElegUserDetailsService implements SAMLUserDetailsService {
             }
 
             return privatlakarUser;
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
+        } catch (AuthenticationException e) {
+                LOG.error("Got AuthenticationException, with message {}", e.getMessage());
                 throw e;
-            }
+        } catch (Exception e) {
             LOG.error("Error building user {}, failed with message {}", e.getMessage());
             throw e;
         }

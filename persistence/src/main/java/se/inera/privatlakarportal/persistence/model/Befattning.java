@@ -23,6 +23,14 @@ public class Befattning {
     @Column(name = "KOD", nullable = false)
     private String kod;
 
+    public Befattning() {
+    }
+    
+    public Befattning(Privatlakare privatlakare, String kod) {
+        this.privatlakare = privatlakare;
+        this.kod = kod;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -45,13 +53,6 @@ public class Befattning {
         return id != null ? id.hashCode() : 0;
     }
 
-    public Befattning() {
-    }
-
-    public Befattning(Privatlakare privatlakare, String kod) {
-        this.privatlakare = privatlakare;
-        this.kod = kod;
-    }
 
     public Privatlakare getPrivatlakare() {
         return privatlakare;

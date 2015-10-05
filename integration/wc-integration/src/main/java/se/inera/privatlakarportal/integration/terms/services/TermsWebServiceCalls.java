@@ -21,9 +21,8 @@ public class TermsWebServiceCalls {
     public GetPrivatePractitionerTermsResponseType getPrivatePractitionerTerms() {
         try {
             GetPrivatePractitionerTermsType parameters = new GetPrivatePractitionerTermsType();
-            GetPrivatePractitionerTermsResponseType response = termsWebServiceClient.getPrivatePractitionerTerms("", parameters);
-            return response;
-        } catch (Throwable ex) {
+            return termsWebServiceClient.getPrivatePractitionerTerms("", parameters);
+        } catch (Exception ex) {
             LOG.error("Failed to call getPrivatePractitionerTerms");
             Throwables.propagate(ex);
             return null;

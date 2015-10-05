@@ -55,9 +55,6 @@ public class Medgivande {
         return id != null ? id.hashCode() : 0;
     }
 
-    public Medgivande() {
-    }
-
     public Long getId() {
         return id;
     }

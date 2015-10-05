@@ -98,7 +98,7 @@ public class RegisterServiceImpl implements RegisterService {
         registration.setAgarForm(privatlakare.getAgarform());
         registration.setArbetsplatskod(privatlakare.getArbetsplatsKod());
         // Detta fält plus några till längre ner kan ha flera värden enligt informationsmodellen men implementeras som bara ett värde.
-        if (privatlakare.getBefattningar() != null && privatlakare.getBefattningar().size() > 0) {
+        if (privatlakare.getBefattningar() != null && !privatlakare.getBefattningar().isEmpty()) {
             registration.setBefattning(privatlakare.getBefattningar().iterator().next().getKod());
         }
         registration.setEpost(privatlakare.getEpost());
@@ -107,11 +107,11 @@ public class RegisterServiceImpl implements RegisterService {
         registration.setPostnummer(privatlakare.getPostnummer());
         registration.setPostort(privatlakare.getPostort());
         registration.setTelefonnummer(privatlakare.getTelefonnummer());
-        if (privatlakare.getVardformer() != null && privatlakare.getVardformer().size() > 0) {
+        if (privatlakare.getVardformer() != null && !privatlakare.getVardformer().isEmpty()) {
             registration.setVardform(privatlakare.getVardformer().iterator().next().getKod());
         }
         registration.setVerksamhetensNamn(privatlakare.getVardgivareNamn());
-        if (privatlakare.getVerksamhetstyper() != null && privatlakare.getVerksamhetstyper().size() > 0) {
+        if (privatlakare.getVerksamhetstyper() != null && !privatlakare.getVerksamhetstyper().isEmpty()) {
             registration.setVerksamhetstyp(privatlakare.getVerksamhetstyper().iterator().next().getKod());
         }
 
@@ -175,31 +175,17 @@ public class RegisterServiceImpl implements RegisterService {
 
         Privatlakare privatlakare = new Privatlakare();
 
-        MedgivandeText medgivandeText = medgivandeTextRepository.findOne(godkantMedgivandeVersion);
-        if (medgivandeText == null) {
-            LOG.error("createRegistration: Could not find medgivandetext with version '{}'", godkantMedgivandeVersion);
-            throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
-                    "Could not find medgivandetext matching godkantMedgivandeVersion");
-        }
-        Medgivande medgivande = new Medgivande();
-        medgivande.setGodkandDatum(dateHelperService.now());
-        medgivande.setMedgivandeText(medgivandeText);
-        medgivande.setPrivatlakare(privatlakare);
-        Set<Medgivande> medgivandeSet = new HashSet<>();
-        medgivandeSet.add(medgivande);
-        privatlakare.setMedgivande(medgivandeSet);
+        privatlakare.setMedgivande(createMedgivandeSet(godkantMedgivandeVersion, privatlakare));
 
         privatlakare.setRegistreringsdatum(dateHelperService.now());
         privatlakare.setPersonId(userService.getUser().getPersonalIdentityNumber());
         privatlakare.setFullstandigtNamn(userService.getUser().getName());
         privatlakare.setGodkandAnvandare(true);
 
-        // Generate next hsaId
-        // Format: "SE" + ineras orgnr (inkl "sekelsiffror", alltså 165565594230) + "-" + "WEBCERT" + femsiffrigt löpnr.
         // PrivatlakareId uses an autoincrement column to get next value
         PrivatlakareId privatlakareId = privatlakareidRepository.save(new PrivatlakareId());
-        String hsaId = "SE165565594230-WEBCERT" + StringUtils.leftPad(Integer.toString(privatlakareId.getId()), 5, '0');
+
+        String hsaId = generateHsaId(privatlakareId);
 
         privatlakare.setEnhetsId(hsaId);
         privatlakare.setHsaId(hsaId);
@@ -213,6 +199,7 @@ public class RegisterServiceImpl implements RegisterService {
         try {
             status = hospUpdateService.updateHospInformation(privatlakare, true);
         } catch (HospUpdateFailedToContactHsaException e) {
+            LOG.error("Failed to contact HSA with error {}, setting status {} in the meantime.", e, RegistrationStatus.WAITING_FOR_HOSP);
             status = RegistrationStatus.WAITING_FOR_HOSP;
         }
 
@@ -256,6 +243,35 @@ public class RegisterServiceImpl implements RegisterService {
         privatlakareRepository.delete(toDelete);
         LOG.info("Deleted Privatlakare with id {}", personId);
         return true;
+    }
+
+    /* Private helpers */
+
+    /**
+     *  Generate next hsaId,
+     *  Format: "SE" + ineras orgnr (inkl "sekelsiffror", alltså 165565594230) + "-" + "WEBCERT" + femsiffrigt löpnr.
+     * @param privatlakareId
+     * @return
+     */
+    private String generateHsaId(PrivatlakareId privatlakareId) {
+        return "SE165565594230-WEBCERT" + StringUtils.leftPad(Integer.toString(privatlakareId.getId()), 5, '0');
+    }
+
+    private Set<Medgivande> createMedgivandeSet(Long godkantMedgivandeVersion, Privatlakare privatlakare) {
+        MedgivandeText medgivandeText = medgivandeTextRepository.findOne(godkantMedgivandeVersion);
+        if (medgivandeText == null) {
+            LOG.error("createRegistration: Could not find medgivandetext with version '{}'", godkantMedgivandeVersion);
+            throw new PrivatlakarportalServiceException(
+                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                    "Could not find medgivandetext matching godkantMedgivandeVersion");
+        }
+        Medgivande medgivande = new Medgivande();
+        medgivande.setGodkandDatum(dateHelperService.now());
+        medgivande.setMedgivandeText(medgivandeText);
+        medgivande.setPrivatlakare(privatlakare);
+        Set<Medgivande> medgivandeSet = new HashSet<>();
+        medgivandeSet.add(medgivande);
+        return medgivandeSet;
     }
 
     private void convertRegistrationToPrivatlakare(Registration registration, Privatlakare privatlakare) {

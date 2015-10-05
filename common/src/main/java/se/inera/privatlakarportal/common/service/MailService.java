@@ -17,5 +17,5 @@ public interface MailService {
      * @throws PrivatlakarportalServiceException
      *             @{link PrivatlakarportalServiceException}
      */
-    public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) throws PrivatlakarportalServiceException;
+    public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare);
 }

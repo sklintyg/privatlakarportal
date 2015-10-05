@@ -29,8 +29,7 @@ public class PostnummerRepositoryImpl implements PostnummerRepository {
     void addPostnummer(String postnummer, Omrade omrade) {
         if (postnummerRepository.containsKey(postnummer)) {
             postnummerRepository.get(postnummer).add(omrade);
-        }
-        else {
+        } else {
             List<Omrade> omradeList = new ArrayList<Omrade>();
             omradeList.add(omrade);
             postnummerRepository.put(postnummer, omradeList);

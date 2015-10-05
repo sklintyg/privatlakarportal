@@ -24,8 +24,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
 
+import se.inera.ifv.hsaws.v3.HsaWsFault;
 import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
-import se.inera.ifv.hsawsresponder.v3.*;
+import se.inera.ifv.hsawsresponder.v3.GetHospLastUpdateResponseType;
+import se.inera.ifv.hsawsresponder.v3.GetHospLastUpdateType;
+import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.ifv.hsawsresponder.v3.GetHospPersonType;
+import se.inera.ifv.hsawsresponder.v3.HandleCertifierResponseType;
+import se.inera.ifv.hsawsresponder.v3.HandleCertifierType;
+import se.inera.ifv.hsawsresponder.v3.PingResponseType;
+import se.inera.ifv.hsawsresponder.v3.PingType;
 
 import com.google.common.base.Throwables;
 
@@ -59,7 +67,7 @@ public class HSAWebServiceCalls {
             PingResponseType response = hsaWebServiceClient.ping(logicalAddressHeader, messageId, pingtype);
             LOG.debug("Response:" + response.getMessage());
 
-        } catch (Throwable ex) {
+        } catch (HsaWsFault ex) {
             LOG.warn("Exception={}", ex.getMessage());
             throw new Exception(ex);
         }
@@ -67,9 +75,8 @@ public class HSAWebServiceCalls {
 
     public HandleCertifierResponseType callHandleCertifier(HandleCertifierType parameters) {
         try {
-            HandleCertifierResponseType response = hsaWebServiceClient.handleCertifier(logicalAddressHeader, messageId, parameters);
-            return response;
-        } catch (Throwable ex) {
+            return hsaWebServiceClient.handleCertifier(logicalAddressHeader, messageId, parameters);
+        } catch (HsaWsFault ex) {
             LOG.error("Failed to call callHandleCertifier with certifierId '{}'", parameters.getCertifierId());
             Throwables.propagate(ex);
             return null;
@@ -78,9 +85,8 @@ public class HSAWebServiceCalls {
 
     public GetHospPersonResponseType callGetHospPerson(GetHospPersonType parameters) {
         try {
-            GetHospPersonResponseType response = hsaWebServiceClient.getHospPerson(logicalAddressHeader, messageId, parameters);
-            return response;
-        } catch (Throwable ex) {
+            return hsaWebServiceClient.getHospPerson(logicalAddressHeader, messageId, parameters);
+        } catch (HsaWsFault ex) {
             LOG.error("Failed to call callGetHospPerson with id '{}'", parameters.getPersonalIdentityNumber());
             Throwables.propagate(ex);
             return null;
@@ -89,9 +95,8 @@ public class HSAWebServiceCalls {
 
     public GetHospLastUpdateResponseType callGetHospLastUpdate(GetHospLastUpdateType parameters) {
         try {
-            GetHospLastUpdateResponseType response = hsaWebServiceClient.getHospLastUpdate(logicalAddressHeader, messageId, parameters);
-            return response;
-        } catch (Throwable ex) {
+            return hsaWebServiceClient.getHospLastUpdate(logicalAddressHeader, messageId, parameters);
+        } catch (HsaWsFault ex) {
             LOG.error("Failed to call callGetHospLastUpdate");
             Throwables.propagate(ex);
             return null;

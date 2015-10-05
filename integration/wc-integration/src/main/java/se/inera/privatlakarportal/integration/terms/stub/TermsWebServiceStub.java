@@ -52,7 +52,7 @@ public class TermsWebServiceStub implements GetPrivatePractitionerTermsResponder
         String fileEncoding = "UTF-8";
         String fileUrl = "classpath:bootstrap-webcertvillkor/webcertvillkor.html";
 
-        LOG.debug("Loading terms file '{}' using encoding '{}'", "", fileUrl, fileEncoding);
+        LOG.debug("Loading terms file '{}' using encoding '{}'", fileUrl, fileEncoding);
 
         String avtalText;
         try {

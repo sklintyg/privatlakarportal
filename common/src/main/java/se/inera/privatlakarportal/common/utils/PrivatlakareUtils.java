@@ -10,8 +10,11 @@ public class PrivatlakareUtils {
 
     private static final String LAKARE = "Läkare";
 
+    private PrivatlakareUtils() {
+    }
+
     public static boolean hasLakareLegitimation(Privatlakare privatlakare) {
-        for(LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
+        for (LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
             if (legitimeradYrkesgrupp.getNamn().equals(LAKARE)) {
                 return true;
             }

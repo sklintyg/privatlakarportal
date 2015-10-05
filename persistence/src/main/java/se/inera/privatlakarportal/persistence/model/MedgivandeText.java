@@ -53,9 +53,6 @@ public class MedgivandeText {
         return version != null ? version.hashCode() : 0;
     }
 
-    public MedgivandeText() {
-    }
-
     public Long getVersion() {
         return version;
     }

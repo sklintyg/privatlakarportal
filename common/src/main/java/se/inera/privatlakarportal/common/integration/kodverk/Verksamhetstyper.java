@@ -13,7 +13,11 @@ public class Verksamhetstyper {
     public static final String VERKSAMHETSTYP_OID = "1.2.752.129.2.2.1.3";
     public static final String VERKSAMHETSTYP_VERSION = "4.1";
 
-    static private Map<String, String> verksamhetstyper;
+    private static final Map<String, String> VERKSAMHETSTYP_MAP;
+
+    private Verksamhetstyper() {
+    }
+
     static {
         Map<String, String> map = new HashMap<>();
         map.put("10", "Barn- och ungdomsverksamhet");
@@ -26,15 +30,14 @@ public class Verksamhetstyper {
         map.put("17", "Radiologisk verksamhet");
         map.put("18", "Tandvårdsverksamhet");
         map.put("20", "Övrig medicinsk serviceverksamhet");
-        verksamhetstyper = Collections.unmodifiableMap(map);
+        VERKSAMHETSTYP_MAP = Collections.unmodifiableMap(map);
     }
 
     public static String getDisplayName(String code) {
-        return verksamhetstyper.get(code);
+        return VERKSAMHETSTYP_MAP.get(code);
     }
 
     public static Map<String, String> getVerksamhetstyper() {
-        return verksamhetstyper;
+        return VERKSAMHETSTYP_MAP;
     }
 }
-

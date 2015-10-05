@@ -53,14 +53,11 @@ public class UserServiceImpl implements UserService {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(privatlakarUser.getPersonalIdentityNumber());
         if (privatlakare == null) {
             status = RegistrationStatus.NOT_STARTED;
-        }
-        else if (!privatlakare.isGodkandAnvandare()) {
+        } else if (!privatlakare.isGodkandAnvandare()) {
             status = RegistrationStatus.NOT_AUTHORIZED;
-        }
-        else if (!PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
+        } else if (!PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
             status = RegistrationStatus.WAITING_FOR_HOSP;
-        }
-        else {
+        } else {
             status = RegistrationStatus.AUTHORIZED;
         }
 
@@ -83,12 +80,10 @@ public class UserServiceImpl implements UserService {
 
             } else if (personSvar.getStatus() == PersonSvar.Status.NOT_FOUND) {
                 LOG.warn("Person '{}' not found in puService", privatlakarUser.getPersonalIdentityNumber());
-            }
-            else {
+            } else {
                 LOG.error("puService returned error status for personId '{}'", privatlakarUser.getPersonalIdentityNumber());
             }
-        }
-        catch(RuntimeException e) {
+        } catch (RuntimeException e) {
             LOG.error("Failed to contact puService", e);
             personSvarStatus = PersonSvar.Status.ERROR;
         }

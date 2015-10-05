@@ -1,12 +1,14 @@
 package se.inera.privatlakarportal.service.postnummer.repo;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.inera.privatlakarportal.service.postnummer.model.Omrade;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import se.inera.privatlakarportal.service.postnummer.model.Omrade;
 
 /**
  * Created by pebe on 2015-08-12.
@@ -32,6 +34,17 @@ public class PostnummerRepositoryFactoryTest {
         assertEquals(LINE_1_POSTORT, res.getPostort());
         assertEquals(LINE_1_KOMMUN, res.getKommun());
         assertEquals(LINE_1_LAN, res.getLan());
-
     }
+
+    @Test
+    public void testCreateOmradeWithSetters() {
+        Omrade control = factory.createOmradeFromString(LINE_1);
+        Omrade test = new Omrade(null, null, null, null);
+        test.setKommun(LINE_1_KOMMUN);
+        test.setLan(LINE_1_LAN);
+        test.setPostnummer(LINE_1_POSTNUMMER);
+        test.setPostort(LINE_1_POSTORT);
+        assertTrue(control.hashCode() == test.hashCode());
+    }
+
 }

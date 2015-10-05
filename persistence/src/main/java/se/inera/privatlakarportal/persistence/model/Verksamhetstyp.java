@@ -23,6 +23,14 @@ public class Verksamhetstyp {
     @Column(name = "KOD", nullable = false)
     private String kod;
 
+    public Verksamhetstyp() {
+    }
+
+    public Verksamhetstyp(Privatlakare privatlakare, String kod) {
+        this.privatlakare = privatlakare;
+        this.kod = kod;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -43,14 +51,6 @@ public class Verksamhetstyp {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
-    }
-
-    public Verksamhetstyp() {
-    }
-
-    public Verksamhetstyp(Privatlakare privatlakare, String kod) {
-        this.privatlakare = privatlakare;
-        this.kod = kod;
     }
 
     public Privatlakare getPrivatlakare() {

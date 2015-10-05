@@ -26,6 +26,15 @@ public class Specialitet {
     @Column(name = "NAMN", nullable = false)
     private String namn;
 
+    public Specialitet() {
+    }
+
+    public Specialitet(Privatlakare privatlakare, String namn, String kod) {
+        this.privatlakare = privatlakare;
+        this.namn = namn;
+        this.kod = kod;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,15 +55,6 @@ public class Specialitet {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
-    }
-
-    public Specialitet() {
-    }
-
-    public Specialitet(Privatlakare privatlakare, String namn, String kod) {
-        this.privatlakare = privatlakare;
-        this.namn = namn;
-        this.kod = kod;
     }
 
     public Privatlakare getPrivatlakare() {

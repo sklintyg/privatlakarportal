@@ -17,9 +17,10 @@ public class CgiElegAssertion {
     public static final String FORNAMN_ATTRIBUTE = "Subject_GivenName";
     public static final String MELLAN_OCH_EFTERNAMN_ATTRIBUTE = "Subject_Surname";
 
-    public static final String UTFARDARE_ORGANISATIONSNAMN_ATTRIBUTE = "Issuer_OrganisationName";
+    public static final String UTFARDARE_ORGANISATIONSNAMN_ATTRIBUTE = "Issuer_OrganizationName";
     public static final String UTFARDARE_CA_NAMN_ATTRIBUTE = "Issuer_CommonName";
-    public static final String SECURITY_LEVEL_ATTRIBUTE = "SecurityLevel"; // 3 == e-leg på fil, 4 == e-leg på kort.
+    // 3 == e-leg på fil, 4 == e-leg på kort.
+    public static final String SECURITY_LEVEL_ATTRIBUTE = "SecurityLevel"; 
 
     private String personId;
     private String fornamn;

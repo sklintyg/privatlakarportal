@@ -12,12 +12,14 @@ import org.springframework.core.env.StandardEnvironment;
 import org.springframework.mock.env.MockPropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import se.inera.privatlakarportal.service.postnummer.model.Omrade;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
@@ -61,6 +63,7 @@ public class PostnummerServiceTest {
         assertThat(postnummerService.getOmradeByPostnummer("13061"), is(omrade13061));
         assertThat(postnummerService.getOmradeByPostnummer("13100"), is(omrade13100));
         assertThat(postnummerService.getOmradeByPostnummer("13155"), is(omrade13155));
+        assertThat(postnummerService.getOmradeByPostnummer("13155"), not(omrade13061));
     }
 
 }

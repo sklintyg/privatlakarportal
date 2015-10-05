@@ -61,7 +61,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Async
-    public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) throws PrivatlakarportalServiceException {
+    public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) {
         try {
             LOG.info("Sending registration status email to {}", privatlakare.getEpost());
             MimeMessage message = createMessage(status, privatlakare);
@@ -84,7 +84,7 @@ public class MailServiceImpl implements MailService {
         return message;
     }
 
-    private void buildEmailContent(MimeMessage message, RegistrationStatus status) throws MessagingException, PrivatlakarportalServiceException, IOException {
+    private void buildEmailContent(MimeMessage message, RegistrationStatus status) throws MessagingException, IOException {
        
         String subjectString = null;
         String htmlBodyString = null;
@@ -100,7 +100,7 @@ public class MailServiceImpl implements MailService {
             htmlBodyString = notApprovedBody;
             break;
         case NOT_STARTED:
-            // TODO: What happens here?
+            // Ignored
             break;
         case WAITING_FOR_HOSP:
             subjectString = awaitingHospSubject;

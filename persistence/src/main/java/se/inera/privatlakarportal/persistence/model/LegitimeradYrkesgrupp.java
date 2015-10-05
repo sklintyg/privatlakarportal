@@ -1,8 +1,16 @@
 package se.inera.privatlakarportal.persistence.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * Created by pebe on 2015-06-24.
@@ -26,6 +34,15 @@ public class LegitimeradYrkesgrupp {
     @Column(name = "NAMN", nullable = false)
     private String namn;
 
+    public LegitimeradYrkesgrupp() {
+    }
+
+    public LegitimeradYrkesgrupp(Privatlakare privatlakare, String namn, String kod) {
+        this.privatlakare = privatlakare;
+        this.namn = namn;
+        this.kod = kod;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,15 +63,6 @@ public class LegitimeradYrkesgrupp {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
-    }
-
-    public LegitimeradYrkesgrupp() {
-    }
-
-    public LegitimeradYrkesgrupp(Privatlakare privatlakare, String namn, String kod) {
-        this.privatlakare = privatlakare;
-        this.namn = namn;
-        this.kod = kod;
     }
 
     public Privatlakare getPrivatlakare() {

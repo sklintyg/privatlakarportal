@@ -23,6 +23,14 @@ public class Vardform {
     @Column(name = "KOD", nullable = false)
     private String kod;
 
+    public Vardform() {
+    }
+
+    public Vardform(Privatlakare privatlakare, String kod) {
+        this.privatlakare = privatlakare;
+        this.kod = kod;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -43,14 +51,6 @@ public class Vardform {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
-    }
-
-    public Vardform() {
-    }
-
-    public Vardform(Privatlakare privatlakare, String kod) {
-        this.privatlakare = privatlakare;
-        this.kod = kod;
     }
 
     public Privatlakare getPrivatlakare() {
