@@ -1,45 +1,17 @@
 package se.inera.privatlakarportal.persistence.config;
 
-import java.sql.SQLException;
 import java.util.Properties;
 
-import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-import liquibase.integration.spring.SpringLiquibase;
-
-import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jndi.JndiTemplate;
+import org.springframework.context.annotation.Bean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
-import se.inera.privatlakarportal.persistence.liquibase.DbChecker;
-
-@Configuration
-@ComponentScan("se.inera.privatlakarportal.persistence")
-@EnableJpaRepositories(basePackages = "se.inera.privatlakarportal.persistence")
-public class PersistenceConfig {
-
-    @Value("${db.driver}")
-    private String databaseDriver;
-    @Value("${db.url}")
-    private String databaseUrl;
-    @Value("${db.username}")
-    private String databaseUsername;
-    @Value("${db.password}")
-    private String databasePassword;
-    @Value("${db.httpPort}")
-    private String databaseHttpPort;
-    @Value("${db.tcpPort}")
-    private String databaseTcpPort;
+public abstract class PersistenceConfig {
 
     @Value("${hibernate.dialect}")
     private String hibernateDialect;
@@ -51,47 +23,6 @@ public class PersistenceConfig {
     private String hibernateShowSql;
     @Value("${hibernate.format_sql}")
     private String hibernateFormatSql;
-
-    @Bean(destroyMethod="stop")
-    @Profile("dev")
-    Server createTcpServer() throws SQLException {
-        Server server = Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", databaseTcpPort);
-        server.start();
-        return server;
-    }
-
-    @Bean(destroyMethod="stop")
-    @Profile("dev")
-    Server createWebServer() throws SQLException {
-        Server server = Server.createWebServer("-web", "-webAllowOthers", "-webPort", databaseHttpPort);
-        server.start();
-        return server;
-    }
-
-    @Bean(destroyMethod = "close")
-    @Profile("!dev")
-    DataSource jndiDataSource() {
-        DataSource dataSource = null;
-        JndiTemplate jndi = new JndiTemplate();
-        try {
-            dataSource = (DataSource) jndi.lookup("java:comp/env/jdbc/privatlakarportal");
-        } catch (NamingException e) {
-            
-        }
-        return dataSource;
-    }
-
-    @Bean(destroyMethod = "close")
-    @Profile("dev")
-    DataSource standaloneDataSource() {
-        HikariConfig dataSourceConfig = new HikariConfig();
-        dataSourceConfig.setDriverClassName(databaseDriver);
-        dataSourceConfig.setJdbcUrl(databaseUrl);
-        dataSourceConfig.setUsername(databaseUsername);
-        dataSourceConfig.setPassword(databasePassword);
-
-        return new HikariDataSource(dataSourceConfig);
-    }
 
     @Bean
     LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
@@ -118,21 +49,5 @@ public class PersistenceConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
-    }
-
-    @Bean(name = "dbUpdate")
-    @Profile("dev")
-    SpringLiquibase initDb(DataSource dataSource) {
-        SpringLiquibase springLiquibase = new SpringLiquibase();
-        springLiquibase.setDataSource(dataSource);
-        springLiquibase.setChangeLog("classpath:changelog/changelog.xml");
-        return springLiquibase;
-    }
-
-    @Bean(name = "dbUpdate")
-    @Profile("!dev")
-    DbChecker checkDb(DataSource dataSource) {
-        DbChecker dbChecker = new DbChecker(dataSource, "changelog/changelog.xml");
-        return dbChecker;
     }
 }

@@ -11,13 +11,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import se.inera.privatlakarportal.persistence.config.PersistenceConfig;
+import se.inera.privatlakarportal.persistence.config.PersistenceConfigDev;
 import se.inera.privatlakarportal.persistence.config.PersistenceConfigTest;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader=AnnotationConfigContextLoader.class, classes = {PersistenceConfigTest.class,PersistenceConfig.class})
-@ActiveProfiles({"dev"})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { PersistenceConfigTest.class, PersistenceConfigDev.class })
+@ActiveProfiles({ "dev" })
 public class HospUppdateringRepositoryTest {
 
     @Autowired
