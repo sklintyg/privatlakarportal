@@ -10,7 +10,13 @@ findbugs {
 
 tasks.withType(FindBugs) {
     reports {
-        xml.enabled = true
-        html.enabled = true
+        if (project.findBugsHtmlOutput) {
+            xml.enabled = false
+            html.enabled = true
+        }
+        else {
+            xml.enabled = true
+            html.enabled = false
+        }
     }
 }
