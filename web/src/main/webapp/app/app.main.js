@@ -95,6 +95,11 @@ app.run(
         messageService, UserProxy, UserModel, USER_DATA) {
         'use strict';
 
+        // Always scroll to top
+        $rootScope.$on('$stateChangeSuccess',function(){
+            $('html, body').animate({ scrollTop: 0 }, 200);
+        });
+
         $rootScope.lang = 'sv';
         $rootScope.DEFAULT_LANG = 'sv';
 
