@@ -25,6 +25,10 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
+        if (!(authentication instanceof FakeElegAuthenticationToken)) {
+            throw new RuntimeException("Failed to cast Authentication to FakeElegAuthenticationToken");
+        }
+
         FakeElegAuthenticationToken token = (FakeElegAuthenticationToken) authentication;
 
         SAMLCredential credential = createSamlCredential(token);

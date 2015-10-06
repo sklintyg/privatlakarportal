@@ -44,9 +44,9 @@ allprojects {
     }
     
 }
+
 if (project.hasProperty('runSonar')) {
     apply plugin: 'sonar-runner'
-
     sonarRunner {
         sonarProperties {
             property "sonar.jacoco.reportPath", "$buildDir/jacoco/test.exec"
@@ -73,7 +73,7 @@ if (project.hasProperty('runSonar')) {
                 "**/stub/**",
                 "**/exception/**",
                 "**/*Exception*.java",
-                "**/*Fake*.java",
+                "**/*Fake*.java"
                 ]
 
             //Skip these projects entirely
@@ -94,6 +94,12 @@ if (project.hasProperty('runSonar')) {
 
 subprojects {
     apply plugin: 'java'
+
+    if (project.hasProperty('codeQuality')) {
+        apply from: rootProject.file("tools/codeQuality/codeQuality.gradle")
+    }
+
+
     if (project.hasProperty('runSonar')) {
         apply plugin: 'jacoco'
 

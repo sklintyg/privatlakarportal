@@ -48,7 +48,7 @@ public class PostnummerRepositoryFactory {
 
         String fileEncoding = env.getProperty("postnummer.encoding", "ISO-8859-1");
 
-        LOG.debug("Loading postnummer file '{}' using encoding '{}'", fileUrl, fileEncoding );
+        LOG.debug("Loading postnummer file '{}' using encoding '{}'", fileUrl, fileEncoding);
 
         try {
             Resource resource = resourceLoader.getResource(fileUrl);
@@ -58,19 +58,19 @@ public class PostnummerRepositoryFactory {
                 return;
             }
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), fileEncoding));
-
-            while (reader.ready()) {
-                String line = reader.readLine();
-                Omrade omrade = createOmradeFromString(line);
-                postnummerRepository.addPostnummer(omrade.getPostnummer(), omrade);
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), fileEncoding))) {
+                while (reader.ready()) {
+                    String line = reader.readLine();
+                    Omrade omrade = createOmradeFromString(line);
+                    postnummerRepository.addPostnummer(omrade.getPostnummer(), omrade);
+                }
             }
-
-            reader.close();
 
         } catch (IOException ioe) {
             LOG.error("IOException occured when loading postnummer file '{}'", fileUrl);
             throw new RuntimeException("Error occured when loading postnummer file", ioe);
+        } finally {
+
         }
     }
 

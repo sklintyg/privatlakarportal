@@ -1,0 +1,16 @@
+apply plugin: 'findbugs'
+
+findbugs {
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "low"
+    includeFilter = rootProject.file("tools/codeQuality/findbugsIncludeFilter.xml")
+    sourceSets = [ sourceSets.main ]
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}

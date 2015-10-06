@@ -89,15 +89,22 @@ public class PUConfiguration {
 
         TLSClientParameters tlsClientParameters = new TLSClientParameters();
         tlsClientParameters.setDisableCNCheck(true);
-
         KeyStore trustStore = KeyStore.getInstance(ntjpWsCertificateType);
-        trustStore.load(new FileInputStream(ntjpWsCertificateFile), ntjpWsCertificatePassword.toCharArray());
+
+        try (FileInputStream trustStoreStream = new FileInputStream(ntjpWsCertificateFile)) {
+            trustStore.load(trustStoreStream, ntjpWsCertificatePassword.toCharArray());
+        }
+
         KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
         kmf.init(trustStore, ntjpWsKeyManagerPassword.toCharArray());
         tlsClientParameters.setKeyManagers(kmf.getKeyManagers());
 
         KeyStore keyStore = KeyStore.getInstance(ntjpWsTruststoreType);
-        keyStore.load(new FileInputStream(ntjpWsTruststoreFile), ntjpWsTruststorePassword.toCharArray());
+
+        try (FileInputStream keyStoreStream = new FileInputStream(ntjpWsTruststoreFile)) {
+            keyStore.load(keyStoreStream, ntjpWsTruststorePassword.toCharArray());
+        }
+
         TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
         tmf.init(keyStore);
         tlsClientParameters.setTrustManagers(tmf.getTrustManagers());
