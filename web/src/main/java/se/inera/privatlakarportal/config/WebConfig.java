@@ -45,7 +45,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         int cachePeriod = 3600 * 24 * 15;
-        registry.addResourceHandler("/index.html").addResourceLocations("/").setCachePeriod(cachePeriod);
+        registry.addResourceHandler("/index.html").addResourceLocations("/");
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/robots.txt").addResourceLocations("/").setCachePeriod(cachePeriod);
         registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components/");

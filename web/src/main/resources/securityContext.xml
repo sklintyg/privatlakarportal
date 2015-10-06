@@ -119,6 +119,7 @@
   <beans profile="pp-security-test">
     <!-- Unauthenticated requests matching samlRequestMatcher will be sent to saml login flow -->
     <security:http entry-point-ref="samlEntryPoint" request-matcher-ref="samlRequestMatcher">
+      <security:headers/>
       <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
@@ -146,6 +147,7 @@
   <!-- =============================================================== -->
   <beans profile="prod,pp-security-prod">
     <security:http entry-point-ref="samlEntryPoint" request-matcher-ref="samlRequestMatcher">
+      <security:headers/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
       <security:request-cache ref="httpSessionRequestCache" />
