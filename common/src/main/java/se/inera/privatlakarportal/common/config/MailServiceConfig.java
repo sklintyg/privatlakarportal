@@ -38,9 +38,6 @@ public class MailServiceConfig implements AsyncConfigurer {
     @Value("${mail.password}")
     private String password;
 
-    @Value("${mail.from}")
-    private String from;
-
     @Value("${mail.defaultEncoding}")
     private String defaultEncoding;
 

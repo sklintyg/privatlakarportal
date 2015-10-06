@@ -1,14 +1,24 @@
 package se.inera.privatlakarportal.web.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.service.RegisterService;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.privatlakarportal.service.RegisterService;
 import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.postnummer.PostnummerService;
-import se.inera.privatlakarportal.web.controller.api.dto.*;
+import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
+import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponse;
+import se.inera.privatlakarportal.web.controller.api.dto.GetHospInformationResponse;
+import se.inera.privatlakarportal.web.controller.api.dto.GetOmradeResponse;
+import se.inera.privatlakarportal.web.controller.api.dto.GetRegistrationResponse;
+import se.inera.privatlakarportal.web.controller.api.dto.SaveRegistrationRequest;
+import se.inera.privatlakarportal.web.controller.api.dto.SaveRegistrationResponse;
 
 /**
  * Created by pebe on 2015-06-25.
@@ -22,9 +32,6 @@ public class RegisterController {
 
     @Autowired
     private PostnummerService postnummerService;
-
-    @Autowired
-    private HospUpdateService hospUpdateService;
 
     @RequestMapping(value = "")
     public GetRegistrationResponse getRegistration() {

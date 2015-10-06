@@ -32,7 +32,6 @@ public class PersistenceConfigJndi extends PersistenceConfig {
 
     @Bean(name = "dbUpdate")
     DbChecker checkDb(DataSource dataSource) {
-        DbChecker dbChecker = new DbChecker(dataSource, "changelog/changelog.xml");
-        return dbChecker;
+        return new DbChecker(dataSource, "changelog/changelog.xml");
     }
 }

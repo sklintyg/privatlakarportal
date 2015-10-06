@@ -1,12 +1,12 @@
 package se.inera.privatlakarportal.persistence.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by pebe on 2015-09-03.
@@ -15,6 +15,7 @@ import javax.persistence.Table;
 @Table(name = "HOSP_UPPDATERING")
 public class HospUppdatering {
 
+    @SuppressWarnings("unused")
     @Id
     @Column(name="ID")
     private Long id;

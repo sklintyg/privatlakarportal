@@ -2,8 +2,6 @@ package se.inera.privatlakarportal.hsa.config;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ComponentScan({"se.inera.privatlakarportal.common.config"})
 @Profile({"dev", "hsa-stub"})
 public class HsaStubConfiguration {
-
-    private static final Logger LOG = LoggerFactory.getLogger(HsaStubConfiguration.class);
 
     @Autowired
     private ApplicationContext applicationContext;

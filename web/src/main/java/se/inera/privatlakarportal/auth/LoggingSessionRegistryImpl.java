@@ -11,7 +11,7 @@ import org.springframework.security.core.session.SessionRegistryImpl;
  *
  */
 public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
-
+    
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingSessionRegistryImpl.class);
-
 }

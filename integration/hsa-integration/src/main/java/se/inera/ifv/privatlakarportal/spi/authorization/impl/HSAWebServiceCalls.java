@@ -60,7 +60,7 @@ public class HSAWebServiceCalls {
      *
      * @throws Exception
      */
-    public void callPing() throws Exception {
+    public void callPing() {
 
         try {
             PingType pingtype = new PingType();
@@ -69,7 +69,7 @@ public class HSAWebServiceCalls {
 
         } catch (HsaWsFault ex) {
             LOG.warn("Exception={}", ex.getMessage());
-            throw new Exception(ex);
+            Throwables.propagate(ex);
         }
     }
 

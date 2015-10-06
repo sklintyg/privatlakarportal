@@ -8,7 +8,6 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,9 +19,6 @@ public class MailStubController {
 
     @Autowired
     private MailStubStore mailStore;
-
-    @Autowired
-    private JavaMailSender mailsender;
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public Map<String, String> getMails() throws MessagingException, IOException {
