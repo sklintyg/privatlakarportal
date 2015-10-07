@@ -8,14 +8,17 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.WebContentInterceptor;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
 
 import java.util.List;
+import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
@@ -68,4 +71,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         }
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // Disable browser caching of all /api requests
+        WebContentInterceptor webContentInterceptor = new WebContentInterceptor();
+        Properties cacheMappings = new Properties();
+        cacheMappings.setProperty("/api/**", "0");
+        webContentInterceptor.setCacheMappings(cacheMappings);
+        registry.addInterceptor(webContentInterceptor);
+    }
 }
