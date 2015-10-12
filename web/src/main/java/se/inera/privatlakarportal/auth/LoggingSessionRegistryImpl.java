@@ -10,9 +10,6 @@ import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
  * Implementation of SessionRegistry that performs audit logging of login and logout.
  */
 public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
-    @SuppressWarnings("unused")
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingSessionRegistryImpl.class);
-
     @Autowired
     private MonitoringLogService monitoringService;
 
@@ -39,5 +36,4 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
         }
         super.removeSessionInformation(sessionId);
     }
->>>>>>> [PRIV-93] Ram för händelselogg
 }
