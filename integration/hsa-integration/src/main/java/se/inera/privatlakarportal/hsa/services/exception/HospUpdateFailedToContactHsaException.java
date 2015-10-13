@@ -10,4 +10,9 @@ public class HospUpdateFailedToContactHsaException extends Exception {
     public HospUpdateFailedToContactHsaException(WebServiceException e) {
         this.e = e;
     }
+
+    @Override
+    public String getMessage() {
+        return e.getMessage();
+    }
 }

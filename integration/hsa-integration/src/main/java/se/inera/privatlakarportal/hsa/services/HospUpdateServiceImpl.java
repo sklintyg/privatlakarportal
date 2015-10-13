@@ -98,7 +98,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                         mailService.sendRegistrationStatusEmail(status, privatlakare);
                     }
                 } catch(HospUpdateFailedToContactHsaException e) {
-                    LOG.error("Failed to contact HSA with error {}", e);
+                    LOG.error("Failed to contact HSA with error '{}'", e.getMessage());
                 }
             }
         }
@@ -114,7 +114,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                     LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
                 }
             } catch (WebServiceException e) {
-                LOG.error("Failed to call handleCertifier in HSA with error {}, this call will be retried at next hosp update cycle.", e);
+                LOG.error("Failed to call handleCertifier in HSA with error {}, this call will be retried at next hosp update cycle.", e.getMessage());
                 throw new HospUpdateFailedToContactHsaException(e);
             }
         }

@@ -45,6 +45,8 @@ public class HospUpdateServiceImplTest {
 
     private final String PERSON_ID = "1912121212";
     private final String PERSONAL_PRESCRIPTION_CODE = "7654321";
+    private final String PERSON_ID2 = "PERSON_ID2";
+    private final String PERSON_ID3 = "PERSON_ID3";
 
     @Mock
     private HospPersonService hospPersonService;
@@ -62,6 +64,18 @@ public class HospUpdateServiceImplTest {
     private HospUpdateService hospUpdateService = new HospUpdateServiceImpl();
 
     @Test
+    public void testUpdateHospInformationKanEjKontaktaHSA() throws HospUpdateFailedToContactHsaException {
+        when(hospPersonService.getHospLastUpdate()).thenThrow(new WebServiceException("Could not send message"));
+
+        hospUpdateService.updateHospInformation();
+
+        // Om det går att hämta senaste tidpunkt för hospupdate görs inget mer nu.
+        // Ett nytt försök kommer göras vid nästa schemalagda körning.
+        verify(hospPersonService).getHospLastUpdate();
+        verifyNoMoreInteractions(hospPersonService);
+    }
+
+    @Test
     public void testUpdateHospInformation() {
 
         HospUppdatering hospUppdatering = new HospUppdatering();
@@ -69,27 +83,47 @@ public class HospUpdateServiceImplTest {
         when(hospUppdateringRepository.findSingle()).thenReturn(hospUppdatering);
         LocalDateTime hospLastUpdate = LocalDateTime.parse("2015-09-05");
         when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
-        Privatlakare privatlakare = new Privatlakare();
-        privatlakare.setPersonId(PERSON_ID);
+        Privatlakare privatlakare1 = new Privatlakare();
+        privatlakare1.setPersonId(PERSON_ID);
+        Privatlakare privatlakare2 = new Privatlakare();
+        privatlakare2.setPersonId(PERSON_ID2);
+        Privatlakare privatlakare3 = new Privatlakare();
+        privatlakare3.setPersonId(PERSON_ID3);
         ArrayList list = new ArrayList();
-        list.add(privatlakare);
+        list.add(privatlakare1);
+        list.add(privatlakare2);
+        list.add(privatlakare3);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
-        GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
-        hospPersonResponse.getTitleCodes().getTitleCode().add("DT");
-        hospPersonResponse.getHsaTitles().getHsaTitle().add("Dietist");
-        hospPersonResponse.getSpecialityCodes().getSpecialityCode().add("12");
-        hospPersonResponse.getSpecialityNames().getSpecialityName().add("Specialitet");
-        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse);
+        when(hospPersonService.addToCertifier(any(String.class),any(String.class))).thenReturn(true);
+
+        // Om det går fel vid kontakt med hsa ska uppdateringsrutinen ändå fortsätta med nästa i listan.
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
+        GetHospPersonResponseType hospPersonResponse2 = createGetHospPersonResponse();
+        hospPersonResponse2.getTitleCodes().getTitleCode().add("DT");
+        hospPersonResponse2.getHsaTitles().getHsaTitle().add("Dietist");
+        hospPersonResponse2.getSpecialityCodes().getSpecialityCode().add("12");
+        hospPersonResponse2.getSpecialityNames().getSpecialityName().add("Specialitet");
+        when(hospPersonService.getHospPerson(PERSON_ID2)).thenReturn(hospPersonResponse2);
+        GetHospPersonResponseType hospPersonResponse3 = createGetHospPersonResponse();
+        hospPersonResponse3.getTitleCodes().getTitleCode().add("LK");
+        hospPersonResponse3.getHsaTitles().getHsaTitle().add("Läkare");
+        hospPersonResponse3.getSpecialityCodes().getSpecialityCode().add("12");
+        hospPersonResponse3.getSpecialityNames().getSpecialityName().add("Specialitet");
+        when(hospPersonService.getHospPerson(PERSON_ID3)).thenReturn(hospPersonResponse3);
 
         hospUpdateService.updateHospInformation();
 
-        // sensateHospUppdatering in DB should be se to hospLastUpdate from HSA
+        // sensateHospUppdatering in DB should be set to hospLastUpdate from HSA
         assertEquals(hospLastUpdate, hospUppdatering.getSenasteHospUppdatering());
         verify(hospUppdateringRepository).save(hospUppdatering);
 
-        // privatlakare should be updated with new hospinformation
-        verify(privatlakareRepository).save(privatlakare);
+        // privatlakare2 and privatlakare3 should be updated with new hospinformation
+        verify(privatlakareRepository, times(0)).save(privatlakare1);
+        verify(privatlakareRepository).save(privatlakare2);
+        verify(mailService).sendRegistrationStatusEmail(RegistrationStatus.NOT_AUTHORIZED, privatlakare2);
+        verify(privatlakareRepository).save(privatlakare3);
+        verify(mailService).sendRegistrationStatusEmail(RegistrationStatus.AUTHORIZED, privatlakare3);
     }
 
     @Test(expected = HospUpdateFailedToContactHsaException.class)
