@@ -107,6 +107,18 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     @Override
     public RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier)
             throws HospUpdateFailedToContactHsaException {
+
+        if (shouldRegisterInCertifier) {
+            try {
+                if (!hospPersonService.addToCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
+                    LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
+                }
+            } catch (WebServiceException e) {
+                LOG.error("Failed to call handleCertifier in HSA with error {}, this call will be retried at next hosp update cycle.", e);
+                throw new HospUpdateFailedToContactHsaException(e);
+            }
+        }
+
         GetHospPersonResponseType hospPersonResponse;
         try {
             hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
@@ -116,15 +128,6 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         }
 
         if (hospPersonResponse == null) {
-            if (shouldRegisterInCertifier) {
-                try {
-                    if (!hospPersonService.addToCertifier(privatlakare.getPersonId(), privatlakare.getHsaId())) {
-                        LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
-                    }
-                } catch (WebServiceException e) {
-                    LOG.error("Failed to call handleCertifier in HSA with error {}, this call will be retried at next hosp update cycle.", e);
-                }
-            }
             privatlakare.setLegitimeradeYrkesgrupper(new HashSet<LegitimeradYrkesgrupp>());
             privatlakare.setSpecialiteter(new ArrayList<Specialitet>());
             privatlakare.setForskrivarKod(null);

@@ -100,29 +100,29 @@ public class HospUpdateServiceImplTest {
 
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
 
-        RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
-
-        verify(hospPersonService).getHospPerson(PERSON_ID);
-        verifyNoMoreInteractions(hospPersonService);
-        assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
+        try {
+            hospUpdateService.updateHospInformation(privatlakare, true);
+        } finally {
+            verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
+            verify(hospPersonService).getHospPerson(PERSON_ID);
+            verifyNoMoreInteractions(hospPersonService);
+        }
     }
 
-    @Test
+    @Test(expected = HospUpdateFailedToContactHsaException.class)
     public void testUpdateHospInformationKanEjKontaktaHSA2() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setPersonId(PERSON_ID);
 
-        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
-
         when(hospPersonService.addToCertifier(eq(PERSON_ID), any(String.class))).thenThrow(new WebServiceException("Could not send message"));
 
-        RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
-
-        verify(hospPersonService).getHospPerson(PERSON_ID);
-        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
-        verifyNoMoreInteractions(hospPersonService);
-        assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
+        try {
+            hospUpdateService.updateHospInformation(privatlakare, true);
+        } finally {
+            verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
+            verifyNoMoreInteractions(hospPersonService);
+        }
     }
 
     @Test
@@ -135,7 +135,7 @@ public class HospUpdateServiceImplTest {
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
-        verify(hospPersonService, times(0)).addToCertifier(any(String.class), any(String.class));
+        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
         assertEquals(response, RegistrationStatus.NOT_AUTHORIZED);
     }
 
@@ -168,7 +168,7 @@ public class HospUpdateServiceImplTest {
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
-        verify(hospPersonService, times(0)).addToCertifier(any(String.class), any(String.class));
+        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
         assertEquals(response, RegistrationStatus.AUTHORIZED);
     }
 
