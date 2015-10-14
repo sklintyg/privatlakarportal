@@ -3,7 +3,7 @@ describe('Service: LinkBuilder', function() {
 
     // Load the module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('privatlakareApp', function($provide) {
-        $provide.value('APP_CONFIG', {webcertStartUrl: 'starturl'});
+        $provide.value('APP_CONFIG', {webcertUrl: 'starturl'});
     }));
 
     var LinkBuilder, $rootScope, $httpBackend;

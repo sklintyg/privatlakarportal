@@ -1,10 +1,10 @@
 angular.module('privatlakareApp').factory('LinkBuilder',
-    function($window,
+    function($window, $log,
         messageService, APP_CONFIG, ObjectHelper) {
         'use strict';
 
         return {
-            getExitLink: function(fromStateName, toStateName, userStatus) {
+            getExitLink: function(fromStateName, toStateName, userStatus, fromUrlPath) {
                 var exitLink = {
                     name: '',
                     link: ''
@@ -14,7 +14,10 @@ angular.module('privatlakareApp').factory('LinkBuilder',
                     if (ObjectHelper.isEmpty(fromStateName) || fromStateName === 'app.boot') {
                         // If we had no valid state before we came from an external site, assuming webcert for now.
                         exitLink.name = messageService.getProperty('label.header.backtoapp');
-                        exitLink.link = APP_CONFIG.webcertStartUrl;
+                        // Build exit link with specific path in external application if available.
+                        exitLink.link =  ObjectHelper.isDefined(fromUrlPath) ? APP_CONFIG.webcertUrl + fromUrlPath : APP_CONFIG.webcertUrl;
+                        $log.debug('ExitLink:');
+                        $log.debug(exitLink.link);
                     } else {
                         switch (userStatus) {
                         case 'AUTHORIZED':
