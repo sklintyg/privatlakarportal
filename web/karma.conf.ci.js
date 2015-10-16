@@ -14,5 +14,14 @@ module.exports = function(config) {
         singleRun: true,
 
         browsers: [ 'PhantomJS' ],
+
+        // coverage reporter generates the coverage
+        reporters: ['progress', 'coverage'],
+
+        coverageReporter: {
+            type : 'lcovonly',
+            dir : 'build/karma/coverage/lcov',
+            subdir: '.'
+        }
     });
 };

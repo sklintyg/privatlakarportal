@@ -76,6 +76,15 @@ if (project.hasProperty('runSonar')) {
                 "**/*Fake*.java"
                 ]
 
+            project(":privatlakarportal-web") {
+                sonarRunner {
+                    sonarProperties {
+                        property "sonar.javascript.lcov.reportPath", "$buildDir/karma/coverage/lcov/lcov.info"
+                        property "sonar.sources", "${projectDir}/src/main/resources,${projectDir}/src/main/java,${projectDir}/src/main/webapp/app"
+                    }
+                }
+            }
+
             //Skip these projects entirely
             project(":privatlakarportal-specifications") {
                 sonarRunner {
