@@ -56,6 +56,7 @@ import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExce
 import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
@@ -85,6 +86,9 @@ public class RegisterServiceImplTest {
 
     @Mock
     private DateHelperService dateHelperService;
+
+    @Mock
+    private MonitoringLogService monitoringLogService;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

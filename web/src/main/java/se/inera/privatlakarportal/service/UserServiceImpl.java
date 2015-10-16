@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import se.inera.certificate.logging.HashUtility;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -72,16 +74,16 @@ public class UserServiceImpl implements UserService {
 
                 // Check if name has changed and update in database
                 if (privatlakare != null && !name.equals(privatlakare.getFullstandigtNamn())) {
-                    LOG.info("Updated name for user '{}'", privatlakarUser.getPersonalIdentityNumber());
+                    LOG.info("Updated name for user '{}'", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
                     privatlakare.setFullstandigtNamn(name);
                     privatlakareRepository.save(privatlakare);
                     nameUpdated = true;
                 }
 
             } else if (personSvar.getStatus() == PersonSvar.Status.NOT_FOUND) {
-                LOG.warn("Person '{}' not found in puService", privatlakarUser.getPersonalIdentityNumber());
+                LOG.warn("Person '{}' not found in puService", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
             } else {
-                LOG.error("puService returned error status for personId '{}'", privatlakarUser.getPersonalIdentityNumber());
+                LOG.error("puService returned error status for personId '{}'", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
             }
         } catch (RuntimeException e) {
             LOG.error("Failed to contact puService", e);

@@ -1,49 +1,43 @@
 package se.inera.privatlakarportal.service.monitoring;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import se.inera.certificate.logging.HashUtility;
 import se.inera.certificate.logging.LogMarkers;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 
-@Service
+@Service("webMonitoringLogService")
 public class MonitoringLogServiceImpl implements MonitoringLogService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MonitoringLogService.class);
     private static final Object SPACE = " ";
-    private static final String DIGEST = "SHA-256";
+    private static final Logger LOG = LoggerFactory.getLogger(MonitoringLogService.class);
 
-    private MessageDigest msgDigest;
-
-    @PostConstruct
-    public void initMessageDigest() {
-        try {
-            msgDigest = MessageDigest.getInstance(DIGEST);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException(e);
-        }
+    @Override
+    public void logUserRegistered(String id, String hsaId, RegistrationStatus registrationStatus) {
+        logEvent(MonitoringEvent.USER_REGISTERED, HashUtility.hash(id), hsaId, registrationStatus);
     }
 
     @Override
-    public void logUserRegistered(String id, String hsaId) {
-        logEvent(MonitoringEvent.USER_REGISTERED, hash(id), hsaId);
+    public void logUserDeleted(String id) {
+        logEvent(MonitoringEvent.USER_DELETED, HashUtility.hash(id));
     }
 
     @Override
-    public void logUserLogin(String id) {
-        logEvent(MonitoringEvent.USER_LOGIN, hash(id));
+    public void logUserLogin(String id, String authenticationScheme) {
+        logEvent(MonitoringEvent.USER_LOGIN, HashUtility.hash(id), authenticationScheme);
     }
 
     @Override
-    public void logUserLogout(String id) {
-        logEvent(MonitoringEvent.USER_LOGOUT, hash(id));
+    public void logUserLogout(String id, String authenticationScheme) {
+        logEvent(MonitoringEvent.USER_LOGOUT, HashUtility.hash(id), authenticationScheme);
+    }
+
+    @Override
+    public void logUserDetailsChanged(String id) {
+        logEvent(MonitoringEvent.USER_DETAILS_CHANGED, HashUtility.hash(id));
     }
 
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {
@@ -56,20 +50,12 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         return logMsg.toString();
     }
 
-    public String hash(String id) {
-        try {
-            msgDigest.update(id.getBytes("UTF-8"));
-            byte[] digest = msgDigest.digest();
-            return new String(Hex.encodeHex(digest));
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
     private enum MonitoringEvent {
-        USER_REGISTERED("User '{}' registered"),
+        USER_REGISTERED("User '{}' registered with hsaId '{}', status '{}'"),
+        USER_DELETED("User '{}' deleted"),
         USER_LOGIN("Login user '{}' using scheme '{}'"),
-        USER_LOGOUT("Logout user '{}' using scheme '{}'");
+        USER_LOGOUT("Logout user '{}' using scheme '{}'"),
+        USER_DETAILS_CHANGED("Details for user '{}' changed");
 
         private String message;
 

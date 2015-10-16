@@ -29,6 +29,7 @@ import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
 import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.common.service.MailService;
+import se.inera.privatlakarportal.hsa.monitoring.MonitoringLogService;
 import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
@@ -59,6 +60,9 @@ public class HospUpdateServiceImplTest {
 
     @Mock
     private MailService mailService;
+
+    @Mock
+    private MonitoringLogService monitoringLogService;
 
     @InjectMocks
     private HospUpdateService hospUpdateService = new HospUpdateServiceImpl();

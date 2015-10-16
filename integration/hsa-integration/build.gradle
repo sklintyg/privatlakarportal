@@ -39,6 +39,7 @@ dependencies {
     compile 'joda-time:joda-time:2.5'
     compile 'ch.qos.logback:logback-classic:1.0.13'
     compile 'com.google.guava:guava:18.0'
+    compile 'se.inera.intyg.common:logging-util:0-SNAPSHOT'
 
     wsdlgen "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion}"
     wsdlgen "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion}"

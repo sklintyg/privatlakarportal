@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,7 @@ import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.privatlakarportal.service.model.HospInformation;
 import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
 
 /**
  * Created by pebe on 2015-06-26.
@@ -66,6 +68,10 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Autowired
     private DateHelperService dateHelperService;
+
+    @Autowired
+    @Qualifier("webMonitoringLogService")
+    private MonitoringLogService monitoringService;
 
     @Override
     public HospInformation getHospInformation() {
@@ -207,6 +213,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         privatlakareRepository.save(privatlakare);
 
+        monitoringService.logUserRegistered(privatlakare.getPersonId(), privatlakare.getHsaId(), status);
         return status;
     }
 
@@ -229,6 +236,8 @@ public class RegisterServiceImpl implements RegisterService {
         convertRegistrationToPrivatlakare(registration, privatlakare);
 
         privatlakareRepository.save(privatlakare);
+        
+        monitoringService.logUserDetailsChanged(privatlakare.getPersonId());
 
         return SaveRegistrationResponseStatus.OK;
     }
@@ -242,6 +251,9 @@ public class RegisterServiceImpl implements RegisterService {
         }
         privatlakareRepository.delete(toDelete);
         LOG.info("Deleted Privatlakare with id {}", personId);
+
+        monitoringService.logUserDeleted(personId);
+
         return true;
     }
 

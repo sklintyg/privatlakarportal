@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
 
+import se.inera.certificate.logging.HashUtility;
 import se.inera.ifv.hsaws.v3.HsaWsFault;
 import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
 import se.inera.ifv.hsawsresponder.v3.GetHospLastUpdateResponseType;
@@ -87,7 +88,7 @@ public class HSAWebServiceCalls {
         try {
             return hsaWebServiceClient.getHospPerson(logicalAddressHeader, messageId, parameters);
         } catch (HsaWsFault ex) {
-            LOG.error("Failed to call callGetHospPerson with id '{}'", parameters.getPersonalIdentityNumber());
+            LOG.error("Failed to call callGetHospPerson with id '{}'", HashUtility.hash(parameters.getPersonalIdentityNumber()));
             Throwables.propagate(ex);
             return null;
         }

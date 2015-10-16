@@ -4,6 +4,7 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnu
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
+import se.inera.privatlakarportal.hsa.monitoring.MonitoringLogService;
 import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
@@ -48,6 +50,10 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
     @Autowired
     MailService mailService;
+
+    @Autowired
+    @Qualifier("hsaMonitoringLogService")
+    private MonitoringLogService monitoringService;
 
     @Override
     @Scheduled(cron = "${privatlakarportal.hospupdate.cron}")
@@ -132,6 +138,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             privatlakare.setSpecialiteter(new ArrayList<Specialitet>());
             privatlakare.setForskrivarKod(null);
 
+            monitoringService.logHospWaiting(privatlakare.getPersonId());
             return RegistrationStatus.WAITING_FOR_HOSP;
         } else {
             privatlakare.setSpecialiteter(getSpecialiteter(privatlakare, hospPersonResponse));
@@ -139,8 +146,10 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
 
             if (PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
+                monitoringService.logUserAuthorizedInHosp(privatlakare.getPersonId());
                 return RegistrationStatus.AUTHORIZED;
             } else {
+                monitoringService.logUserNotAuthorizedInHosp(privatlakare.getPersonId());
                 return RegistrationStatus.NOT_AUTHORIZED;
             }
         }

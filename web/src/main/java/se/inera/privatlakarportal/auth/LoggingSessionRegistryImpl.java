@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistryImpl;
 
@@ -11,13 +12,14 @@ import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
  */
 public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
     @Autowired
+    @Qualifier("webMonitoringLogService")
     private MonitoringLogService monitoringService;
 
     @Override
     public void registerNewSession(String sessionId, Object principal) {
         if (principal != null && principal instanceof PrivatlakarUser) {
             PrivatlakarUser user = (PrivatlakarUser) principal;
-            monitoringService.logUserLogin(user.getPersonalIdentityNumber());
+            monitoringService.logUserLogin(user.getPersonalIdentityNumber(), user.getAuthenticationScheme());
         }
         super.registerNewSession(sessionId, principal);
     }
@@ -31,7 +33,8 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
             if (principal instanceof PrivatlakarUser) {
                 // TODO: We could log specifically that a session has expired. Is this something we want to do?
                 //       sessionInformation.isExpired()
-                monitoringService.logUserLogout(((PrivatlakarUser) principal).getPersonalIdentityNumber());
+                PrivatlakarUser user = (PrivatlakarUser) principal;
+                monitoringService.logUserLogout(user.getPersonalIdentityNumber(), user.getAuthenticationScheme());
             }
         }
         super.removeSessionInformation(sessionId);

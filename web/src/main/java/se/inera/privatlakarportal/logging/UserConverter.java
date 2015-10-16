@@ -1,11 +1,12 @@
 package se.inera.privatlakarportal.logging;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import se.inera.certificate.logging.HashUtility;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
-import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
 import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
@@ -20,8 +21,6 @@ public class UserConverter extends ClassicConverter {
 
     private static final String NO_USER = "NO USER";
 
-    @Autowired
-    private MonitoringLogService monitoring;
     @Override
     public String convert(ILoggingEvent event) {
 
@@ -35,7 +34,7 @@ public class UserConverter extends ClassicConverter {
 
         if (principal instanceof PrivatlakarUser) {
             PrivatlakarUser user = (PrivatlakarUser) auth.getPrincipal();
-            return monitoring.hash(user.getPersonalIdentityNumber());
+            return HashUtility.hash(user.getPersonalIdentityNumber());
         }
 
         return NO_USER;
