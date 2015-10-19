@@ -15,7 +15,7 @@ angular.module('privatlakareApp').controller('HeaderController',
             }, true);
 
             $scope.$on('$stateChangeSuccess',
-                function(event, toState, toParams, fromState, $state/*, fromParams*/) {
+                function(event, toState, toParams, fromState/*, $state, fromParams*/) {
                     // sessionStorage.from is defined in boot.controller.js.
                     $scope.exitLink = LinkBuilder.getExitLink(fromState.name, toState.name, UserModel.get().status, $sessionStorage.from);
                 });

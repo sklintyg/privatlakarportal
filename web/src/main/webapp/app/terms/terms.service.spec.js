@@ -9,7 +9,8 @@ describe('Service: TermsService', function() {
     var $rootScope, $httpBackend, $state, wcModalService, $window, AppTermsModalModel, TermsModel, TermsService, mockResponse;
     
     // Initialize the controller and a mock scope
-    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _TermsService_, _mockResponse_, _$state_, _AppTermsModalModel_, _wcModalService_, _$window_, _TermsModel_) {
+    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _$state_,
+        _TermsService_, _mockResponse_, _AppTermsModalModel_, _wcModalService_, _$window_, _TermsModel_) {
         $httpBackend = _$httpBackend_;
         $rootScope = _$rootScope_;
         mockResponse = _mockResponse_;

@@ -129,7 +129,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '<%= config.client %>/.jshintrc',
                 reporter: require('jshint-stylish'),
-                force: true
+                force: false
             },
             all: [
                 '<%= config.client %>/{app,components}/**/*.js',

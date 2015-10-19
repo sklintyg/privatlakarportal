@@ -17,7 +17,7 @@ angular.module('privatlakareApp').directive('ppSpinner',
                     $window.rendered = false;
                 },
                 post : function (scope/*, element*/){
-                    scope.$watch('showSpinner', function(newVal, oldVal){
+                    scope.$watch('showSpinner', function(newVal/*, oldVal*/){
                         if (!newVal && !scope.isHeader) {
                             $timeout(function(){
                                 $window.rendered = true;
