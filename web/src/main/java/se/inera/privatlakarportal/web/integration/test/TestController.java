@@ -32,7 +32,7 @@ public class TestController {
     @Autowired
     private PrivatlakareRepository privatlakareRepository;
 
-    @Autowired
+    @Autowired(required=false)
     private HsaServiceStub hsaServiceStub;
 
     @Autowired
@@ -84,11 +84,13 @@ public class TestController {
         return true;
     }
 
+    @Profile("hsa-stub")
     @RequestMapping(value = "/hosp/add", method = RequestMethod.POST)
     public void addHospPerson(@RequestBody HsaHospPerson hsaHospPerson) {
         hsaServiceStub.addHospPerson(hsaHospPerson);
     }
 
+    @Profile("hsa-stub")
     @RequestMapping(value = "/hosp/remove/{id}", method = RequestMethod.DELETE)
     public void removeHospPerson(@PathVariable("id") String id) {
         hsaServiceStub.removeHospPerson(id);
