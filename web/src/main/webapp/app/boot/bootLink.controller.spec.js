@@ -22,13 +22,12 @@ describe('Controller: BootCtrl', function() {
         });
     }));
 
-    var BootCtrl, scope, $controller, UserModel, $state;
+    var scope, $controller, $state;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function(_$controller_, $rootScope, _UserModel_, _$state_) {
+    beforeEach(inject(function(_$controller_, $rootScope, _$state_) {
         $controller = _$controller_;
         scope = $rootScope.$new();
-        UserModel = _UserModel_;
         $state = _$state_;
     }));
 
@@ -37,7 +36,7 @@ describe('Controller: BootCtrl', function() {
         user = {name:'Nisse', status: 'NOT_STARTED'};
         $state.params.targetId = 'new';
         spyOn($state, 'go').and.stub();
-        BootCtrl = $controller('BootLinkCtrl', { $scope: scope });
+        $controller('BootLinkCtrl', { $scope: scope });
         expect($state.go).toHaveBeenCalledWith('app.register.step1');
     });
 
@@ -46,7 +45,7 @@ describe('Controller: BootCtrl', function() {
         user = {name:'Nisse', status: 'NOT_STARTED'};
         $state.params.targetId = '';
         spyOn($state, 'go').and.stub();
-        BootCtrl = $controller('BootLinkCtrl', { $scope: scope });
+        $controller('BootLinkCtrl', { $scope: scope });
         expect(scope.errorMessage).not.toBe(null);
     });
 
@@ -54,7 +53,7 @@ describe('Controller: BootCtrl', function() {
         succeed = false;
         error = {};
         $state.params.targetId = '';
-        BootCtrl = $controller('BootLinkCtrl', { $scope: scope });
+        $controller('BootLinkCtrl', { $scope: scope });
         expect(scope.errorMessage).not.toBe(null);
     });
 

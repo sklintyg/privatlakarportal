@@ -4,13 +4,12 @@ describe('Controller: MainCtrl', function () {
   // load the controller's module
   beforeEach(module('privatlakareApp'));
 
-  var MainCtrl,
-      scope;
+  var scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    $controller('MainCtrl', {
       $scope: scope
     });
   }));

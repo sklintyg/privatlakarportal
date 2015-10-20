@@ -5,8 +5,9 @@ angular.module('privatlakareApp').service('MinsidaViewState',
         this.reset = function() {
 
             this.errorMessage = {
+                load: null,
                 noPermission: false,
-                save: false
+                save: null
             };
 
             this.loading = {

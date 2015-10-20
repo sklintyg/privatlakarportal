@@ -6,12 +6,12 @@ describe('Controller: CompleteCtrl', function () {
       $provide.value('APP_CONFIG', {});
   }));
 
-  var CompleteCtrl, scope;
+  var scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    CompleteCtrl = $controller('CompleteCtrl', {
+    $controller('CompleteCtrl', {
       $scope: scope
     });
   }));

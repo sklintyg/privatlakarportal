@@ -6,12 +6,12 @@ describe('Controller: RegisterCtrl', function() {
         $provide.value('APP_CONFIG', {});
     }));
 
-    var RegisterCtrl, scope;
+    var scope;
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function($controller, $rootScope) {
         scope = $rootScope.$new();
-        RegisterCtrl = $controller('RegisterCtrl', {
+        $controller('RegisterCtrl', {
             $scope: scope
         });
     }));

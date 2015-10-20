@@ -4,12 +4,12 @@ describe('Controller: WaitingCtrl', function() {
     // load the controller's module
     beforeEach(module('privatlakareApp'));
 
-    var WaitingCtrl, scope;
+    var scope;
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function($controller, $rootScope) {
         scope = $rootScope.$new();
-        WaitingCtrl = $controller('WaitingCtrl', {
+        $controller('WaitingCtrl', {
             $scope: scope
         });
     }));

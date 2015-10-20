@@ -5,20 +5,18 @@ angular.module('privatlakareApp')
         $scope.loading = true;
         $scope.errorMessage = null;
 
-        //$timeout(function() {
-            UserProxy.getUser().then(function(successData) {
-                $scope.loading = false;
-                $scope.errorMessage = null;
-                UserModel.set(successData);
+        UserProxy.getUser().then(function(successData) {
+            $scope.loading = false;
+            $scope.errorMessage = null;
+            UserModel.set(successData);
 
-                if($state.params.targetId === 'new') {
-                    $state.go('app.register.step1');
-                } else {
-                    $scope.errorMessage = 'Kunde inte länka rätt. Kontrollera parametern:' + $state.params.targetId;
-                }
-            }, function() {
-                $scope.loading = false;
-                $scope.errorMessage = 'Kunde inte hämta användare. Har du loggat in?';
-            });
-        //}, 3000);
+            if($state.params.targetId === 'new') {
+                $state.go('app.register.step1');
+            } else {
+                $scope.errorMessage = 'Kunde inte länka rätt. Kontrollera parametern:' + $state.params.targetId;
+            }
+        }, function() {
+            $scope.loading = false;
+            $scope.errorMessage = 'Kunde inte hämta användare. Har du loggat in?';
+        });
     });

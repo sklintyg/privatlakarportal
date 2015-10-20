@@ -7,23 +7,9 @@ describe('Controller: BootCtrl', function() {
 
     // load the controller's module
     beforeEach(angular.mock.module('htmlTemplates'));
-    beforeEach(angular.mock.module('privatlakareApp', function($provide) {
-        $provide.value('UserProxy', {
-            getUser: function() {
-                return {
-                    then: function(onSuccess, onError) {
-                        if (succeed) {
-                            onSuccess(user);
-                        } else {
-                            onError(error);
-                        }
-                    }
-                };
-            }
-        });
-    }));
+    beforeEach(angular.mock.module('privatlakareApp'));
 
-    var $rootScope , $controller, $state, BootCtrl, scope, UserModel, mockResponse;
+    var $rootScope , $controller, $state, scope, UserModel, mockResponse;
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function(_$controller_, _$rootScope_, _UserModel_, _$state_, _mockResponse_) {
@@ -44,7 +30,7 @@ describe('Controller: BootCtrl', function() {
         user.nameFromPuService = true;
         UserModel.set(user);
 
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
+        $controller('BootCtrl', { $scope: scope });
 
         expect($state.go).toHaveBeenCalledWith('app.start');
     });
@@ -58,7 +44,7 @@ describe('Controller: BootCtrl', function() {
         user.nameFromPuService = false;
         UserModel.set(user);
 
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
+        $controller('BootCtrl', { $scope: scope });
 
         expect($state.go).toHaveBeenCalledWith('app.error',
             { errorMessage: 'Ett tekniskt fel har tyvärr uppstått och det går inte att hämta dina namnuppgifter ' +
@@ -74,7 +60,7 @@ describe('Controller: BootCtrl', function() {
         user.status = 'WAITING_FOR_HOSP';
         UserModel.set(user);
 
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
+        $controller('BootCtrl', { $scope: scope });
 
         expect($state.go).toHaveBeenCalledWith('app.minsida');
     });
@@ -87,7 +73,7 @@ describe('Controller: BootCtrl', function() {
         user.status = 'AUTHORIZED';
         UserModel.set(user);
 
-        BootCtrl = $controller('BootCtrl', { $scope: scope });
+        $controller('BootCtrl', { $scope: scope });
 
         expect($state.go).toHaveBeenCalledWith('app.minsida');
     });

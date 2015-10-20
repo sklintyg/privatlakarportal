@@ -1,4 +1,4 @@
-angular.module('privatlakareApp').controller('HeaderController', 
+angular.module('privatlakareApp').controller('HeaderController',
         function($scope, $window, $state, $log, UserModel, LinkBuilder, $sessionStorage) {
             'use strict';
 

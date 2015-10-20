@@ -31,6 +31,7 @@ angular.module('privatlakareApp')
         }, function(errorData) {
             $log.debug('MinsidaCtrl - Got error:');
             $log.debug(errorData);
+            MinsidaViewState.errorMessage.load = 'Kunde inte ladda formuläret. Prova ladda om sidan. (' + errorData.message + ')';
         });
 
         $scope.save = function() {
