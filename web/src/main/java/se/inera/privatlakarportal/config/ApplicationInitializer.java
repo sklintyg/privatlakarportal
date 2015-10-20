@@ -6,8 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 import org.apache.cxf.transport.servlet.CXFServlet;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -48,6 +50,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic cxfServlet = servletContext.addServlet("services", new CXFServlet());
         cxfServlet.setLoadOnStartup(1);
         cxfServlet.addMapping("/services/*");
+
+        // Listeners for session audit logging
+        servletContext.addListener(new HttpSessionEventPublisher());
+        servletContext.addListener(new RequestContextListener());
     }
 
     private void registerCharachterEncodingFilter(ServletContext aContext) {
