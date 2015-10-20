@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/stub/mails")
-@Profile({"dev","testability-api"})
+@Profile({"dev","mail-stub"})
 public class MailStubController {
 
     @Autowired
