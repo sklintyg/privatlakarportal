@@ -2,7 +2,7 @@ describe('Service: RegisterNavigation', function() {
     'use strict';
 
     // Load the module and mock away everything that is not necessary.
-    beforeEach(angular.mock.module('privatlakareApp', function($provide) {
+    beforeEach(angular.mock.module('privatlakareApp', function() {
     }));
 
     var state;

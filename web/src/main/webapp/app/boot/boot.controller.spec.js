@@ -3,7 +3,6 @@ describe('Controller: BootCtrl', function() {
 
     var succeed = true;
     var user = {};
-    var error = {};
 
     // load the controller's module
     beforeEach(angular.mock.module('htmlTemplates'));

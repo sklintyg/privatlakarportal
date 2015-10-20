@@ -1,3 +1,4 @@
+/* globals window */
 describe('Service: TermsService', function() {
     'use strict';
 
@@ -73,7 +74,7 @@ describe('Service: TermsService', function() {
 
         function setUserAgent(window, userAgent) {
            var oldUserAgent = window.navigator.userAgent;
-           if (window.navigator.userAgent != userAgent) {
+           if (window.navigator.userAgent !== userAgent) {
                var userAgentProp = { get: function () { return userAgent; } };
                try {
                    Object.defineProperty(window.navigator, 'userAgent', userAgentProp);
