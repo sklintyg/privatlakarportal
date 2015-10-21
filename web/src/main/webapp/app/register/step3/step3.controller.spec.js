@@ -76,7 +76,6 @@ describe('Controller: Step3Ctrl', function() {
     });
 
     describe('when user is not registered', function() {
-        var RegisterNavigationService;
         var RegisterProxy;
         var Step3ViewState;
 
@@ -87,7 +86,6 @@ describe('Controller: Step3Ctrl', function() {
                 $valid: true
             };
             state = _$state_;
-            RegisterNavigationService = _RegisterNavigationService_;
             RegisterProxy = _RegisterProxy_;
             Step3ViewState = _Step3ViewState_;
 

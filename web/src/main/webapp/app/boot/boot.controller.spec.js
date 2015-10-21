@@ -1,7 +1,6 @@
 describe('Controller: BootCtrl', function() {
     'use strict';
 
-    var succeed = true;
     var user = {};
 
     // load the controller's module
@@ -22,7 +21,6 @@ describe('Controller: BootCtrl', function() {
 
     it('should be redirected to start page if not registered yet', function() {
         spyOn($state, 'go').and.stub();
-        succeed = true;
 
         user = angular.copy(mockResponse.userModel);
         user.status = 'NOT_STARTED';
@@ -36,7 +34,6 @@ describe('Controller: BootCtrl', function() {
 
     it('should be redirected to error page if not registered yet and unable to get name from pu service', function() {
         spyOn($state, 'go').and.stub();
-        succeed = true;
 
         user = angular.copy(mockResponse.userModel);
         user.status = 'NOT_STARTED';
@@ -53,7 +50,6 @@ describe('Controller: BootCtrl', function() {
 
     it('should be redirected to minsida page if registered but havent received läkarlegimitation yet', function() {
         spyOn($state, 'go').and.stub();
-        succeed = true;
 
         user = angular.copy(mockResponse.userModel);
         user.status = 'WAITING_FOR_HOSP';
@@ -66,7 +62,6 @@ describe('Controller: BootCtrl', function() {
 
     it('should be redirected to minsida page if registered and got läkarlegitimation', function() {
         spyOn($state, 'go').and.stub();
-        succeed = true;
 
         user = angular.copy(mockResponse.userModel);
         user.status = 'AUTHORIZED';
