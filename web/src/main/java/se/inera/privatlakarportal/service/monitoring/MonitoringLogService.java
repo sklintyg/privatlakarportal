@@ -7,7 +7,7 @@ import se.inera.privatlakarportal.common.model.RegistrationStatus;
  */
 public interface MonitoringLogService {
 
-    void logUserRegistered(String id, String hsaId, RegistrationStatus registrationStatus);
+    void logUserRegistered(String id, Long consentVersion, String hsaId, RegistrationStatus registrationStatus);
 
     void logUserDeleted(String id);
 

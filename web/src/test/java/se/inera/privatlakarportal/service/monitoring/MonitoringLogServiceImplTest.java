@@ -27,6 +27,7 @@ public class MonitoringLogServiceImplTest {
     private static final String USER_ID = "USER_ID";
     private static final String AUTHENTICATION_SCHEME = "AUTHENTICATION_SCHEME";
     private static final String HSA_ID = "HSA_ID";
+    private static final Long CONSENT_VERSION = 1L;
     
     @Mock
     private Appender<ILoggingEvent> mockAppender;
@@ -50,8 +51,8 @@ public class MonitoringLogServiceImplTest {
     
     @Test
     public void shouldLogUserRegistered() {
-        logService.logUserRegistered(USER_ID, HSA_ID, RegistrationStatus.AUTHORIZED);
-        verifyLog(Level.INFO, "USER_REGISTERED User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' registered with hsaId 'HSA_ID', status 'AUTHORIZED'");
+        logService.logUserRegistered(USER_ID, CONSENT_VERSION, HSA_ID, RegistrationStatus.AUTHORIZED);
+        verifyLog(Level.INFO, "USER_REGISTERED User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' registered with consent version '1' and hsaId 'HSA_ID', returned status 'AUTHORIZED'");
     }
 
     @Test

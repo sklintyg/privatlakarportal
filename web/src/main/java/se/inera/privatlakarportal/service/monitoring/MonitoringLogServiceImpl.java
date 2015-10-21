@@ -16,8 +16,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     private static final Logger LOG = LoggerFactory.getLogger(MonitoringLogService.class);
 
     @Override
-    public void logUserRegistered(String id, String hsaId, RegistrationStatus registrationStatus) {
-        logEvent(MonitoringEvent.USER_REGISTERED, HashUtility.hash(id), hsaId, registrationStatus);
+    public void logUserRegistered(String id, Long consentVersion, String hsaId, RegistrationStatus registrationStatus) {
+        logEvent(MonitoringEvent.USER_REGISTERED, HashUtility.hash(id), consentVersion, hsaId, registrationStatus);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     private enum MonitoringEvent {
-        USER_REGISTERED("User '{}' registered with hsaId '{}', status '{}'"),
+        USER_REGISTERED("User '{}' registered with consent version '{}' and hsaId '{}', returned status '{}'"),
         USER_DELETED("User '{}' deleted"),
         USER_LOGIN("Login user '{}' using scheme '{}'"),
         USER_LOGOUT("Logout user '{}' using scheme '{}'"),

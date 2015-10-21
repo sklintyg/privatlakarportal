@@ -213,7 +213,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         privatlakareRepository.save(privatlakare);
 
-        monitoringService.logUserRegistered(privatlakare.getPersonId(), privatlakare.getHsaId(), status);
+        monitoringService.logUserRegistered(privatlakare.getPersonId(), godkantMedgivandeVersion, privatlakare.getHsaId(), status);
         return status;
     }
 
