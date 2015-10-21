@@ -69,7 +69,7 @@ var ppMessages = {
 
         // Start
         'label.start.header': 'Skapa konto i Webcert för privatläkare',
-        'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett kontot i Webcert.',
+        'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett konto i Webcert.',
         'label.start.1': 'Du lämnar uppgifter om dig själv och din verksamhet. Uppgifterna behövs för att du ska kunna använda alla funktioner i Webcert.',
         'label.start.2': 'Din yrkeslegitimation verifieras automatiskt mot Socialstyrelsens register över legitimerad hälso- och sjukvårdspersonal (HOSP).',
         'label.start.3': 'Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms">Webcerts användarvillkor</a> (endast första gången).',
