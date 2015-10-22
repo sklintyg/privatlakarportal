@@ -18,8 +18,9 @@
   <security:http security="none" pattern="/saml/web/**"/>
   <security:http security="none" pattern="/saml2/web/**"/>
   <security:http security="none" pattern="/services/**"/>
-  <security:http security="none" pattern="/monitoring/**"/>
   <security:http security="none" pattern="/version.jsp"/>
+  <security:http security="none" pattern="/healthcheck.jsp"/>
+  <security:http security="none" pattern="/api/monitoring/**"/>
   <security:http security="none" pattern="/favicon.ico"/>
   <security:http security="none" pattern="/error.jsp"/>
 

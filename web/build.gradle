@@ -13,40 +13,6 @@ apply plugin: 'war'
 apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.moowork.grunt'
 
-dependencies {
-    compile project(":privatlakarportal-persistence")
-    compile project(":privatlakarportal-hsa-integration")
-    compile project(":privatlakarportal-pu-integration")
-    compile project(":privatlakarportal-wc-integration")
-    compile project(":privatlakarportal-common")
-
-    compile "org.springframework:spring-webmvc:${springContextVersion}"
-    compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
-    compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecurityExtensionsVersion}"
-    compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
-    compile 'com.googlecode.json-simple:json-simple:1.1.1'
-    compile 'org.slf4j:slf4j-api:1.7.10'
-    compile 'ch.qos.logback:logback-classic:1.0.13'
-    compile 'wsdl4j:wsdl4j:1.6.3'
-    compile 'commons-lang:commons-lang:2.6'
-
-    compile 'org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}'
-    compile 'org.apache.cxf:cxf-rt-transports-http:${cxfVersion}'
-
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-all:1.10.19'
-    testCompile "org.springframework:spring-test:${springContextVersion}"
-    testCompile 'org.unitils:unitils-core:3.3'
-    testCompile 'org.apache.cxf:cxf-bundle-jaxrs:2.1.2'
-
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-    providedCompile 'jstl:jstl:1.2'
-
-
-
-}
-
 grunt {
     colors = true
 }
@@ -66,6 +32,8 @@ if (project.hasProperty('privatlakarportal.useMinifiedJavaScript')) {
 else {
     war.dependsOn grunt_build_no_minify
 }
+
+
 
 task assembleManifestClasspath() << {
     war {
@@ -123,4 +91,39 @@ gretty {
     fastReload = true
     inplaceMode = 'hard'
     scanInterval = 0
+}
+
+dependencies {
+    compile project(":privatlakarportal-persistence")
+    compile project(":privatlakarportal-hsa-integration")
+    compile project(":privatlakarportal-pu-integration")
+    compile project(":privatlakarportal-wc-integration")
+    compile project(":privatlakarportal-common")
+    
+    compile "org.springframework:spring-webmvc:${springContextVersion}"
+    compile "org.springframework.ws:spring-ws-core:2.2.2.RELEASE"
+    compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
+    compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecurityExtensionsVersion}"
+    compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    compile 'org.slf4j:slf4j-api:1.7.10'
+    compile 'ch.qos.logback:logback-classic:1.0.13'
+    compile 'wsdl4j:wsdl4j:1.6.3'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'org.apache.commons:commons-lang3:3.1'
+    
+    compile 'se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.0'
+
+    compile 'org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}'
+    compile 'org.apache.cxf:cxf-rt-transports-http:${cxfVersion}'
+    
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:1.10.19'
+    testCompile "org.springframework:spring-test:${springContextVersion}"
+    testCompile 'org.unitils:unitils-core:3.3'
+    testCompile 'org.apache.cxf:cxf-bundle-jaxrs:2.1.2'
+    
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    providedCompile 'jstl:jstl:1.2'
 }

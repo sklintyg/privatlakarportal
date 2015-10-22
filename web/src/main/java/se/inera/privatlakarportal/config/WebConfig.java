@@ -1,5 +1,8 @@
 package se.inera.privatlakarportal.config;
 
+import java.util.List;
+import java.util.Properties;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +18,8 @@ import org.springframework.web.servlet.mvc.WebContentInterceptor;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
 
-import java.util.List;
-import java.util.Properties;
+import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
 
 @EnableWebMvc
 @Configuration
