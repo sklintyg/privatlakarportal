@@ -2,7 +2,7 @@ package se.inera.privatlakarportal.page
 
 class WelcomePage extends AbstractPage {
     static url = "/welcome.html"
-    static at = { $("#loginForm").isDisplayed() }
+    static at = { $("#loginForm").isDisplayed() && doneLoading() }
 
     static content = {
         userSelect { $("#jsonSelect") }
@@ -12,8 +12,7 @@ class WelcomePage extends AbstractPage {
     def loginAs(String id) {
         userSelect = $("#${id}").value();
         loginBtn.click()
-        waitFor {
-            doneLoading()
-        }
+        // The login page is running a separate angular app, here we need to wait for the "real" angular app to start.
+        waitForAngularBoot();
     }
 }
