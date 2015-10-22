@@ -29,7 +29,7 @@ abstract class AbstractPage extends Page {
     static public Object waitForJavascriptCallback(String statementPattern, Object... parameters) {
         def driver = se.inera.privatlakarportal.spec.Browser.getDriver();
         driver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
-        Object result;
+        Object result = "";
         String script = "var callback = arguments[arguments.length - 1];" + String.format(statementPattern, parameters);
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         if (statementPattern.contains("arguments")) {

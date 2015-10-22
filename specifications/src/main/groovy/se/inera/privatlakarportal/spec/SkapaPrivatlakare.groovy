@@ -56,7 +56,7 @@ public class SkapaPrivatlakare extends RestClientFixture {
         kommun = null
         lan = null
 
-        String responseStatus;
+        String responseStatus = ""
     }
 	
     public void execute() {

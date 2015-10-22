@@ -23,7 +23,9 @@ public class Browser {
     public void stäng() {
         if (!browser) throw new IllegalStateException("Browser not initialized")
         browser.quit()
-        browser = null
+        this.static {
+            browser = null
+        }
         CachingDriverFactory.clearCache()
     }
 
