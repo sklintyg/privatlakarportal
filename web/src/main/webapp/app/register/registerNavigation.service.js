@@ -18,12 +18,9 @@ angular.module('privatlakareApp').service('RegisterNavigationService',
 
             if(toStep === null) { // step number is N/A. allow navigation because it is outside the register flow.
                 return true;
+            } else {
+                return !(toStep > fromStep + 1 || (toStep === fromStep + 1 && !formValid));
             }
-
-            if (toStep > fromStep + 1 || (toStep === fromStep + 1 && !formValid)) {
-                return false;
-            }
-            return true;
         };
     }
 );

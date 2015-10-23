@@ -4,7 +4,7 @@ angular.module('privatlakareApp')
         $scope.user = UserModel.get();
         $scope.registerModel = RegisterModel.init();
         $scope.step = 1;
-        $scope.$on('$stateChangeStart',
+        $scope.$on('$stateChangeSuccess',
             function(event, toState) {
                 $scope.step = RegisterNavigationService.getStepFromState(toState);
             }
