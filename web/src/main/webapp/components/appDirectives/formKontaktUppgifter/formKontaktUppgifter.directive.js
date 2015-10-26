@@ -11,8 +11,7 @@ angular.module('privatlakareApp').directive('formKontaktUppgifter',
                 restrict: 'A',
                 transclude: true,
                 scope: {
-                    'registerModel': '=',
-                    'viewState': '='
+                    'registerModel': '='
                 },
                 controller: function($scope) {
 

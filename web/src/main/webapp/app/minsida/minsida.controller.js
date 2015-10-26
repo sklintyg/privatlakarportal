@@ -35,6 +35,12 @@ angular.module('privatlakareApp')
         });
 
         $scope.save = function() {
+
+            if($scope.registerForm.$invalid) {
+                MinsidaViewState.errorMessage.save = 'Kunde inte spara ändringarna. Det finns fel i formuläret.';
+                return;
+            }
+
             MinsidaViewState.loading.save = true;
             RegisterProxy.savePrivatlakare(RegisterModel.get()).then(function(/*successData*/) {
                 MinsidaViewState.loading.save = false;

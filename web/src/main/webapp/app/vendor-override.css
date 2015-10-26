@@ -407,6 +407,6 @@ UI-bootstrap
     margin: 0;
 }
 
-.alert-dismissable .close {
-    right: -10px;
+.alert-dismissable .close, .alert-dismissible .close {
+    right: -6px;
 }
