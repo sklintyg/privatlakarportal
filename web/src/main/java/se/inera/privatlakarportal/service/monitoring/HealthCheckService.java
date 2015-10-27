@@ -5,7 +5,7 @@ import se.inera.privatlakarportal.service.monitoring.dto.HealthStatus;
 /**
  * Service for checking the health of the application.
  *
- * @author npet
+ * @author Erik
  *
  */
 public interface HealthCheckService {
@@ -44,4 +44,10 @@ public interface HealthCheckService {
      * @return
      */
     HealthStatus checkNbrOfUsers();
+    /**
+     * Checks the number of used HSA id.
+     *
+     * @return
+     */
+    HealthStatus checkNbrOfUsedHsaId();
 }

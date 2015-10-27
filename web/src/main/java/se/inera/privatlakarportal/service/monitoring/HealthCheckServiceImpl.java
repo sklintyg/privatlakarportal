@@ -12,11 +12,16 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
+import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
+import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.privatlakarportal.service.monitoring.dto.HealthStatus;
 
 /**
@@ -40,6 +45,9 @@ public class HealthCheckServiceImpl implements HealthCheckService {
 
     @Autowired
     private SessionRegistry sessionRegistry;
+
+    @Autowired
+    private PrivatlakareIdRepository privatlakareIdRepository;
 
     public HealthStatus checkHSA() {
         boolean ok;
@@ -86,6 +94,17 @@ public class HealthCheckServiceImpl implements HealthCheckService {
         return new HealthStatus(size, ok);
     }
 
+    @Override
+    public HealthStatus checkNbrOfUsedHsaId() {
+        int nbrOfHsaId = 0;
+        Page<PrivatlakareId> ids = privatlakareIdRepository.findAll(new PageRequest(0, 1, new Sort(Sort.Direction.DESC, "id")));
+
+        if (!ids.getContent().isEmpty()) {
+            nbrOfHsaId = ids.getContent().get(0).getId();
+        }
+        return new HealthStatus(nbrOfHsaId, true);
+    }
+
     public HealthStatus checkUptime() {
         long uptime = System.currentTimeMillis() - START_TIME;
         LOG.info("Current system uptime is {}", DurationFormatUtils.formatDurationWords(uptime, true, true));
@@ -118,4 +137,5 @@ public class HealthCheckServiceImpl implements HealthCheckService {
     private HealthStatus createStatusWithTiming(boolean ok, StopWatch stopWatch) {
         return new HealthStatus(stopWatch.getTime(), ok);
     }
+
 }
