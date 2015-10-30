@@ -4,6 +4,7 @@ import geb.driver.CachingDriverFactory
 
 import org.openqa.selenium.Alert
 import org.openqa.selenium.Cookie
+import org.openqa.selenium.TimeoutException
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.WebDriverWait
 
@@ -33,10 +34,13 @@ public class Browser {
 
         browser.drive {
             if(acceptBrowserDialog == "true") {
-                WebDriverWait wait = new WebDriverWait(driver, 2);
-                wait.until(ExpectedConditions.alertIsPresent());
-                Alert alert = driver.switchTo().alert();
-                alert.accept();
+                try {
+                    WebDriverWait wait = new WebDriverWait(driver, 2);
+                    wait.until(ExpectedConditions.alertIsPresent());
+                    Alert alert = driver.switchTo().alert();
+                    alert.accept();
+                }
+                catch(TimeoutException e) {}
             }
             waitFor {
                 js.doneLoading && js.dialogDoneLoading

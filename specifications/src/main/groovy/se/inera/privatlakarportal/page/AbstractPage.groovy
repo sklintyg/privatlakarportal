@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit
 abstract class AbstractPage extends Page {
 
     static boolean doneLoading() {
+        waitForAngularBoot();
         waitForAngularRequestsToFinish();
         true
     }
