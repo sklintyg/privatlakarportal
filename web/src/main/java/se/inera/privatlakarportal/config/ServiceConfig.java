@@ -7,6 +7,7 @@ import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,7 +32,10 @@ public class ServiceConfig {
 
     @Autowired
     private ApplicationContext applicationContext;
-    
+
+    @Value("${terms.ws.services.url}")
+    private String termsUrl;
+
     @Bean
     public ServletContextAttributeExporter contextAttributes() {
         final Map<String, Object> attributes = new HashMap<String, Object>();
@@ -59,6 +63,7 @@ public class ServiceConfig {
     public GetPrivatePractitionerTermsResponderInterface termsWebServiceClient() {
         JaxWsProxyFactoryBean proxyFactoryBean = new JaxWsProxyFactoryBean();
         proxyFactoryBean.setServiceClass(GetPrivatePractitionerTermsResponderInterface.class);
+        proxyFactoryBean.setAddress(termsUrl);
         return (GetPrivatePractitionerTermsResponderInterface) proxyFactoryBean.create();
     }
 }
