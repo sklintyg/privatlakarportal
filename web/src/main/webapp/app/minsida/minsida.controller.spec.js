@@ -44,6 +44,7 @@ describe('Controller: MinsidaCtrl', function() {
         beforeEach(inject(function($controller, $rootScope, $window, _MinsidaViewState_) {
             succeed = true;
             scope = $rootScope.$new();
+            scope.registerModel = { telefonnummer: '0123456789' };
             scope.registerForm = {
                 $dirty: true,
                 $setPristine: function() {}
@@ -68,6 +69,16 @@ describe('Controller: MinsidaCtrl', function() {
             succeedSave = false;
             scope.save();
             expect(MinsidaViewState.errorMessage.save).not.toBe(null);
+        });
+
+        it('should reset data when user resets', function() {
+            MinsidaViewState.reset();
+            MinsidaViewState.undoModel.telefonnummer = '0123456789';
+            scope.registerModel = { telefonnummer: '0123456789' };
+            expect(scope.registerModel.telefonnummer).toBe('0123456789');
+            scope.registerModel.telefonnummer = '12345';
+            scope.reset();
+            expect(scope.registerModel.telefonnummer).toBe('0123456789');
         });
     });
 
