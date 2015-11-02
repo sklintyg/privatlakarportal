@@ -174,7 +174,7 @@ var ppMessages = {
         'label.godkannvillkor': 'Jag medger <a ui-sref=".terms">behandling av mina och verksamhetens uppgifter</a>.',
         'label.createaccount': 'Skapa konto',
 
-        'label.summary.logoutinfo': 'För att ändringen ska visas i de nya utkast som du skapar måste du spara och logga ut och sedan logga in i Webcert igen. Ändringen kommer inte att visas på signerade intyg.',
+        'label.summary.logoutinfo': 'För att ändringen ska visas i nya utkast som du skapar måste du spara och logga ut och sedan logga in i Webcert igen. Ändringen kommer inte att visas på redan signerade intyg.',
 
         'label.modal.title.portalvillkor': 'Godkännande av lagring och hämtning av uppgifter',
         'label.modal.content.title.portalvillkor': 'Medgivande av villkor för lagring och hämtning av uppgifter',
