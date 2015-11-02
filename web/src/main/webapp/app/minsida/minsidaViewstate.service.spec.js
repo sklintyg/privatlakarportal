@@ -2,7 +2,7 @@ describe('Service: minsidaViewstate', function() {
     'use strict';
 
     // load the controller's module
-    beforeEach(module('privatlakareApp', function($provide) {
+    beforeEach(module('privatlakareApp', function(/*$provide*/) {
     }));
 
     var MinsidaViewState;
