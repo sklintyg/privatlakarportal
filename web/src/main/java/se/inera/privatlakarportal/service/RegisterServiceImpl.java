@@ -43,6 +43,8 @@ import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
 @Service
 public class RegisterServiceImpl implements RegisterService {
 
+    private static final int NUMBER_OF_HSA_IDS_BEFORE_NOTIFICATION = 50;
+
     private static final Logger LOG = LoggerFactory.getLogger(RegisterServiceImpl.class);
 
     @Autowired
@@ -209,6 +211,11 @@ public class RegisterServiceImpl implements RegisterService {
             status = RegistrationStatus.WAITING_FOR_HOSP;
         }
 
+        // Determine if an administrator needs to be notified about HSA ID's running out
+        if (privatlakareidRepository.findLatestGeneratedHsaId() != 0 && 
+                privatlakareidRepository.findLatestGeneratedHsaId() % NUMBER_OF_HSA_IDS_BEFORE_NOTIFICATION == 0) {
+            mailService.sendHsaGenerationStatusEmail();
+        }
         mailService.sendRegistrationStatusEmail(status, privatlakare);
 
         privatlakareRepository.save(privatlakare);

@@ -5,6 +5,7 @@ import javax.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,25 @@ public class MailServiceStub implements MailService {
     private static final String AUTHORIZED_BODY = "Registration klar";
     private static final String NOT_AUTHORIZED_BODY = "Saknar behörighet";
     private static final String WAITING_FOR_HOSP_BODY = "Väntar på hosp-information";
+    private static final String HSA_GENERATION_STATUS = "Dags att göra ny TAKning för genererade HSA-IDn";
     private static final Logger LOG = LoggerFactory.getLogger(MailServiceStub.class);
+
+    @Value("{mail.admin}")
+    private String adminEpost;
 
     @Autowired(required=false)
     private MailStubStore mailStore;
+
+    @Override
+    @Async
+    public void sendHsaGenerationStatusEmail() {
+        LOG.info("Sending registration status email to {}", adminEpost);
+        try {
+            mailStore.addMail("ADMIN", HSA_GENERATION_STATUS);
+        } catch (PrivatlakarportalServiceException e) {
+            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, e.getMessage());
+        }
+    }
 
     @Override
     @Async
@@ -62,4 +78,5 @@ public class MailServiceStub implements MailService {
         }
         return htmlString;
     }
+
 }
