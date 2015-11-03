@@ -115,7 +115,6 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.1'
     
     compile 'se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.0'
-    compile 'se.inera.intyg.common:logging-util:0-SNAPSHOT'
 
     compile 'org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}'
     compile 'org.apache.cxf:cxf-rt-transports-http:${cxfVersion}'
