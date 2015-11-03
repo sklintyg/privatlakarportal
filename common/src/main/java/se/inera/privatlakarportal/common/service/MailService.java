@@ -18,4 +18,6 @@ public interface MailService {
      *             @{link PrivatlakarportalServiceException}
      */
     public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare);
+
+    public void sendHsaGenerationStatusEmail();
 }

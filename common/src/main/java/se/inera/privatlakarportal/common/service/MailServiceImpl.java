@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -29,6 +30,9 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 @Service
 public class MailServiceImpl implements MailService {
 
+    @Value("mail.admin")
+    private String adminEpost;
+
     @Value("${mail.from}")
     private String from;
 
@@ -50,6 +54,12 @@ public class MailServiceImpl implements MailService {
     @Value("${mail.content.pending.subject}")
     private String awaitingHospSubject;
 
+    @Value("${mail.admin.content.hsa.subject}")
+    private String hsaGenerationMailSubject;
+
+    @Value("${mail.admin.content.hsa.body}")
+    private String hsaGenerationMailBody;
+
     private static final String INERA_LOGO = "inera_logo.png";
 
     private static final String BOTTOM_BODY_CONTENT = "<br/><br/><span><img src='cid:inera_logo'></span>";
@@ -61,10 +71,10 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Async
-    public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) {
+    public void sendHsaGenerationStatusEmail() {
         try {
-            LOG.info("Sending registration status email to {}", privatlakare.getEpost());
-            MimeMessage message = createMessage(status, privatlakare);
+            LOG.info("Sending hsa-generation-status email to {}", adminEpost);
+            MimeMessage message = createHsaGenerationStatusMessage(adminEpost);
             message.saveChanges();
             mailSender.send(message);
         } catch (MessagingException | PrivatlakarportalServiceException | MailException | IOException e) {
@@ -73,49 +83,93 @@ public class MailServiceImpl implements MailService {
         }
     }
 
-    private MimeMessage createMessage(RegistrationStatus status, Privatlakare privatlakare) throws MessagingException,
+    @Override
+    @Async
+    public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) {
+        try {
+            LOG.info("Sending registration status email to {}", privatlakare.getEpost());
+            MimeMessage message = createStatusMessage(status, privatlakare);
+            message.saveChanges();
+            mailSender.send(message);
+        } catch (MessagingException | PrivatlakarportalServiceException | MailException | IOException e) {
+            LOG.error("Error while sending registration status email with message {}", e.getMessage(), e);
+            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, e.getMessage());
+        }
+    }
+
+    private MimeMessage createHsaGenerationStatusMessage(String epost) throws AddressException, MessagingException, IOException {
+        MimeMessage message = mailSender.createMimeMessage();
+        message.setFrom(new InternetAddress(from));
+        message.addRecipient(Message.RecipientType.TO,
+                new InternetAddress(epost));
+        buildEmailContent(message, hsaGenerationMailSubject, hsaGenerationMailBody);
+        return message;
+    }
+
+    private MimeMessage createStatusMessage(RegistrationStatus status, Privatlakare privatlakare) throws MessagingException,
             PrivatlakarportalServiceException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO,
                 new InternetAddress(privatlakare.getEpost()));
-
-        buildEmailContent(message, status);
+        buildEmailContent(message, messageSubjectFromRegistrationStatus(status), messageBodyFromRegistrationStatus(status));
         return message;
     }
 
-    private void buildEmailContent(MimeMessage message, RegistrationStatus status) throws MessagingException, IOException {
-       
-        String subjectString = null;
-        String htmlBodyString = null;
-
-        // Set correct content and subject depending on status
+    private String messageSubjectFromRegistrationStatus(RegistrationStatus status) {
+        String htmlSubjectString = null;
+        // Set correct subject depending on status
         switch (status) {
         case AUTHORIZED:
-            subjectString = approvedSubject;
+            htmlSubjectString = approvedSubject;
+            break;
+        case NOT_AUTHORIZED:
+            htmlSubjectString = notApprovedSubject;
+            break;
+        case NOT_STARTED:
+            // Ignored
+            break;
+        case WAITING_FOR_HOSP:
+            htmlSubjectString = awaitingHospSubject;
+            break;
+        default:
+            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
+                    "Something unforseen happened while sending registration verification email.");
+        }
+        return htmlSubjectString;
+    }
+
+    private String messageBodyFromRegistrationStatus(RegistrationStatus status) {
+        String htmlBodyString = null;
+
+        // Set correct content depending on status
+        switch (status) {
+        case AUTHORIZED:
             htmlBodyString = approvedBody;
             break;
         case NOT_AUTHORIZED:
-            subjectString = notApprovedSubject;
             htmlBodyString = notApprovedBody;
             break;
         case NOT_STARTED:
             // Ignored
             break;
         case WAITING_FOR_HOSP:
-            subjectString = awaitingHospSubject;
             htmlBodyString = awaitingHospBody;
             break;
         default:
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
                     "Something unforseen happened while sending registration verification email.");
         }
+        return htmlBodyString;
+    }
 
+    private void buildEmailContent(MimeMessage message, String subjectText, String bodyText) throws MessagingException, IOException {
+        String htmlBodyString = bodyText;
         htmlBodyString += BOTTOM_BODY_CONTENT;
 
-        //Use mimeHelper to set content
+        // Use mimeHelper to set content
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setSubject(subjectString);
+        helper.setSubject(subjectText);
         helper.setText(htmlBodyString, true);
         final InputStreamSource imageSource = new ByteArrayResource(getLogo());
         helper.addInline("inera_logo", imageSource, "image/png");
@@ -128,5 +182,4 @@ public class MailServiceImpl implements MailService {
         LOG.debug("Getting file as bytes");
         return bytes;
     }
-
 }

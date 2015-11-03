@@ -12,6 +12,8 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,7 +23,12 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.springframework.core.io.ClassPathResource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
@@ -37,6 +44,7 @@ import se.inera.privatlakarportal.common.model.Registration;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.common.service.MailService;
+import se.inera.privatlakarportal.common.service.stub.MailStubStore;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
@@ -93,8 +101,13 @@ public class RegisterServiceImplTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    @Rule 
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+
     @InjectMocks
     private RegisterService registerService = new RegisterServiceImpl();
+
+    private MailStubStore mailStore = new MailStubStore();
 
     private Privatlakare readPrivatlakare(String path) throws IOException {
         Privatlakare verifyPrivatlakare = new CustomObjectMapper().readValue(new ClassPathResource(
@@ -148,6 +161,61 @@ public class RegisterServiceImplTest {
         when(medgivandeTextRepository.findOne(1L)).thenReturn(medgivandeText);
 
         when(dateHelperService.now()).thenReturn(LocalDateTime.parse("2015-09-09"));
+
+        registerService.injectHsaInterval(50);
+    }
+
+    @Test
+    public void testHsaMailSent() throws HospUpdateFailedToContactHsaException, IOException, MessagingException {
+
+        // Notify admin every 50 registrations
+        final int SEND_HSA_MAIL_INTERVAL = 50;
+
+        Mockito.doAnswer(new Answer<Object>() {
+                    public Object answer(InvocationOnMock invocation) {
+                        mailStore.addMail("ADMIN-EMAIL", "TEST");
+                        return null;
+                    }})
+                    .when(mailService).sendHsaGenerationStatusEmail();
+
+        // Create enough registrations to reach the threshold
+        for (int i = 1; i <= SEND_HSA_MAIL_INTERVAL; i++) {
+            PrivatlakareId privatlakareId = new PrivatlakareId();
+            privatlakareId.setId(i);
+            when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(new Integer(i));
+
+            when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.AUTHORIZED);
+            Registration registration = createValidRegistration();
+            registerService.createRegistration(registration, 1L);
+        }
+        assertTrue(mailStore.getMails().containsKey("ADMIN-EMAIL"));
+    }
+
+    @Test
+    public void testHsaMailThreshold() throws HospUpdateFailedToContactHsaException, IOException, MessagingException {
+        // Notify admin every 50 registrations
+        final int SEND_HSA_MAIL_INTERVAL = 49;
+
+        Mockito.doAnswer(new Answer<Object>() {
+            public Object answer(InvocationOnMock invocation) {
+                mailStore.addMail("ADMIN-EMAIL", "TEST");
+                return null;
+            }})
+            .when(mailService).sendHsaGenerationStatusEmail();
+
+        // Create one less registration than the threshold
+        for (int i = 1; i <= SEND_HSA_MAIL_INTERVAL; i++) {
+            PrivatlakareId privatlakareId = new PrivatlakareId();
+            privatlakareId.setId(i);
+            when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(new Integer(i));
+            
+            when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.AUTHORIZED);
+            Registration registration = createValidRegistration();
+            registerService.createRegistration(registration, 1L);
+        }
+        assertFalse(mailStore.getMails().containsKey("ADMIN-EMAIL"));
     }
 
     @Test
