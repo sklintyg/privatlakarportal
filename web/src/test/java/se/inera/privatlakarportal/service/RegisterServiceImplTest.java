@@ -161,6 +161,8 @@ public class RegisterServiceImplTest {
         when(medgivandeTextRepository.findOne(1L)).thenReturn(medgivandeText);
 
         when(dateHelperService.now()).thenReturn(LocalDateTime.parse("2015-09-09"));
+
+        registerService.injectHsaInterval(50);
     }
 
     @Test

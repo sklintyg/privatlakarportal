@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +44,8 @@ import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
 @Service
 public class RegisterServiceImpl implements RegisterService {
 
-    private static final int NUMBER_OF_HSA_IDS_BEFORE_NOTIFICATION = 50;
+    @Value("${mail.admin.notification.interval}")
+    private int hsaIdNotificationInterval;
 
     private static final Logger LOG = LoggerFactory.getLogger(RegisterServiceImpl.class);
 
@@ -213,7 +215,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         // Determine if an administrator needs to be notified about HSA ID's running out
         if (privatlakareidRepository.findLatestGeneratedHsaId() != 0 && 
-                privatlakareidRepository.findLatestGeneratedHsaId() % NUMBER_OF_HSA_IDS_BEFORE_NOTIFICATION == 0) {
+                privatlakareidRepository.findLatestGeneratedHsaId() % hsaIdNotificationInterval == 0) {
             mailService.sendHsaGenerationStatusEmail();
         }
         mailService.sendRegistrationStatusEmail(status, privatlakare);
@@ -262,6 +264,12 @@ public class RegisterServiceImpl implements RegisterService {
         monitoringService.logUserDeleted(personId);
 
         return true;
+    }
+
+    // Visible for test purposes only!
+    @Override
+    public void injectHsaInterval(int hsaIdNotificationInterval) {
+        this.hsaIdNotificationInterval = hsaIdNotificationInterval;
     }
 
     /* Private helpers */
