@@ -14,7 +14,6 @@
 
 !3 Gå till min sida
 | script | !-RedigeraMinSida-! |
-| gå till min sida |
 | min sida visas |
 
 !3 Fyll i registrering
@@ -31,9 +30,13 @@
 | ange postnummer| 13100 |
 | spara registrering |
 
-!3 Ladda om sidan
-| script | Browser |
-| ladda om | true |
+!3 Logga in som privatläkare
+| script | !-LoggaIn-! |
+| logga in som | private-practicioner-1 |
+
+!3 Gå till min sida
+| script | !-RedigeraMinSida-! |
+| min sida visas |
 
 !3 Verifiera registrering
 | script | !-RedigeraMinSida-! |
@@ -60,5 +63,3 @@
 | !-TaBortPrivatlakare-! |
 | id           | resultat? |
 | 199008252398 | true      |
-
-
