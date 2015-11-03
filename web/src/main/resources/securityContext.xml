@@ -83,7 +83,9 @@
   <!-- =============================================================== -->
   <beans profile="!pp-security-test">
     <beans profile="dev,pp-security-dev">
-      <security:http entry-point-ref="http403ForbiddenEntryPoint" access-denied-page="/welcome.html">
+      <security:http use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
+        <security:csrf disabled="true"/>
+        <security:access-denied-handler error-page="/welcome.html"/>
         <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
         <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
         <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
@@ -119,7 +121,8 @@
   <!-- =============================================================== -->
   <beans profile="pp-security-test">
     <!-- Unauthenticated requests matching samlRequestMatcher will be sent to saml login flow -->
-    <security:http entry-point-ref="samlEntryPoint" request-matcher-ref="samlRequestMatcher">
+    <security:http use-expressions="false" entry-point-ref="samlEntryPoint" request-matcher-ref="samlRequestMatcher">
+      <security:csrf disabled="true"/>
       <security:headers/>
       <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
@@ -130,7 +133,8 @@
     </security:http>
     <!-- Other unauthenticated requests will be returned as http status 403. -->
     <!-- This will allow frontend to act correctly on ajax requests          -->
-    <security:http entry-point-ref="http403ForbiddenEntryPoint">
+    <security:http use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
+      <security:csrf disabled="true"/>
       <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
@@ -147,14 +151,16 @@
   <!-- The pp-security-prod profile only supports CGI e-leg login      -->
   <!-- =============================================================== -->
   <beans profile="prod,pp-security-prod">
-    <security:http entry-point-ref="samlEntryPoint" request-matcher-ref="samlRequestMatcher">
+    <security:http use-expressions="false" entry-point-ref="samlEntryPoint" request-matcher-ref="samlRequestMatcher">
+      <security:csrf disabled="true"/>
       <security:headers/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
       <security:request-cache ref="httpSessionRequestCache" />
       <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
     </security:http>
-    <security:http entry-point-ref="http403ForbiddenEntryPoint">
+    <security:http  use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
+      <security:csrf disabled="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
     </security:http>
     <security:authentication-manager alias="authenticationManager">
