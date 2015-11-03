@@ -28,9 +28,16 @@
 
       <div class="buttonbar section-line top-pad-1">
         <button id="saveBtn" class="btn btn-success" ng-click="save()" ng-disabled="registerForm.$pristine">
-          <img ng-show="viewState.loading.save" ng-src="assets/images/ajax-loader-small-green.gif" /> <span message key="common.save"></span>
+          <img ng-show="viewState.loading.save" ng-src="assets/images/ajax-loader-small-green.gif" /> <span
+            ng-show="viewState.infoMessage.save == null" message key="common.save"></span><span
+            ng-show="viewState.infoMessage.save != null" message key="common.savelogout"></span>
+        </button>
+        <button id="resetBtn" class="btn btn-secondary" ng-click="reset()" ng-disabled="registerForm.$pristine">
+          <span message key="common.resetchanges"></span>
         </button>
       </div>
+
+      <div alert-message alert-show="viewState.infoMessage.save" alert-severity="info" class="top-pad"></div>
 
       <div alert-message alert-show="viewState.errorMessage.save" alert-severity="danger" class="top-pad"></div>
     </div>

@@ -3,6 +3,8 @@ var ppMessages = {
     'sv': {
 
         'common.logout': 'Logga ut',
+        'common.savelogout': 'Spara och logga ut',
+        'common.resetchanges': 'Ångra ändringar',
         'common.continue': 'Fortsätt',
         'common.yes': 'Ja',
         'common.no': 'Nej',
@@ -171,6 +173,8 @@ var ppMessages = {
         'label.step3intro': 'Kontrollera att sammanfattningen av din information stämmer innan du går vidare. Du kan justera de uppgifter som du själv har angett. Information hämtad från din e-legitimation och från Socialstyrelsens register går inte att redigera.',
         'label.godkannvillkor': 'Jag medger <a ui-sref=".terms">behandling av mina och verksamhetens uppgifter</a>.',
         'label.createaccount': 'Skapa konto',
+
+        'label.summary.logoutinfo': 'För att ändringen ska visas i nya utkast som du skapar måste du spara och logga ut och sedan logga in i Webcert igen. Ändringen kommer inte att visas på redan signerade intyg.',
 
         'label.modal.title.portalvillkor': 'Godkännande av lagring och hämtning av uppgifter',
         'label.modal.content.title.portalvillkor': 'Medgivande av villkor för lagring och hämtning av uppgifter',
