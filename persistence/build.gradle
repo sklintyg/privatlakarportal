@@ -16,13 +16,13 @@ dependencies {
     compile 'org.jadira.usertype:usertype.core:3.1.0.CR2'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
 
-    compile 'org.springframework.data:spring-data-jpa:1.7.1.RELEASE'
+    compile 'org.springframework.data:spring-data-jpa:1.9.0.RELEASE'
     compile 'com.zaxxer:HikariCP-java6:2.3.5'
 
     compile "org.liquibase:liquibase-core:${liquibaseVersion}"
 
     testCompile 'org.codehaus.groovy:groovy-all:2.3.6'
-    testCompile "org.apache.activemq:activemq-spring:5.8.0"
+    testCompile "org.apache.activemq:activemq-spring:5.9.1"
     testCompile "org.springframework:spring-test:${springContextVersion}"
     testCompile 'junit:junit:4.12'
 

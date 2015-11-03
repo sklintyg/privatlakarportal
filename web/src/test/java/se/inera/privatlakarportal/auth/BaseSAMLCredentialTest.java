@@ -4,7 +4,7 @@ import static org.mockito.Mockito.mock;
 
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.cxf.helpers.XMLUtils;
+import org.apache.cxf.staxutils.StaxUtils;
 import org.opensaml.DefaultBootstrap;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.NameID;
@@ -56,7 +56,7 @@ public abstract class BaseSAMLCredentialTest {
     }
 
     private static XMLObject readSamlDocument(String docPath) throws Exception {
-        Document doc = (Document) XMLUtils.fromSource(new StreamSource(new ClassPathResource(
+        Document doc = StaxUtils.read(new StreamSource(new ClassPathResource(
                 docPath).getInputStream()));
         org.w3c.dom.Element documentElement = doc.getDocumentElement();
 
@@ -65,13 +65,4 @@ public abstract class BaseSAMLCredentialTest {
         return unmarshaller.unmarshall(documentElement);
     }
 
-    protected SAMLCredential buildPrivatlakareSamlCredential() {
-        return new SAMLCredential(mock(NameID.class), assertionPrivatlakare, "", "");
-    }
-    protected SAMLCredential buildLandstingslakareSamlCredential() {
-        return new SAMLCredential(mock(NameID.class), assertionLandstingslakare, "", "");
-    }
-    protected SAMLCredential buildUnknownSamlCredential() {
-        return new SAMLCredential(mock(NameID.class), assertionUnknownAuthCtx, "", "");
-    }
 }
