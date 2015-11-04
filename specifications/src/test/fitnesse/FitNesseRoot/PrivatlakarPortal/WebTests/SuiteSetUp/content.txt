@@ -1,4 +1,4 @@
-!contents -R2 -g -p -f -h
+﻿!contents -R2 -g -p -f -h
 
 !| Import|
 | se.inera.privatlakarportal.page |
@@ -9,7 +9,7 @@
 | property | value |
 | geb.build.baseUrl |  ${baseUrl} |
 | privatlakarportal.baseUrl| ${baseUrl} |
-| geb.env | firefox |
+| geb.env | ${seleniumDriver} |
 
 
 | script | Browser |
