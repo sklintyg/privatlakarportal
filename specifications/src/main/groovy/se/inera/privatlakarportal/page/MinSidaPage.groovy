@@ -1,5 +1,7 @@
 package se.inera.privatlakarportal.page
 
+import se.inera.privatlakarportal.page.WelcomePage
+
 class MinSidaPage extends AbstractPage {
     static url = "/#/minsida"
     static at = { doneLoading() && $("#minsida").isDisplayed() }
@@ -34,6 +36,9 @@ class MinSidaPage extends AbstractPage {
 
     public void spara() {
         sparaBtn.click();
+        waitFor {
+            at WelcomePage
+        }
     }
 
     public void angeBefattning(value) {
