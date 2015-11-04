@@ -1,6 +1,6 @@
 package se.inera.privatlakarportal.page
 
-import se.inera.privatlakarportal.page.WelcomePage
+import se.inera.privatlakarportal.spec.Browser
 
 class MinSidaPage extends AbstractPage {
     static url = "/#/minsida"
@@ -36,8 +36,11 @@ class MinSidaPage extends AbstractPage {
 
     public void spara() {
         sparaBtn.click();
-        waitFor {
-            at WelcomePage
+
+        Browser.drive {
+            waitFor {
+                at WelcomePage
+            }
         }
     }
 
