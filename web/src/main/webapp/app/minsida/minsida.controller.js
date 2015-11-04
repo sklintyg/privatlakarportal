@@ -1,5 +1,5 @@
 angular.module('privatlakareApp')
-    .controller('MinsidaCtrl', function($scope, $state, $log, $window,
+    .controller('MinsidaCtrl', function($scope, $state, $log, $window, $timeout,
         HospModel, HospService, HospViewState, MinsidaViewState, ObjectHelper, RegisterModel, RegisterProxy,
         UserModel, WindowUnload) {
         'use strict';

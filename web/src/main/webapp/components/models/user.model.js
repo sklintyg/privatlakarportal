@@ -1,5 +1,5 @@
 angular.module('privatlakareApp').factory('UserModel',
-    function($window) {
+    function($window, $timeout) {
         'use strict';
 
         var data = {};
@@ -14,6 +14,12 @@ angular.module('privatlakareApp').factory('UserModel',
             data.nameFromPuService = false;
             data.nameUpdated = false;
             return data;
+        }
+
+        function _changeLocation(newLocation) {
+            $timeout(function() {
+                $window.location.href = newLocation;
+            });
         }
 
         return {
@@ -64,14 +70,14 @@ angular.module('privatlakareApp').factory('UserModel',
             },
             fakeLogin: function() {
                 if (data.authenticationScheme === data.fakeSchemeId) {
-                    $window.location = '/welcome.html';
+                    _changeLocation('/welcome.html');
                 }
             },
             logout: function() {
                 if (data.authenticationScheme === data.fakeSchemeId) {
-                    $window.location = '/logout';
+                    _changeLocation('/logout');
                 } else {
-                    $window.location = '/saml/logout/';
+                    _changeLocation('/saml/logout/');
                 }
             },
             getLogoutLocation: function() {
