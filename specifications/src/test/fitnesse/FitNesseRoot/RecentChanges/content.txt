@@ -1,3 +1,7 @@
+|FirefoxSuite||15:03:25 Wed, Nov 04, 2015|
+|ChromeSuite||15:03:11 Wed, Nov 04, 2015|
+|PrivatlakarPortal.WebTests.SuiteSetUp||15:02:54 Wed, Nov 04, 2015|
+|FrontPage||14:34:11 Wed, Nov 04, 2015|
 |PrivatlakarPortal.WebTests.RedigeraPrivatlakare||15:10:29 Tue, Nov 03, 2015|
 |PrivatlakarPortal.WebTests.RegistreraPrivatlakareUtanHospInformation||11:17:25 Thu, Oct 01, 2015|
 |PrivatlakarPortal.WebTests.RegistreraPrivatlakare||11:15:49 Thu, Oct 01, 2015|
@@ -5,15 +9,11 @@
 |PrivatlakarPortal.RensaPrivatlakare||08:36:14 Thu, Oct 01, 2015|
 |PrivatlakarPortal.WebTests.AnvandarVillkor||17:37:15 Fri, Sep 25, 2015|
 |PrivatlakarPortal.WebTests.HospUppdatering.TillbakadragenLakarbehorighet||10:24:32 Mon, Sep 28, 2015|
-|PrivatlakarPortal.WebTests.SuiteSetUp||14:00:30 Thu, Sep 24, 2015|
 |PrivatlakarPortal.WebTests.PersonUppgifter.UppdateraNamnOmNyaPersonUppgifterFinns||10:50:51 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.HospUppdatering.UppdateraTillLakare||10:47:49 Thu, Sep 10, 2015|
 |PrivatlakarPortal.WebTests.PersonUppgifter.StoppaRegistreringOmPersonUppgifterEjKanHamtas||11:09:29 Wed, Sep 02, 2015|
 |PrivatlakarPortal||10:50:36 Tue, Aug 25, 2015|
-|FirefoxSuite||14:47:56 Tue, Jun 16, 2015|
 |PrivatlakarPortal.WebTests.TestRootPage||14:47:21 Tue, Jun 16, 2015|
-|ChromeSuite||14:39:17 Tue, Jun 16, 2015|
-|FrontPage||14:37:59 Tue, Jun 16, 2015|
 |FrontPage.FirefoxSuite||14:35:16 Tue, Jun 16, 2015|
 |PrivatlakarPortal.WebTests.SuiteTearDown||14:33:38 Tue, Jun 16, 2015|
 |FrontPage.ChromeSuite||14:12:32 Tue, Jun 16, 2015|

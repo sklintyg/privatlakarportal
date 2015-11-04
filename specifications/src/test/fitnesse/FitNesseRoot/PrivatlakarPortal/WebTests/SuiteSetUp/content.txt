@@ -11,5 +11,6 @@
 | privatlakarportal.baseUrl| ${baseUrl} |
 | geb.env | ${seleniumDriver} |
 
+
 | script | Browser |
 | öppna |
