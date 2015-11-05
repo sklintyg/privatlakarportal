@@ -30,7 +30,7 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 @Service
 public class MailServiceImpl implements MailService {
 
-    @Value("mail.admin")
+    @Value("${mail.admin}")
     private String adminEpost;
 
     @Value("${mail.from}")
