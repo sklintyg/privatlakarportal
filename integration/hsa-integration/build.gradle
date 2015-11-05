@@ -17,6 +17,7 @@ task wsdl2Java(type: JavaExec) {
     inputs.files wsdlFile
     outputs.dir generatedJavaDir
     classpath configurations.wsdlgen
+    jvmArgs "-Djavax.xml.accessExternalSchema=all"
     main "org.apache.cxf.tools.wsdlto.WSDLToJava"
     args "-xjc-XhashCode", "-xjc-Xequals", "-xjc-XtoString", "-xjc-Xinheritance",
             "-xjc-b,${projectDir}/src/main/resources/jaxb-bindings.xjb", "-validate", "-verbose",
@@ -31,7 +32,7 @@ dependencies {
     compile project(":privatlakarportal-persistence")
     compile project(":privatlakarportal-common")
 
-    compile "org.jvnet.jaxb2_commons:jaxb2-basics:0.6.4"
+    compile "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
     compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.2.3"
     compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
     compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
@@ -43,7 +44,7 @@ dependencies {
 
     wsdlgen "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion}"
     wsdlgen "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion}"
-    wsdlgen "org.jvnet.jaxb2_commons:jaxb2-basics:0.6.4"
+    wsdlgen "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
