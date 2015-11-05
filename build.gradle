@@ -21,7 +21,11 @@ allprojects {
     group = 'se.inera.privatlakarportal'
 
     if (System.env.BUILD_VERSION && System.env.BUILD_NUMBER) {
-        version = "$System.env.BUILD_VERSION-b$System.env.BUILD_NUMBER"
+        if (System.env.BRANCH == 'develop') {
+            version = "$System.env.BUILD_VERSION-b$System.env.BUILD_NUMBER"
+        } else if (System.env.BRANCH.contains('release')) {
+            version = "$System.env.BUILD_VERSION"
+        }
     } else {
         version = '1.0.0-SNAPSHOT'
     }
