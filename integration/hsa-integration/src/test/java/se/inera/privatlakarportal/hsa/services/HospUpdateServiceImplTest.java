@@ -1,6 +1,7 @@
 package se.inera.privatlakarportal.hsa.services;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
@@ -89,10 +90,13 @@ public class HospUpdateServiceImplTest {
         when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
         Privatlakare privatlakare1 = new Privatlakare();
         privatlakare1.setPersonId(PERSON_ID);
+        privatlakare1.setGodkandAnvandare(true);
         Privatlakare privatlakare2 = new Privatlakare();
         privatlakare2.setPersonId(PERSON_ID2);
+        privatlakare2.setGodkandAnvandare(true);
         Privatlakare privatlakare3 = new Privatlakare();
         privatlakare3.setPersonId(PERSON_ID3);
+        privatlakare3.setGodkandAnvandare(true);
         ArrayList list = new ArrayList();
         list.add(privatlakare1);
         list.add(privatlakare2);
@@ -130,10 +134,48 @@ public class HospUpdateServiceImplTest {
         verify(mailService).sendRegistrationStatusEmail(RegistrationStatus.AUTHORIZED, privatlakare3);
     }
 
+    @Test
+    public void testUpdateHospInformationEjGodkandAnvandare() {
+        HospUppdatering hospUppdatering = new HospUppdatering();
+        hospUppdatering.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+        when(hospUppdateringRepository.findSingle()).thenReturn(hospUppdatering);
+        LocalDateTime hospLastUpdate = LocalDateTime.parse("2015-09-05");
+        when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
+        Privatlakare privatlakare1 = new Privatlakare();
+        privatlakare1.setPersonId(PERSON_ID);
+        privatlakare1.setGodkandAnvandare(false);
+        ArrayList list = new ArrayList();
+        list.add(privatlakare1);
+        when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
+
+        when(hospPersonService.addToCertifier(any(String.class),any(String.class))).thenReturn(true);
+
+        // privatlakare1 får nu läkarbehörighet men har fått GODKAND_ANVANDARE false innan
+        GetHospPersonResponseType hospPersonResponse1 = createGetHospPersonResponse();
+        hospPersonResponse1.getTitleCodes().getTitleCode().add("LK");
+        hospPersonResponse1.getHsaTitles().getHsaTitle().add("Läkare");
+        hospPersonResponse1.getSpecialityCodes().getSpecialityCode().add("12");
+        hospPersonResponse1.getSpecialityNames().getSpecialityName().add("Specialitet");
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse1);
+
+        hospUpdateService.updateHospInformation();
+
+        // sensateHospUppdatering in DB should be set to hospLastUpdate from HSA
+        assertEquals(hospLastUpdate, hospUppdatering.getSenasteHospUppdatering());
+        verify(hospUppdateringRepository).save(hospUppdatering);
+
+        // privatlakare1 should be updated with new hospinformation
+        verify(privatlakareRepository).save(privatlakare1);
+        // but should still be NOT_AUTHORIZED since GODKAND_ANVANDARE is false
+        assertFalse(privatlakare1.isGodkandAnvandare());
+        verify(mailService).sendRegistrationStatusEmail(RegistrationStatus.NOT_AUTHORIZED, privatlakare1);
+    }
+
     @Test(expected = HospUpdateFailedToContactHsaException.class)
     public void testUpdateHospInformationKanEjKontaktaHSA1() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
 
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
@@ -151,6 +193,7 @@ public class HospUpdateServiceImplTest {
     public void testUpdateHospInformationKanEjKontaktaHSA2() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
 
         when(hospPersonService.addToCertifier(eq(PERSON_ID), any(String.class))).thenThrow(new WebServiceException("Could not send message"));
@@ -167,6 +210,7 @@ public class HospUpdateServiceImplTest {
     public void testUpdateHospInformationEjLakare() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
 
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(createGetHospPersonResponse());
@@ -181,6 +225,7 @@ public class HospUpdateServiceImplTest {
     public void testUpdateHospInformationEjIHosp() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
 
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
@@ -197,6 +242,7 @@ public class HospUpdateServiceImplTest {
     public void testUpdateHospInformationLakare() throws HospUpdateFailedToContactHsaException {
 
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
 
         GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
@@ -211,8 +257,27 @@ public class HospUpdateServiceImplTest {
     }
 
     @Test
+    public void testUpdateHospInformationLakareEjGodkandAnvandare() throws HospUpdateFailedToContactHsaException {
+
+        Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(false);
+        privatlakare.setPersonId(PERSON_ID);
+
+        GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
+        hospPersonResponse.getTitleCodes().getTitleCode().add("LK");
+        hospPersonResponse.getHsaTitles().getHsaTitle().add("Läkare");
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse);
+
+        RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
+
+        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
+        assertEquals(response, RegistrationStatus.NOT_AUTHORIZED);
+    }
+
+    @Test
     public void testCheckForUpdatedHospInformationNotUpdated() {
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
         privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
 
@@ -228,6 +293,7 @@ public class HospUpdateServiceImplTest {
     @Test
     public void testCheckForUpdatedHospInformationUpdated() {
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
         privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
 
@@ -261,6 +327,7 @@ public class HospUpdateServiceImplTest {
     @Test
     public void testCheckForUpdatedHospInformationKanEjKontaktaHSA1() {
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
         privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
 
@@ -273,6 +340,7 @@ public class HospUpdateServiceImplTest {
     @Test
     public void testCheckForUpdatedHospInformationKanEjKontaktaHSA2() {
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
         privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
 
@@ -289,6 +357,7 @@ public class HospUpdateServiceImplTest {
     public void testCheckForUpdatedHospInformationTillbakadragenLakarbehorighet() {
         // Haft läkarbehörighet innan.
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
         privatlakare.setForskrivarKod("7777777");
         Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();
@@ -321,6 +390,7 @@ public class HospUpdateServiceImplTest {
     public void testCheckForUpdatedHospInformationTillbakadragenLakarbehorighetKanEjKontaktaHSA() {
         // Haft läkarbehörighet innan.
         Privatlakare privatlakare = new Privatlakare();
+        privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
         privatlakare.setForskrivarKod("7777777");
         Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();

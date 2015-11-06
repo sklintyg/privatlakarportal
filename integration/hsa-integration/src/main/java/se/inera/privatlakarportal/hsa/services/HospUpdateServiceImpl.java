@@ -147,6 +147,9 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
             if (PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
                 monitoringService.logUserAuthorizedInHosp(privatlakare.getPersonId());
+                if (!privatlakare.isGodkandAnvandare()) {
+                    return RegistrationStatus.NOT_AUTHORIZED;
+                }
                 return RegistrationStatus.AUTHORIZED;
             } else {
                 monitoringService.logUserNotAuthorizedInHosp(privatlakare.getPersonId());
