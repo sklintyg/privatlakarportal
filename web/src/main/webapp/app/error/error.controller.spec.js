@@ -2,7 +2,9 @@ describe('Controller: ErrorCtrl', function() {
     'use strict';
 
     // load the controller's module
-    beforeEach(module('privatlakareApp'));
+    beforeEach(angular.mock.module('privatlakareApp', function($provide) {
+        $provide.value('APP_CONFIG', { webcertUrl: 'webcertUrl' });
+    }));
 
     var scope, sessionStorage;
 
