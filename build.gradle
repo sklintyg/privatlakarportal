@@ -21,10 +21,12 @@ allprojects {
     group = 'se.inera.privatlakarportal'
 
     if (System.env.BUILD_VERSION && System.env.BUILD_NUMBER) {
-        if (System.env.BRANCH == 'develop') {
+        if (System.env.BRANCH == 'develop' || System.env.BRANCH.contains('feature')) {
             version = "$System.env.BUILD_VERSION-b$System.env.BUILD_NUMBER"
         } else if (System.env.BRANCH.contains('release')) {
             version = "$System.env.BUILD_VERSION"
+        } else {
+            throw new GradleScriptException("git branch '$System.env.BRANCH' is not known as a buildable branch. Builds must be performed from develop, release/ or feature/ branches.", null)
         }
     } else {
         version = '1.0.0-SNAPSHOT'
