@@ -17,6 +17,7 @@ task wsdl2Java(type: JavaExec) {
     inputs.files wsdlFile
     outputs.dir generatedJavaDir
     classpath configurations.wsdlgen
+    jvmArgs "-Djavax.xml.accessExternalSchema=all"
     main "org.apache.cxf.tools.wsdlto.WSDLToJava"
     args "-xjc-XhashCode", "-xjc-Xequals", "-xjc-XtoString", "-xjc-Xinheritance",
          "-p", "urn:riv:population:residentmaster:LookupResidentForFullProfileResponder:1=se.inera.population.residentmaster.v1.lookupresidentforfullprofile",

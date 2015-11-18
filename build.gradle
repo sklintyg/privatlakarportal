@@ -133,8 +133,8 @@ subprojects {
         
     }
 
-    sourceCompatibility = "1.7"
-    targetCompatibility = "1.7"
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
 
     ext {
         cxfVersion = '3.1.3'
