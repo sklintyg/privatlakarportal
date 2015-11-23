@@ -3,7 +3,7 @@
 
 # General
 inera_root: /opt/inera
-java_home: "{{ inera_root }}/jre"
+java_home: "{{ inera_root }}/jre8"
 releases_folder: "{{ inera_root }}/releases"
 
 # Spring profiles
