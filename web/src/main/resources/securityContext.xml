@@ -244,11 +244,6 @@
       <property name="defaultProfileOptions">
         <bean class="org.springframework.security.saml.websso.WebSSOProfileOptions">
           <property name="includeScoping" value="false"/>
-          <property name="authnContexts">
-            <list>
-              <value>urn:oasis:names:tc:SAML:2.0:ac:classes:SoftwarePKI</value>
-            </list>
-          </property>
         </bean>
       </property>
     </bean>
