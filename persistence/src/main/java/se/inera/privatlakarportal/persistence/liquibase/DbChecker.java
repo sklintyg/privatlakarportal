@@ -6,16 +6,15 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseConnection;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.DatabaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
-import org.apache.commons.dbutils.DbUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -54,7 +53,14 @@ public class DbChecker {
         } catch (SQLException e) {
             throw new Error("Database not ok, aborting startup.", e);
         } finally {
-            DbUtils.closeQuietly((Connection) connection);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (DatabaseException e) {
+                    LOG.info("Could not close DatabaseConnection in DbChecker, {}", e);
+                    throw new Error("Could not close DatabaseConnection in DbChecker", e);
+                }
+            }
         }
         LOG.info("Liquibase ok");
     }
