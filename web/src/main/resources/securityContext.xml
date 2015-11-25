@@ -244,7 +244,6 @@
       <property name="defaultProfileOptions">
         <bean class="org.springframework.security.saml.websso.WebSSOProfileOptions">
           <property name="includeScoping" value="false"/>
-              <value>urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient</value>
         </bean>
       </property>
     </bean>
