@@ -1,6 +1,6 @@
 package se.inera.privatlakarportal.pu.stub;
 
-import se.inera.population.residentmaster.v1.ResidentType;
+import se.riv.population.residentmaster.types.v1.ResidentType;
 
 import java.util.HashMap;
 import java.util.Map;
