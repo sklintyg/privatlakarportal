@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import se.inera.population.residentmaster.v1.*;
-import se.inera.population.residentmaster.v1.lookupresidentforfullprofile.LookUpSpecificationType;
-import se.inera.population.residentmaster.v1.lookupresidentforfullprofile.LookupResidentForFullProfileResponseType;
-import se.inera.population.residentmaster.v1.lookupresidentforfullprofile.LookupResidentForFullProfileType;
 import se.inera.privatlakarportal.pu.model.Person;
 import se.inera.privatlakarportal.pu.model.PersonSvar;
+import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v1.LookUpSpecificationType;
+import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v1.LookupResidentForFullProfileResponseType;
+import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v1.LookupResidentForFullProfileType;
+import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v11.LookupResidentForFullProfileResponderInterface;
+import se.riv.population.residentmaster.types.v1.JaNejTYPE;
+import se.riv.population.residentmaster.types.v1.NamnTYPE;
+import se.riv.population.residentmaster.types.v1.ResidentType;
+import se.riv.population.residentmaster.types.v1.SvenskAdressTYPE;
 
 import javax.xml.ws.soap.SOAPFaultException;
 
