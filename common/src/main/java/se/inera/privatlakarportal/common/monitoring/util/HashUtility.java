@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.service.monitoring.util;
+package se.inera.privatlakarportal.common.monitoring.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
