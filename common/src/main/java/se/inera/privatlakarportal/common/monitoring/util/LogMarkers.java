@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.service.monitoring.util;
+package se.inera.privatlakarportal.common.monitoring.util;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;

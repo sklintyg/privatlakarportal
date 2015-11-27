@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
 
-import se.inera.certificate.logging.HashUtility;
 import se.inera.ifv.hsaws.v3.HsaWsFault;
 import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
 import se.inera.ifv.hsawsresponder.v3.GetHospLastUpdateResponseType;
@@ -35,6 +34,7 @@ import se.inera.ifv.hsawsresponder.v3.HandleCertifierResponseType;
 import se.inera.ifv.hsawsresponder.v3.HandleCertifierType;
 import se.inera.ifv.hsawsresponder.v3.PingResponseType;
 import se.inera.ifv.hsawsresponder.v3.PingType;
+import se.inera.privatlakarportal.common.monitoring.util.HashUtility;
 
 import com.google.common.base.Throwables;
 

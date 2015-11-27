@@ -23,6 +23,7 @@ dependencies {
     compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
     compile "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
+    compile 'commons-codec:commons-codec:1.10'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'

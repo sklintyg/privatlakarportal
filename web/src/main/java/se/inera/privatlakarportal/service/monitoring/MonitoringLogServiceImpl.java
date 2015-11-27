@@ -23,9 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import se.inera.privatlakarportal.service.monitoring.util.HashUtility;
-import se.inera.privatlakarportal.service.monitoring.util.LogMarkers;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.privatlakarportal.common.monitoring.util.HashUtility;
+import se.inera.privatlakarportal.common.monitoring.util.LogMarkers;
 
 @Service("webMonitoringLogService")
 public class MonitoringLogServiceImpl implements MonitoringLogService {
