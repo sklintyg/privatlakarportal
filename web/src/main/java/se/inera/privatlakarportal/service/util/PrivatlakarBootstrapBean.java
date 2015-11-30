@@ -42,22 +42,24 @@ public class PrivatlakarBootstrapBean {
 
         try {
             Privatlakare privatlakare = new CustomObjectMapper().readValue(res.getInputStream(), Privatlakare.class);
-            for(Befattning befattning : privatlakare.getBefattningar()) {
-                befattning.setPrivatlakare(privatlakare);
+            if (!privatlakareRepository.exists(privatlakare.getPrivatlakareId())) {
+                for (Befattning befattning : privatlakare.getBefattningar()) {
+                    befattning.setPrivatlakare(privatlakare);
+                }
+                for (LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
+                    legitimeradYrkesgrupp.setPrivatlakare(privatlakare);
+                }
+                for (Specialitet specialitet : privatlakare.getSpecialiteter()) {
+                    specialitet.setPrivatlakare(privatlakare);
+                }
+                for (Verksamhetstyp verksamhetstyp : privatlakare.getVerksamhetstyper()) {
+                    verksamhetstyp.setPrivatlakare(privatlakare);
+                }
+                for (Vardform vardform : privatlakare.getVardformer()) {
+                    vardform.setPrivatlakare(privatlakare);
+                }
+                privatlakareRepository.save(privatlakare);
             }
-            for(LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
-                legitimeradYrkesgrupp.setPrivatlakare(privatlakare);
-            }
-            for(Specialitet specialitet : privatlakare.getSpecialiteter()) {
-                specialitet.setPrivatlakare(privatlakare);
-            }
-            for(Verksamhetstyp verksamhetstyp : privatlakare.getVerksamhetstyper()) {
-                verksamhetstyp.setPrivatlakare(privatlakare);
-            }
-            for(Vardform vardform : privatlakare.getVardformer()) {
-                vardform.setPrivatlakare(privatlakare);
-            }
-            privatlakareRepository.save(privatlakare);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
