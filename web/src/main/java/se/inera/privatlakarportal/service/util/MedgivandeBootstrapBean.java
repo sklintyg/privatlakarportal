@@ -19,7 +19,6 @@ import se.inera.privatlakarportal.persistence.model.MedgivandeText;
 import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 
 @Service
-@Profile({"dev", "pp-init-data"})
 @DependsOn("dbUpdate")
 public class MedgivandeBootstrapBean {
     private static final Logger LOG = LoggerFactory.getLogger(MedgivandeBootstrapBean.class);
@@ -41,7 +40,9 @@ public class MedgivandeBootstrapBean {
 
         try {
             MedgivandeText medgivandeText = new CustomObjectMapper().readValue(res.getInputStream(), MedgivandeText.class);
-            medgivandeTextRepository.save(medgivandeText);
+            if (!medgivandeTextRepository.exists(medgivandeText.getVersion())) {
+                medgivandeTextRepository.save(medgivandeText);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
