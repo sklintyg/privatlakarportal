@@ -42,7 +42,7 @@ public class PrivatlakarBootstrapBean {
 
         try {
             Privatlakare privatlakare = new CustomObjectMapper().readValue(res.getInputStream(), Privatlakare.class);
-            if (!privatlakareRepository.exists(privatlakare.getPrivatlakareId())) {
+            if (privatlakareRepository.findByPersonId(privatlakare.getPersonId()) == null) {
                 for (Befattning befattning : privatlakare.getBefattningar()) {
                     befattning.setPrivatlakare(privatlakare);
                 }
