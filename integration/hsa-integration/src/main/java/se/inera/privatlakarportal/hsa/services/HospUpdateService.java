@@ -9,7 +9,9 @@ import se.inera.privatlakarportal.common.model.RegistrationStatus;
  */
 public interface HospUpdateService {
 
-    public void updateHospInformation();
+    void scheduledUpdateHospInformation();
+
+    void updateHospInformation();
 
     RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier)
             throws HospUpdateFailedToContactHsaException;

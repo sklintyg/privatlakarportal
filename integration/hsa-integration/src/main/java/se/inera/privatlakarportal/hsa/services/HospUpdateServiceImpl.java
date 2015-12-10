@@ -58,10 +58,19 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     @Override
     @Scheduled(cron = "${privatlakarportal.hospupdate.cron}")
     @Transactional
+    public void scheduledUpdateHospInformation() {
+        String skipUpdate = System.getProperty("scheduled.update.skip", "false");
+        LOG.debug("scheduled.update.skip = " + skipUpdate);
+        if (skipUpdate.equalsIgnoreCase("true")) {
+            LOG.info("Skipping scheduled updateHospInformation");
+        } else {
+            LOG.info("Starting scheduled updateHospInformation");
+            updateHospInformation();
+        }
+    }
+
+    @Override
     public void updateHospInformation() {
-
-        LOG.debug("Starting scheduled updateHospInformation");
-
         // Get our last hosp update time from database
         HospUppdatering hospUppdatering = hospUppdateringRepository.findSingle();
 
