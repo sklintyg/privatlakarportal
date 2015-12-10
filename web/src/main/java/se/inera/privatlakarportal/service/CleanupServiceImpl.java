@@ -39,10 +39,19 @@ public class CleanupServiceImpl implements CleanupService {
     @Override
     @Scheduled(cron = "${privatlakarportal.cleanup.cron}")
     @Transactional
+    public void scheduledCleanupPrivatlakare() {
+        String skipUpdate = System.getProperty("scheduled.update.skip", "false");
+        LOG.debug("scheduled.update.skip = " + skipUpdate);
+        if (skipUpdate.equalsIgnoreCase("true")) {
+            LOG.info("Skipping scheduled cleanupPrivatlakare");
+        } else {
+            LOG.info("Starting scheduled cleanupPrivatlakare");
+            cleanupPrivatlakare();
+        }
+    }
+
+    @Override
     public void cleanupPrivatlakare() {
-
-        LOG.debug("Starting scheduled cleanupPrivatlakare");
-
         LocalDateTime date = dateHelperService.now().minusMonths(MONTHS_BEFORE_REMOVED);
 
         LOG.debug("Checking for privatlakare registered before '{}' still waiting for hosp", date.toString());
