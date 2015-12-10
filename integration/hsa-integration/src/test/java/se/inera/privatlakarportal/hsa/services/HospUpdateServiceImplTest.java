@@ -72,7 +72,7 @@ public class HospUpdateServiceImplTest {
     public void testUpdateHospInformationKanEjKontaktaHSA() throws HospUpdateFailedToContactHsaException {
         when(hospPersonService.getHospLastUpdate()).thenThrow(new WebServiceException("Could not send message"));
 
-        hospUpdateService.updateHospInformation();
+        hospUpdateService.scheduledUpdateHospInformation();
 
         // Om det går att hämta senaste tidpunkt för hospupdate görs inget mer nu.
         // Ett nytt försök kommer göras vid nästa schemalagda körning.
@@ -120,7 +120,7 @@ public class HospUpdateServiceImplTest {
         hospPersonResponse3.getSpecialityNames().getSpecialityName().add("Specialitet");
         when(hospPersonService.getHospPerson(PERSON_ID3)).thenReturn(hospPersonResponse3);
 
-        hospUpdateService.updateHospInformation();
+        hospUpdateService.scheduledUpdateHospInformation();
 
         // sensateHospUppdatering in DB should be set to hospLastUpdate from HSA
         assertEquals(hospLastUpdate, hospUppdatering.getSenasteHospUppdatering());
@@ -158,7 +158,7 @@ public class HospUpdateServiceImplTest {
         hospPersonResponse1.getSpecialityNames().getSpecialityName().add("Specialitet");
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse1);
 
-        hospUpdateService.updateHospInformation();
+        hospUpdateService.scheduledUpdateHospInformation();
 
         // sensateHospUppdatering in DB should be set to hospLastUpdate from HSA
         assertEquals(hospLastUpdate, hospUppdatering.getSenasteHospUppdatering());
