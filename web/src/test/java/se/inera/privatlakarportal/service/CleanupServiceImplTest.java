@@ -60,7 +60,7 @@ public class CleanupServiceImplTest {
 
         when(hospPersonService.removeFromCertifier(any(String.class),any(String.class),any(String.class))).thenReturn(true);
 
-        cleanupService.cleanupPrivatlakare();
+        cleanupService.scheduledCleanupPrivatlakare();
 
         verify(privatlakareRepository).findNeverHadLakarBehorighetAndRegisteredBefore(date2);
         verify(privatlakareRepository).delete(p1);
@@ -92,7 +92,7 @@ public class CleanupServiceImplTest {
         // Test failed with error response
         when(hospPersonService.removeFromCertifier(eq("personId2"), eq("SE165565594230-WEBCERT00002"), any(String.class))).thenReturn(false);
 
-        cleanupService.cleanupPrivatlakare();
+        cleanupService.scheduledCleanupPrivatlakare();
 
         verify(privatlakareRepository).findNeverHadLakarBehorighetAndRegisteredBefore(date2);
         // p1 doesn't get deleted since we failed to call handleCertifier for p1
