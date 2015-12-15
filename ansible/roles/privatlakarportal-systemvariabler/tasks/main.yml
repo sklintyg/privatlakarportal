@@ -12,4 +12,4 @@
     regexp="privatlakarportal-env\.sh"
     insertafter="EOF"
     line=". \"{{ inera_tomcat_folder }}/privatlakarportal-env.sh\""
-    
+

@@ -6,7 +6,7 @@
 
 - name: create release directory
   file: path={{ releases_folder }} state=directory
-  
+
 - name: Make sure liquibase runner file download is forced when using shapshot repo
   file: state=absent  path={{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip
   when: repo == "snapshots"
