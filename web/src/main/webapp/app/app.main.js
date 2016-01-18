@@ -25,10 +25,10 @@ deferredBootstrapper.bootstrap({
 });
 
 app.value('networkConfig', {
-    defaultTimeout: 1000, // prod: 30000
-    regionTimeout: 1000, // prod: 30000
-    registerTimeout: 1000, // prod: 30000
-    hospTimeout: 1000 // prod: 30000
+    defaultTimeout: 30000,
+    regionTimeout: 30000,
+    registerTimeout: 30000,
+    hospTimeout: 30000
 });
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $tooltipProvider, $httpProvider,
