@@ -55,8 +55,8 @@ angular.module('privatlakareApp').factory('wcModalService',
         }
 
         function createBootstrapModalOptions(options) {
-            var contentTemplate = 'components/commonDirectives/modal/wcModal.content.html',
-                windowTemplate = 'components/commonDirectives/modal/wcModal.window.html';
+            var contentTemplate = '/components/commonDirectives/modal/wcModal.content.html',
+                windowTemplate = '/components/commonDirectives/modal/wcModal.window.html';
             var modal = {
                 controller: options.controller,
                 titleId : options.titleId,

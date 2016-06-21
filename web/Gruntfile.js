@@ -291,20 +291,20 @@ module.exports = function(grunt) {
                     removeScriptTypeAttributes: true,
                     removeStyleLinkTypeAttributes: true
                 },
-                usemin: 'app/app.main.js',
-                url: function(url) {
-                    return '/' + url;
-                }
+                usemin: 'app/app.main.js'
             },
             main: {
                 cwd: '<%= config.client %>',
                 src: ['{app,components}/**/*.html'],
-                dest: '<%= config.tmp %>/templates.js'
+                dest: '<%= config.tmp %>/templates.js',
+                options: {
+                    prefix: '/'
+                }
             },
             tmp: {
                 cwd: '<%= config.tmp %>',
                 src: ['{app,components}/**/*.html'],
-                dest: '<%= config.tmp %>/tmp-templates.js'
+                dest: '<%= config.tmp %>/tmp-templates.js',
             }
         },
 
@@ -529,8 +529,8 @@ module.exports = function(grunt) {
         'wiredep',
         'useminPrepare',
         'autoprefixer',
-        'karma',
         'ngtemplates',
+        'karma',
         'concat',
         'ngAnnotate',
         'cssmin',
