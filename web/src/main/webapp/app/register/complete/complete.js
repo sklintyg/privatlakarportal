@@ -6,7 +6,7 @@ angular.module('privatlakareApp')
                 url: '/klar',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/register/complete/complete.html',
+                        templateUrl: '/app/register/complete/complete.html',
                         controller: 'CompleteCtrl'
                     }
                 }

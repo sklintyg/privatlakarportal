@@ -24,6 +24,6 @@ angular.module('privatlakareApp').directive('formGrundUppgifter',
                     $scope.message = messageService;
                     $scope.viewState = FormGrundUppgifterViewState;
                 },
-                templateUrl: 'components/appDirectives/formGrundUppgifter/formGrundUppgifter.directive.html'
+                templateUrl: '/components/appDirectives/formGrundUppgifter/formGrundUppgifter.directive.html'
             };
         });

@@ -6,7 +6,7 @@ angular.module('privatlakareApp')
                 url: '/minsida',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/minsida/minsida.html',
+                        templateUrl: '/app/minsida/minsida.html',
                         controller: 'MinsidaCtrl'
                     }
                 }

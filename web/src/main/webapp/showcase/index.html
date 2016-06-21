@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="sv" id="ng-app">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="ROBOTS" content="nofollow, noindex" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Privatläkarportalen | Komponenter</title>
+
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+
+<link rel="stylesheet" href="/app/app.css" media="screen">
+<link rel="stylesheet" href="/app/vendor-override.css" media="screen">
+<link rel="stylesheet" href="ref.app.css" media="screen">
+
+</head>
+<body ng-app="showcase">
+  <h1>Privatläkarportalen komponenter showcase</h1>
+
+  <div ui-view="header" id="header"></div>
+  <div ui-view="content" id="view"></div>
+
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-i18n/angular-locale_sv-se.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.js"></script>
+  <script type="text/javascript" src="/bower_components/ngstorage/ngStorage.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-mocks/angular-mocks.js"></script>
+
+  <script type="text/javascript" src="ref.app.js"></script>
+  <script type="text/javascript" src="ref.app.routes.js"></script>
+  <script type="text/javascript" src="messages.js"></script>
+
+  <script type="text/javascript" src="/components/commonDirectives/alertMessage/alertMessage.directive.js"></script>
+  <script type="text/javascript" src="/components/commonDirectives/alertSingle/alertSingle.directive.js"></script>
+  <script type="text/javascript" src="/components/commonDirectives/message/message.service.js"></script>
+  <script type="text/javascript" src="/components/commonDirectives/message/message.directive.js"></script>
+  <script type="text/javascript" src="/components/commonDirectives/message/message.filter.js"></script>
+  <script type="text/javascript" src="/components/commonDirectives/ppCookieBanner/ppCookieBanner.animation.js"></script>
+  <script type="text/javascript" src="/components/commonDirectives/ppCookieBanner/ppCookieBanner.directive.js"></script>
+  <script type="text/javascript" src="/components/commonDirectives/ppField/ppField.directive.js"></script>
+  <script type="text/javascript" src="/components/commonDirectives/ppSpinner/ppSpinner.directive.js"></script>
+  <script type="text/javascript" src="/components/commonDirectives/ppTooltip/ppTooltip.directive.js"></script>
+
+  <script type="text/javascript" src="/components/modal/dialogService.js"></script>
+
+  <script type="text/javascript" src="/components/models/user.model.js"></script>
+
+  <script type="text/javascript" src="/components/proxies/omrade.proxy.js"></script>
+
+  <script type="text/javascript" src="/components/utils/http403ResponseInterceptor.service.js"></script>
+  <script type="text/javascript" src="/components/utils/postnummer.helper.js"></script>
+  <script type="text/javascript" src="/components/utils/object.helper.js"></script>
+
+  <script type="text/javascript" src="/components/appDirectives/postnummerRegionLookup/postnummerRegionLookup.directive.js"></script>
+  <script type="text/javascript" src="/components/appDirectives/postnummerRegionLookup/postnummerRegionLookupViewState.service.js"></script>
+
+  <script type="text/javascript" src="/app/register/abort/abort.controller.js"></script>
+
+  <script type="text/javascript" src="views/bootstrap.controller.js"></script>
+  <script type="text/javascript" src="views/portal.controller.js"></script>
+
+</body>
+</html>

@@ -5,7 +5,7 @@ angular.module('privatlakareApp')
             .state('app.start', {
                 url: '/start',
                 views: {
-                    'content@app': { templateUrl: 'app/start/start.html', controller: 'MainCtrl' }
+                    'content@app': { templateUrl: '/app/start/start.html', controller: 'MainCtrl' }
                 }
             });
     });

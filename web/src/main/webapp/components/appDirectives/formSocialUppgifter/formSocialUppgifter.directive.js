@@ -20,6 +20,6 @@ angular.module('privatlakareApp').directive('formSocialUppgifter',
                     HospService.loadHosp(HospViewState, HospModel);
                 }
             },
-            templateUrl: 'components/appDirectives/formSocialUppgifter/formSocialUppgifter.directive.html'
+            templateUrl: '/components/appDirectives/formSocialUppgifter/formSocialUppgifter.directive.html'
         };
     });

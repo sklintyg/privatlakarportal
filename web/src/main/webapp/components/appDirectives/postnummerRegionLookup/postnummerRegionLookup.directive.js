@@ -128,6 +128,6 @@ angular.module('privatlakareApp').directive('postnummerRegionLookup',
                     }
                 });
             },
-            templateUrl: 'components/appDirectives/postnummerRegionLookup/postnummerRegionLookup.directive.html'
+            templateUrl: '/components/appDirectives/postnummerRegionLookup/postnummerRegionLookup.directive.html'
         };
     });

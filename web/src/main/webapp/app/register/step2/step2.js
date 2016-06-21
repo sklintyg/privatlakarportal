@@ -6,7 +6,7 @@ angular.module('privatlakareApp')
                 url: '/steg2',
                 views: {
                     step: {
-                        templateUrl: 'app/register/step2/step2.html',
+                        templateUrl: '/app/register/step2/step2.html',
                         controller: 'Step2Ctrl'
                     }
                 },

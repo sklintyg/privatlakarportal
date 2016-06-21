@@ -6,7 +6,7 @@ angular.module('privatlakareApp').directive('ppCookieBanner',
         return {
             restrict: 'E',
             scope: {},
-            templateUrl: 'components/commonDirectives/ppCookieBanner/ppCookieBanner.directive.html',
+            templateUrl: '/components/commonDirectives/ppCookieBanner/ppCookieBanner.directive.html',
             controller: function($scope, $timeout) {
                 $scope.isOpen = false;
                 $scope.showDetails = false;

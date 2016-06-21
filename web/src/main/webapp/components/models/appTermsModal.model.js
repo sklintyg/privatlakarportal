@@ -18,7 +18,7 @@ angular.module('privatlakareApp').factory('AppTermsModalModel',
             data.modalInstance = null;
             data.options = {
                 controller: null,
-                modalBodyTemplateUrl: 'app/terms/terms.body.html',
+                modalBodyTemplateUrl: '/app/terms/terms.body.html',
                 titleId: null,
                 extraDlgClass: undefined,
                 width: '600px',

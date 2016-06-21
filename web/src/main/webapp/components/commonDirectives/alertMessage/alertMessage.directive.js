@@ -1,5 +1,5 @@
 /**
- * Show an alert that can be closed
+ * Show an alert box
  */
 angular.module('privatlakareApp').directive('alertMessage',
     [
@@ -18,6 +18,6 @@ angular.module('privatlakareApp').directive('alertMessage',
                         $scope.alertShow = true;
                     }
                 },
-                templateUrl: 'components/commonDirectives/alertMessage/alertMessage.directive.html'
+                templateUrl: '/components/commonDirectives/alertMessage/alertMessage.directive.html'
             };
         }]);

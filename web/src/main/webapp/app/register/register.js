@@ -6,7 +6,7 @@ angular.module('privatlakareApp')
                 url: '/registrera',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/register/register.html',
+                        templateUrl: '/app/register/register.html',
                         controller: 'RegisterCtrl'
                     }
                 }

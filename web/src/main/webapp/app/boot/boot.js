@@ -5,12 +5,12 @@ angular.module('privatlakareApp')
             .state('app.boot', {
                 url: '/?:from',
                 views: {
-                    'content@app': { templateUrl: 'app/boot/boot.html', controller: 'BootCtrl' }
+                    'content@app': { templateUrl: '/app/boot/boot.html', controller: 'BootCtrl' }
                 }
             }).state('app.bootLink', {
                 url: '/link/:targetId',
                 views: {
-                    'content@app': { templateUrl: 'app/boot/boot.html', controller: 'BootLinkCtrl' }
+                    'content@app': { templateUrl: '/app/boot/boot.html', controller: 'BootLinkCtrl' }
                 }
             });
         });

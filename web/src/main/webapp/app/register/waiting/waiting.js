@@ -6,7 +6,7 @@ angular.module('privatlakareApp')
                 url: '/vanta',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/register/waiting/waiting.html',
+                        templateUrl: '/app/register/waiting/waiting.html',
                         controller: 'WaitingCtrl'
                     }
                 }

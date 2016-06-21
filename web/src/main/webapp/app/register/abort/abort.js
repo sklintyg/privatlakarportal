@@ -6,7 +6,7 @@ angular.module('privatlakareApp')
 
         function showAbortDialog($state, dialogService) {
             dialogService.open({
-                templateUrl: 'app/register/abort/abort.html',
+                templateUrl: '/app/register/abort/abort.html',
                 controller: 'RegisterAbortCtrl'
             }).result.finally(function() { //jshint ignore:line
                 if ($state.current.url === abortUrl) {
