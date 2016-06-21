@@ -52,17 +52,6 @@
             $logProvider.debugEnabled(true);
         }]);
 
-/*
-    angular.module('privatlakareApp').constant('messages',{
-        'sv': {
-            'label.text': 'Text'
-        },
-        'en': {
-            'label.text': 'Text'
-        }
-    });
-*/
-
     // Global config of default date picker config (individual attributes can be
     // overridden per directive usage)
     app.constant('uibDatepickerPopupConfig', {
@@ -111,6 +100,7 @@
     pp_app.run(['$log', '$rootScope', '$window', '$location', '$state', '$q', '$httpBackend', 'messageService', 'messages',
         function($log, $rootScope, $window, $location, $state, $q, $httpBackend, messageService, messages) {
 
+            messageService.addResources(ppMessages);// jshint ignore:line
             messageService.addResources(messages);// jshint ignore:line
 
             $rootScope.lang = 'sv';
