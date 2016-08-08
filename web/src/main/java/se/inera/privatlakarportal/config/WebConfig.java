@@ -55,6 +55,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components/");
         registry.addResourceHandler("/app/**").addResourceLocations("/app/");
         registry.addResourceHandler("/components/**").addResourceLocations("/components/");
+        registry.addResourceHandler("/showcase/**").addResourceLocations("/showcase/");
     }
 
     @Override
