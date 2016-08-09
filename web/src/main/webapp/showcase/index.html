@@ -6,15 +6,26 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta name="ROBOTS" content="nofollow, noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Privatläkarportalen | Komponenter</title>
 
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+<!-- bower:css -->
+<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+<!-- endbower -->
 
-<link rel="stylesheet" href="/app/app.css" media="screen">
-<link rel="stylesheet" href="/app/vendor-override.css" media="screen">
-<link rel="stylesheet" href="ref.app.css" media="screen">
+
+
+<!-- build:css({build/.tmp,src/main/webapp}) /app/showcase_gen.css -->
+<link rel="stylesheet" href="/app/app.css">
+<link rel="stylesheet" href="/showcase/ref.app.css">
+<!-- injector:css -->
+<link rel="stylesheet" href="/app/app.css">
+<link rel="stylesheet" href="/app/header/header.css">
+<link rel="stylesheet" href="/app/navbar/navbar.css">
+<link rel="stylesheet" href="/app/vendor-override.css">
+<link rel="stylesheet" href="/components/commonDirectives/alertMessage/alertMessage.css">
+<link rel="stylesheet" href="/components/commonDirectives/alertSingle/alertSingle.css">
+<!-- endinjector -->
+<!-- endbuild -->
 
 </head>
 <body ng-app="showcase">
@@ -23,21 +34,34 @@
   <div ui-view="header" id="header"></div>
   <div ui-view="content" id="view"></div>
 
-  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
-  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-  <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
-  <script type="text/javascript" src="/bower_components/angular-i18n/angular-locale_sv-se.js"></script>
-  <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.js"></script>
-  <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
-  <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.js"></script>
-  <script type="text/javascript" src="/bower_components/ngstorage/ngStorage.js"></script>
-  <script type="text/javascript" src="/bower_components/angular-mocks/angular-mocks.js"></script>
+  <!-- bower:js -->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-animate/angular-animate.js"></script>
+  <script src="../bower_components/angular-resource/angular-resource.js"></script>
+  <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="../bower_components/angular-messages/angular-messages.js"></script>
+  <script src="../bower_components/angular-i18n/angular-locale_sv-se.js"></script>
+  <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="../bower_components/angular-deferred-bootstrap/angular-deferred-bootstrap.js"></script>
+  <script src="../bower_components/ngstorage/ngStorage.js"></script>
+  <!-- endbower -->
 
-  <script type="text/javascript" src="ref.app.js"></script>
-  <script type="text/javascript" src="ref.app.routes.js"></script>
-  <script type="text/javascript" src="showcase.messages.js"></script>
+  <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
+
+
+  <!-- build:js({build/.tmp,src/main/webapp}) /showcase/shellapp.js -->
+  <script type="text/javascript" src="/showcase/ref.app.js"></script>
+  <script type="text/javascript" src="/showcase/ref.app.routes.js"></script>
+  <script type="text/javascript" src="/showcase/showcase.messages.js"></script>
+  <script type="text/javascript" src="/showcase/views/bootstrap.controller.js"></script>
+  <script type="text/javascript" src="/showcase/views/portal.controller.js"></script>
+  <!-- endbuild -->
+
+  <!-- build:js({build/.tmp,src/main/webapp}) /showcase/showcase.js -->
+
   <script type="text/javascript" src="/app/messages.js"></script>
 
   <script type="text/javascript" src="/components/commonDirectives/alertMessage/alertMessage.directive.js"></script>
@@ -65,9 +89,7 @@
   <script type="text/javascript" src="/components/appDirectives/postnummerRegionLookup/postnummerRegionLookupViewState.service.js"></script>
 
   <script type="text/javascript" src="/app/register/abort/abort.controller.js"></script>
-
-  <script type="text/javascript" src="views/bootstrap.controller.js"></script>
-  <script type="text/javascript" src="views/portal.controller.js"></script>
+  <!-- endbuild -->
 
 </body>
 </html>

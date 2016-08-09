@@ -23,8 +23,10 @@
     'use strict';
 
 
-    // --- end test hooks
-
+    // Add replaceAll function to all strings.
+    String.prototype.replaceAll = function(f,r) { // jshint ignore:line
+        return this.split(f).join(r);
+    };
     // Globally configure jquery not to cache ajax requests.
     // Our other angular $http service driven requests have their own solution (using an interceptor)
 
@@ -83,6 +85,9 @@
 
             //Kanske vi kan (i resp controller) sätta upp 'when' mockning så att direktiven kan köra som i en sandbox (Se exempel i arendehantering.controller.js)?
             // Detta kanske gör det möjligt att kunna laborera med ett direktivs alla funktioner som även kräver backendkommunikation.
+
+           // /api/registration/omrade/13232
+            $httpBackend.whenGET(/^\/api\/registration\/omrade\/*/).passThrough();
             $httpBackend.whenGET(/^\/api\/*/).respond(200);
             $httpBackend.whenPOST(/^\/api\/*/).respond(200);
             $httpBackend.whenPUT(/^\/api\/*/).respond(200);

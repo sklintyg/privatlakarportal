@@ -38,11 +38,11 @@ angular.module('showcase').controller('showcase.PortalCtrl',
             $scope.openModal = function() {
                 dialogService.open({
                     templateUrl: '/showcase/views/modal.html',
-                    controller: function($scope) {
+                    controller: ['$scope', function($scope) {
                         $scope.dismiss = function() {
                             $scope.$dismiss();
                         };
-                    }
+                    }]
                 });
             };
 
