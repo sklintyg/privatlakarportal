@@ -1,0 +1,3 @@
+!define seleniumDriver {firefoxRemote}
+
+ * >PrivatlakarPortal.WebTests
