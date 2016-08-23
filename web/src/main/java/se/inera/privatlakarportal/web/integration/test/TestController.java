@@ -1,11 +1,15 @@
 package se.inera.privatlakarportal.web.integration.test;
 
+import javax.ws.rs.core.MediaType;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
 import se.inera.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.privatlakarportal.hsa.stub.HsaServiceStub;
 import se.inera.privatlakarportal.integration.privatepractioner.services.IntegrationService;
@@ -19,6 +23,7 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 /**
  * Created by pebe on 2015-09-02.
  */
+@Api(value = "/test", description = "Rest-api för test-tjänster.", produces = MediaType.APPLICATION_JSON, tags = "testability, test")
 @RestController
 @RequestMapping("/api/test")
 @Profile({"dev", "testability-api"})

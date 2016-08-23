@@ -72,6 +72,8 @@
   <!-- =============================================================== -->
   <beans profile="dev,pp-security-dev,pp-security-test">
     <security:http security="none" pattern="/welcome.html"/>
+    <security:http security="none" pattern="/v2/api-docs/**"/>
+    <security:http security="none" pattern="/swagger-ui/**"/>
   </beans>
   <beans profile="dev,testability-api">
     <security:http security="none" pattern="/api/test/**"/>

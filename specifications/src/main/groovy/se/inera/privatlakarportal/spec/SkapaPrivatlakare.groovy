@@ -67,7 +67,7 @@ public class SkapaPrivatlakare extends RestClientFixture {
             RestClientUtils.login(restClient);
 
         // An updated name is needed to create a registration
-        restClient.post(
+        restClient.get(
             path: 'user',
             requestContentType: JSON)
 

@@ -1,14 +1,18 @@
 package se.inera.privatlakarportal.web.controller.api;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
 import se.inera.privatlakarportal.service.monitoring.HealthCheckServiceImpl;
 import se.inera.privatlakarportal.service.monitoring.dto.HealthStatus;
 
+@Api(value = "/monitoring", description = "Healthcheck-api för Privatläkarportalen", produces = MediaType.APPLICATION_JSON)
 @RestController
 @RequestMapping("/api/monitoring")
 public class MonitoringController {
@@ -16,28 +20,28 @@ public class MonitoringController {
     @Autowired
     private HealthCheckServiceImpl healthCheck;
 
-    @RequestMapping(value = "/db")
+    @RequestMapping(value = "/db", method = RequestMethod.GET)
     public Response getDBStatus() {
         HealthStatus status = healthCheck.checkDB();
         String xml = buildXMLResponse(status);
         return Response.ok(xml).build();
     }
 
-    @RequestMapping(value = "/hsa")
+    @RequestMapping(value = "/hsa", method = RequestMethod.GET)
     public Response getHsaStatus() {
         HealthStatus status = healthCheck.checkHSA();
         String xml = buildXMLResponse(status);
         return Response.ok(xml).build();
     }
 
-    @RequestMapping(value = "/uptime")
+    @RequestMapping(value = "/uptime", method = RequestMethod.GET)
     public Response getUpTimeStatus() {
         HealthStatus status = healthCheck.checkUptime();
         String xml = buildXMLResponse(status);
         return Response.ok(xml).build();
     }
 
-    @RequestMapping(value = "/usernumber")
+    @RequestMapping(value = "/usernumber", method = RequestMethod.GET)
     public Response getUpNumberOfUsers() {
         HealthStatus status = healthCheck.checkNbrOfUsers();
         String xml = buildXMLResponse(status);

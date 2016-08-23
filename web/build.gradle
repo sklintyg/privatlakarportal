@@ -113,7 +113,13 @@ dependencies {
     compile 'wsdl4j:wsdl4j:1.6.3'
     compile 'commons-lang:commons-lang:2.6'
     compile 'org.apache.commons:commons-lang3:3.1'
-    
+
+    compile('io.swagger:swagger-jaxrs:1.5.4') {
+        transitive = false;
+    }
+    compile("io.springfox:springfox-swagger2:2.4.0") 
+    compile('io.springfox:springfox-swagger-ui:2.4.0')
+
     compile 'se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.0'
 
     compile 'org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}'

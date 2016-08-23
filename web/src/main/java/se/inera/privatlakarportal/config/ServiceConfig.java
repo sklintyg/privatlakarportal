@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.context.support.ServletContextAttributeExporter;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
 import se.inera.privatlakarportal.service.monitoring.HealthCheckService;
 import se.inera.privatlakarportal.service.monitoring.PingForConfigurationResponderImpl;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
@@ -26,7 +28,6 @@ import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitione
 @ComponentScan("se.inera.privatlakarportal.service, se.inera.privatlakarportal.common.service")
 @EnableScheduling
 public class ServiceConfig {
-
     @Autowired
     HealthCheckService healtCheckService;
 
@@ -46,10 +47,15 @@ public class ServiceConfig {
     }
 
     @Bean
+    public JacksonJsonProvider jacksonJsonProvider() {
+        return new JacksonJsonProvider();
+    }
+
+    @Bean
     public PingForConfigurationResponderImpl pingForConfigurationResponder() {
         return new PingForConfigurationResponderImpl();
     }
-    
+
     @Bean
     public EndpointImpl pingForConfigurationEndpoint() {
         Bus bus = (Bus) applicationContext.getBean(Bus.DEFAULT_BUS_ID);

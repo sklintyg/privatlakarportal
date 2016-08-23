@@ -9,7 +9,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Configuration
 @PropertySource({ "file:${privatlakarportal.config.file}", "file:${credentials.file}", "classpath:version.properties"})
-@ImportResource({ "classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml" })
+@ImportResource({ "classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml"})
 public class ApplicationConfig {
 
     @Bean

@@ -25,7 +25,6 @@ import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
 @Configuration
 @ComponentScan({"se.inera.privatlakarportal.web", "se.inera.privatlakarportal.common.service.stub"})
 public class WebConfig extends WebMvcConfigurerAdapter {
-
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -64,7 +63,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {
-        for(HttpMessageConverter converter : converters) {
+        for(HttpMessageConverter<?> converter : converters) {
             if (converter instanceof MappingJackson2HttpMessageConverter) {
                 MappingJackson2HttpMessageConverter jsonConverter = (MappingJackson2HttpMessageConverter) converter;
                 jsonConverter.setObjectMapper(new CustomObjectMapper());
