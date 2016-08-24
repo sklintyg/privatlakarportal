@@ -69,6 +69,9 @@ angular.module('privatlakareApp')
                 version : successData.version
             };
         }, function(errorData) {
+            Step3ViewState.loading.register = false;
+            Step3ViewState.errorMessage.register =
+                'Kunde inte registrera privatläkare på grund av tekniskt fel. Försök igen senare.';
             $log.debug('Failed to get terms.');
             $log.debug(errorData);
         });
