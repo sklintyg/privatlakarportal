@@ -18,6 +18,8 @@
  */
 package se.inera.privatlakarportal.service.postnummer.repo;
 
+import java.io.*;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,11 +28,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import se.inera.privatlakarportal.service.postnummer.model.Omrade;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import se.inera.privatlakarportal.service.postnummer.model.Omrade;
 
 /**
  * Created by pebe on 2015-08-12.
@@ -87,7 +86,7 @@ public class PostnummerRepositoryFactory {
         } catch (IOException ioe) {
             LOG.error("IOException occured when loading postnummer file '{}'", fileUrl);
             throw new RuntimeException("Error occured when loading postnummer file", ioe);
-        } 
+        }
     }
 
     Omrade createOmradeFromString(String line) {

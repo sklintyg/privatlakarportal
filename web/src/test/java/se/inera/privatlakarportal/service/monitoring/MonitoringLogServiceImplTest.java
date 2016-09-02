@@ -1,14 +1,14 @@
 /**
- * Copyright (C) 2015 Inera AB (http://www.inera.se)
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
  *
- * This file is part of statistik (https://github.com/sklintyg/statistik).
+ * This file is part of privatlakarportal (https://github.com/sklintyg/privatlakarportal).
  *
- * statistik is free software: you can redistribute it and/or modify
+ * privatlakarportal is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * statistik is distributed in the hope that it will be useful,
+ * privatlakarportal is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -41,18 +41,18 @@ import ch.qos.logback.core.Appender;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MonitoringLogServiceImplTest {
-    
+
     private static final String USER_ID = "USER_ID";
     private static final String AUTHENTICATION_SCHEME = "AUTHENTICATION_SCHEME";
     private static final String HSA_ID = "HSA_ID";
     private static final Long CONSENT_VERSION = 1L;
-    
+
     @Mock
     private Appender<ILoggingEvent> mockAppender;
 
     @Captor
     private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
-    
+
     MonitoringLogService logService = new MonitoringLogServiceImpl();
 
     @Before
@@ -60,17 +60,18 @@ public class MonitoringLogServiceImplTest {
         final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         logger.addAppender(mockAppender);
     }
-    
+
     @After
     public void teardown() {
         final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         logger.detachAppender(mockAppender);
     }
-    
+
     @Test
     public void shouldLogUserRegistered() {
         logService.logUserRegistered(USER_ID, CONSENT_VERSION, HSA_ID, RegistrationStatus.AUTHORIZED);
-        verifyLog(Level.INFO, "USER_REGISTERED User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' registered with consent version '1' and hsaId 'HSA_ID', returned status 'AUTHORIZED'");
+        verifyLog(Level.INFO,
+                "USER_REGISTERED User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' registered with consent version '1' and hsaId 'HSA_ID', returned status 'AUTHORIZED'");
     }
 
     @Test
@@ -82,13 +83,15 @@ public class MonitoringLogServiceImplTest {
     @Test
     public void shouldLogUserLogin() {
         logService.logUserLogin(USER_ID, AUTHENTICATION_SCHEME);
-        verifyLog(Level.INFO, "USER_LOGIN Login user 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' using scheme 'AUTHENTICATION_SCHEME'");
+        verifyLog(Level.INFO,
+                "USER_LOGIN Login user 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' using scheme 'AUTHENTICATION_SCHEME'");
     }
 
     @Test
     public void shouldLogUserLogout() {
         logService.logUserLogout(USER_ID, AUTHENTICATION_SCHEME);
-        verifyLog(Level.INFO, "USER_LOGOUT Logout user 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' using scheme 'AUTHENTICATION_SCHEME'");
+        verifyLog(Level.INFO,
+                "USER_LOGOUT Logout user 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' using scheme 'AUTHENTICATION_SCHEME'");
     }
 
     @Test
@@ -104,7 +107,6 @@ public class MonitoringLogServiceImplTest {
 
         // Verify log
         assertThat(loggingEvent.getLevel(), equalTo(logLevel));
-        assertThat(loggingEvent.getFormattedMessage(), 
-                equalTo(logMessage));
+        assertThat(loggingEvent.getFormattedMessage(), equalTo(logMessage));
     }
 }

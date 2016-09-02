@@ -52,6 +52,7 @@ public class MailStore {
         }
     }
 
+    //CHECKSTYLE:OFF EmptyBlock
     public void waitToContinue() {
         synchronized (this) {
             if (doWait) {
@@ -62,6 +63,7 @@ public class MailStore {
             }
         }
     }
+    //CHECKSTYLE:ON EmptyBlock
 
     public void setWait(boolean doWait) {
         synchronized (this) {

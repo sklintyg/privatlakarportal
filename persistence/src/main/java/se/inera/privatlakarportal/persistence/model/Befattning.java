@@ -43,7 +43,7 @@ public class Befattning {
 
     public Befattning() {
     }
-    
+
     public Befattning(Privatlakare privatlakare, String kod) {
         this.privatlakare = privatlakare;
         this.kod = kod;
@@ -70,7 +70,6 @@ public class Befattning {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
-
 
     public Privatlakare getPrivatlakare() {
         return privatlakare;

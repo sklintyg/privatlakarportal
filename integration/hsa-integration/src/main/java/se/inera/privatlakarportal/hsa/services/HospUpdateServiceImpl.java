@@ -90,14 +90,14 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         LocalDateTime hsaHospLastUpdate;
         try {
             hsaHospLastUpdate = hospPersonService.getHospLastUpdate();
-        } catch(WebServiceException e) {
+        } catch (WebServiceException e) {
             LOG.error("Failed to getHospLastUpdate from HSA with exception {}", e);
             return;
         }
 
         // If hospUppdatering is null this is our first update ever
-        if (hospUppdatering == null ||
-            hospUppdatering.getSenasteHospUppdatering().isBefore(hsaHospLastUpdate)) {
+        if (hospUppdatering == null
+                || hospUppdatering.getSenasteHospUppdatering().isBefore(hsaHospLastUpdate)) {
 
             LOG.info("Hospinformation has been updated in HSA since our last update");
 
@@ -111,7 +111,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
             // Find privatlakare without hospinformation
             List<Privatlakare> privatlakareList = privatlakareRepository.findNeverHadLakarBehorighet();
-            for(Privatlakare privatlakare : privatlakareList) {
+            for (Privatlakare privatlakare : privatlakareList) {
 
                 LOG.info("Checking privatlakare '{}' for updated hosp information", privatlakare.getPersonId());
                 try {
@@ -119,12 +119,12 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                     LOG.info("updateHospInformation returned status '{}'", status);
 
                     // Check if information has been updated
-                    if (status == RegistrationStatus.AUTHORIZED ||
-                            status == RegistrationStatus.NOT_AUTHORIZED) {
+                    if (status == RegistrationStatus.AUTHORIZED
+                            || status == RegistrationStatus.NOT_AUTHORIZED) {
                         privatlakareRepository.save(privatlakare);
                         mailService.sendRegistrationStatusEmail(status, privatlakare);
                     }
-                } catch(HospUpdateFailedToContactHsaException e) {
+                } catch (HospUpdateFailedToContactHsaException e) {
                     LOG.error("Failed to contact HSA with error '{}'", e.getMessage());
                 }
             }
@@ -141,7 +141,8 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                     LOG.error("Failed to call handleCertifier in HSA, this call will be retried at next hosp update cycle.");
                 }
             } catch (WebServiceException e) {
-                LOG.error("Failed to call handleCertifier in HSA with error {}, this call will be retried at next hosp update cycle.", e.getMessage());
+                LOG.error("Failed to call handleCertifier in HSA with error {}, this call will be retried at next hosp update cycle.",
+                        e.getMessage());
                 throw new HospUpdateFailedToContactHsaException(e);
             }
         }
@@ -184,8 +185,8 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     public void checkForUpdatedHospInformation(Privatlakare privatlakare) {
         try {
             LocalDateTime hospLastUpdate = hospPersonService.getHospLastUpdate();
-            if (privatlakare.getSenasteHospUppdatering() == null ||
-                    privatlakare.getSenasteHospUppdatering().isBefore(hospLastUpdate)) {
+            if (privatlakare.getSenasteHospUppdatering() == null
+                    || privatlakare.getSenasteHospUppdatering().isBefore(hospLastUpdate)) {
 
                 LOG.debug("Hosp has been updated since last login for privlakare '{}'. Updating hosp information", privatlakare.getPersonId());
 
@@ -193,12 +194,13 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                     updateHospInformation(privatlakare, false);
                     privatlakare.setSenasteHospUppdatering(hospLastUpdate);
                     privatlakareRepository.save(privatlakare);
-                } catch(HospUpdateFailedToContactHsaException e) {
+                } catch (HospUpdateFailedToContactHsaException e) {
                     LOG.error("Failed to update hosp information for privatlakare '{}' due to {}", privatlakare.getPersonId(), e);
                 }
             }
-        } catch(WebServiceException e) {
-            LOG.error("Failed to getHospLastUpdate from HSA in checkForUpdatedHospInformation for privatlakare '{}' due to {}", privatlakare.getPersonId(), e);
+        } catch (WebServiceException e) {
+            LOG.error("Failed to getHospLastUpdate from HSA in checkForUpdatedHospInformation for privatlakare '{}' due to {}",
+                    privatlakare.getPersonId(), e);
         }
     }
 
@@ -206,12 +208,12 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
     private List<Specialitet> getSpecialiteter(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {
         List<Specialitet> specialiteter = new ArrayList<>();
-        if (hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() !=
-            hospPersonResponse.getSpecialityNames().getSpecialityName().size()) {
-            LOG.error("getHospPerson getSpecialityCodes count " +
-                    hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() +
-                    "doesn't match getSpecialityNames count '{}' != '{}'" +
-                    hospPersonResponse.getSpecialityNames().getSpecialityName().size());
+        if (hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() != hospPersonResponse.getSpecialityNames().getSpecialityName()
+                .size()) {
+            LOG.error("getHospPerson getSpecialityCodes count "
+                    + hospPersonResponse.getSpecialityCodes().getSpecialityCode().size()
+                    + "doesn't match getSpecialityNames count '{}' != '{}'"
+                    + hospPersonResponse.getSpecialityNames().getSpecialityName().size());
             throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
                     "Inconsistent data from HSA");
@@ -227,12 +229,11 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
     private Set<LegitimeradYrkesgrupp> getLegitimeradeYrkesgrupper(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {
         Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();
-        if (hospPersonResponse.getHsaTitles().getHsaTitle().size() !=
-            hospPersonResponse.getTitleCodes().getTitleCode().size()) {
-            LOG.error("getHospPerson getHsaTitles count " +
-                    hospPersonResponse.getHsaTitles().getHsaTitle().size() +
-                    "doesn't match getTitleCodes count '{}' != '{}'" +
-                    hospPersonResponse.getTitleCodes().getTitleCode().size());
+        if (hospPersonResponse.getHsaTitles().getHsaTitle().size() != hospPersonResponse.getTitleCodes().getTitleCode().size()) {
+            LOG.error("getHospPerson getHsaTitles count "
+                    + hospPersonResponse.getHsaTitles().getHsaTitle().size()
+                    + "doesn't match getTitleCodes count '{}' != '{}'"
+                    + hospPersonResponse.getTitleCodes().getTitleCode().size());
             throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
                     "Inconsistent data from HSA");

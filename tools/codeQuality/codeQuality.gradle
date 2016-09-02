@@ -1,6 +1,6 @@
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
-//apply plugin: 'checkstyle'
+apply plugin: 'checkstyle'
 
 findbugs {
     ignoreFailures = false
@@ -32,11 +32,11 @@ pmd {
 
 pmdMain.source = fileTree('src/main/java')
 
-//checkstyle {
-//    configProperties.checkstyleConfigDir = file("$rootProject.projectDir/tools/codeQuality")
-//    config = resources.text.fromFile("${rootProject.projectDir}/tools/codeQuality/checkstyle.xml")
-//    ignoreFailures = false
-//    showViolations = false
-//}
-//
-//checkstyleMain.source = "src/main/java"
+checkstyle {
+    configProperties.checkstyleConfigDir = file("$rootProject.projectDir/tools/codeQuality")
+    config = resources.text.fromFile("${rootProject.projectDir}/tools/codeQuality/checkstyle.xml")
+    ignoreFailures = false
+    showViolations = true
+}
+
+checkstyleMain.source = "src/main/java"

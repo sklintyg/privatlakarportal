@@ -29,7 +29,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -46,9 +45,6 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 public class MailServiceImplTest {
 
     @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
     private MailStore mailStore;
 
     @Autowired
@@ -56,7 +52,7 @@ public class MailServiceImplTest {
 
     @Value("${mail.port}")
     private String port;
-    
+
     @Value("${mail.username}")
     private String username;
 

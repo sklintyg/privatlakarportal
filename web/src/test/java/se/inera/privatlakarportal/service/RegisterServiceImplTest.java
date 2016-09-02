@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ *
+ * This file is part of privatlakarportal (https://github.com/sklintyg/privatlakarportal).
+ *
+ * privatlakarportal is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * privatlakarportal is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.privatlakarportal.service;
 
 import static org.junit.Assert.assertEquals;
@@ -19,11 +37,9 @@ import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.*;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 import org.springframework.core.io.ClassPathResource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
@@ -50,7 +66,7 @@ import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
 
-    private final String PERSON_ID = "191212121212";
+    private static final String PERSON_ID = "191212121212";
 
     @Mock
     private PrivatlakareRepository privatlakareRepository;
@@ -108,7 +124,6 @@ public class RegisterServiceImplTest {
         return verifyPrivatlakare;
     }
 
-
     private Registration createValidRegistration() {
         Registration registration = new Registration();
 
@@ -150,18 +165,15 @@ public class RegisterServiceImplTest {
     public void testHsaMailSent() throws HospUpdateFailedToContactHsaException, IOException, MessagingException {
 
         // Notify admin every 50 registrations
-        final int SEND_HSA_MAIL_INTERVAL = 50;
+        final int sendHsaMailInterval = 50;
 
-        Mockito.doAnswer(new Answer<Object>() {
-                    @Override
-                    public Object answer(InvocationOnMock invocation) {
-                        mailStore.addMail("ADMIN-EMAIL", "TEST");
-                        return null;
-                    }})
-                    .when(mailService).sendHsaGenerationStatusEmail();
+        Mockito.doAnswer(invocation -> {
+            mailStore.addMail("ADMIN-EMAIL", "TEST");
+            return null;
+        }).when(mailService).sendHsaGenerationStatusEmail();
 
         // Create enough registrations to reach the threshold
-        for (int i = 1; i <= SEND_HSA_MAIL_INTERVAL; i++) {
+        for (int i = 1; i <= sendHsaMailInterval; i++) {
             PrivatlakareId privatlakareId = new PrivatlakareId();
             privatlakareId.setId(i);
             when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
@@ -177,18 +189,16 @@ public class RegisterServiceImplTest {
     @Test
     public void testHsaMailThreshold() throws HospUpdateFailedToContactHsaException, IOException, MessagingException {
         // Notify admin every 50 registrations
-        final int SEND_HSA_MAIL_INTERVAL = 49;
+        final int sendHsaMailInterval = 49;
 
-        Mockito.doAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) {
-                mailStore.addMail("ADMIN-EMAIL", "TEST");
-                return null;
-            }})
-            .when(mailService).sendHsaGenerationStatusEmail();
+        Mockito.doAnswer(invocation -> {
+            mailStore.addMail("ADMIN-EMAIL", "TEST");
+            return null;
+        })
+                .when(mailService).sendHsaGenerationStatusEmail();
 
         // Create one less registration than the threshold
-        for (int i = 1; i <= SEND_HSA_MAIL_INTERVAL; i++) {
+        for (int i = 1; i <= sendHsaMailInterval; i++) {
             PrivatlakareId privatlakareId = new PrivatlakareId();
             privatlakareId.setId(i);
             when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
@@ -220,7 +230,7 @@ public class RegisterServiceImplTest {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(new Privatlakare());
 
         Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration, 1L);
+        registerService.createRegistration(registration, 1L);
     }
 
     @Test
@@ -255,7 +265,7 @@ public class RegisterServiceImplTest {
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
         Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration, null);
+        registerService.createRegistration(registration, null);
     }
 
     @Test
@@ -269,9 +279,8 @@ public class RegisterServiceImplTest {
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
         Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration, 2L);
+        registerService.createRegistration(registration, 2L);
     }
-
 
     @Test
     public void testCreateRegistrationEjLakare() throws HospUpdateFailedToContactHsaException {
@@ -314,7 +323,7 @@ public class RegisterServiceImplTest {
         when(userService.getUser()).thenReturn(new PrivatlakarUser(PERSON_ID, "Test User"));
 
         Registration registration = createValidRegistration();
-        RegistrationStatus response = registerService.createRegistration(registration, 1L);
+        registerService.createRegistration(registration, 1L);
 
         verifyNoMoreInteractions(privatlakareRepository);
         verifyNoMoreInteractions(hospUpdateService);
@@ -341,7 +350,7 @@ public class RegisterServiceImplTest {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
 
         Registration registration = createValidRegistration();
-        SaveRegistrationResponseStatus response = registerService.saveRegistration(registration);
+        registerService.saveRegistration(registration);
     }
 
     @Test
@@ -353,7 +362,7 @@ public class RegisterServiceImplTest {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(new Privatlakare());
 
         Registration registration = new Registration();
-        SaveRegistrationResponseStatus response = registerService.saveRegistration(registration);
+        registerService.saveRegistration(registration);
     }
 
     @Test
@@ -430,12 +439,12 @@ public class RegisterServiceImplTest {
         // assert Hosp-information
         assertEquals(testPrivatlakare.getLegitimeradeYrkesgrupper().size(), registration.getHospInformation().getHsaTitles().size());
         for (LegitimeradYrkesgrupp legitimeradYrkesgrupp : testPrivatlakare.getLegitimeradeYrkesgrupper()) {
-            assert (registration.getHospInformation().getHsaTitles().contains(legitimeradYrkesgrupp.getNamn()));
+            assertTrue(registration.getHospInformation().getHsaTitles().contains(legitimeradYrkesgrupp.getNamn()));
         }
         assertEquals(testPrivatlakare.getForskrivarKod(), registration.getHospInformation().getPersonalPrescriptionCode());
         assertEquals(testPrivatlakare.getSpecialiteter().size(), registration.getHospInformation().getSpecialityNames().size());
         for (Specialitet specialitet : testPrivatlakare.getSpecialiteter()) {
-            assert (registration.getHospInformation().getSpecialityNames().contains(specialitet.getNamn()));
+            assertTrue(registration.getHospInformation().getSpecialityNames().contains(specialitet.getNamn()));
         }
     }
 

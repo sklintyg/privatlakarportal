@@ -1,20 +1,34 @@
+/**
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ *
+ * This file is part of privatlakarportal (https://github.com/sklintyg/privatlakarportal).
+ *
+ * privatlakarportal is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * privatlakarportal is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.privatlakarportal.auth;
-
-import static org.mockito.Mockito.mock;
 
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.cxf.staxutils.StaxUtils;
 import org.opensaml.DefaultBootstrap;
 import org.opensaml.saml2.core.Assertion;
-import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.Response;
 import org.opensaml.xml.Configuration;
 import org.opensaml.xml.XMLObject;
 import org.opensaml.xml.io.Unmarshaller;
 import org.opensaml.xml.io.UnmarshallerFactory;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.saml.SAMLCredential;
 import org.w3c.dom.Document;
 
 /**

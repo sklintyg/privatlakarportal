@@ -21,11 +21,7 @@ package se.inera.privatlakarportal.web.controller.api;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,13 +30,7 @@ import se.inera.privatlakarportal.service.RegisterService;
 import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.privatlakarportal.service.postnummer.PostnummerService;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationResponse;
-import se.inera.privatlakarportal.web.controller.api.dto.GetHospInformationResponse;
-import se.inera.privatlakarportal.web.controller.api.dto.GetOmradeResponse;
-import se.inera.privatlakarportal.web.controller.api.dto.GetRegistrationResponse;
-import se.inera.privatlakarportal.web.controller.api.dto.SaveRegistrationRequest;
-import se.inera.privatlakarportal.web.controller.api.dto.SaveRegistrationResponse;
+import se.inera.privatlakarportal.web.controller.api.dto.*;
 
 /**
  * Created by pebe on 2015-06-25.
@@ -84,7 +74,7 @@ public class RegisterController {
     }
 
     @ApiOperation(value = "getOmrade")
-    @RequestMapping(value = "/omrade/{postnummer}", method = RequestMethod.GET )
+    @RequestMapping(value = "/omrade/{postnummer}", method = RequestMethod.GET)
     public GetOmradeResponse getOmrade(@PathVariable("postnummer") String postnummer) {
         return new GetOmradeResponse(postnummerService.getOmradeByPostnummer(postnummer));
     }

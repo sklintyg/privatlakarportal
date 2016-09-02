@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+// CHECKSTYLE:OFF PackageName
 package se.inera.ifv.privatlakarportal.spi.authorization.impl;
+// CHECKSTYLE:ON PackageName
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

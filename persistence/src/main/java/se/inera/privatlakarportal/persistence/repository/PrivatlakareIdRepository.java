@@ -29,5 +29,5 @@ import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
 public interface PrivatlakareIdRepository extends JpaRepository<PrivatlakareId, Integer> {
 
     @Query("SELECT max(pi.id) FROM PrivatlakareId pi")
-    Integer findLatestGeneratedHsaId(); 
+    Integer findLatestGeneratedHsaId();
 }

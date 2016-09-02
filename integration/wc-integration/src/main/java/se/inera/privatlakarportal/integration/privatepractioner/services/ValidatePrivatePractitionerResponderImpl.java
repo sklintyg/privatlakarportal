@@ -33,22 +33,21 @@ public class ValidatePrivatePractitionerResponderImpl implements ValidatePrivate
     private IntegrationService integrationService;
 
     @Override
-    public ValidatePrivatePractitionerResponseType validatePrivatePractitioner(String s, ValidatePrivatePractitionerType validatePrivatePractitionerType) {
+    public ValidatePrivatePractitionerResponseType validatePrivatePractitioner(String s,
+            ValidatePrivatePractitionerType validatePrivatePractitionerType) {
 
         final boolean hasHsaArgument = !StringUtils.isEmpty(validatePrivatePractitionerType.getPersonHsaId());
         final boolean hasPersonArgument = !StringUtils.isEmpty(validatePrivatePractitionerType.getPersonalIdentityNumber());
 
         if (hasHsaArgument && hasPersonArgument) {
             throw new IllegalArgumentException("Endast ett av argumenten hsaIdentityNumber och personalIdentityNumber får vara satt.");
-        }
-        else if (hasHsaArgument) {
+        } else if (hasHsaArgument) {
             return integrationService.validatePrivatePractitionerByHsaId(validatePrivatePractitionerType.getPersonHsaId());
-        }
-        else if (hasPersonArgument) {
+        } else if (hasPersonArgument) {
             return integrationService.validatePrivatePractitionerByPersonId(validatePrivatePractitionerType.getPersonalIdentityNumber());
-        }
-        else {
-            throw new IllegalArgumentException("Inget av argumenten hsaIdentityNumber och personalIdentityNumber är satt. Ett av dem måste ha ett värde.");
+        } else {
+            throw new IllegalArgumentException(
+                    "Inget av argumenten hsaIdentityNumber och personalIdentityNumber är satt. Ett av dem måste ha ett värde.");
         }
     }
 }

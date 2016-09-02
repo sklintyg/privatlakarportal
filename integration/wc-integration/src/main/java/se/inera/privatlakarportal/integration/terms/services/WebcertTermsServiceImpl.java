@@ -51,8 +51,7 @@ public class WebcertTermsServiceImpl implements WebcertTermsService {
             }
 
             return new Terms(avtalType.getAvtalText(), avtalType.getAvtalVersion(), avtalType.getAvtalVersionDatum());
-        }
-        catch(WebServiceException e) {
+        } catch (WebServiceException e) {
             LOG.error("WebServiceException '{}' in getPrivatePractitionerTerms", e.getMessage());
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.EXTERNAL_ERROR, "Unable to lookup terms");
         }

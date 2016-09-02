@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ *
+ * This file is part of privatlakarportal (https://github.com/sklintyg/privatlakarportal).
+ *
+ * privatlakarportal is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * privatlakarportal is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.privatlakarportal.hsa.services;
 
 import static org.junit.Assert.assertEquals;
@@ -36,10 +54,10 @@ import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 @RunWith(MockitoJUnitRunner.class)
 public class HospUpdateServiceImplTest {
 
-    private final String PERSON_ID = "1912121212";
-    private final String PERSONAL_PRESCRIPTION_CODE = "7654321";
-    private final String PERSON_ID2 = "PERSON_ID2";
-    private final String PERSON_ID3 = "PERSON_ID3";
+    private static final String PERSON_ID = "1912121212";
+    private static final String PERSONAL_PRESCRIPTION_CODE = "7654321";
+    private static final String PERSON_ID2 = "PERSON_ID2";
+    private static final String PERSON_ID3 = "PERSON_ID3";
 
     @Mock
     private HospPersonService hospPersonService;
@@ -94,7 +112,7 @@ public class HospUpdateServiceImplTest {
         list.add(privatlakare3);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
-        when(hospPersonService.addToCertifier(any(String.class),any(String.class))).thenReturn(true);
+        when(hospPersonService.addToCertifier(any(String.class), any(String.class))).thenReturn(true);
 
         // Om det går fel vid kontakt med hsa ska uppdateringsrutinen ändå fortsätta med nästa i listan.
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
@@ -139,7 +157,7 @@ public class HospUpdateServiceImplTest {
         list.add(privatlakare1);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
-        when(hospPersonService.addToCertifier(any(String.class),any(String.class))).thenReturn(true);
+        when(hospPersonService.addToCertifier(any(String.class), any(String.class))).thenReturn(true);
 
         // privatlakare1 får nu läkarbehörighet men har fått GODKAND_ANVANDARE false innan
         GetHospPersonResponseType hospPersonResponse1 = createGetHospPersonResponse();

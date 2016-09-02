@@ -40,7 +40,7 @@ import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.service.MailServiceImpl;
 
 @Configuration
-@PropertySource({"file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}"})
+@PropertySource({ "file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}" })
 @EnableAsync
 public class MailServiceConfig implements AsyncConfigurer {
 
@@ -80,7 +80,7 @@ public class MailServiceConfig implements AsyncConfigurer {
         mailSender.setDefaultEncoding(defaultEncoding);
         mailSender.setProtocol(protocol);
         mailSender.setPort(Integer.parseInt(port));
-        if(username != null && !username.isEmpty()) {
+        if (username != null && !username.isEmpty()) {
             mailSender.setUsername(username);
         }
         if (password != null && !password.isEmpty()) {
@@ -88,11 +88,11 @@ public class MailServiceConfig implements AsyncConfigurer {
         }
 
         Properties javaMailProperties = new Properties();
-        javaMailProperties.put("mail."+protocol+".auth", smtpsAuth);
-        javaMailProperties.put("mail."+protocol+".port", Integer.parseInt(port));
-        javaMailProperties.put("mail."+protocol+".starttls.enable", smtpsStarttlsEnable);
-        javaMailProperties.put("mail."+protocol+".debug", smtpsDebug);
-        javaMailProperties.put("mail."+protocol+".socketFactory.fallback", true);
+        javaMailProperties.put("mail." + protocol + ".auth", smtpsAuth);
+        javaMailProperties.put("mail." + protocol + ".port", Integer.parseInt(port));
+        javaMailProperties.put("mail." + protocol + ".starttls.enable", smtpsStarttlsEnable);
+        javaMailProperties.put("mail." + protocol + ".debug", smtpsDebug);
+        javaMailProperties.put("mail." + protocol + ".socketFactory.fallback", true);
 
         mailSender.setJavaMailProperties(javaMailProperties);
         LOG.info("Mailsender initialized with: [port: {}, protocol: {}, host: {}]", port, protocol, mailHost);

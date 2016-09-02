@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ *
+ * This file is part of privatlakarportal (https://github.com/sklintyg/privatlakarportal).
+ *
+ * privatlakarportal is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * privatlakarportal is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.privatlakarportal.service;
 
 import static org.mockito.Matchers.any;
@@ -51,9 +69,12 @@ public class CleanupServiceImplTest {
         when(dateHelperService.now()).thenReturn(date);
 
         ArrayList<Privatlakare> list = new ArrayList<>();
-        Privatlakare p1 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test1.json").getFile(), Privatlakare.class);
-        Privatlakare p2 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test2.json").getFile(), Privatlakare.class);
-        Privatlakare p3 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test3.json").getFile(), Privatlakare.class);
+        Privatlakare p1 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test1.json").getFile(),
+                Privatlakare.class);
+        Privatlakare p2 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test2.json").getFile(),
+                Privatlakare.class);
+        Privatlakare p3 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test3.json").getFile(),
+                Privatlakare.class);
         list.add(p1);
         list.add(p2);
         list.add(p3);
@@ -61,7 +82,7 @@ public class CleanupServiceImplTest {
         LocalDateTime date2 = LocalDate.parse("2014-09-30").atStartOfDay();
         when(privatlakareRepository.findNeverHadLakarBehorighetAndRegisteredBefore(date2)).thenReturn(list);
 
-        when(hospPersonService.removeFromCertifier(any(String.class),any(String.class),any(String.class))).thenReturn(true);
+        when(hospPersonService.removeFromCertifier(any(String.class), any(String.class), any(String.class))).thenReturn(true);
 
         cleanupService.scheduledCleanupPrivatlakare();
 
@@ -79,9 +100,12 @@ public class CleanupServiceImplTest {
         when(dateHelperService.now()).thenReturn(date);
 
         ArrayList<Privatlakare> list = new ArrayList<>();
-        Privatlakare p1 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test1.json").getFile(), Privatlakare.class);
-        Privatlakare p2 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test2.json").getFile(), Privatlakare.class);
-        Privatlakare p3 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test3.json").getFile(), Privatlakare.class);
+        Privatlakare p1 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test1.json").getFile(),
+                Privatlakare.class);
+        Privatlakare p2 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test2.json").getFile(),
+                Privatlakare.class);
+        Privatlakare p3 = new CustomObjectMapper().readValue(new ClassPathResource("CleanupServiceImplTest/test3.json").getFile(),
+                Privatlakare.class);
         list.add(p1);
         list.add(p2);
         list.add(p3);
@@ -91,7 +115,8 @@ public class CleanupServiceImplTest {
 
         when(hospPersonService.removeFromCertifier(any(String.class), any(String.class), any(String.class))).thenReturn(true);
         // Test failed with exception
-        when(hospPersonService.removeFromCertifier(eq("personId1"), eq("SE165565594230-WEBCERT00001"), any(String.class))).thenThrow(new WebServiceException());
+        when(hospPersonService.removeFromCertifier(eq("personId1"), eq("SE165565594230-WEBCERT00001"), any(String.class)))
+                .thenThrow(new WebServiceException());
         // Test failed with error response
         when(hospPersonService.removeFromCertifier(eq("personId2"), eq("SE165565594230-WEBCERT00002"), any(String.class))).thenReturn(false);
 

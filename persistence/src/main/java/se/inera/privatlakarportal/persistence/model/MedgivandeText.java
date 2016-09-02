@@ -47,7 +47,7 @@ public class MedgivandeText {
     private LocalDateTime datum;
 
     @JsonManagedReference(value = "medgivandeText")
-    @OneToMany(mappedBy="medgivandeText", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "medgivandeText", cascade = CascadeType.ALL)
     private Set<Medgivande> medgivande;
 
     @Override

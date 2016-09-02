@@ -30,11 +30,11 @@ import se.inera.privatlakarportal.common.service.stub.MailServiceStub;
 import se.inera.privatlakarportal.common.service.stub.MailStubStore;
 
 @Configuration
-@Profile({"dev", "mail-stub"})
+@Profile({ "dev", "mail-stub" })
 @PropertySource("classpath:default.properties")
 public class MailServiceStubConfig {
 
-    @Bean 
+    @Bean
     public MailService mailService() {
         return new MailServiceStub();
     }

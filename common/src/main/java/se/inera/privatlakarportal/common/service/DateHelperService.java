@@ -24,5 +24,5 @@ import java.time.LocalDateTime;
  * Created by pebe on 2015-09-10.
  */
 public interface DateHelperService {
-    public LocalDateTime now();
+    LocalDateTime now();
 }

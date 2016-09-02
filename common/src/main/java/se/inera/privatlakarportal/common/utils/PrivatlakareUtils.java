@@ -24,7 +24,7 @@ import se.inera.privatlakarportal.persistence.model.Privatlakare;
 /**
  * Created by pebe on 2015-09-07.
  */
-public class PrivatlakareUtils {
+public final class PrivatlakareUtils {
 
     private static final String LAKARE = "Läkare";
 

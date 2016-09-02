@@ -45,7 +45,7 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 @Api(value = "/test", description = "Rest-api för test-tjänster.", produces = MediaType.APPLICATION_JSON, tags = "testability, test")
 @RestController
 @RequestMapping("/api/test")
-@Profile({"dev", "testability-api"})
+@Profile({ "dev", "testability-api" })
 public class TestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
@@ -56,7 +56,7 @@ public class TestController {
     @Autowired
     private PrivatlakareRepository privatlakareRepository;
 
-    @Autowired(required=false)
+    @Autowired(required = false)
     private HsaServiceStub hsaServiceStub;
 
     @Autowired
@@ -73,14 +73,14 @@ public class TestController {
     }
 
     @RequestMapping(value = "/registration/{id}", method = RequestMethod.GET)
-    public @ResponseBody
-    Privatlakare getPrivatlakare(@PathVariable("id") String personId) {
+    @ResponseBody
+    public Privatlakare getPrivatlakare(@PathVariable("id") String personId) {
         return privatlakareRepository.findByPersonId(personId);
     }
 
     @RequestMapping(value = "/registration/remove/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody
-    boolean removePrivatlakare(@PathVariable("id") String personId) {
+    @ResponseBody
+    public boolean removePrivatlakare(@PathVariable("id") String personId) {
         return registerService.removePrivatlakare(personId);
     }
 
@@ -88,8 +88,8 @@ public class TestController {
     public boolean setNamePrivatlakare(@PathVariable("id") String personId, @RequestBody String name) {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(personId);
         if (privatlakare == null) {
-           LOG.error("Unable to find privatlakare with personId '{}'", personId);
-           return false;
+            LOG.error("Unable to find privatlakare with personId '{}'", personId);
+            return false;
         }
         privatlakare.setFullstandigtNamn(name);
         privatlakareRepository.save(privatlakare);

@@ -45,7 +45,7 @@ public class MailServiceStub implements MailService {
     @Value("{mail.admin}")
     private String adminEpost;
 
-    @Autowired(required=false)
+    @Autowired(required = false)
     private MailStubStore mailStore;
 
     @Override
@@ -85,7 +85,6 @@ public class MailServiceStub implements MailService {
             htmlString = NOT_AUTHORIZED_BODY;
             break;
         case NOT_STARTED:
-            // TODO: What happens here?
             break;
         case WAITING_FOR_HOSP:
             htmlString = WAITING_FOR_HOSP_BODY;

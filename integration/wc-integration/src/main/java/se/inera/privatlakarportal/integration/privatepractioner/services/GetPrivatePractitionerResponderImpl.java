@@ -40,15 +40,13 @@ public class GetPrivatePractitionerResponderImpl implements GetPrivatePractition
 
         if (hasHsaArgument && hasPersonArgument) {
             throw new IllegalArgumentException("Endast ett av argumenten hsaIdentityNumber och personalIdentityNumber får vara satt.");
-        }
-        else if (hasHsaArgument) {
+        } else if (hasHsaArgument) {
             return integrationService.getPrivatePractitionerByHsaId(getPrivatePractitionerType.getPersonHsaId());
-        }
-        else if (hasPersonArgument) {
+        } else if (hasPersonArgument) {
             return integrationService.getPrivatePractitionerByPersonId(getPrivatePractitionerType.getPersonalIdentityNumber());
-        }
-        else {
-            throw new IllegalArgumentException("Inget av argumenten hsaIdentityNumber och personalIdentityNumber är satt. Ett av dem måste ha ett värde.");
+        } else {
+            throw new IllegalArgumentException(
+                    "Inget av argumenten hsaIdentityNumber och personalIdentityNumber är satt. Ett av dem måste ha ett värde.");
         }
     }
 }

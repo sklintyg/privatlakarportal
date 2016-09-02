@@ -37,13 +37,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class DbChecker {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(DbChecker.class);
 
     private DataSource dataSource;
-    
+
     private String script;
-    
+
     public DbChecker(DataSource dataSource, String script) {
         super();
         this.dataSource = dataSource;
@@ -64,7 +64,8 @@ public class DbChecker {
                 for (ChangeSet changeSet : changeSets) {
                     errors.append('>').append(changeSet.toString()).append('\n');
                 }
-                throw new Error("Database version mismatch. Check liquibase status. Errors:\n" + errors.toString() + database.getDatabaseProductName() + ", " + database);
+                throw new Error("Database version mismatch. Check liquibase status. Errors:\n" + errors.toString() + database.getDatabaseProductName()
+                        + ", " + database);
             }
         } catch (liquibase.exception.LiquibaseException e) {
             throw new Error("Database not ok, aborting startup.", e);

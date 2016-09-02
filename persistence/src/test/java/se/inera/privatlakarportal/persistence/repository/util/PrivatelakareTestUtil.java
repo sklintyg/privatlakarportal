@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ *
+ * This file is part of privatlakarportal (https://github.com/sklintyg/privatlakarportal).
+ *
+ * privatlakarportal is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * privatlakarportal is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.privatlakarportal.persistence.repository.util;
 
 import java.time.LocalDate;
@@ -5,22 +23,28 @@ import java.util.*;
 
 import se.inera.privatlakarportal.persistence.model.*;
 
-public class PrivatelakareTestUtil {
+public final class PrivatelakareTestUtil {
 
-    public static Privatlakare buildPrivatlakare(String personId, int hsaCounter, boolean isLakare) {
-        return buildPrivatlakare(
-            personId,
-            "SE000000000000-WEBCERT0000"+hsaCounter,
-            "Tolvan Tolvansson",
-            "test@example.com",
-            "4444444444",
-            "postadress",
-            "postnummer",
-            "postort",
-            "2015-08-01",
-            isLakare);
+    private PrivatelakareTestUtil() {
     }
 
+    // CHECKSTYLE:OFF ParameterNumber
+    public static Privatlakare buildPrivatlakare(String personId, int hsaCounter, boolean isLakare) {
+        return buildPrivatlakare(
+                personId,
+                "SE000000000000-WEBCERT0000" + hsaCounter,
+                "Tolvan Tolvansson",
+                "test@example.com",
+                "4444444444",
+                "postadress",
+                "postnummer",
+                "postort",
+                "2015-08-01",
+                isLakare);
+    }
+    // CHECKSTYLE:ON ParameterNumber
+
+    // CHECKSTYLE:OFF ParameterNumber
     public static Privatlakare buildPrivatlakare(
             String personId, String hsaId, String fullstandigtNamn, String epost, String telefonnummer,
             String postadress, String postnummer, String postort, String registreringsdatum, boolean isLakare) {
@@ -87,7 +111,6 @@ public class PrivatelakareTestUtil {
 
         return privatlakare;
     }
-
-
+    // CHECKSTYLE:ON ParameterNumber
 
 }

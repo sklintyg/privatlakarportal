@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ *
+ * This file is part of privatlakarportal (https://github.com/sklintyg/privatlakarportal).
+ *
+ * privatlakarportal is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * privatlakarportal is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.privatlakarportal.integration.privatepractioner.services;
 
 import static org.junit.Assert.assertEquals;
@@ -71,13 +89,13 @@ public class IntegrationServiceTest {
         Resource res = new ClassPathResource("IntegrationServiceTest/test_Privatlakare.json");
         Privatlakare privatlakare = objectMapper.readValue(res.getInputStream(), Privatlakare.class);
 
-        Privatlakare privatlakare_ej_godkand = objectMapper.readValue(res.getInputStream(), Privatlakare.class);
-        privatlakare_ej_godkand.setGodkandAnvandare(false);
+        Privatlakare privatlakareEjGodkand = objectMapper.readValue(res.getInputStream(), Privatlakare.class);
+        privatlakareEjGodkand.setGodkandAnvandare(false);
 
-        Privatlakare privatlakare_ej_lakare = objectMapper.readValue(res.getInputStream(), Privatlakare.class);
+        Privatlakare privatlakareEjLakare = objectMapper.readValue(res.getInputStream(), Privatlakare.class);
         Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();
         legitimeradYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare, "Dietist", "DT"));
-        privatlakare_ej_lakare.setLegitimeradeYrkesgrupper(legitimeradYrkesgrupper);
+        privatlakareEjLakare.setLegitimeradeYrkesgrupper(legitimeradYrkesgrupper);
 
         res = new ClassPathResource("IntegrationServiceTest/test_HosPerson.json");
         verifyHosPerson = objectMapper.readValue(res.getInputStream(), HoSPersonType.class);
@@ -86,10 +104,10 @@ public class IntegrationServiceTest {
         when(privatlakareRepository.findByPersonId(GODKAND_PERSON_ID)).thenReturn(privatlakare);
         when(privatlakareRepository.findByHsaId(FINNS_EJ_HSA_ID)).thenReturn(null);
         when(privatlakareRepository.findByPersonId(FINNS_EJ_PERSON_ID)).thenReturn(null);
-        when(privatlakareRepository.findByHsaId(EJ_GODKAND_HSA_ID)).thenReturn(privatlakare_ej_godkand);
-        when(privatlakareRepository.findByPersonId(EJ_GODKAND_PERSON_ID)).thenReturn(privatlakare_ej_godkand);
-        when(privatlakareRepository.findByHsaId(EJ_LAKARE_HSA_ID)).thenReturn(privatlakare_ej_lakare);
-        when(privatlakareRepository.findByPersonId(EJ_LAKARE_PERSON_ID)).thenReturn(privatlakare_ej_lakare);
+        when(privatlakareRepository.findByHsaId(EJ_GODKAND_HSA_ID)).thenReturn(privatlakareEjGodkand);
+        when(privatlakareRepository.findByPersonId(EJ_GODKAND_PERSON_ID)).thenReturn(privatlakareEjGodkand);
+        when(privatlakareRepository.findByHsaId(EJ_LAKARE_HSA_ID)).thenReturn(privatlakareEjLakare);
+        when(privatlakareRepository.findByPersonId(EJ_LAKARE_PERSON_ID)).thenReturn(privatlakareEjLakare);
 
         when(dateHelperService.now()).thenReturn(LocalDate.parse("2015-09-09").atStartOfDay());
     }
@@ -185,7 +203,7 @@ public class IntegrationServiceTest {
     }
 
     @Test
-    public void testValidatePrivatePractitionerByPersonIdEjGodkänd() {
+    public void testValidatePrivatePractitionerByPersonIdEjGodkand() {
         ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(EJ_GODKAND_PERSON_ID);
         assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
     }

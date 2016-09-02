@@ -125,7 +125,8 @@ public class RegisterServiceImpl implements RegisterService {
         registration.setAdress(privatlakare.getPostadress());
         registration.setAgarForm(privatlakare.getAgarform());
         registration.setArbetsplatskod(privatlakare.getArbetsplatsKod());
-        // Detta fält plus några till längre ner kan ha flera värden enligt informationsmodellen men implementeras som bara ett värde.
+        // Detta fält plus några till längre ner kan ha flera värden enligt informationsmodellen men implementeras som
+        // bara ett värde.
         if (privatlakare.getBefattningar() != null && !privatlakare.getBefattningar().isEmpty()) {
             registration.setBefattning(privatlakare.getBefattningar().iterator().next().getKod());
         }
@@ -145,7 +146,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         HospInformation hospInformation = new HospInformation();
         if (privatlakare.getLegitimeradeYrkesgrupper() != null) {
-            List<String> legitimeradeYrkesgrupper = new ArrayList<String>();
+            List<String> legitimeradeYrkesgrupper = new ArrayList<>();
             for (LegitimeradYrkesgrupp legitimeradYrkesgrupp : privatlakare.getLegitimeradeYrkesgrupper()) {
                 legitimeradeYrkesgrupper.add(legitimeradYrkesgrupp.getNamn());
             }
@@ -155,7 +156,7 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         if (privatlakare.getSpecialiteter() != null) {
-            List<String> specialiteter = new ArrayList<String>();
+            List<String> specialiteter = new ArrayList<>();
             for (Specialitet specialitet : privatlakare.getSpecialiteter()) {
                 specialiteter.add(specialitet.getNamn());
             }
@@ -232,8 +233,8 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         // Determine if an administrator needs to be notified about HSA ID's running out
-        if (privatlakareidRepository.findLatestGeneratedHsaId() != 0 && 
-                privatlakareidRepository.findLatestGeneratedHsaId() % hsaIdNotificationInterval == 0) {
+        if (privatlakareidRepository.findLatestGeneratedHsaId() != 0
+                && privatlakareidRepository.findLatestGeneratedHsaId() % hsaIdNotificationInterval == 0) {
             mailService.sendHsaGenerationStatusEmail();
         }
         mailService.sendRegistrationStatusEmail(status, privatlakare);
@@ -263,7 +264,7 @@ public class RegisterServiceImpl implements RegisterService {
         convertRegistrationToPrivatlakare(registration, privatlakare);
 
         privatlakareRepository.save(privatlakare);
-        
+
         monitoringService.logUserDetailsChanged(privatlakare.getPersonId());
 
         return SaveRegistrationResponseStatus.OK;
@@ -293,8 +294,9 @@ public class RegisterServiceImpl implements RegisterService {
     /* Private helpers */
 
     /**
-     *  Generate next hsaId,
-     *  Format: "SE" + ineras orgnr (inkl "sekelsiffror", alltså 165565594230) + "-" + "WEBCERT" + femsiffrigt löpnr.
+     * Generate next hsaId,
+     * Format: "SE" + ineras orgnr (inkl "sekelsiffror", alltså 165565594230) + "-" + "WEBCERT" + femsiffrigt löpnr.
+     *
      * @param privatlakareId
      * @return
      */
@@ -332,7 +334,9 @@ public class RegisterServiceImpl implements RegisterService {
         privatlakare.setTelefonnummer(registration.getTelefonnummer());
         privatlakare.setVardgivareNamn(registration.getVerksamhetensNamn());
 
-        /* Effectively change the oneToMany cardinality of the following to act as oneToOne, see javadoc for more info*/
+        /*
+         * Effectively change the oneToMany cardinality of the following to act as oneToOne, see javadoc for more info
+         */
         privatlakare.updateBefattningar(registration.getBefattning());
         privatlakare.updateVardformer(registration.getVardform());
         privatlakare.updateVerksamhetstyper(registration.getVerksamhetstyp());

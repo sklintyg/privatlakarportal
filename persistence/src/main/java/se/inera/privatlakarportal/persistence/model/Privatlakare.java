@@ -137,7 +137,7 @@ public class Privatlakare {
     private LocalDateTime senasteHospUppdatering;
 
     @JsonManagedReference
-    @OneToMany(mappedBy="privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Medgivande> medgivande;
 
     @Column(name = "REGISTRERINGSDATUM", nullable = false)
@@ -359,8 +359,9 @@ public class Privatlakare {
     }
 
     /**
-     * Update Befattningar with a new Befattningskod if the Set exists,
-     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
+     * Update Befattningar with a new Befattningskod if the Set exists.
+     * Effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
+     *
      * @param kod
      */
     public void updateBefattningar(String kod) {
@@ -397,8 +398,9 @@ public class Privatlakare {
     }
 
     /**
-     * Update Verksamhetstyper with a new Verksamhetstyp-kod if the Set exists,
-     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
+     * Update Verksamhetstyper with a new Verksamhetstyp-kod if the Set exists.
+     * Effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
+     *
      * @param kod
      */
     public void updateVerksamhetstyper(String kod) {
@@ -419,8 +421,9 @@ public class Privatlakare {
     }
 
     /**
-     * Update Vardformer with a new Vardform-kod if the Set exists,
-     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
+     * Update Vardformer with a new Vardform-kod if the Set exists.
+     * Effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
+     *
      * @param kod
      */
     public void updateVardformer(String kod) {

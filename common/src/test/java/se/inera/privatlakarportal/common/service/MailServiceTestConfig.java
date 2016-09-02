@@ -21,11 +21,7 @@ package se.inera.privatlakarportal.common.service;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -35,7 +31,7 @@ import se.inera.privatlakarportal.common.service.stub.MailStore;
 
 @Configuration
 @Profile("dev")
-@PropertySource({"classpath:MailServiceTest/test.properties"})
+@PropertySource({ "classpath:MailServiceTest/test.properties" })
 @EnableAspectJAutoProxy
 public class MailServiceTestConfig {
 
@@ -71,10 +67,10 @@ public class MailServiceTestConfig {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-       return new PropertySourcesPlaceholderConfigurer();
+        return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean 
+    @Bean
     public MailService mailService() {
         return new MailServiceImpl();
     }
@@ -96,11 +92,11 @@ public class MailServiceTestConfig {
         }
 
         Properties javaMailProperties = new Properties();
-        javaMailProperties.put("mail."+protocol+".port", intPort);
-        javaMailProperties.put("mail."+protocol+".auth", smtpsAuth);
-        javaMailProperties.put("mail."+protocol+".starttls.enable", smtpsStarttlsEnable);
-        javaMailProperties.put("mail."+protocol+".debug", smtpsDebug);
-        javaMailProperties.put("mail."+protocol+".socketFactory.fallback", true);
+        javaMailProperties.put("mail." + protocol + ".port", intPort);
+        javaMailProperties.put("mail." + protocol + ".auth", smtpsAuth);
+        javaMailProperties.put("mail." + protocol + ".starttls.enable", smtpsStarttlsEnable);
+        javaMailProperties.put("mail." + protocol + ".debug", smtpsDebug);
+        javaMailProperties.put("mail." + protocol + ".socketFactory.fallback", true);
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;
     }
@@ -113,6 +109,6 @@ public class MailServiceTestConfig {
     @Bean
     MailStore mailstore() {
         return new MailStore();
-        
+
     }
 }

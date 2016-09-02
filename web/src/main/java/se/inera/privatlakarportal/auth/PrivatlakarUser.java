@@ -23,7 +23,7 @@ import java.io.Serializable;
 /**
  * Created by pebe on 2015-08-11.
  */
-public class PrivatlakarUser implements Serializable{
+public class PrivatlakarUser implements Serializable {
 
     private static final long serialVersionUID = 8711015219408194075L;
 

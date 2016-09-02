@@ -36,6 +36,7 @@ import se.inera.privatlakarportal.persistence.liquibase.DbChecker;
 @EnableJpaRepositories(basePackages = "se.inera.privatlakarportal.persistence")
 public class PersistenceConfigJndi extends PersistenceConfig {
 
+    // CHECKSTYLE:OFF EmptyBlock
     @Bean(destroyMethod = "close")
     DataSource jndiDataSource() {
         DataSource dataSource = null;
@@ -43,10 +44,10 @@ public class PersistenceConfigJndi extends PersistenceConfig {
         try {
             dataSource = (DataSource) jndi.lookup("java:comp/env/jdbc/privatlakarportal");
         } catch (NamingException e) {
-
         }
         return dataSource;
     }
+    // CHECKSTYLE:ON EmptyBlock
 
     @Bean(name = "dbUpdate")
     DbChecker checkDb(DataSource dataSource) {

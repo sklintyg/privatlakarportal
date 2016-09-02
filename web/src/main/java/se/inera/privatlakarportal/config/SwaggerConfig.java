@@ -56,9 +56,9 @@ public class SwaggerConfig {
                 .version("1.0")
                 .build();
     }
-    
-    private Set<String> buildMediaTypes(){
-        Set<String> mediaTypesSet = new HashSet<String>();
+
+    private Set<String> buildMediaTypes() {
+        Set<String> mediaTypesSet = new HashSet<>();
         mediaTypesSet.add("application/json");
         return mediaTypesSet;
     }

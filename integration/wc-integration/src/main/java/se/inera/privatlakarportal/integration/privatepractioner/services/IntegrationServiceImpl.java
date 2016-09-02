@@ -63,8 +63,7 @@ public class IntegrationServiceImpl implements IntegrationService {
             response.setHoSPerson(null);
             response.setResultCode(ResultCodeEnum.ERROR);
             response.setResultText("No private practitioner with hsa id: " + personHsaId + " exists.");
-        }
-        else {
+        } else {
             response.setResultCode(ResultCodeEnum.OK);
             checkFirstLogin(privatlakare);
             convertPrivatlakareToResponse(privatlakare, response);
@@ -85,8 +84,7 @@ public class IntegrationServiceImpl implements IntegrationService {
             response.setHoSPerson(null);
             response.setResultCode(ResultCodeEnum.ERROR);
             response.setResultText("No private practitioner with personal identity number: " + personalIdentityNumber + " exists.");
-        }
-        else {
+        } else {
             response.setResultCode(ResultCodeEnum.OK);
             checkFirstLogin(privatlakare);
             convertPrivatlakareToResponse(privatlakare, response);
@@ -140,7 +138,8 @@ public class IntegrationServiceImpl implements IntegrationService {
                 checkFirstLogin(privatlakare);
             } else {
                 response.setResultCode(ResultCodeEnum.ERROR);
-                response.setResultText("Private practitioner with personal identity number: " + personalIdentityNumber + " is not authorized to use webcert.");
+                response.setResultText(
+                        "Private practitioner with personal identity number: " + personalIdentityNumber + " is not authorized to use webcert.");
             }
         }
 
@@ -292,6 +291,5 @@ public class IntegrationServiceImpl implements IntegrationService {
 
         response.setHoSPerson(hoSPersonType);
     }
-
 
 }

@@ -33,7 +33,7 @@ public class HospUppdatering {
 
     @SuppressWarnings("unused")
     @Id
-    @Column(name="ID")
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "SENASTE_HOSP_UPPDATERING", nullable = true)
