@@ -39,7 +39,7 @@ import se.inera.privatlakarportal.pu.config.PUConfiguration;
 public class ApplicationInitializer implements WebApplicationInitializer {
 
     @Override
-    public void onStartup(javax.servlet.ServletContext servletContext) throws ServletException {
+    public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(ApplicationConfig.class, PersistenceConfigJndi.class, PersistenceConfigDev.class, MailServiceConfig.class,
                 HsaConfiguration.class, PUConfiguration.class, WcIntegrationConfiguration.class, ServiceConfig.class);
