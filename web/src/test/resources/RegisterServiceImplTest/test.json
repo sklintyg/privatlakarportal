@@ -40,13 +40,13 @@
     ],
     "medgivande": [
         {
-            "godkandDatum": "2015-09-09",
+            "godkandDatum": "2015-09-09T00:00:00.000",
             "medgivandeText": {
                 "version": 1,
-                "datum": "2015-08-01",
+                "datum": "2015-08-01T00:00:00.000",
                 "medgivandeText": "Medgivandetext"
             }
         }
     ],
-    "registreringsdatum": "2015-09-09"
+    "registreringsdatum": "2015-09-09T00:00:00.000"
 }
