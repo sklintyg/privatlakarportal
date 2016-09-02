@@ -18,8 +18,10 @@
  */
 package se.inera.privatlakarportal.hsa.adapter;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 
 /**
  * Adapter for converting XML Schema types to Java dates and vice versa.
@@ -28,74 +30,52 @@ import org.joda.time.LocalDateTime;
  */
 public final class LocalDateAdapter {
 
-    private static final String ISO_DATE_PATTERN = "YYYY-MM-dd";
-    private static final String ISO_DATE_TIME_PATTERN = "YYYY-MM-dd'T'HH:mm:ss";
-
-    private static final int DATE_END_INDEX = 10;
-    private static final String TIMEZONE_PATTERN = "\\+.*";
+    private static final ZoneId TIMEZONE = ZoneId.of("Europe/Stockholm");
+    private static final String ISO_DATE_PATTERN = "yyyy-MM-dd";
+    private static final String ISO_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
+    private static final DateTimeFormatter ISO_DATETIME_FORMATTER = new DateTimeFormatterBuilder().appendPattern(ISO_DATE_TIME_PATTERN)
+            .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true).toFormatter();
+    private static final String XSD_DATE_TIMEZONE_REGEXP = "[0-9]{4}-[0-9]{2}-[0-9]{2}([+-].*|Z)";
+    private static final String XSD_DATETIME_TIMEZONE_REGEXP = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.?[0-9]*([+-].*|Z)";
 
     private LocalDateAdapter() {
     }
 
     /**
-     * Converts an xs:date to a Joda Time LocalDate.
+     * Converts an xs:date to a java.time.LocalDate.
      */
     public static LocalDate parseDate(String dateString) {
-        if (dateString.length() > DATE_END_INDEX) {
-            return new LocalDate(dateString.substring(0, DATE_END_INDEX));
+        if (dateString.matches(XSD_DATE_TIMEZONE_REGEXP) || dateString.matches(XSD_DATETIME_TIMEZONE_REGEXP)) {
+            return LocalDate.from(javax.xml.bind.DatatypeConverter.parseDate(dateString).toInstant().atZone(TIMEZONE));
         } else {
-            return new LocalDate(dateString);
+            return LocalDate.parse(dateString.substring(0, ISO_DATE_PATTERN.length()));
         }
     }
 
     /**
-     * Converts an xs:datetime to a Joda Time LocalDateTime.
+     * Converts an xs:datetime to a LocalDateTime.
      */
     public static LocalDateTime parseDateTime(String dateString) {
-
-        // crop timezone information ('+...')
-        return new LocalDateTime(dateString.replaceAll(TIMEZONE_PATTERN, ""));
+        if (dateString.matches(XSD_DATETIME_TIMEZONE_REGEXP) || dateString.matches(XSD_DATE_TIMEZONE_REGEXP)) {
+            return LocalDateTime.from(javax.xml.bind.DatatypeConverter.parseDateTime(dateString).toInstant().atZone(TIMEZONE));
+        } else if (dateString.contains("T")) {
+            return LocalDateTime.parse(dateString, ISO_DATETIME_FORMATTER);
+        } else {
+            return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(ISO_DATE_PATTERN)).atStartOfDay();
+        }
     }
 
     /**
-     * Converts an intyg:common-model:1:date to a Joda Time LocalDate.
-     */
-    public static LocalDate parseIsoDate(String dateString) {
-        return LocalDate.parse(dateString);
-    }
-
-    /**
-     * Converts an intyg:common-model:1:dateTime to a Joda Time LocalDateTime.
-     */
-    public static LocalDateTime parseIsoDateTime(String dateString) {
-        return LocalDateTime.parse(dateString);
-    }
-
-    /**
-     * Converts a Joda Time LocalDateTime to an xs:datetime.
+     * Print a DateTime.
      */
     public static String printDateTime(LocalDateTime dateTime) {
-        return dateTime.toString();
+        return dateTime.format(DateTimeFormatter.ofPattern(ISO_DATE_TIME_PATTERN));
     }
 
     /**
-     * Converts a Joda Time LocalDate to an xs:date.
+     * Print a Date.
      */
     public static String printDate(LocalDate date) {
-        return date.toString();
-    }
-
-    /**
-     * Converts a Joda Time LocalDateTime to an intyg:common-model:1:date.
-     */
-    public static String printIsoDateTime(LocalDateTime dateTime) {
-        return dateTime.toString(ISO_DATE_TIME_PATTERN);
-    }
-
-    /**
-     * Converts a Joda Time LocalDate to an intyg:common-model:1:dateTime.
-     */
-    public static String printIsoDate(LocalDate date) {
-        return date.toString(ISO_DATE_PATTERN);
+        return date.format(DateTimeFormatter.ofPattern(ISO_DATE_PATTERN));
     }
 }

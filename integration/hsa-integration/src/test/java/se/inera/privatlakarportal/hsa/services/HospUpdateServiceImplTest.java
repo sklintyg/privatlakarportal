@@ -9,33 +9,24 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import javax.xml.ws.WebServiceException;
 
-import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
-import se.inera.ifv.hsawsresponder.v3.SpecialityCodesType;
-import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
-import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
+import se.inera.ifv.hsawsresponder.v3.*;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.hsa.monitoring.MonitoringLogService;
 import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
-import se.inera.privatlakarportal.persistence.model.HospUppdatering;
-import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.model.Specialitet;
+import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
@@ -84,9 +75,9 @@ public class HospUpdateServiceImplTest {
     public void testUpdateHospInformation() {
 
         HospUppdatering hospUppdatering = new HospUppdatering();
-        hospUppdatering.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+        hospUppdatering.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
         when(hospUppdateringRepository.findSingle()).thenReturn(hospUppdatering);
-        LocalDateTime hospLastUpdate = LocalDateTime.parse("2015-09-05");
+        LocalDateTime hospLastUpdate = LocalDate.parse("2015-09-05").atStartOfDay();
         when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
         Privatlakare privatlakare1 = new Privatlakare();
         privatlakare1.setPersonId(PERSON_ID);
@@ -97,7 +88,7 @@ public class HospUpdateServiceImplTest {
         Privatlakare privatlakare3 = new Privatlakare();
         privatlakare3.setPersonId(PERSON_ID3);
         privatlakare3.setGodkandAnvandare(true);
-        ArrayList list = new ArrayList();
+        ArrayList<Privatlakare> list = new ArrayList<>();
         list.add(privatlakare1);
         list.add(privatlakare2);
         list.add(privatlakare3);
@@ -137,14 +128,14 @@ public class HospUpdateServiceImplTest {
     @Test
     public void testUpdateHospInformationEjGodkandAnvandare() {
         HospUppdatering hospUppdatering = new HospUppdatering();
-        hospUppdatering.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+        hospUppdatering.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
         when(hospUppdateringRepository.findSingle()).thenReturn(hospUppdatering);
-        LocalDateTime hospLastUpdate = LocalDateTime.parse("2015-09-05");
+        LocalDateTime hospLastUpdate = LocalDate.parse("2015-09-05").atStartOfDay();
         when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
         Privatlakare privatlakare1 = new Privatlakare();
         privatlakare1.setPersonId(PERSON_ID);
         privatlakare1.setGodkandAnvandare(false);
-        ArrayList list = new ArrayList();
+        ArrayList<Privatlakare> list = new ArrayList<>();
         list.add(privatlakare1);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
@@ -279,9 +270,9 @@ public class HospUpdateServiceImplTest {
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
-        privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+        privatlakare.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
 
-        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDateTime.parse("2015-09-01"));
+        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDate.parse("2015-09-01").atStartOfDay());
 
         hospUpdateService.checkForUpdatedHospInformation(privatlakare);
 
@@ -295,9 +286,9 @@ public class HospUpdateServiceImplTest {
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
-        privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+        privatlakare.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
 
-        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDateTime.parse("2015-09-05"));
+        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDate.parse("2015-09-05").atStartOfDay());
 
         GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
         hospPersonResponse.getTitleCodes().getTitleCode().add("DT");
@@ -313,7 +304,7 @@ public class HospUpdateServiceImplTest {
         verifyNoMoreInteractions(hospPersonService);
         verify(privatlakareRepository).save(privatlakare);
 
-        assertEquals(LocalDateTime.parse("2015-09-05"), privatlakare.getSenasteHospUppdatering());
+        assertEquals(LocalDate.parse("2015-09-05").atStartOfDay(), privatlakare.getSenasteHospUppdatering());
         assertEquals(1, privatlakare.getLegitimeradeYrkesgrupper().size());
         LegitimeradYrkesgrupp l = privatlakare.getLegitimeradeYrkesgrupper().iterator().next();
         assertEquals("DT", l.getKod());
@@ -329,12 +320,12 @@ public class HospUpdateServiceImplTest {
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
-        privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+        privatlakare.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
 
         when(hospPersonService.getHospLastUpdate()).thenThrow(new WebServiceException("Could not send message"));
         hospUpdateService.checkForUpdatedHospInformation(privatlakare);
 
-        assertEquals(LocalDateTime.parse("2015-09-01"), privatlakare.getSenasteHospUppdatering());
+        assertEquals(LocalDate.parse("2015-09-01").atStartOfDay(), privatlakare.getSenasteHospUppdatering());
     }
 
     @Test
@@ -342,15 +333,15 @@ public class HospUpdateServiceImplTest {
         Privatlakare privatlakare = new Privatlakare();
         privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
-        privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+        privatlakare.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
 
-        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDateTime.parse("2015-09-05"));
+        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDate.parse("2015-09-05").atStartOfDay());
 
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
 
         hospUpdateService.checkForUpdatedHospInformation(privatlakare);
 
-        assertEquals(LocalDateTime.parse("2015-09-01"), privatlakare.getSenasteHospUppdatering());
+        assertEquals(LocalDate.parse("2015-09-01").atStartOfDay(), privatlakare.getSenasteHospUppdatering());
     }
 
     @Test
@@ -366,9 +357,9 @@ public class HospUpdateServiceImplTest {
         List<Specialitet> specialiteter = new ArrayList<>();
         specialiteter.add(new Specialitet(privatlakare, "Specialitet", "12"));
         privatlakare.setSpecialiteter(specialiteter);
-        privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+        privatlakare.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
 
-        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDateTime.parse("2015-09-05"));
+        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDate.parse("2015-09-05").atStartOfDay());
 
         // Läkarbehörigheten är borttagen ur HSA
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
@@ -380,7 +371,7 @@ public class HospUpdateServiceImplTest {
         verifyNoMoreInteractions(hospPersonService);
         verify(privatlakareRepository).save(privatlakare);
 
-        assertEquals(LocalDateTime.parse("2015-09-05"), privatlakare.getSenasteHospUppdatering());
+        assertEquals(LocalDate.parse("2015-09-05").atStartOfDay(), privatlakare.getSenasteHospUppdatering());
         assertEquals(0, privatlakare.getLegitimeradeYrkesgrupper().size());
         assertEquals(0, privatlakare.getSpecialiteter().size());
         assertEquals(null, privatlakare.getForskrivarKod());
@@ -399,9 +390,9 @@ public class HospUpdateServiceImplTest {
         List<Specialitet> specialiteter = new ArrayList<>();
         specialiteter.add(new Specialitet(privatlakare, "Specialitet", "12"));
         privatlakare.setSpecialiteter(specialiteter);
-        privatlakare.setSenasteHospUppdatering(LocalDateTime.parse("2015-09-01"));
+        privatlakare.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
 
-        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDateTime.parse("2015-09-05"));
+        when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDate.parse("2015-09-05").atStartOfDay());
 
         // Läkarbehörigheten är borttagen ur HSA
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException());
@@ -415,7 +406,7 @@ public class HospUpdateServiceImplTest {
         verifyNoMoreInteractions(hospUppdateringRepository);
         verifyNoMoreInteractions(privatlakareRepository);
 
-        assertEquals(LocalDateTime.parse("2015-09-01"), privatlakare.getSenasteHospUppdatering());
+        assertEquals(LocalDate.parse("2015-09-01").atStartOfDay(), privatlakare.getSenasteHospUppdatering());
     }
 
     private GetHospPersonResponseType createGetHospPersonResponse() {

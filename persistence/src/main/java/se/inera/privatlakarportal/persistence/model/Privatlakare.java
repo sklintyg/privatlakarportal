@@ -18,23 +18,15 @@
  */
 package se.inera.privatlakarportal.persistence.model;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * Created by pebe on 2015-06-24.
@@ -92,11 +84,11 @@ public class Privatlakare {
     private String epost;
 
     @Column(name = "ENHET_STARTDATUM", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime enhetStartdatum;
 
     @Column(name = "ENHET_SLUTDATUM", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime enhetSlutDatum;
 
     @Column(name = "LAN", nullable = true)
@@ -112,11 +104,11 @@ public class Privatlakare {
     private String vardgivareNamn;
 
     @Column(name = "VARDGIVARE_STARTDATUM", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime vardgivareStartdatum;
 
     @Column(name = "VARDGIVARE_SLUTDATUM", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime vardgivareSlutdatum;
 
     @JsonManagedReference
@@ -141,7 +133,7 @@ public class Privatlakare {
     private Set<Vardform> vardformer;
 
     @Column(name = "SENASTE_HOSP_UPPDATERING", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime senasteHospUppdatering;
 
     @JsonManagedReference
@@ -149,7 +141,7 @@ public class Privatlakare {
     private Set<Medgivande> medgivande;
 
     @Column(name = "REGISTRERINGSDATUM", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime registreringsdatum;
 
     @Override
@@ -368,14 +360,14 @@ public class Privatlakare {
 
     /**
      * Update Befattningar with a new Befattningskod if the Set exists,
-     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior 
-     * @param kod 
+     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
+     * @param kod
      */
     public void updateBefattningar(String kod) {
         if (this.getBefattningar() != null && !this.getBefattningar().isEmpty()) {
             this.befattningar.iterator().next().setKod(kod);
         } else {
-            this.befattningar = new HashSet<Befattning>();
+            this.befattningar = new HashSet<>();
             this.befattningar.add(new Befattning(this, kod));
         }
     }
@@ -406,14 +398,14 @@ public class Privatlakare {
 
     /**
      * Update Verksamhetstyper with a new Verksamhetstyp-kod if the Set exists,
-     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior 
-     * @param kod 
+     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
+     * @param kod
      */
     public void updateVerksamhetstyper(String kod) {
         if (this.getVerksamhetstyper() != null && !this.getVerksamhetstyper().isEmpty()) {
             this.verksamhetstyper.iterator().next().setKod(kod);
         } else {
-            this.verksamhetstyper = new HashSet<Verksamhetstyp>();
+            this.verksamhetstyper = new HashSet<>();
             this.verksamhetstyper.add(new Verksamhetstyp(this, kod));
         }
     }
@@ -428,14 +420,14 @@ public class Privatlakare {
 
     /**
      * Update Vardformer with a new Vardform-kod if the Set exists,
-     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior 
-     * @param kod 
+     * effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
+     * @param kod
      */
     public void updateVardformer(String kod) {
         if (this.getVardformer() != null && !this.getVardformer().isEmpty()) {
             this.vardformer.iterator().next().setKod(kod);
         } else {
-            this.vardformer = new HashSet<Vardform>();
+            this.vardformer = new HashSet<>();
             this.vardformer.add(new Vardform(this, kod));
         }
     }

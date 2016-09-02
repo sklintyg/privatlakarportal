@@ -5,9 +5,8 @@ apply plugin: 'java'
 dependencies {
     compile project(":privatlakarportal-persistence")
 
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.1'
-    compile 'joda-time:joda-time:2.5'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.1'
     compile 'javax.mail:javax.mail-api:1.5.2'
     compile 'com.sun.mail:javax.mail:1.5.2'
 

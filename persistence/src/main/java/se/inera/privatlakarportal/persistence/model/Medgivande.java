@@ -18,11 +18,13 @@
  */
 package se.inera.privatlakarportal.persistence.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * Created by pebe on 2015-09-09.
@@ -37,7 +39,7 @@ public class Medgivande {
     private Long id;
 
     @Column(name = "GODKAND_DATUM")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime godkandDatum;
 
     @ManyToOne(fetch = FetchType.LAZY)

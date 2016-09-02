@@ -18,12 +18,14 @@
  */
 package se.inera.privatlakarportal.persistence.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.*;
-import java.util.Set;
+
+import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * Created by pebe on 2015-09-09.
@@ -41,7 +43,7 @@ public class MedgivandeText {
     private String medgivandeText;
 
     @Column(name = "DATUM", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime datum;
 
     @JsonManagedReference(value = "medgivandeText")

@@ -11,19 +11,14 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.mail.MessagingException;
 
-import org.joda.time.LocalDateTime;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -33,9 +28,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
-import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
+import se.inera.ifv.hsawsresponder.v3.*;
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -48,22 +41,10 @@ import se.inera.privatlakarportal.common.service.stub.MailStubStore;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
-import se.inera.privatlakarportal.persistence.model.Befattning;
-import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
-import se.inera.privatlakarportal.persistence.model.Medgivande;
-import se.inera.privatlakarportal.persistence.model.MedgivandeText;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
-import se.inera.privatlakarportal.persistence.model.Specialitet;
-import se.inera.privatlakarportal.persistence.model.Vardform;
-import se.inera.privatlakarportal.persistence.model.Verksamhetstyp;
-import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.privatlakarportal.persistence.model.*;
+import se.inera.privatlakarportal.persistence.repository.*;
 import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
-import se.inera.privatlakarportal.service.model.HospInformation;
-import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
-import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
+import se.inera.privatlakarportal.service.model.*;
 import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -101,7 +82,7 @@ public class RegisterServiceImplTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @Rule 
+    @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @InjectMocks
@@ -155,12 +136,12 @@ public class RegisterServiceImplTest {
         when(userService.getUser()).thenReturn(privatlakarUser);
 
         MedgivandeText medgivandeText = new MedgivandeText();
-        medgivandeText.setDatum(LocalDateTime.parse("2015-08-01"));
+        medgivandeText.setDatum(LocalDate.parse("2015-08-01").atStartOfDay());
         medgivandeText.setMedgivandeText("Medgivandetext");
         medgivandeText.setVersion(1L);
         when(medgivandeTextRepository.findOne(1L)).thenReturn(medgivandeText);
 
-        when(dateHelperService.now()).thenReturn(LocalDateTime.parse("2015-09-09"));
+        when(dateHelperService.now()).thenReturn(LocalDate.parse("2015-09-09").atStartOfDay());
 
         registerService.injectHsaInterval(50);
     }
@@ -172,6 +153,7 @@ public class RegisterServiceImplTest {
         final int SEND_HSA_MAIL_INTERVAL = 50;
 
         Mockito.doAnswer(new Answer<Object>() {
+                    @Override
                     public Object answer(InvocationOnMock invocation) {
                         mailStore.addMail("ADMIN-EMAIL", "TEST");
                         return null;
@@ -198,6 +180,7 @@ public class RegisterServiceImplTest {
         final int SEND_HSA_MAIL_INTERVAL = 49;
 
         Mockito.doAnswer(new Answer<Object>() {
+            @Override
             public Object answer(InvocationOnMock invocation) {
                 mailStore.addMail("ADMIN-EMAIL", "TEST");
                 return null;
@@ -210,7 +193,7 @@ public class RegisterServiceImplTest {
             privatlakareId.setId(i);
             when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
             when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(new Integer(i));
-            
+
             when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.AUTHORIZED);
             Registration registration = createValidRegistration();
             registerService.createRegistration(registration, 1L);

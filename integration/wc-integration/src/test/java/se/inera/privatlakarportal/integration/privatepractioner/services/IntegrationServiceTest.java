@@ -1,44 +1,45 @@
 package se.inera.privatlakarportal.integration.privatepractioner.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.joda.time.LocalDateTime;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
 import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.persistence.model.*;
+import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.HoSPersonType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.ResultCodeEnum;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 /**
  * Created by pebe on 2015-08-18.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class IntegrationServiceTest {
-
-    private static final Logger LOG = LoggerFactory.getLogger(IntegrationServiceTest.class);
 
     @Mock
     private PrivatlakareRepository privatlakareRepository;
@@ -90,7 +91,7 @@ public class IntegrationServiceTest {
         when(privatlakareRepository.findByHsaId(EJ_LAKARE_HSA_ID)).thenReturn(privatlakare_ej_lakare);
         when(privatlakareRepository.findByPersonId(EJ_LAKARE_PERSON_ID)).thenReturn(privatlakare_ej_lakare);
 
-        when(dateHelperService.now()).thenReturn(LocalDateTime.parse("2015-09-09"));
+        when(dateHelperService.now()).thenReturn(LocalDate.parse("2015-09-09").atStartOfDay());
     }
 
     @Test

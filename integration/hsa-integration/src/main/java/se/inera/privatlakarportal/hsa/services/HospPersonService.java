@@ -18,7 +18,8 @@
  */
 package se.inera.privatlakarportal.hsa.services;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
+
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 
 public interface HospPersonService {

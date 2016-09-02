@@ -18,9 +18,10 @@
  */
 package se.inera.privatlakarportal.web.integration.test;
 
+import java.time.LocalDate;
+
 import javax.ws.rs.core.MediaType;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
+import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.privatlakarportal.hsa.stub.HsaServiceStub;
 import se.inera.privatlakarportal.integration.privatepractioner.services.IntegrationService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.privatlakarportal.service.CleanupService;
 import se.inera.privatlakarportal.service.RegisterService;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
@@ -102,7 +103,7 @@ public class TestController {
             LOG.error("Unable to find privatlakare with personId '{}'", personId);
             return false;
         }
-        privatlakare.setRegistreringsdatum(LocalDateTime.parse(date));
+        privatlakare.setRegistreringsdatum(LocalDate.parse(date).atStartOfDay());
         privatlakareRepository.save(privatlakare);
         return true;
     }

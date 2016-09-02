@@ -33,11 +33,10 @@ dependencies {
     compile project(":privatlakarportal-common")
 
     compile "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
-    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.2.3"
+    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.1"
     compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
     compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
     compile "org.springframework:spring-context:${springContextVersion}"
-    compile 'joda-time:joda-time:2.5'
     compile 'ch.qos.logback:logback-classic:1.0.13'
     compile 'com.google.guava:guava:18.0'
 

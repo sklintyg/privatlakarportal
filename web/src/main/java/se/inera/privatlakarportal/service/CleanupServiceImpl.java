@@ -18,12 +18,12 @@
  */
 package se.inera.privatlakarportal.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.xml.ws.WebServiceException;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

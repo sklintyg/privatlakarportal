@@ -106,7 +106,7 @@ dependencies {
     compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
     compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecurityExtensionsVersion}"
     compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile 'org.slf4j:slf4j-api:1.7.10'
     compile 'ch.qos.logback:logback-classic:1.0.13'
@@ -120,7 +120,7 @@ dependencies {
     compile("io.springfox:springfox-swagger2:2.4.0") 
     compile('io.springfox:springfox-swagger-ui:2.4.0')
 
-    compile 'se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.0'
+    compile 'se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.1'
 
     compile 'org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}'
     compile 'org.apache.cxf:cxf-rt-transports-http:${cxfVersion}'

@@ -18,39 +18,22 @@
  */
 package se.inera.privatlakarportal.integration.privatepractioner.services;
 
+import java.time.LocalDateTime;
+
 import javax.transaction.Transactional;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import se.inera.privatlakarportal.common.integration.kodverk.Befattningar;
-import se.inera.privatlakarportal.common.integration.kodverk.Vardformer;
-import se.inera.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
+import se.inera.privatlakarportal.common.integration.kodverk.*;
 import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.persistence.model.Befattning;
-import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.model.Specialitet;
-import se.inera.privatlakarportal.persistence.model.Vardform;
-import se.inera.privatlakarportal.persistence.model.Verksamhetstyp;
+import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
-import se.riv.infrastructure.directory.privatepractitioner.types.v1.ArbetsplatsKod;
-import se.riv.infrastructure.directory.privatepractitioner.types.v1.CV;
-import se.riv.infrastructure.directory.privatepractitioner.types.v1.HsaId;
-import se.riv.infrastructure.directory.privatepractitioner.types.v1.PersonId;
-import se.riv.infrastructure.directory.privatepractitioner.v1.BefattningType;
-import se.riv.infrastructure.directory.privatepractitioner.v1.EnhetType;
-import se.riv.infrastructure.directory.privatepractitioner.v1.GeografiskIndelningType;
-import se.riv.infrastructure.directory.privatepractitioner.v1.HoSPersonType;
-import se.riv.infrastructure.directory.privatepractitioner.v1.LegitimeradYrkesgruppType;
-import se.riv.infrastructure.directory.privatepractitioner.v1.ResultCodeEnum;
-import se.riv.infrastructure.directory.privatepractitioner.v1.SpecialitetType;
-import se.riv.infrastructure.directory.privatepractitioner.v1.VardgivareType;
-import se.riv.infrastructure.directory.privatepractitioner.v1.VerksamhetType;
+import se.riv.infrastructure.directory.privatepractitioner.types.v1.*;
+import se.riv.infrastructure.directory.privatepractitioner.v1.*;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
 /**

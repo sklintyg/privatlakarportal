@@ -6,9 +6,10 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -81,8 +82,8 @@ public class PrivatlakareRepositoryTest {
         Privatlakare p3 = privatlakareRepository.save(PrivatelakareTestUtil.buildPrivatlakare("p3", 3, false));
         Privatlakare p4 = privatlakareRepository.save(PrivatelakareTestUtil.buildPrivatlakare("p4", 4, true));
         Privatlakare p5 = PrivatelakareTestUtil.buildPrivatlakare("p5", 5, false);
-        p5.setEnhetStartdatum(LocalDateTime.parse("2015-08-01"));
-        p5.setVardgivareStartdatum(LocalDateTime.parse("2015-08-01"));
+        p5.setEnhetStartdatum(LocalDate.parse("2015-08-01").atStartOfDay());
+        p5.setVardgivareStartdatum(LocalDate.parse("2015-08-01").atStartOfDay());
         privatlakareRepository.save(p5);
 
         List<Privatlakare> list = privatlakareRepository.findWithoutLakarBehorighet();
@@ -102,8 +103,8 @@ public class PrivatlakareRepositoryTest {
         Privatlakare p3 = privatlakareRepository.save(PrivatelakareTestUtil.buildPrivatlakare("p3", 3, false));
         Privatlakare p4 = privatlakareRepository.save(PrivatelakareTestUtil.buildPrivatlakare("p4", 4, true));
         Privatlakare p5 = PrivatelakareTestUtil.buildPrivatlakare("p5", 5, false);
-        p5.setEnhetStartdatum(LocalDateTime.parse("2015-08-01"));
-        p5.setVardgivareStartdatum(LocalDateTime.parse("2015-08-01"));
+        p5.setEnhetStartdatum(LocalDate.parse("2015-08-01").atStartOfDay());
+        p5.setVardgivareStartdatum(LocalDate.parse("2015-08-01").atStartOfDay());
         privatlakareRepository.save(p5);
 
         List<Privatlakare> list = privatlakareRepository.findNeverHadLakarBehorighet();
@@ -121,22 +122,22 @@ public class PrivatlakareRepositoryTest {
         Privatlakare p1 = PrivatelakareTestUtil.buildPrivatlakare("p1", 1, true);
         privatlakareRepository.save(p1);
         Privatlakare p2 = PrivatelakareTestUtil.buildPrivatlakare("p2", 2, false);
-        p2.setRegistreringsdatum(LocalDateTime.parse("2015-09-30"));
+        p2.setRegistreringsdatum(LocalDate.parse("2015-09-30").atStartOfDay());
         privatlakareRepository.save(p2);
         Privatlakare p3 = PrivatelakareTestUtil.buildPrivatlakare("p3", 3, false);
-        p3.setRegistreringsdatum(LocalDateTime.parse("2014-01-01"));
+        p3.setRegistreringsdatum(LocalDate.parse("2014-01-01").atStartOfDay());
         privatlakareRepository.save(p3);
         Privatlakare p4 = PrivatelakareTestUtil.buildPrivatlakare("p4", 4, true);
         privatlakareRepository.save(p4);
         Privatlakare p5 = PrivatelakareTestUtil.buildPrivatlakare("p5", 5, false);
-        p5.setEnhetStartdatum(LocalDateTime.parse("2015-08-01"));
-        p5.setVardgivareStartdatum(LocalDateTime.parse("2015-08-01"));
+        p5.setEnhetStartdatum(LocalDate.parse("2015-08-01").atStartOfDay());
+        p5.setVardgivareStartdatum(LocalDate.parse("2015-08-01").atStartOfDay());
         privatlakareRepository.save(p5);
         Privatlakare p6 = PrivatelakareTestUtil.buildPrivatlakare("p6", 6, false);
-        p6.setRegistreringsdatum(LocalDateTime.parse("2015-10-01"));
+        p6.setRegistreringsdatum(LocalDate.parse("2015-10-01").atStartOfDay());
         privatlakareRepository.save(p6);
 
-        LocalDateTime date = LocalDateTime.parse("2015-09-30");
+        LocalDateTime date = LocalDate.parse("2015-09-30").atStartOfDay();
         List<Privatlakare> list = privatlakareRepository.findNeverHadLakarBehorighetAndRegisteredBefore(date);
 
         assertThat("p1 should not be in the list, it has läkarbehörighet", !list.contains(p1));

@@ -18,7 +18,7 @@
  */
 package se.inera.privatlakarportal.integration.terms.services.dto;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 /**
  * Created by pebe on 2015-08-25.

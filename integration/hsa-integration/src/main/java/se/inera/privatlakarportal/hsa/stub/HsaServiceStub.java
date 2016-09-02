@@ -18,16 +18,16 @@
  */
 package se.inera.privatlakarportal.hsa.stub;
 
-import org.joda.time.LocalDateTime;
-import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class HsaServiceStub {
 
-    private Map<String, HsaHospPerson> personMap = new HashMap<String, HsaHospPerson>();
+    private Map<String, HsaHospPerson> personMap = new HashMap<>();
 
     private LocalDateTime hospLastUpdate;
 
@@ -37,12 +37,12 @@ public class HsaServiceStub {
 
     public void addHospPerson(HsaHospPerson hospPerson) {
         personMap.put(hospPerson.getPersonalIdentityNumber(), hospPerson);
-        hospLastUpdate = new LocalDateTime();
+        hospLastUpdate = LocalDateTime.now();
     }
 
     public void removeHospPerson(String id) {
         personMap.remove(id);
-        hospLastUpdate = new LocalDateTime();
+        hospLastUpdate = LocalDateTime.now();
     }
 
     public LocalDateTime getHospLastUpdate() {

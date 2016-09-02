@@ -1,27 +1,30 @@
 package se.inera.privatlakarportal.service;
 
-import org.joda.time.LocalDateTime;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import javax.xml.ws.WebServiceException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
+
 import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
 import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-
-import javax.xml.ws.WebServiceException;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by pebe on 2015-09-30.
@@ -44,7 +47,7 @@ public class CleanupServiceImplTest {
     @Test
     public void testCleanup() throws IOException {
 
-        LocalDateTime date = LocalDateTime.parse("2015-09-30");
+        LocalDateTime date = LocalDate.parse("2015-09-30").atStartOfDay();
         when(dateHelperService.now()).thenReturn(date);
 
         ArrayList<Privatlakare> list = new ArrayList<>();
@@ -55,7 +58,7 @@ public class CleanupServiceImplTest {
         list.add(p2);
         list.add(p3);
         // Should check for current date minus 12 months
-        LocalDateTime date2 = LocalDateTime.parse("2014-09-30");
+        LocalDateTime date2 = LocalDate.parse("2014-09-30").atStartOfDay();
         when(privatlakareRepository.findNeverHadLakarBehorighetAndRegisteredBefore(date2)).thenReturn(list);
 
         when(hospPersonService.removeFromCertifier(any(String.class),any(String.class),any(String.class))).thenReturn(true);
@@ -72,7 +75,7 @@ public class CleanupServiceImplTest {
     @Test
     public void testCleanupFailedToContactHSA() throws IOException {
 
-        LocalDateTime date = LocalDateTime.parse("2015-09-30");
+        LocalDateTime date = LocalDate.parse("2015-09-30").atStartOfDay();
         when(dateHelperService.now()).thenReturn(date);
 
         ArrayList<Privatlakare> list = new ArrayList<>();
@@ -83,7 +86,7 @@ public class CleanupServiceImplTest {
         list.add(p2);
         list.add(p3);
         // Should check for current date minus 12 months
-        LocalDateTime date2 = LocalDateTime.parse("2014-09-30");
+        LocalDateTime date2 = LocalDate.parse("2014-09-30").atStartOfDay();
         when(privatlakareRepository.findNeverHadLakarBehorighetAndRegisteredBefore(date2)).thenReturn(list);
 
         when(hospPersonService.removeFromCertifier(any(String.class), any(String.class), any(String.class))).thenReturn(true);

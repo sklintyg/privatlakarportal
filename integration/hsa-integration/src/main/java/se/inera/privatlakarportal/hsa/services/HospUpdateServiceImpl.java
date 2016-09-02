@@ -18,7 +18,12 @@
  */
 package se.inera.privatlakarportal.hsa.services;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
+import java.util.*;
+
+import javax.transaction.Transactional;
+import javax.xml.ws.WebServiceException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,25 +34,14 @@ import org.springframework.stereotype.Service;
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.privatlakarportal.hsa.monitoring.MonitoringLogService;
 import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
-import se.inera.privatlakarportal.persistence.model.HospUppdatering;
-import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.model.Specialitet;
+import se.inera.privatlakarportal.persistence.model.*;
 import se.inera.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-
-import javax.transaction.Transactional;
-import javax.xml.ws.WebServiceException;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by pebe on 2015-09-03.
@@ -251,5 +245,5 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         }
         return legitimeradYrkesgrupper;
     }
-    
+
 }
