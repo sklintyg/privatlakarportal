@@ -1,14 +1,14 @@
 /**
  * Copyright (C) 2016 Inera AB (http://www.inera.se)
  *
- * This file is part of rehabstod (https://github.com/sklintyg/rehabstod).
+ * This file is part of privatlakarportal (https://github.com/sklintyg/privatlakarportal).
  *
- * rehabstod is free software: you can redistribute it and/or modify
+ * privatlakarportal is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * rehabstod is distributed in the hope that it will be useful,
+ * privatlakarportal is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -31,7 +31,7 @@ import com.jayway.restassured.builder.RequestSpecBuilder;
 public abstract class BaseIntegrationTest {
 
     /**
-     * Common setup for all tests
+     * Common setup for all tests.
      */
     @Before
     public void setupBase() {

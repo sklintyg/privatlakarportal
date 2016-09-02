@@ -21,7 +21,9 @@ package se.inera.privatlakarportal.auth;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.opensaml.saml2.core.*;
+import org.opensaml.saml2.core.Assertion;
+import org.opensaml.saml2.core.Attribute;
+import org.opensaml.saml2.core.AttributeStatement;
 import org.opensaml.xml.XMLObject;
 
 /**
