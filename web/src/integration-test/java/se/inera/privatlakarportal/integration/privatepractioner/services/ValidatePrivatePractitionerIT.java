@@ -42,6 +42,7 @@ public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
     private static final String PNR_OKANT = "okant-pnr";
 
     private ST requestTemplate;
+    private ST brokenTemplate;
     private STGroup templateGroup;
 
     @Before
@@ -49,7 +50,7 @@ public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
         // Setup String template resource
         templateGroup = new STGroupFile("integrationtestTemplates/validatePrivatePractitioner.v1.stg");
         requestTemplate = templateGroup.getInstanceOf("request");
-
+        brokenTemplate = templateGroup.getInstanceOf("brokenrequest");
     }
 
     @Test
@@ -75,6 +76,15 @@ public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
                 .body("resultCode", is(ResultCodeEnum.ERROR.value()))
                 .body("resultText", is("No private practitioner with personal identity number: " + PNR_OKANT + " exists."));
 
+    }
+
+    @Test
+    public void testValidatePrivatePractitionerWithInvalidRequest() throws Exception {
+        given().body(brokenTemplate.render())
+                .when()
+                .post(RestAssured.baseURI + VALIDATE_PRIVATE_PRACTITIONER_V1_0)
+                .then().statusCode(500)
+                .rootPath(BASE);
     }
 
     private class ValidationData {
