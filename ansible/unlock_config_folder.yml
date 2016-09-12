@@ -2,7 +2,7 @@
 # This playbook unlocks the config repo folder
 
 - hosts: privatlakarportal-tomcat
-  sudo: yes 
+  sudo: "{{ sudo }}" 
   
   roles:
     - unlock-config-folder

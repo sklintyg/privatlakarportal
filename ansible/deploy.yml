@@ -1,11 +1,11 @@
 # This playbook deploys privatlakarportalen 
 
 - hosts: privatlakarportal-tomcat
-  sudo: yes 
+  sudo: "{{ sudo }}" 
   vars:
     # repo - values: 'snapshots or 'releases'
-    repo: releases
-    version: 1.2.0-b36
+    repo: snapshots
+    version: 1.0.0-SNAPSHOT
     config_version: master
 
   roles:

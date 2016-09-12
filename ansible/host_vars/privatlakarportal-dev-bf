@@ -1,11 +1,11 @@
 # Spring profiles
-profiles: test,pp-security-test,testability-api,hsa-stub,mail-stub
+profiles: test,pp-security-test,hsa-stub,wc-stub,pu-stub,mail-stub,testability-api,pp-init-data
 
 # General
-sudo: yes
+sudo: no
 
 # Configuration repository
-environment_name: "demo"
+environment_name: "test"
 config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
 
 # Tomcat

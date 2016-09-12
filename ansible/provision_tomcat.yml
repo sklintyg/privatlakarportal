@@ -2,7 +2,7 @@
 # This playbook provisions Tomcat resources for Privatlakarportalen 
 
 - hosts: privatlakarportal-tomcat
-  sudo: yes 
+  sudo: "{{ sudo }}" 
 
   roles:
     - privatlakarportal-systemvariabler
