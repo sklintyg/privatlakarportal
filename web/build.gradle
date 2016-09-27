@@ -151,7 +151,7 @@ dependencies {
     compile("io.springfox:springfox-swagger2:2.4.0") 
     compile('io.springfox:springfox-swagger-ui:2.4.0')
 
-    compile 'se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.1'
+    compile 'se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.3'
 
     compile 'org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}'
     compile 'org.apache.cxf:cxf-rt-transports-http:${cxfVersion}'
