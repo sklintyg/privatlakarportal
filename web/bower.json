@@ -23,6 +23,11 @@
     "angular-scenario": "1.4.7"
   },
   "overrides": {
+    "angular": {
+      "dependencies": {
+        "jquery": "1.11.3"
+      }
+    },
     "angular-i18n": {
       "main": "angular-locale_sv-se.js"
     }
