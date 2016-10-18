@@ -1,7 +1,6 @@
 ext {
     // Versions used for maintaining dependencies
-    // seleniumVersion = '2.47.1'
-    seleniumVersion = '2.52.0'
+    seleniumVersion = '2.47.1'
     phantomJsVersion = '1.1.0'
 }
 
@@ -23,7 +22,7 @@ fitnesse {
     wikiStartPage = "PrivatlakarPortal.WebTests"
 
     if (project.hasProperty('fileOutput')) {
-        outputFormat = "xml&includehtml"
+        outputFormat = project.getProperty('outputFormat') != null ? project.getProperty('outputFormat') : "xml&includehtml"
     }
 }
 
