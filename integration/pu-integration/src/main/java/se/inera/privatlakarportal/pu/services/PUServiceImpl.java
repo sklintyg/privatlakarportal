@@ -51,9 +51,7 @@ public class PUServiceImpl implements PUService {
     private String logicaladdress;
 
     @Override
-    @Cacheable(value = "personCache",
-               key = "#personId",
-               unless = "#result.status == T(se.inera.privatlakarportal.pu.model.PersonSvar$Status).ERROR")
+    @Cacheable(value = "personCache", key = "#personId", unless = "#result.status == T(se.inera.privatlakarportal.pu.model.PersonSvar$Status).ERROR")
     public PersonSvar getPerson(String personId) {
         String normalizedId = normalizeId(personId);
 
@@ -76,7 +74,8 @@ public class PUServiceImpl implements PUService {
 
             String adressRader = buildAdress(adress);
             Person person = new Person(personId, resident.getSekretessmarkering() == JaNejTYPE.J, namn.getFornamn(),
-                    namn.getMellannamn(), namn.getEfternamn(), adressRader, adress.getPostNr(), adress.getPostort());
+                    namn.getMellannamn(), namn.getEfternamn(), adressRader, adress != null ? adress.getPostNr() : null,
+                    adress != null ? adress.getPostort() : null);
             LOG.debug("Person '{}' found", normalizedId);
 
             return new PersonSvar(person, PersonSvar.Status.FOUND);
@@ -102,7 +101,7 @@ public class PUServiceImpl implements PUService {
     }
 
     private String buildAdress(SvenskAdressTYPE adress) {
-        return joinIgnoreNulls(", ", adress.getCareOf(), adress.getUtdelningsadress1(), adress.getUtdelningsadress2());
+        return adress == null ? null : joinIgnoreNulls(", ", adress.getCareOf(), adress.getUtdelningsadress1(), adress.getUtdelningsadress2());
     }
 
     private String joinIgnoreNulls(String separator, String... values) {
