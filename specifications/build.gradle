@@ -26,6 +26,10 @@ fitnesse {
     }
 }
 
+sonarqube {
+    skipProject = true
+}
+
 dependencies {
     compile project(":privatlakarportal-web")
 

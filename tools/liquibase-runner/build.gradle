@@ -15,6 +15,10 @@ startScripts << {
             "--driver=com.mysql.jdbc.Driver --classpath=lib/${privPersistenceDependency} --changeLogFile=changelog/changelog.xml %CMD_LINE_ARGS%")
 }
 
+sonarqube {
+    skipProject = true
+}
+
 artifacts {
     archives distZip
 }
