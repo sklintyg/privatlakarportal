@@ -22,7 +22,7 @@ fitnesse {
     wikiStartPage = "PrivatlakarPortal.WebTests"
 
     if (project.hasProperty('fileOutput')) {
-        outputFormat = project.getProperty('outputFormat') != null ? project.getProperty('outputFormat') : "xml&includehtml"
+        outputFormat = project.findProperty('outputFormat') ?: "xml&includehtml"
     }
 }
 
