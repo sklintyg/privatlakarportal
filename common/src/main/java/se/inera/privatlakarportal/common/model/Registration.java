@@ -18,6 +18,8 @@
  */
 package se.inera.privatlakarportal.common.model;
 
+import java.util.stream.Stream;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -42,44 +44,12 @@ public class Registration {
     private String lan;
 
     public boolean checkIsValid() {
+        return checkValues(befattning, verksamhetensNamn, agarForm, vardform, verksamhetstyp, telefonnummer, epost, adress,
+                postnummer, postort, kommun, lan);
+    }
 
-        if (StringUtils.isBlank(befattning)) {
-            return false;
-        }
-        if (StringUtils.isBlank(verksamhetensNamn)) {
-            return false;
-        }
-        if (StringUtils.isBlank(agarForm)) {
-            return false;
-        }
-        if (StringUtils.isBlank(vardform)) {
-            return false;
-        }
-        if (StringUtils.isBlank(verksamhetstyp)) {
-            return false;
-        }
-        if (StringUtils.isBlank(telefonnummer)) {
-            return false;
-        }
-        if (StringUtils.isBlank(epost)) {
-            return false;
-        }
-        if (StringUtils.isBlank(adress)) {
-            return false;
-        }
-        if (StringUtils.isBlank(postnummer)) {
-            return false;
-        }
-        if (StringUtils.isBlank(postort)) {
-            return false;
-        }
-        if (StringUtils.isBlank(kommun)) {
-            return false;
-        }
-        if (StringUtils.isBlank(lan)) {
-            return false;
-        }
-        return true;
+    private boolean checkValues(String... strings) {
+        return !Stream.of(strings).anyMatch(StringUtils::isBlank);
     }
 
     public String getBefattning() {
