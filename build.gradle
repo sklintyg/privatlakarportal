@@ -1,6 +1,10 @@
 buildscript {
     dependencies {
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1"
+        classpath 'org.akhikhl.gretty:gretty:+'
+        classpath 'se.inera.intyg:gradle-fitnesse-plugin:1.0.+'
+        classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
+        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
     }
     repositories {
         mavenLocal()
@@ -101,22 +105,20 @@ subprojects {
         apply from: rootProject.file("tools/codeQuality/codeQuality.gradle")
     }
 
-    if (project.hasProperty('runSonar')) {
-        apply plugin: 'jacoco'
+    apply plugin: 'jacoco'
 
-        jacoco {
-            toolVersion = "0.7.1.201405082137"
-        }
-        jacocoTestReport {
+    jacoco {
+        toolVersion = "0.7.6.201602180812"
+    }
+    jacocoTestReport {
 
-            classDirectories =  files(sourceSets.main.output)
-            sourceDirectories = files(sourceSets.main.allJava.srcDirs)
+        classDirectories =  files(sourceSets.main.output)
+        sourceDirectories = files(sourceSets.main.allJava.srcDirs)
 
-            reports {
-                xml.enabled false
-                csv.enabled false
-                html.destination "${buildDir}/jacocoHtml"
-            }
+        reports {
+            xml.enabled false
+            csv.enabled false
+            html.destination "${buildDir}/jacocoHtml"
         }
     }
 
