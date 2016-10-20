@@ -12,6 +12,10 @@
       dest={{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip
   when: deploy_from_repo|bool
 
+- name: copy privatlakarportal-liquibase-runner-{{ version }}.zip
+  copy: src={{ inventory_dir }}/../tools/build/libs/privatlakarportal-liquibase-runner-{{ version }}.jar dest={{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip
+  when: not deploy_from_repo|bool
+
 - name: Unzip liquibase-runner-{{ version }}.zip
   command: unzip -od {{ releases_folder }} {{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip
   args:
@@ -28,6 +32,10 @@
   get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/{{ repo }}/se/inera/privatlakarportal/privatlakarportal-web/{{ version }}/privatlakarportal-web-{{ version }}.war
       dest={{ releases_folder }}/privatlakarportal-web-{{ version }}.war
   when: deploy_from_repo|bool
+
+- name: copy privatlakarportal-web-{{ version }}.war
+  copy: src={{ inventory_dir }}/../web/build/libs/privatlakarportal-web-{{ version }}.war dest={{ releases_folder }}/privatlakarportal-web-{{ version }}.war
+  when: not deploy_from_repo|bool
 
 - name: remove old version of unpacked privatlakarportal war
   file: state=absent
