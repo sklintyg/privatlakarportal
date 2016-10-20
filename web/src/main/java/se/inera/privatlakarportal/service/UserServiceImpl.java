@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
@@ -35,8 +36,6 @@ import se.inera.privatlakarportal.pu.services.PUService;
 import se.inera.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.privatlakarportal.common.monitoring.util.HashUtility;
 import se.inera.privatlakarportal.service.model.User;
-
-import javax.transaction.Transactional;
 
 /**
  * Created by pebe on 2015-08-11.

@@ -20,10 +20,9 @@ package se.inera.privatlakarportal.integration.privatepractioner.services;
 
 import java.time.LocalDateTime;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.privatlakarportal.common.integration.kodverk.*;
 import se.inera.privatlakarportal.common.service.DateHelperService;

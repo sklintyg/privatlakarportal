@@ -21,7 +21,6 @@ package se.inera.privatlakarportal.hsa.services;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import javax.transaction.Transactional;
 import javax.xml.ws.WebServiceException;
 
 import org.slf4j.Logger;
@@ -30,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;

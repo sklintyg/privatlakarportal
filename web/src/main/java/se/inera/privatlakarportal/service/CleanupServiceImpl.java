@@ -21,7 +21,6 @@ package se.inera.privatlakarportal.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.transaction.Transactional;
 import javax.xml.ws.WebServiceException;
 
 import org.slf4j.Logger;
@@ -29,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.privatlakarportal.common.service.DateHelperService;
 import se.inera.privatlakarportal.hsa.services.HospPersonService;
