@@ -12,9 +12,8 @@ dependencies {
     compile "org.springframework:spring-orm:${springContextVersion}"
     compile "org.springframework:spring-jms:${springContextVersion}"
     compile 'com.h2database:h2:1.4.183'
-    compile ('org.jadira.usertype:usertype.extended:5.0.0.GA') {
-      exclude(module: 'hibernate-entitymanager')
-    }
+    compile 'org.jadira.usertype:usertype.extended:5.0.0.GA'
+
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
 
     compile 'org.springframework.data:spring-data-jpa:1.9.0.RELEASE'

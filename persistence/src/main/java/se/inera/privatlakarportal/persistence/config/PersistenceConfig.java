@@ -41,6 +41,8 @@ public abstract class PersistenceConfig {
     private String hibernateShowSql;
     @Value("${hibernate.format_sql}")
     private String hibernateFormatSql;
+    @Value("${hibernate.id.new_generator_mappings}")
+    private String hibernateNewId;
 
     @Bean
     LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
@@ -56,6 +58,7 @@ public abstract class PersistenceConfig {
         jpaProperties.put("hibernate.ejb.naming_strategy", hibernateNamingStrategy);
         jpaProperties.put("hibernate.show_sql", hibernateShowSql);
         jpaProperties.put("hibernate.format_sql", hibernateFormatSql);
+        jpaProperties.put("hibernate.id.new_generator_mappings", hibernateNewId);
         jpaProperties.put("hibernate.enable_lazy_load_no_trans", true);
         entityManagerFactoryBean.setJpaProperties(jpaProperties);
 
