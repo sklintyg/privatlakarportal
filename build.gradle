@@ -1,21 +1,18 @@
-buildscript {
-    dependencies {
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1"
-        classpath 'org.akhikhl.gretty:gretty:+'
-        classpath 'se.inera.intyg:gradle-fitnesse-plugin:1.0.+'
-        classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
-        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
-    }
-    repositories {
-        mavenLocal()
-        maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/" }
-        maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/" }
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-}
+ext {
+    cxfVersion = '3.1.3'
+    springContextVersion = "4.2.2.RELEASE"
+    springSecurityVersion = "4.0.3.RELEASE"
+    springSecurityExtensionsVersion = "1.0.1.RELEASE"
+    liquibaseVersion = "3.3.1"
+    jaxb2Version = "0.9.5"
+    restAssuredVersion = "2.9.0"
+    stringTemplateVersion = "4.0.8"
+    junitVersion = "4.12"
+    hamcrestVersion = "1.3"
 
-plugins {
-    id "com.github.hierynomus.license" version "0.12.1"
+    setProperty("buildTime", getDate().toString())
+    setProperty("buildNumber", System.env.BUILD_NUMBER ?: "SNAPSHOT")
+    setProperty("buildVersion", System.env.BUILD_VERSION ?: "1.0.0-SNAPSHOT")
 }
 
 // Load environment specific settings, if the -Penv=xxx parameter is given on invocation
@@ -37,20 +34,10 @@ def getDate() {
 }
 
 allprojects {
-
     group = 'se.inera.privatlakarportal'
+    version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
 
-    if (System.env.BUILD_VERSION && System.env.BUILD_NUMBER) {
-        if (System.env.BRANCH == 'develop' || System.env.BRANCH.contains('feature')) {
-            version = "$System.env.BUILD_VERSION-b$System.env.BUILD_NUMBER"
-        } else if (System.env.BRANCH.contains('release')) {
-            version = "$System.env.BUILD_VERSION"
-        } else {
-            throw new GradleScriptException("git branch '$System.env.BRANCH' is not known as a buildable branch. Builds must be performed from develop, release/ or feature/ branches.", null)
-        }
-    } else {
-        version = '1.0.0-SNAPSHOT'
-    }
+    apply plugin: 'org.ajoberstar.grgit'
 
     buildscript {
         repositories {
@@ -72,6 +59,83 @@ allprojects {
         maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
     }
 }
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'license'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    task createVersionPropertyFile(dependsOn: processResources) {
+        def propertyFile = "${buildDir}/resources/main/version.properties"
+        def projectVersion = rootProject.version
+        def gitCommit = grgit.head().id
+        def gitBranch = grgit.branch.getCurrent().getName()
+        def buildNumber = System.env.BUILD_NUMBER
+
+        inputs.property("project.version", projectVersion)
+        inputs.property("gitCommit", gitCommit)
+        inputs.property("gitBranch", gitBranch)
+        inputs.property("buildNumber", buildNumber)
+        outputs.file(propertyFile)
+
+        doLast {
+            ant.touch(file: propertyFile, mkdirs: "true")
+            ant.propertyfile(file: propertyFile) {
+                entry(key: 'project.version', default: projectVersion)
+                entry(key: 'gitCommit', default: gitCommit)
+                entry(key: 'gitBranch', default: gitBranch)
+                entry(key: 'buildNumber', default: buildNumber)
+                entry(key: 'buildTime', default: new Date())
+            }
+        }
+    }
+
+    jar.dependsOn(createVersionPropertyFile)
+
+    if (project.hasProperty('codeQuality')) {
+        apply from: rootProject.file("tools/codeQuality/codeQuality.gradle")
+    }
+
+    apply plugin: 'jacoco'
+
+    jacoco {
+        toolVersion = "0.7.6.201602180812"
+    }
+
+    test {
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/test.exec")
+        }
+    }
+
+    license {
+        ext.url = 'https://github.com/sklintyg/privatlakarportal'
+        ext.name = rootProject.name
+        ext.year = Calendar.getInstance().get(Calendar.YEAR)
+        strictCheck true
+        header rootProject.file("header.txt")
+        includes(["**/*.xml", "**/main/java/se/inera/**/*.java"])
+        excludes(["**/generatedSource/java/se/inera/**/*.java"])
+    }
+}
+
+task tagRelease {
+    description = 'Tags the current head with the projects version.'
+    def grgit = org.ajoberstar.grgit.Grgit.open(creds: new org.ajoberstar.grgit.Credentials(System.properties['githubUser'], System.properties['githubPassword']))
+    doLast {
+        grgit.tag.add {
+            name = "v" + version
+            message = "Release of ${version}"
+        }
+        grgit.push(tags: true)
+    }
+}
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/allTests")
+    reportOn subprojects*.test // Include the results from the 'test' task in all subprojects
+}
 
 apply plugin: "org.sonarqube"
 
@@ -92,62 +156,6 @@ sonarqube {
             "**/*Fake*.java"
             ]
         property "sonar.javascript.lcov.reportPath", "build/karma/lcov.info"
-    }
-}
-
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'license'
-
-    if (project.hasProperty('codeQuality')) {
-        apply from: rootProject.file("tools/codeQuality/codeQuality.gradle")
-    }
-
-    apply plugin: 'jacoco'
-
-    jacoco {
-        toolVersion = "0.7.6.201602180812"
-    }
-    jacocoTestReport {
-
-        classDirectories =  files(sourceSets.main.output)
-        sourceDirectories = files(sourceSets.main.allJava.srcDirs)
-
-        reports {
-            xml.enabled false
-            csv.enabled false
-            html.destination "${buildDir}/jacocoHtml"
-        }
-    }
-
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-
-    ext {
-        cxfVersion = '3.1.3'
-        springContextVersion = "4.2.2.RELEASE"
-        springSecurityVersion = "4.0.3.RELEASE"
-        springSecurityExtensionsVersion = "1.0.1.RELEASE"
-        liquibaseVersion = "3.3.1"
-        jaxb2Version = "0.9.5"
-        restAssuredVersion = "2.9.0"
-        stringTemplateVersion = "4.0.8"
-        junitVersion = "4.12"
-        hamcrestVersion = "1.3"
-
-        setProperty("buildTime", getDate().toString())
-        setProperty("buildNumber", System.env.BUILD_NUMBER ? System.env.BUILD_NUMBER : "SNAPSHOT")
-        setProperty("buildVersion", System.env.BUILD_VERSION ? System.env.BUILD_VERSION : "1.0.0-SNAPSHOT")
-    }
-
-    license {
-        ext.url = 'https://github.com/sklintyg/privatlakarportal'
-        ext.name = rootProject.name
-        ext.year = Calendar.getInstance().get(Calendar.YEAR)
-        strictCheck true
-        header rootProject.file("header.txt")
-        includes(["**/*.xml", "**/main/java/se/inera/**/*.java"])
-        excludes(["**/generatedSource/java/se/inera/**/*.java"])
     }
 }
 
@@ -193,5 +201,23 @@ configure (subprojects.findAll {
                 uniqueVersion = false
             }
         }
+    }
+}
+
+buildscript {
+    dependencies {
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1"
+        classpath 'org.akhikhl.gretty:gretty:+'
+        classpath 'se.inera.intyg:gradle-fitnesse-plugin:1.0.+'
+        classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
+        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
+        classpath 'org.ajoberstar:gradle-git:1.5.1'
+        classpath "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1"
+    }
+    repositories {
+        mavenLocal()
+        maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/" }
+        maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 }

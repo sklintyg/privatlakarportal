@@ -73,20 +73,6 @@ task assembleManifestClasspath() << {
 
 war.dependsOn assembleManifestClasspath
 
-task createVersionPropertyFile(dependsOn: processResources) << {
-    def propertyFile = "${buildDir}/resources/main/version.properties"
-    ant.touch(file: propertyFile, mkdirs: "true")
-    ant.propertyfile(file: propertyFile) {
-        entry(key: 'buildVersion', default: buildVersion)
-        entry(key: 'buildTime', default: buildTime)
-        entry(key: 'buildNumber', default: buildNumber)
-    }
-}
-
-createVersionPropertyFile.dependsOn assembleManifestClasspath
-
-war.dependsOn createVersionPropertyFile
-
 task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
     script = file('node_modules/bower/bin/bower')
     args = ["--config.storage.cache=${gradle.getGradleUserHomeDir()}/caches/bower/cache",
