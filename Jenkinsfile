@@ -46,4 +46,4 @@ stage('tag and upload') {
     node {
 	shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion}"
     }
-)
+}
