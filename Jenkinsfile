@@ -27,12 +27,7 @@ stage('deploy') {
                 installation: 'ansible-yum', inventory: 'ansible/hosts_test', playbook: 'ansible/deploy.yml'
         }
 	// Wait to make sure the server is up!
-	timeout(240) {
-	    waitUntil {
-		def r = sh script: 'wget -q https://privatlakarportal.inera.nordicmedtest.se/version.jsp --no-check-certificate -O /dev/null', returnStatus: true
-		return (r == 0);
-	    }
-	}
+	util.waitForServer('https://privatlakarportal.inera.nordicmedtest.se/version.jsp')
     }
 }
 
