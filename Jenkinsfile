@@ -33,7 +33,7 @@ stage('fitnesse') {
     node {
         try {
             wrap([$class: 'Xvfb']) {
-                shgradle "fitnesseTest  -Dslim.port=9000 -Penv=build-server -PfileOutput -PoutputFormat=html"
+                shgradle "fitnesseTest -Penv=build-server -PfileOutput -PoutputFormat=html"
             }
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
