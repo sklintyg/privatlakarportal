@@ -26,13 +26,13 @@ stage('deploy') {
             ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false"], \
                 installation: 'ansible-yum', inventory: 'ansible/hosts_test', playbook: 'ansible/deploy.yml'
         }
-    }
-}
-
-timeout(240) {
-    waitUntil {
-	def r = sh script: 'wget -q https://privatlakarportal.inera.nordicmedtest.se/version.jsp --no-check-certificate -O /dev/null', returnStatus: true
-	return (r == 0);
+	// Wait to make sure the server is up!
+	timeout(240) {
+	    waitUntil {
+		def r = sh script: 'wget -q https://privatlakarportal.inera.nordicmedtest.se/version.jsp --no-check-certificate -O /dev/null', returnStatus: true
+		return (r == 0);
+	    }
+	}
     }
 }
 
