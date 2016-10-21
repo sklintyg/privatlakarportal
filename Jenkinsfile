@@ -1,6 +1,6 @@
 #!groovy
 
-def buildVersion = "0.${BUILD_NUMBER}"
+def buildVersion = "1.2.${BUILD_NUMBER}"
 
 stage('checkout') {
     node {
@@ -42,8 +42,8 @@ stage('fitnesse') {
     }
 }
 
-/*stage('tag and upload') {
+stage('tag and upload') {
     node {
-        shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion}"
+	shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion}"
     }
-    )*/
+)
