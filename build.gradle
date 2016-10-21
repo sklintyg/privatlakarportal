@@ -1,3 +1,20 @@
+ext {
+    cxfVersion = '3.1.3'
+    springContextVersion = "4.2.2.RELEASE"
+    springSecurityVersion = "4.0.3.RELEASE"
+    springSecurityExtensionsVersion = "1.0.1.RELEASE"
+    liquibaseVersion = "3.3.1"
+    jaxb2Version = "0.9.5"
+    restAssuredVersion = "2.9.0"
+    stringTemplateVersion = "4.0.8"
+    junitVersion = "4.12"
+    hamcrestVersion = "1.3"
+
+    setProperty("buildTime", getDate().toString())
+    setProperty("buildNumber", System.env.BUILD_NUMBER ?: "SNAPSHOT")
+    setProperty("buildVersion", System.env.BUILD_VERSION ?: "1.0.0-SNAPSHOT")
+}
+
 // Load environment specific settings, if the -Penv=xxx parameter is given on invocation
 task loadConfiguration {
     def environment = null
@@ -48,23 +65,6 @@ subprojects {
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-
-    ext {
-        cxfVersion = '3.1.3'
-        springContextVersion = "4.2.2.RELEASE"
-        springSecurityVersion = "4.0.3.RELEASE"
-        springSecurityExtensionsVersion = "1.0.1.RELEASE"
-        liquibaseVersion = "3.3.1"
-        jaxb2Version = "0.9.5"
-        restAssuredVersion = "2.9.0"
-        stringTemplateVersion = "4.0.8"
-        junitVersion = "4.12"
-        hamcrestVersion = "1.3"
-
-        setProperty("buildTime", getDate().toString())
-        setProperty("buildNumber", System.env.BUILD_NUMBER ?: "SNAPSHOT")
-        setProperty("buildVersion", System.env.BUILD_VERSION ?: "1.0.0-SNAPSHOT")
-    }
 
     task createVersionPropertyFile(dependsOn: processResources) {
         def propertyFile = "${buildDir}/resources/main/version.properties"
