@@ -46,7 +46,7 @@ import se.riv.itintegration.monitoring.v1.PingForConfigurationType;
 public class PingForConfigurationResponderImpl implements PingForConfigurationResponderInterface {
     private static final Logger LOG = LoggerFactory.getLogger(PingForConfigurationResponderImpl.class);
 
-    @Value("${buildVersion}")
+    @Value("${project.version}")
     private String projectVersion;
 
     @Value("${buildNumber}")

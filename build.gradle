@@ -9,10 +9,6 @@ ext {
     stringTemplateVersion = "4.0.8"
     junitVersion = "4.12"
     hamcrestVersion = "1.3"
-
-    setProperty("buildTime", getDate().toString())
-    setProperty("buildNumber", System.env.BUILD_NUMBER ?: "SNAPSHOT")
-    setProperty("buildVersion", System.env.BUILD_VERSION ?: "1.0.0-SNAPSHOT")
 }
 
 // Load environment specific settings, if the -Penv=xxx parameter is given on invocation
@@ -71,7 +67,7 @@ subprojects {
         def projectVersion = rootProject.version
         def gitCommit = grgit.head().id
         def gitBranch = grgit.branch.getCurrent().getName()
-        def buildNumber = System.env.BUILD_NUMBER
+        def buildNumber = System.env.BUILD_NUMBER ?: "SNAPSHOT"
 
         inputs.property("project.version", projectVersion)
         inputs.property("gitCommit", gitCommit)
@@ -86,7 +82,7 @@ subprojects {
                 entry(key: 'gitCommit', default: gitCommit)
                 entry(key: 'gitBranch', default: gitBranch)
                 entry(key: 'buildNumber', default: buildNumber)
-                entry(key: 'buildTime', default: new Date())
+                entry(key: 'buildTime', default: getDate())
             }
         }
     }
