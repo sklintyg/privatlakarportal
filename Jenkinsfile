@@ -29,14 +29,15 @@ stage('deploy') {
     }
 }
 
+timeout(240) {
+    waitUntil {
+	def r = sh script: 'wget -q https://privatlakarportal.inera.nordicmedtest.se/version.jsp --no-check-certificate -O /dev/null', returnStatus: true
+	return (r == 0);
+    }
+}
+
 stage('fitnesse') {
     node {
-	timeout(240) {
-	    waitUntil {
-		def r = sh script: 'wget -q https://privatlakarportal.inera.nordicmedtest.se/version.jsp -O /dev/null', returnStatus: true
-		return (r == 0);
-	    }
-	}
         try {
             wrap([$class: 'Xvfb']) {
                 shgradle "fitnesseTest -Penv=build-server -PfileOutput -PoutputFormat=html"
