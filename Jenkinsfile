@@ -4,6 +4,7 @@ def buildVersion = "1.3.${BUILD_NUMBER}"
 
 stage('checkout') {
     node {
+	git url: "https://github.com/sklintyg/privatlakarportal.git", branch: GIT_BRANCH
         util.run { checkout scm }
     }
 }
