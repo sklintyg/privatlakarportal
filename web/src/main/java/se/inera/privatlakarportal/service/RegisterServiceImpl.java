@@ -237,7 +237,11 @@ public class RegisterServiceImpl implements RegisterService {
                 && privatlakareidRepository.findLatestGeneratedHsaId() % hsaIdNotificationInterval == 0) {
             mailService.sendHsaGenerationStatusEmail();
         }
-        mailService.sendRegistrationStatusEmail(status, privatlakare);
+
+        // Mail notification of WAITING_FOR_HOSP is handled by HospUpdateService
+        if (status != RegistrationStatus.WAITING_FOR_HOSP) {
+            mailService.sendRegistrationStatusEmail(status, privatlakare);
+        }
 
         privatlakareRepository.save(privatlakare);
 

@@ -427,6 +427,37 @@ public class HospUpdateServiceImplTest {
         assertEquals(LocalDate.parse("2015-09-01").atStartOfDay(), privatlakare.getSenasteHospUppdatering());
     }
 
+    @Test public void testAwaitingHospNotificationMailSentCorrectly() {
+        HospUppdatering hospUppdatering = new HospUppdatering();
+        hospUppdatering.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
+        when(hospUppdateringRepository.findSingle()).thenReturn(hospUppdatering);
+
+        LocalDateTime hospLastUpdate = LocalDate.parse("2015-09-15").atStartOfDay();
+        when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
+
+        Privatlakare privatlakare1 = new Privatlakare();
+        privatlakare1.setPersonId(PERSON_ID);
+        privatlakare1.setGodkandAnvandare(true);
+        privatlakare1.setRegistreringsdatum(LocalDate.parse("2015-09-05").atStartOfDay());
+        ArrayList<Privatlakare> list = new ArrayList<>();
+        list.add(privatlakare1);
+        when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
+
+        when(hospPersonService.addToCertifier(any(String.class), any(String.class))).thenReturn(true);
+
+        // No hosp-data available for user
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
+
+        hospUpdateService.scheduledUpdateHospInformation();
+
+        // sensateHospUppdatering in DB should be set to hospLastUpdate from HSA
+        assertEquals(hospLastUpdate, hospUppdatering.getSenasteHospUppdatering());
+        verify(hospUppdateringRepository).save(hospUppdatering);
+
+        // Since registreringsdatum is 10 or more days before the last hospUpdate, a mail should be sent
+        verify(mailService).sendRegistrationStatusEmail(RegistrationStatus.WAITING_FOR_HOSP, privatlakare1);
+    }
+
     private GetHospPersonResponseType createGetHospPersonResponse() {
         GetHospPersonResponseType getHospPersonResponseType = new GetHospPersonResponseType();
 
