@@ -64,11 +64,10 @@
 | script | Registrera |
 | vantar sidan visas |
 
-!3 Verifiera att mail med "Väntar på hosp-information" mottagits | 
+!3 Mail med "Väntar på hosp-information" ska inte ha mottagits, dessa skickas om hospinfo inte kan hämtas och 10 dagar har gått| 
 | script | !-RegistreringsMail-! |
 | mailHarSkickats | 195206172339 | 
-| check | mailMottaget | true | 
-| check | mailInnehåll | Väntar på hosp-information | 
+| check | mailMottaget | false | 
 
 | !-TaBortPrivatlakare-! |
 | id           | resultat? |

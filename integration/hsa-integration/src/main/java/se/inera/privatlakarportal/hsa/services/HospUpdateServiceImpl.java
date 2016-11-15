@@ -18,8 +18,13 @@
  */
 package se.inera.privatlakarportal.hsa.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 import javax.xml.ws.WebServiceException;
@@ -39,7 +44,10 @@ import se.inera.privatlakarportal.common.service.MailService;
 import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.privatlakarportal.hsa.monitoring.MonitoringLogService;
 import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
-import se.inera.privatlakarportal.persistence.model.*;
+import se.inera.privatlakarportal.persistence.model.HospUppdatering;
+import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.privatlakarportal.persistence.model.Specialitet;
 import se.inera.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
@@ -48,6 +56,8 @@ import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
  */
 @Service
 public class HospUpdateServiceImpl implements HospUpdateService {
+
+    private static final int NOTIFY_USER_AFTER_DAYS = 10;
 
     private static final Logger LOG = LoggerFactory.getLogger(HospUpdateServiceImpl.class);
 
@@ -122,6 +132,9 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                     if (status == RegistrationStatus.AUTHORIZED
                             || status == RegistrationStatus.NOT_AUTHORIZED) {
                         privatlakareRepository.save(privatlakare);
+                        mailService.sendRegistrationStatusEmail(status, privatlakare);
+                    } else if (status == RegistrationStatus.WAITING_FOR_HOSP
+                            && isTimeToNotifyAboutAwaitingHospStatus(privatlakare.getRegistreringsdatum())) {
                         mailService.sendRegistrationStatusEmail(status, privatlakare);
                     }
                 } catch (HospUpdateFailedToContactHsaException e) {
@@ -205,6 +218,9 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     }
 
     /* Private helpers */
+    private boolean isTimeToNotifyAboutAwaitingHospStatus(LocalDateTime registreringsdatum) {
+        return Period.between(registreringsdatum.toLocalDate(), LocalDate.now()).getDays() >= NOTIFY_USER_AFTER_DAYS;
+    }
 
     private List<Specialitet> getSpecialiteter(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {
         List<Specialitet> specialiteter = new ArrayList<>();
