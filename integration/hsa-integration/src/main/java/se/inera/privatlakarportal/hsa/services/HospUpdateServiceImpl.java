@@ -134,7 +134,8 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                         privatlakareRepository.save(privatlakare);
                         mailService.sendRegistrationStatusEmail(status, privatlakare);
                     } else if (status == RegistrationStatus.WAITING_FOR_HOSP
-                            && isTimeToNotifyAboutAwaitingHospStatus(privatlakare.getRegistreringsdatum())) {
+                            && isTimeToNotifyAboutAwaitingHospStatus(privatlakare.getRegistreringsdatum(),
+                            hsaHospLastUpdate)) {
                         mailService.sendRegistrationStatusEmail(status, privatlakare);
                     }
                 } catch (HospUpdateFailedToContactHsaException e) {
@@ -218,8 +219,8 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     }
 
     /* Private helpers */
-    private boolean isTimeToNotifyAboutAwaitingHospStatus(LocalDateTime registreringsdatum) {
-        return Period.between(registreringsdatum.toLocalDate(), LocalDate.now()).getDays() >= NOTIFY_USER_AFTER_DAYS;
+    private boolean isTimeToNotifyAboutAwaitingHospStatus(LocalDateTime registreringsdatum, LocalDateTime lastHospUpdate) {
+        return Period.between(registreringsdatum.toLocalDate(), lastHospUpdate.toLocalDate()).getDays() >= NOTIFY_USER_AFTER_DAYS;
     }
 
     private List<Specialitet> getSpecialiteter(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {
