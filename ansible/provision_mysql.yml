@@ -1,8 +1,8 @@
 ---
 # This playbook provisions mysql for privatlakarportalen 
 
-- hosts: privatlakarportal-mysql
-  sudo: "{{ sudo }}"
+- hosts: mysql
+  become: yes
 
   roles:
     - privatlakarportal-mysql

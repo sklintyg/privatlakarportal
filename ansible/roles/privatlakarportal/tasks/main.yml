@@ -13,13 +13,15 @@
   when: deploy_from_repo|bool
 
 - name: copy privatlakarportal-liquibase-runner-{{ version }}.zip
-  copy: src={{ inventory_dir }}/../tools/liquibase-runner/build/distributions/privatlakarportal-liquibase-runner-{{ version }}.zip dest={{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip
+  copy: src={{ playbook_dir }}/../tools/liquibase-runner/build/distributions/privatlakarportal-liquibase-runner-{{ version }}.zip dest={{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip
   when: not deploy_from_repo|bool
 
 - name: Unzip liquibase-runner-{{ version }}.zip
-  command: unzip -od {{ releases_folder }} {{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip
-  args:
+  unarchive:
+    src: "{{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip"
+    dest: "{{ releases_folder }}"
     creates: "{{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}/bin/liquibase-runner"
+    remote_src: yes
 
 - name: run liquibase update
   command: "{{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}/bin/privatlakarportal-liquibase-runner --url={{ database_url }} --username={{ database_username }} --password={{ database_password }} update"
@@ -34,7 +36,7 @@
   when: deploy_from_repo|bool
 
 - name: copy privatlakarportal-web-{{ version }}.war
-  copy: src={{ inventory_dir }}/../web/build/libs/privatlakarportal-web-{{ version }}.war dest={{ releases_folder }}/privatlakarportal-web-{{ version }}.war
+  copy: src={{ playbook_dir }}/../web/build/libs/privatlakarportal-web-{{ version }}.war dest={{ releases_folder }}/privatlakarportal-web-{{ version }}.war
   when: not deploy_from_repo|bool
 
 - name: remove old version of unpacked privatlakarportal war

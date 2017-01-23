@@ -3,3 +3,5 @@ profiles: test,pp-security-test,hsa-stub
 
 # Configuration repository
 environment_name: "dev"
+
+deploy_from_repo: false

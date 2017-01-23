@@ -25,12 +25,12 @@ app_resources_src: "{{ playbook_dir }}/../web/src/main/resources/"
 app_resources_folder: "{{ inera_root }}/privatlakarportal-resources"
 
 # Tomcat installation
-tomcat_service: tomcat-priv
-tomcat_home: "{{ inera_root }}/tomcat7"
-tomcat_conf: "{{ tomcat_home }}/conf"
-tomcat_bin:  "{{ tomcat_home }}/bin"
-tomcat_lib:  "{{ tomcat_home }}/lib"
+tomcat_service: "{{ inventory_hostname }}-tomcat"
 inera_tomcat_folder: "{{ inera_root }}/{{ tomcat_service }}"
+
+tomcat_conf: "{{ inera_tomcat_folder }}/conf"
+tomcat_bin:  "{{ inera_tomcat_folder }}/bin"
+tomcat_lib:  "{{ inera_tomcat_folder }}/lib"
 webapps_folder: "{{ inera_tomcat_folder }}/webapps"
 
 
