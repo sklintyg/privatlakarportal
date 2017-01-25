@@ -16,7 +16,8 @@ class RensningPrivatlakare extends RestClientFixture{
         def resp = restClient.post(
                 path: restPath + '/registration/setregistrationdate/' + id,
                 body: date,
-                requestContentType: JSON
+                requestContentType: JSON,
+                headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
         resp.status
     }
@@ -25,7 +26,8 @@ class RensningPrivatlakare extends RestClientFixture{
         def restClient = createRestClient()
         def resp = restClient.post(
                 path: restPath + '/cleanup/trigger',
-                requestContentType: JSON
+                requestContentType: JSON,
+                headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
         resp.status
     }
@@ -34,7 +36,8 @@ class RensningPrivatlakare extends RestClientFixture{
         def restClient = createRestClient()
         def resp = restClient.get(
                 path: restPath + '/registration/' + id,
-                requestContentType: JSON
+                requestContentType: JSON,
+                headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
         resp.data
     }

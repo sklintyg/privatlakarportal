@@ -17,7 +17,8 @@ class RegistreringsMail extends RestClientFixture {
         def restClient = createRestClient()
         def resp = restClient.delete(
             path: restPath + "/clear",
-            requestContentType: JSON
+            requestContentType: JSON,
+            headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
         resp.status
     }
@@ -26,7 +27,8 @@ class RegistreringsMail extends RestClientFixture {
         def restClient = createRestClient()
         def resp = restClient.get(
             path: restPath,
-            requestContentType: JSON
+            requestContentType: JSON,
+            headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
         mottaget = resp.data.containsKey(id)
         responseValue = resp.data.get(id)

@@ -15,7 +15,8 @@ class HospUppdatering extends RestClientFixture {
         def restClient = createRestClient()
         def resp = restClient.delete(
             path: restPath + "remove/" + id,
-            requestContentType: JSON
+            requestContentType: JSON,
+            headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
         resp.status
     }
@@ -24,7 +25,8 @@ class HospUppdatering extends RestClientFixture {
         def restClient = createRestClient()
         def resp = restClient.post(
             path: restPath + "update",
-            requestContentType: JSON
+            requestContentType: JSON,
+            headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
         resp.status
     }
@@ -33,7 +35,8 @@ class HospUppdatering extends RestClientFixture {
         def restClient = createRestClient()
         RestClientUtils.login(restClient, "Björn Anders Daniel", "Pärsson", "195206172339");
         def resp = restClient.get(
-            path: "/api/registration"
+            path: "/api/registration",
+            headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
         resp.data.hospInformation != null && resp.data.hospInformation.hsaTitles != null && resp.data.hospInformation.hsaTitles.contains("Läkare")
     }
@@ -42,7 +45,8 @@ class HospUppdatering extends RestClientFixture {
         def restClient = createRestClient()
         def resp = restClient.post(
             path: 'test/webcert/validatePrivatePractitioner/' + personId,
-            requestContentType: JSON
+            requestContentType: JSON,
+            headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
         resp.data.resultCode
     }
