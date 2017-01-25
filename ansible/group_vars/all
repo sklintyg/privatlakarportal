@@ -11,7 +11,6 @@ deploy_from_repo: true
 profiles: test
 
 # Configuration repository
-environment_name: "test"
 config_name: privatlakarportal-konfiguration
 config_repository: https://github.com/sklintyg/privatlakarportal-konfiguration.git
 config_folder: "{{ inera_root }}/privatlakarportal-konfiguration"
