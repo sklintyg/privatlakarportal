@@ -33,6 +33,9 @@ Testar fallet då läkerbehörighet finns vid registering men saknas vid ett inl
 | script | !-HospUppdatering-! |
 | ta bort hosp information | 195206172339|
 
+| script | !-HospUppdatering-! |
+| kor hosp uppdatering |
+
 !3 Privatläkaren logga in genom webcert, detta tillåts ej
 | script | !-HospUppdatering-! |
 | check | logga in genom webcert | 195206172339 | ERROR |
