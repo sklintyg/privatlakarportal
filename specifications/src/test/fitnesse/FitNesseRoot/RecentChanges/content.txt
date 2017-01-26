@@ -1,3 +1,4 @@
+|ChromeSuite.PrivatlakarPortal.WebTests.HospUppdatering.TillbakadragenLakarbehorighet||15:59:52 Thu, Jan 26, 2017|
 |FirefoxSuite||15:03:25 Wed, Nov 04, 2015|
 |ChromeSuite||15:03:11 Wed, Nov 04, 2015|
 |PrivatlakarPortal.WebTests.SuiteSetUp||15:02:54 Wed, Nov 04, 2015|
