@@ -40,4 +40,5 @@ public abstract class BaseIntegrationTest {
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType("application/xml;charset=utf-8").build();
         RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
     }
+
 }

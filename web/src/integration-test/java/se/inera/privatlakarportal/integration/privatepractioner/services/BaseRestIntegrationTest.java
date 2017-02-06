@@ -39,16 +39,19 @@ public abstract class BaseRestIntegrationTest {
      */
     @Before
     public void setupBase() {
+        RestAssured.reset();
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
         RestAssured.config = newConfig().sslConfig(sslConfig().allowAllHostnames());
     }
 
+
     @After
     public void cleanupBase() {
         RestAssured.reset();
     }
+
 
     protected static String createAuthSession(String firstName, String lastName, String personId) {
         String sessionId = RestUtil.login(firstName, lastName, personId);

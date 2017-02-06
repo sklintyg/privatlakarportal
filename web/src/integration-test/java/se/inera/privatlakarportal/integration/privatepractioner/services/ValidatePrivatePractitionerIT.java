@@ -58,7 +58,7 @@ public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
         requestTemplate.add("data", new ValidationData(PNR));
         given().body(requestTemplate.render())
                 .when()
-                .post(RestAssured.baseURI + VALIDATE_PRIVATE_PRACTITIONER_V1_0)
+                .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
                 .then().statusCode(200)
                 .rootPath(BASE)
                 .body("resultCode", is(ResultCodeEnum.OK.value()));
@@ -70,7 +70,7 @@ public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
         requestTemplate.add("data", new ValidationData(PNR_OKANT));
         given().body(requestTemplate.render())
                 .when()
-                .post(RestAssured.baseURI + VALIDATE_PRIVATE_PRACTITIONER_V1_0)
+                .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
                 .then().statusCode(200)
                 .rootPath(BASE)
                 .body("resultCode", is(ResultCodeEnum.ERROR.value()))
@@ -82,7 +82,7 @@ public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
     public void testValidatePrivatePractitionerWithInvalidRequest() throws Exception {
         given().body(brokenTemplate.render())
                 .when()
-                .post(RestAssured.baseURI + VALIDATE_PRIVATE_PRACTITIONER_V1_0)
+                .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
                 .then().statusCode(500)
                 .rootPath(BASE);
     }

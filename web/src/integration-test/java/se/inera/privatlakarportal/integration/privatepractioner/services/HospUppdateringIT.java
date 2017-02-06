@@ -22,6 +22,7 @@ import com.google.common.collect.Lists;
 import com.jayway.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.json.simple.JSONObject;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import se.inera.privatlakarportal.common.model.Registration;
@@ -61,6 +62,22 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .contentType(ContentType.JSON)
             .cookie("ROUTEID", RestUtil.routeId)
         .delete("api/stub/mails/clear");
+    }
+
+    @After
+    public void cleanup() {
+        // Ta bort registrering
+        given()
+                .contentType(ContentType.JSON)
+                .cookie("ROUTEID", RestUtil.routeId)
+                .delete("api/test/registration/remove/" + PERSONNUMMER);
+
+        // Ta bort hosp-info
+        given()
+                .contentType(ContentType.JSON)
+                .cookie("ROUTEID", RestUtil.routeId)
+                .when()
+                .delete("api/test/hosp/remove/" + PERSONNUMMER);
     }
 
     @Test
