@@ -69,12 +69,15 @@ public class SkapaPrivatlakare extends RestClientFixture {
         // An updated name is needed to create a registration
         restClient.get(
             path: 'user',
-            requestContentType: JSON)
+	    requestContentType: JSON,
+	    headers: ["Cookie":"ROUTEID="+Browser.getRouteId()])
 
         def resp = restClient.post(
             path: 'registration/create',
             body: createPayload(),
-            requestContentType: JSON)
+            requestContentType: JSON,
+	    headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
+	)
         responseStatus = resp.status
     }
 

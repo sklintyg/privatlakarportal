@@ -25,7 +25,9 @@ public class LaggTillHospInformation extends RestClientFixture {
         def resp = restClient.post(
             path: 'test/hosp/add',
             body: createPayload(),
-            requestContentType: JSON)
+            requestContentType: JSON,
+	    headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
+	)
         responseStatus = resp.status
     }
 
