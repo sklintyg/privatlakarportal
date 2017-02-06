@@ -18,7 +18,6 @@
  */
 package se.inera.privatlakarportal.integration.privatepractioner.services;
 
-import com.jayway.restassured.RestAssured;
 import org.junit.Before;
 import org.junit.Test;
 import org.stringtemplate.v4.ST;
