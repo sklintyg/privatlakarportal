@@ -26,19 +26,7 @@ stage('deploy') {
         util.run {
             ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false"], \
                 installation: 'ansible-yum', inventory: 'ansible/inventory/privatlakarportal/test', playbook: 'ansible/deploy.yml'
-            util.waitForServer('http://privatlakarportal.inera.nordicmedtest.se/services/get-private-practitioner/v1.0?wsdl')
-        }
-    }
-}
-
-stage('restAssured') {
-    node {
-        try {
-            shgradle "restAssuredTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se/ \
-                 -DbuildVersion=${buildVersion}"
-        } finally {
-            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
-               reportFiles: 'index.html', reportName: 'RestAssured results'
+            util.waitForServer('http://privatlakarportal.inera.nordicmedtest.se/version.jsp')
         }
     }
 }
@@ -52,6 +40,18 @@ stage('fitnesse') {
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
                 reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
+        }
+    }
+}
+
+stage('restAssured') {
+    node {
+        try {
+            shgradle "restAssuredTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se/ \
+                 -DbuildVersion=${buildVersion}"
+        } finally {
+            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
+               reportFiles: 'index.html', reportName: 'RestAssured results'
         }
     }
 }
