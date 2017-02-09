@@ -31,6 +31,18 @@ stage('deploy') {
     }
 }
 
+stage('restAssured') {
+    node {
+        try {
+            shgradle "restAssuredTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se/ \
+                 -DbuildVersion=${buildVersion}"
+        } finally {
+            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
+               reportFiles: 'index.html', reportName: 'RestAssured results'
+        }
+    }
+}
+
 stage('fitnesse') {
     node {
         try {
@@ -40,18 +52,6 @@ stage('fitnesse') {
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
                 reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
-        }
-    }
-}
-
-stage('restAssured') {
-    node {
-        try {
-            shgradle "restAssuredTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se/ \
-                 -DbuildVersion=${buildVersion}"
-        } finally {
-            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
-               reportFiles: 'index.html', reportName: 'RestAssured results'
         }
     }
 }
