@@ -3,3 +3,6 @@ profiles: test,pp-security-test,hsa-stub,wc-stub,pu-stub,mail-stub,testability-a
 
 # Configuration repository
 environment_name: "test"
+
+#Most correspond to the same port as in the tools project
+tomcat_https_port: 8189
