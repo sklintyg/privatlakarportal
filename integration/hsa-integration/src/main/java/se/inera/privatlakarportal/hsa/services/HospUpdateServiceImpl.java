@@ -42,11 +42,12 @@ import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 import javax.xml.ws.WebServiceException;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * Created by pebe on 2015-09-03.
@@ -55,6 +56,8 @@ import java.util.Set;
 public class HospUpdateServiceImpl implements HospUpdateService {
 
     private static final int NOTIFY_USER_AFTER_DAYS = 10;
+
+    private static final int REMOVE_REGISTRATION_AFTER_DAYS = 30;
 
     private static final Logger LOG = LoggerFactory.getLogger(HospUpdateServiceImpl.class);
 
@@ -119,21 +122,25 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             // Find privatlakare without hospinformation
             List<Privatlakare> privatlakareList = privatlakareRepository.findNeverHadLakarBehorighet();
             for (Privatlakare privatlakare : privatlakareList) {
-
-                LOG.info("Checking privatlakare '{}' for updated hosp information", privatlakare.getPersonId());
                 try {
                     RegistrationStatus status = updateHospInformation(privatlakare, true);
-                    LOG.info("updateHospInformation returned status '{}'", status);
-
                     // Check if information has been updated
-                    if (status == RegistrationStatus.AUTHORIZED
-                            || status == RegistrationStatus.NOT_AUTHORIZED) {
+                    if (status.equals(RegistrationStatus.AUTHORIZED)
+                            || status.equals(RegistrationStatus.NOT_AUTHORIZED)) {
                         privatlakareRepository.save(privatlakare);
                         mailService.sendRegistrationStatusEmail(status, privatlakare);
-                    } else if (status == RegistrationStatus.WAITING_FOR_HOSP
-                            && isTimeToNotifyAboutAwaitingHospStatus(privatlakare.getRegistreringsdatum(),
-                            hsaHospLastUpdate)) {
-                        mailService.sendRegistrationStatusEmail(status, privatlakare);
+                    } else if (status.equals(RegistrationStatus.WAITING_FOR_HOSP)) {
+                        if (isTimeToRemoveRegistration(privatlakare.getRegistreringsdatum())) {
+                            // Remove registration as this is the third attempt without success
+                            LOG.info("Removing {} from registration repo", privatlakare.getPersonId());
+                            privatlakareRepository.delete(privatlakare);
+                            mailService.sendRegistrationRemovedEmail(privatlakare);
+                            monitoringService.logRegistrationRemoved(privatlakare.getPersonId());
+                        } else if (isTimeToNotifyAboutAwaitingHospStatus(privatlakare.getRegistreringsdatum(),
+                                hsaHospLastUpdate)) {
+                            LOG.info("Sending AWAITING_HOSP mail to {}", privatlakare.getPersonId());
+                            mailService.sendRegistrationStatusEmail(status, privatlakare);
+                        }
                     }
                 } catch (HospUpdateFailedToContactHsaException e) {
                     LOG.error("Failed to contact HSA with error '{}'", e.getMessage());
@@ -217,7 +224,12 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
     /* Private helpers */
     private boolean isTimeToNotifyAboutAwaitingHospStatus(LocalDateTime registreringsdatum, LocalDateTime lastHospUpdate) {
-        return Period.between(registreringsdatum.toLocalDate(), lastHospUpdate.toLocalDate()).getDays() >= NOTIFY_USER_AFTER_DAYS;
+        return DAYS.between(registreringsdatum.toLocalDate(), lastHospUpdate.toLocalDate()) >= NOTIFY_USER_AFTER_DAYS;
+    }
+
+    private boolean isTimeToRemoveRegistration(LocalDateTime registrationDate) {
+        return DAYS.between(registrationDate.toLocalDate(), LocalDateTime.now().toLocalDate())
+                >= REMOVE_REGISTRATION_AFTER_DAYS;
     }
 
     private List<Specialitet> getSpecialiteter(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {

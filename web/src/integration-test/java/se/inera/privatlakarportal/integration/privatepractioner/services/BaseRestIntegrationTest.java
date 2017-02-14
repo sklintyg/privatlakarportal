@@ -46,12 +46,10 @@ public abstract class BaseRestIntegrationTest {
         RestAssured.config = newConfig().sslConfig(sslConfig().allowAllHostnames());
     }
 
-
     @After
     public void cleanupBase() {
         RestAssured.reset();
     }
-
 
     protected static String createAuthSession(String firstName, String lastName, String personId) {
         String sessionId = RestUtil.login(firstName, lastName, personId);

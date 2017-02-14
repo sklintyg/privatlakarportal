@@ -23,7 +23,6 @@ import java.io.InputStream;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -78,6 +77,12 @@ public class MailServiceImpl implements MailService {
     @Value("${mail.admin.content.hsa.body}")
     private String hsaGenerationMailBody;
 
+    @Value("${mail.content.removed.body}")
+    private String registrationRemovedBody;
+
+    @Value("${mail.content.removed.subject}")
+    private String registrationRemovedSubject;
+
     private static final String INERA_LOGO = "inera_logo.png";
 
     private static final String BOTTOM_BODY_CONTENT = "<br/><br/><span><img src='cid:inera_logo'></span>";
@@ -92,7 +97,7 @@ public class MailServiceImpl implements MailService {
     public void sendHsaGenerationStatusEmail() {
         try {
             LOG.info("Sending hsa-generation-status email to {}", adminEpost);
-            MimeMessage message = createHsaGenerationStatusMessage(adminEpost);
+            MimeMessage message = createMessage(adminEpost, hsaGenerationMailSubject, hsaGenerationMailBody);
             message.saveChanges();
             mailSender.send(message);
         } catch (MessagingException | PrivatlakarportalServiceException | MailException | IOException e) {
@@ -106,7 +111,8 @@ public class MailServiceImpl implements MailService {
     public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) {
         try {
             LOG.info("Sending registration status email to {}", privatlakare.getEpost());
-            MimeMessage message = createStatusMessage(status, privatlakare);
+            MimeMessage message = createMessage(privatlakare.getEpost(), messageSubjectFromRegistrationStatus(status),
+                    messageBodyFromRegistrationStatus(status));
             message.saveChanges();
             mailSender.send(message);
         } catch (MessagingException | PrivatlakarportalServiceException | MailException | IOException e) {
@@ -115,22 +121,27 @@ public class MailServiceImpl implements MailService {
         }
     }
 
-    private MimeMessage createHsaGenerationStatusMessage(String epost) throws AddressException, MessagingException, IOException {
-        MimeMessage message = mailSender.createMimeMessage();
-        message.setFrom(new InternetAddress(from));
-        message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress(epost));
-        buildEmailContent(message, hsaGenerationMailSubject, hsaGenerationMailBody);
-        return message;
+    @Override
+    @Async
+    public void sendRegistrationRemovedEmail(Privatlakare privatlakare) {
+        try {
+            LOG.info("Sending registration status email to {}", privatlakare.getEpost());
+            MimeMessage message = createMessage(privatlakare.getEpost(), registrationRemovedSubject,
+                    registrationRemovedBody);
+            message.saveChanges();
+            mailSender.send(message);
+        } catch (MessagingException | PrivatlakarportalServiceException | MailException | IOException e) {
+            LOG.error("Error while sending registration status email with message {}", e.getMessage(), e);
+            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, e.getMessage());
+        }
     }
 
-    private MimeMessage createStatusMessage(RegistrationStatus status, Privatlakare privatlakare) throws MessagingException,
-            PrivatlakarportalServiceException, IOException {
+    private MimeMessage createMessage(String email, String subject, String body) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress(privatlakare.getEpost()));
-        buildEmailContent(message, messageSubjectFromRegistrationStatus(status), messageBodyFromRegistrationStatus(status));
+                new InternetAddress(email));
+        buildEmailContent(message, subject, body);
         return message;
     }
 

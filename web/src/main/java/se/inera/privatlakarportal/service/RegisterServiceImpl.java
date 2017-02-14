@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -289,7 +290,7 @@ public class RegisterServiceImpl implements RegisterService {
         return true;
     }
 
-    // Visible for test purposes only!
+    @VisibleForTesting
     @Override
     public void injectHsaInterval(int hsaIdNotificationInterval) {
         this.hsaIdNotificationInterval = hsaIdNotificationInterval;

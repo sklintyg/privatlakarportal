@@ -29,4 +29,6 @@ public interface MonitoringLogService {
     void logUserAuthorizedInHosp(String id);
 
     void logUserNotAuthorizedInHosp(String id);
+
+    void logRegistrationRemoved(String id);
 }

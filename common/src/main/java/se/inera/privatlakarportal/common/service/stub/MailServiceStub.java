@@ -41,6 +41,7 @@ public class MailServiceStub implements MailService {
     private static final String WAITING_FOR_HOSP_BODY = "Väntar på hosp-information";
     private static final String HSA_GENERATION_STATUS = "Dags att göra ny TAKning för genererade HSA-IDn";
     private static final Logger LOG = LoggerFactory.getLogger(MailServiceStub.class);
+    private static final String REGISTRATION_REMOVED = "Registrering borttagen";
 
     @Value("{mail.admin}")
     private String adminEpost;
@@ -64,14 +65,20 @@ public class MailServiceStub implements MailService {
     public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) throws PrivatlakarportalServiceException {
         LOG.info("Sending registration status email to {}", privatlakare.getEpost());
         try {
-            mailStore.addMail(privatlakare.getPersonId(), createMessage(status, privatlakare));
+            mailStore.addMail(privatlakare.getPersonId(), createHtmlBody(status));
         } catch (MessagingException | PrivatlakarportalServiceException e) {
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, e.getMessage());
         }
     }
 
-    private String createMessage(RegistrationStatus status, Privatlakare privatlakare) throws MessagingException, PrivatlakarportalServiceException {
-        return createHtmlBody(status);
+    @Override
+    public void sendRegistrationRemovedEmail(Privatlakare privatlakare) {
+        LOG.info("Sending registration removed email to {}", privatlakare.getEpost());
+        try {
+            mailStore.addMail(privatlakare.getPersonId(), REGISTRATION_REMOVED);
+        } catch (PrivatlakarportalServiceException e) {
+            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, e.getMessage());
+        }
     }
 
     private String createHtmlBody(RegistrationStatus status) throws MessagingException, PrivatlakarportalServiceException {

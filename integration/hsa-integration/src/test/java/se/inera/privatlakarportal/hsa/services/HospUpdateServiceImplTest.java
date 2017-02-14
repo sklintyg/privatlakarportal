@@ -430,16 +430,16 @@ public class HospUpdateServiceImplTest {
 
     @Test public void testAwaitingHospNotificationMailSentCorrectly() {
         HospUppdatering hospUppdatering = new HospUppdatering();
-        hospUppdatering.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
+        hospUppdatering.setSenasteHospUppdatering(LocalDate.now().minusDays(15).atStartOfDay());
         when(hospUppdateringRepository.findSingle()).thenReturn(hospUppdatering);
 
-        LocalDateTime hospLastUpdate = LocalDate.parse("2015-09-15").atStartOfDay();
+        LocalDateTime hospLastUpdate = LocalDate.now().atStartOfDay();
         when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
 
         Privatlakare privatlakare1 = new Privatlakare();
         privatlakare1.setPersonId(PERSON_ID);
         privatlakare1.setGodkandAnvandare(true);
-        privatlakare1.setRegistreringsdatum(LocalDate.parse("2015-09-05").atStartOfDay());
+        privatlakare1.setRegistreringsdatum(LocalDate.now().minusDays(10).atStartOfDay());
         ArrayList<Privatlakare> list = new ArrayList<>();
         list.add(privatlakare1);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
@@ -459,7 +459,7 @@ public class HospUpdateServiceImplTest {
         verify(mailService).sendRegistrationStatusEmail(RegistrationStatus.WAITING_FOR_HOSP, privatlakare1);
     }
 
-    @Test public void testAwaitingHospNotificationMailNotSentBeforeAlottedTime() {
+    @Test public void testAwaitingHospNotificationMailNotSentBeforeAllottedTime() {
         HospUppdatering hospUppdatering = new HospUppdatering();
         hospUppdatering.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
         when(hospUppdateringRepository.findSingle()).thenReturn(hospUppdatering);
@@ -489,6 +489,49 @@ public class HospUpdateServiceImplTest {
 
         // Since registreringsdatum is less than 10 days before the last hospUpdate, a mail should not be sent
         verify(mailService, times(0)).sendRegistrationStatusEmail(RegistrationStatus.WAITING_FOR_HOSP, privatlakare1);
+    }
+
+    @Test public void testRegistrationRemovedAfterCorrectTimePeriod() {
+        LocalDateTime hospLastUpdate = LocalDate.parse("2015-09-15").atStartOfDay();
+        when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
+
+        Privatlakare privatlakare1 = new Privatlakare();
+        privatlakare1.setPersonId(PERSON_ID);
+        privatlakare1.setGodkandAnvandare(true);
+        privatlakare1.setRegistreringsdatum(LocalDate.now().minusDays(30).atStartOfDay());
+        ArrayList<Privatlakare> list = new ArrayList<>();
+        list.add(privatlakare1);
+        when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
+
+        // No hosp-data available for user
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
+
+        hospUpdateService.scheduledUpdateHospInformation();
+
+        verify(mailService).sendRegistrationRemovedEmail(privatlakare1);
+        verify(monitoringLogService).logRegistrationRemoved(privatlakare1.getPersonId());
+        verify(privatlakareRepository).delete(privatlakare1);
+    }
+
+    @Test public void testRegistrationNotRemovedWhileInAllowedTimeFrame() {
+        LocalDateTime hospLastUpdate = LocalDate.parse("2015-09-15").atStartOfDay();
+        when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
+
+        Privatlakare privatlakare1 = new Privatlakare();
+        privatlakare1.setPersonId(PERSON_ID);
+        privatlakare1.setGodkandAnvandare(true);
+        privatlakare1.setRegistreringsdatum(LocalDate.now().minusDays(29).atStartOfDay());
+        ArrayList<Privatlakare> list = new ArrayList<>();
+        list.add(privatlakare1);
+        when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
+
+        // No hosp-data available for user
+        when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
+
+        hospUpdateService.scheduledUpdateHospInformation();
+
+        verify(mailService, times(0)).sendRegistrationRemovedEmail(privatlakare1);
+        verify(privatlakareRepository, times(0)).delete(privatlakare1);
     }
 
     private GetHospPersonResponseType createGetHospPersonResponse() {

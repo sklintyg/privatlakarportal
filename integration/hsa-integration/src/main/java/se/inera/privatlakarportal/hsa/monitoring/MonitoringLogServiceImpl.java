@@ -48,6 +48,11 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         logEvent(MonitoringEvent.HOSP_NOT_AUTHORIZED, HashUtility.hash(id));
     }
 
+    @Override
+    public void logRegistrationRemoved(String id) {
+        logEvent(MonitoringEvent.REGISTRATION_REMOVED, HashUtility.hash(id));
+    }
+
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {
         LOG.info(LogMarkers.MONITORING, buildMessage(logEvent), logMsgArgs);
     }
@@ -61,7 +66,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     private enum MonitoringEvent {
         HOSP_WAITING("User '{}' is waiting for HOSP"),
         HOSP_AUTHORIZED("User '{}' is authorized doctor in HOSP"),
-        HOSP_NOT_AUTHORIZED("User '{}' is not authorized doctor in HOSP");
+        HOSP_NOT_AUTHORIZED("User '{}' is not authorized doctor in HOSP"),
+        REGISTRATION_REMOVED("User '{}' exceeded number of registration attempts, removing user");
 
         private String message;
 

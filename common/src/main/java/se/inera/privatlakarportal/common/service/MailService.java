@@ -36,5 +36,7 @@ public interface MailService {
      */
     void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare);
 
+    void sendRegistrationRemovedEmail(Privatlakare privatlakare);
+
     void sendHsaGenerationStatusEmail();
 }

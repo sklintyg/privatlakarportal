@@ -44,6 +44,9 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
 
     @Before
     public void setup() {
+        // Logga in
+        String session = createAuthSession(FORNAMN, EFTERNAMN, PERSONNUMMER);
+
         // Ta bort registrering
         given()
             .contentType(ContentType.JSON)
@@ -59,9 +62,9 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
 
         // Rensa mail-stubbe
         given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .delete("api/stub/mails/clear");
+                .contentType(ContentType.JSON)
+                .cookie("ROUTEID", RestUtil.routeId)
+                .delete("api/stub/mails/clear");
     }
 
     @After
@@ -78,13 +81,15 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
                 .cookie("ROUTEID", RestUtil.routeId)
                 .when()
                 .delete("api/test/hosp/remove/" + PERSONNUMMER);
+        // Rensa mail-stubbe
+        given()
+                .contentType(ContentType.JSON)
+                .cookie("ROUTEID", RestUtil.routeId)
+                .delete("api/stub/mails/clear");
     }
 
     @Test
     public void testTillbakadragenLakarbehorighet() {
-        // Logga in
-        String session = createAuthSession(FORNAMN, EFTERNAMN, PERSONNUMMER);
-
         // Lägg till i hosp
         given()
             .contentType(ContentType.JSON)
@@ -150,10 +155,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
     }
 
     @Test
-    public void testUppdateraTillLakare() throws InterruptedException {
-        // Logga in
-        String session = createAuthSession(FORNAMN, EFTERNAMN, PERSONNUMMER);
-
+    public void testUppdateraTillLakare() {
         // Se till att uppdaterat namn finns
         given()
             .contentType(ContentType.JSON)
@@ -219,6 +221,62 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .assertThat()
                 .body(PERSONNUMMER, Matchers.equalTo("Registration klar"));
 
+    }
+
+    @Test
+    public void testRemovalStrategy() throws InterruptedException {
+        // Se till att uppdaterat namn finns
+        given()
+            .contentType(ContentType.JSON)
+            .cookie("ROUTEID", RestUtil.routeId)
+        .get("api/user");
+
+        // Skapa registrering
+        given()
+            .contentType(ContentType.JSON)
+            .cookie("ROUTEID", RestUtil.routeId)
+            .body(createValidRegistration())
+        .expect()
+            .statusCode(200)
+        .when()
+            .post("api/registration/create");
+
+        // Ändra registreringsdatum så att städningen ska triggas
+        given()
+            .contentType(ContentType.JSON)
+            .cookie("ROUTEID", RestUtil.routeId)
+            .body("2017-01-15")
+        .when()
+            .post("api/test/registration/setregistrationdate/" + PERSONNUMMER);
+
+        // Trigga hosp-uppdatering
+        given()
+            .contentType(ContentType.JSON)
+            .cookie("ROUTEID", RestUtil.routeId)
+        .expect()
+            .statusCode(200)
+        .when()
+            .post("api/test/hosp/update");
+
+        // Försök hämta registreringsinfo, denna ska vara rensad
+        given()
+            .contentType(ContentType.JSON)
+            .cookie("ROUTEID", RestUtil.routeId)
+        .when()
+            .get("api/test/registration/" + PERSONNUMMER)
+        .then()
+            .assertThat()
+                .body(Matchers.isEmptyOrNullString());
+
+        // Verifiera att mail om borttagen registrering gått iväg
+        given()
+            .contentType(ContentType.JSON)
+            .cookie("ROUTEID", RestUtil.routeId)
+        .when()
+            .get("api/stub/mails")
+        .then()
+            .assertThat()
+                .body(PERSONNUMMER, Matchers.equalTo("Registrering borttagen"));
     }
 
     private CreateRegistrationRequest createValidRegistration() {
