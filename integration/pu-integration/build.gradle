@@ -1,5 +1,3 @@
-description = 'Inera Privatlakaportal PU-Integration module'
-
 dependencies {
     compile project(":privatlakarportal-common")
 

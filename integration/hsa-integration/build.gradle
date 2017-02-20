@@ -1,5 +1,3 @@
-description = 'Inera Privatlakaportal HSA-Integration module'
-
 ext.wsdlFile = file("src/main/resources/schemas/wsdl/HsaWsInteraction_3.18.wsdl")
 ext.generatedJavaDir = file("generatedSource/java")
 

@@ -45,7 +45,6 @@ public class DbChecker {
     private String script;
 
     public DbChecker(DataSource dataSource, String script) {
-        super();
         this.dataSource = dataSource;
         this.script = script;
     }
@@ -67,17 +66,14 @@ public class DbChecker {
                 throw new Error("Database version mismatch. Check liquibase status. Errors:\n" + errors.toString() + database.getDatabaseProductName()
                         + ", " + database);
             }
-        } catch (liquibase.exception.LiquibaseException e) {
-            throw new Error("Database not ok, aborting startup.", e);
-        } catch (SQLException e) {
-            throw new Error("Database not ok, aborting startup.", e);
+        } catch (liquibase.exception.LiquibaseException | SQLException e) {
+            throw new RuntimeException("Database not ok, aborting startup.", e);
         } finally {
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (DatabaseException e) {
-                    LOG.info("Could not close DatabaseConnection in DbChecker, {}", e);
-                    throw new Error("Could not close DatabaseConnection in DbChecker", e);
+                     // Ignore. Nothing can be done.
                 }
             }
         }

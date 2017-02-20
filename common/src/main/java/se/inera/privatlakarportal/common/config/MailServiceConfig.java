@@ -107,9 +107,11 @@ public class MailServiceConfig implements AsyncConfigurer {
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        // CHECKSTYLE:OFF MagicNumber
         executor.setCorePoolSize(10);
         executor.setMaxPoolSize(42);
         executor.setQueueCapacity(100);
+        // CHECKSTYLE:ON MagicNumber
         executor.setThreadNamePrefix("MyExecutor-");
         executor.initialize();
         return executor;

@@ -3,34 +3,18 @@ apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.moowork.grunt'
 apply plugin: 'idea'
 
-sourceSets {
-    restAssuredTest {
-        java {
-            compileClasspath += sourceSets.main.output + sourceSets.test.output
-            runtimeClasspath += sourceSets.main.output + sourceSets.test.output
-            srcDir file('src/integration-test/java')
-        }
-        resources.srcDir file('src/integration-test/resources')
-    }
-}
-
-configurations {
-    restAssuredTestCompile.extendsFrom testCompile
-    restAssuredTestRuntime.extendsFrom testRuntime
+test {
+    exclude '**/*IT*'
 }
 
 task restAssuredTest(type: Test) {
-    systemProperty "integration.tests.baseUrl", System.properties['baseUrl'] ?: 'http://localhost:8090/'
-
     outputs.upToDateWhen { false }
-    testClassesDir = sourceSets.restAssuredTest.output.classesDir
-    classpath = sourceSets.restAssuredTest.runtimeClasspath
+    systemProperty "integration.tests.baseUrl", System.properties['baseUrl'] ?: 'http://localhost:8090/'
+    include '**/*IT*'
 }
 
 idea {
     module {
-        //and some extra test source dirs
-        scopes.TEST.plus += [ configurations.restAssuredTestCompile, configurations.restAssuredTestRuntime ]
         excludeDirs += file('node_modules')
         excludeDirs += file('src/main/webapp/bower_components')
     }
@@ -51,10 +35,11 @@ if (project.hasProperty('privatlakarportal.useMinifiedJavaScript')) {
         webAppDirName = 'build/webapp'
     }
     war.dependsOn grunt_build
-}
-else {
+} else {
     war.dependsOn grunt_build_no_minify
 }
+
+war.dependsOn createVersionPropertyFile
 
 task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
     script = file('node_modules/bower/bin/bower')
@@ -75,13 +60,13 @@ gretty {
     contextPath = '/'
     logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
     jvmArgs = [
-        '-Dspring.profiles.active=dev',
-        '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties',
-        '-Dprivatlakarportal.mailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
-        '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',
-        '-Dprivatlakarportal.resources.folder=/' +projectDir + '/src/main/resources',
-        '-XX:MaxPermSize=256M'
-    ]
+               '-Dspring.profiles.active=dev',
+               '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties',
+               '-Dprivatlakarportal.mailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
+               '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',
+               '-Dprivatlakarportal.resources.folder=/' +projectDir + '/src/main/resources',
+               '-XX:MaxPermSize=256M'
+               ]
     fastReload = true
     inplaceMode = 'hard'
     scanInterval = 0
@@ -93,7 +78,9 @@ dependencies {
     compile project(":privatlakarportal-pu-integration")
     compile project(":privatlakarportal-wc-integration")
     compile project(":privatlakarportal-common")
-    
+
+    compile 'se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.3'
+
     compile "org.springframework:spring-webmvc:${springContextVersion}"
     compile "org.springframework.ws:spring-ws-core:2.2.2.RELEASE"
     compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
@@ -106,32 +93,21 @@ dependencies {
     compile 'wsdl4j:wsdl4j:1.6.3'
     compile 'commons-lang:commons-lang:2.6'
     compile 'org.apache.commons:commons-lang3:3.1'
-
-    compile('io.swagger:swagger-jaxrs:1.5.4') {
-        transitive = false;
-    }
-    compile("io.springfox:springfox-swagger2:2.4.0") 
-    compile('io.springfox:springfox-swagger-ui:2.4.0')
-
-    compile 'se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.3'
-
     compile 'org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}'
     compile 'org.apache.cxf:cxf-rt-transports-http:${cxfVersion}'
+    compile "io.springfox:springfox-swagger2:2.4.0"
+    compile "io.springfox:springfox-swagger-ui:2.4.0"
+    compile("io.swagger:swagger-jaxrs:1.5.4") {
+        transitive = false;
+    }
+
+    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+    compileOnly 'jstl:jstl:1.2'
 
     testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
-    testCompile ("junit:junit:${junitVersion}") {
-        exclude module : "hamcrest"
-        exclude module : "hamcrest-core"
-    }
-    testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile "org.springframework:spring-test:${springContextVersion}"
     testCompile 'org.unitils:unitils-core:3.3'
-
     testCompile "org.antlr:ST4:${stringTemplateVersion}"
-
-    restAssuredTestCompile "com.jayway.restassured:rest-assured:${restAssuredVersion}"
-    restAssuredTestCompile "com.jayway.restassured:json-schema-validator:${restAssuredVersion}"
-    
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-    providedCompile 'jstl:jstl:1.2'
+    testCompile "com.jayway.restassured:rest-assured:${restAssuredVersion}"
+    testCompile "com.jayway.restassured:json-schema-validator:${restAssuredVersion}"
 }
