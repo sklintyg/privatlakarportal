@@ -36,7 +36,7 @@ stage('restAssured') {
         try {
             shgradle "restAssuredTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se/ \
                  -DbuildVersion=${buildVersion} \
-                    --tests se.inera.privatlakarportal.integration.privatepractioner.services.HospUppdateringIT"
+                    --tests se.inera.intyg.privatlakarportal.integration.privatepractioner.services.HospUppdateringIT"
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
                reportFiles: 'index.html', reportName: 'RestAssured results'

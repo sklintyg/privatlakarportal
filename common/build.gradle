@@ -1,22 +1,19 @@
 dependencies {
     compile project(":privatlakarportal-persistence")
 
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.1'
-    compile 'javax.mail:javax.mail-api:1.5.2'
-    compile 'com.sun.mail:javax.mail:1.5.2'
-    compile "org.springframework:spring-context-support:${springContextVersion}"
-    compile "org.springframework:spring-webmvc:${springContextVersion}"
-    compile 'org.slf4j:slf4j-api:1.7.10'
-    compile 'ch.qos.logback:logback-classic:1.0.13'
-    compile 'com.google.guava:guava:18.0'
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'commons-io:commons-io:2.4'
-    compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
     compile "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
-    compile 'commons-codec:commons-codec:1.10'
+    compile "org.springframework:spring-context-support:${springContextVersion}"
+    compile "org.springframework:spring-webmvc:${springContextVersion}"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+    compile "com.google.guava:guava:${guavaVersion}"
+    compile "com.sun.mail:javax.mail:${javaxMailVersion}"
+    compile "javax.mail:javax.mail-api:${javaxMailVersion}"
+    compile "commons-codec:commons-codec:${commonsCodecVersion}"
+    compile "commons-io:commons-io:${commonsIOVersion}"
+    compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
 
-    testCompile 'org.aspectj:aspectjweaver:1.6.11'
-    testCompile "org.springframework:spring-test:${springContextVersion}"
+    compileOnly "javax.servlet:javax.servlet-api:${servletApiVersion}"
+
+    testCompile "org.aspectj:aspectjweaver:${aspectJVersion}"
 }

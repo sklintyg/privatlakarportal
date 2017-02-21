@@ -27,21 +27,13 @@ task wsdl2Java(type: JavaExec) {
 compileJava.dependsOn(wsdl2Java)
 
 dependencies {
-    compile project(":privatlakarportal-persistence")
     compile project(":privatlakarportal-common")
 
     compile "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
-    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.1"
-    compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
+    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:${jacksonVersion}"
     compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
-    compile "org.springframework:spring-context:${springContextVersion}"
-    compile 'ch.qos.logback:logback-classic:1.0.13'
-    compile 'com.google.guava:guava:18.0'
 
     wsdlgen "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion}"
     wsdlgen "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion}"
     wsdlgen "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
-
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-all:1.10.19'
 }

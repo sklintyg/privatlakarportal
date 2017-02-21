@@ -1,23 +1,17 @@
-description = "Inera Privatläkarportal - Persistence project"
-
 dependencies {
-    compile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final"
-    compile "org.hibernate:hibernate-entitymanager:4.3.11.Final"
-    compile "org.springframework:spring-orm:${springContextVersion}"
-    compile "org.springframework:spring-jms:${springContextVersion}"
-    compile 'com.h2database:h2:1.4.183'
-    compile 'org.jadira.usertype:usertype.extended:5.0.0.GA'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
-    compile 'org.springframework.data:spring-data-jpa:1.9.0.RELEASE'
-    compile 'com.zaxxer:HikariCP-java6:2.3.5'
+    compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    compile "com.h2database:h2:${h2Version}"
+    compile "com.zaxxer:HikariCP-java6:${hikariCPVersion}"
+    compile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:${hibernateJpaVersion}"
+    compile "org.hibernate:hibernate-entitymanager:${hibernateEntityManagerVersion}"
+    compile "org.jadira.usertype:usertype.extended:${usertypeVersion}"
     compile "org.liquibase:liquibase-core:${liquibaseVersion}"
+    compile "org.springframework.data:spring-data-jpa:${springDataJpaVersion}"
+    compile "org.springframework:spring-jms:${springContextVersion}"
+    compile "org.springframework:spring-orm:${springContextVersion}"
 
-    compileOnly "org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1"
+    compileOnly "org.apache.geronimo.specs:geronimo-jms_1.1_spec:${geronimoJmsVersion}"
 
-    testCompile 'org.codehaus.groovy:groovy-all:2.3.6'
-    testCompile "org.apache.activemq:activemq-spring:5.9.1"
-    testCompile "org.springframework:spring-test:${springContextVersion}"
-    testCompile 'junit:junit:4.12'
-
-    testRuntime "com.h2database:h2:1.3.171"
+    testCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    testCompile "org.apache.activemq:activemq-spring:${activeMQSpringVersion}"
 }

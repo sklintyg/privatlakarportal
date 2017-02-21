@@ -20,7 +20,7 @@ package se.inera.intyg.privatlakarportal.common.model;
 
 import java.util.stream.Stream;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by pebe on 2015-08-06.

@@ -1,4 +1,3 @@
-description = 'Inera Privatläkarportal Fitnesse specifications'
 apply plugin: 'groovy'
 apply plugin: 'inera-fitnesse'
 
@@ -23,19 +22,22 @@ sonarqube {
 
 dependencies {
     def seleniumVersion = "2.52.0"
+    def fitnesseVersion = "20150814"
+    def gebVersion = "0.10.0"
+    def httpBuilderVersion = "0.7.1"
 
     compile project(":privatlakarportal-web")
-    compile "org.gebish:geb-core:0.10.0"
+
+    compile "org.gebish:geb-core:${gebVersion}"
     compile "org.seleniumhq.selenium:selenium-server:${seleniumVersion}"
-    compile "org.fitnesse:fitnesse:20150814"
-    compile "org.codehaus.groovy:groovy-all:2.4.7"
-    compile "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
+    compile "org.fitnesse:fitnesse:${fitnesseVersion}"
+    compile "org.codehaus.groovy.modules.http-builder:http-builder:${httpBuilderVersion}"
 
     fitnesse "org.springframework:spring-core:${springContextVersion}"
-    fitnesse "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
-    fitnesse "org.gebish:geb-core:0.10.0"
-    fitnesse "org.codehaus.groovy:groovy-all:2.4.7"
-    fitnesse "org.fitnesse:fitnesse:20150814"
+    fitnesse "org.codehaus.groovy.modules.http-builder:http-builder:${httpBuilderVersion}"
+    fitnesse "org.gebish:geb-core:${gebVersion}"
+    fitnesse "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    fitnesse "org.fitnesse:fitnesse:${fitnesseVersion}"
     fitnesse "org.seleniumhq.selenium:selenium-support:${seleniumVersion}"
     fitnesse "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"
     fitnesse "org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}"
