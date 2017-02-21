@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.exception;
+package se.inera.intyg.privatlakarportal.service.exception;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 
 /**
  * Created by pebe on 2015-08-17.

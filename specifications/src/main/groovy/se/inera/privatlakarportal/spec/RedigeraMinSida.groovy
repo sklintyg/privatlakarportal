@@ -1,6 +1,6 @@
-package se.inera.privatlakarportal.spec
+package se.inera.intyg.privatlakarportal.spec
 
-import se.inera.privatlakarportal.page.MinSidaPage
+import se.inera.intyg.privatlakarportal.page.MinSidaPage
 
 class RedigeraMinSida {
 

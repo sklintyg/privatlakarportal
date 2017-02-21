@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.terms.services;
+package se.inera.intyg.privatlakarportal.integration.terms.services;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,7 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import se.inera.privatlakarportal.integration.terms.services.config.TermsWebServiceTestConfig;
+import se.inera.intyg.privatlakarportal.integration.terms.services.config.TermsWebServiceTestConfig;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionertermsresponder.v1.GetPrivatePractitionerTermsResponseType;
 
 @RunWith(SpringJUnit4ClassRunner.class)

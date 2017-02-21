@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.persistence.repository;
+package se.inera.intyg.privatlakarportal.persistence.repository;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,9 +30,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import se.inera.privatlakarportal.persistence.config.PersistenceConfigDev;
-import se.inera.privatlakarportal.persistence.config.PersistenceConfigTest;
-import se.inera.privatlakarportal.persistence.model.HospUppdatering;
+import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigDev;
+import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigTest;
+import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { PersistenceConfigTest.class, PersistenceConfigDev.class })

@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.web.controller.api;
+package se.inera.intyg.privatlakarportal.web.controller.api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.inera.privatlakarportal.service.RegisterService;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
+import se.inera.intyg.privatlakarportal.service.RegisterService;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
 
 import static org.mockito.Mockito.verify;
 

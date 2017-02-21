@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service;
+package se.inera.intyg.privatlakarportal.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -45,23 +45,23 @@ import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 
 import se.inera.ifv.hsawsresponder.v3.*;
-import se.inera.privatlakarportal.auth.PrivatlakarUser;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
-import se.inera.privatlakarportal.common.model.Registration;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.common.service.DateHelperService;
-import se.inera.privatlakarportal.common.service.MailService;
-import se.inera.privatlakarportal.common.service.stub.MailStubStore;
-import se.inera.privatlakarportal.hsa.services.HospPersonService;
-import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
-import se.inera.privatlakarportal.persistence.model.*;
-import se.inera.privatlakarportal.persistence.repository.*;
-import se.inera.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
-import se.inera.privatlakarportal.service.model.*;
-import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
+import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.intyg.privatlakarportal.common.model.Registration;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
+import se.inera.intyg.privatlakarportal.common.service.MailService;
+import se.inera.intyg.privatlakarportal.common.service.stub.MailStubStore;
+import se.inera.intyg.privatlakarportal.hsa.services.HospPersonService;
+import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
+import se.inera.intyg.privatlakarportal.persistence.model.*;
+import se.inera.intyg.privatlakarportal.persistence.repository.*;
+import se.inera.intyg.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
+import se.inera.intyg.privatlakarportal.service.model.*;
+import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {

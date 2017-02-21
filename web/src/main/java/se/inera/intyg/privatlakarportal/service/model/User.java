@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.model;
+package se.inera.intyg.privatlakarportal.service.model;
 
-import se.inera.privatlakarportal.auth.PrivatlakarUser;
-import se.inera.privatlakarportal.pu.model.PersonSvar;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.intyg.privatlakarportal.pu.model.PersonSvar;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 
 /**
  * Created by pebe on 2015-08-25.

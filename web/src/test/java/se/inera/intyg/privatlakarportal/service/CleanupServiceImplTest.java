@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service;
+package se.inera.intyg.privatlakarportal.service;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -38,11 +38,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 
-import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
-import se.inera.privatlakarportal.common.service.DateHelperService;
-import se.inera.privatlakarportal.hsa.services.HospPersonService;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
+import se.inera.intyg.privatlakarportal.hsa.services.HospPersonService;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 /**
  * Created by pebe on 2015-09-30.

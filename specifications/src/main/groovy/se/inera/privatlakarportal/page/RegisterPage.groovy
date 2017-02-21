@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.page
+package se.inera.intyg.privatlakarportal.page
 
 class RegisterPage extends AbstractPage {
     static url = System.getProperty("privatlakarportal.baseUrl")

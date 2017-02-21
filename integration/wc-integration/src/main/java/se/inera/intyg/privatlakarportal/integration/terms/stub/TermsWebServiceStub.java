@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.terms.stub;
+package se.inera.intyg.privatlakarportal.integration.terms.stub;
+
+// CHECKSTYLE:OFF LineLength
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -33,6 +35,8 @@ import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitione
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionertermsresponder.v1.GetPrivatePractitionerTermsType;
 import se.riv.infrastructure.directory.privatepractitioner.terms.v1.AvtalType;
 
+// CHECKSTYLE:ON LineLength
+
 /**
  * Created by pebe on 2015-08-25.
  */
@@ -44,7 +48,8 @@ public class TermsWebServiceStub implements GetPrivatePractitionerTermsResponder
     private ResourceLoader resourceLoader;
 
     @Override
-    public GetPrivatePractitionerTermsResponseType getPrivatePractitionerTerms(String s, GetPrivatePractitionerTermsType getPrivatePractitionerTermsType) {
+    public GetPrivatePractitionerTermsResponseType getPrivatePractitionerTerms(String s,
+            GetPrivatePractitionerTermsType getPrivatePractitionerTermsType) {
 
         AvtalType avtalType = new AvtalType();
         avtalType.setAvtalVersion(1);

@@ -1,6 +1,6 @@
-package se.inera.privatlakarportal.spec
+package se.inera.intyg.privatlakarportal.spec
 
-import se.inera.privatlakarportal.page.WelcomePage
+import se.inera.intyg.privatlakarportal.page.WelcomePage
 
 class LoggaIn {
 

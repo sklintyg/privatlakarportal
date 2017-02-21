@@ -1,7 +1,7 @@
-package se.inera.privatlakarportal.spec
+package se.inera.intyg.privatlakarportal.spec
 
-import se.inera.privatlakarportal.spec.util.RestClientFixture
-import se.inera.privatlakarportal.spec.util.RestClientUtils
+import se.inera.intyg.privatlakarportal.spec.util.RestClientFixture
+import se.inera.intyg.privatlakarportal.spec.util.RestClientUtils
 
 import static groovyx.net.http.ContentType.JSON
 

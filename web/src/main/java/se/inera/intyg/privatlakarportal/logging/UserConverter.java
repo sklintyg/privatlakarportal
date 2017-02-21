@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.logging;
+package se.inera.intyg.privatlakarportal.logging;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import se.inera.privatlakarportal.auth.PrivatlakarUser;
-import se.inera.privatlakarportal.common.monitoring.util.HashUtility;
+import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
 import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 

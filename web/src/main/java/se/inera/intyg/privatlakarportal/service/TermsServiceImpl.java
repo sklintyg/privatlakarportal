@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service;
+package se.inera.intyg.privatlakarportal.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.integration.terms.services.dto.Terms;
-import se.inera.privatlakarportal.persistence.model.MedgivandeText;
-import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
+import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
+import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 
 /**
  * Created by pebe on 2015-09-09.

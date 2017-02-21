@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.web.controller.api;
+package se.inera.intyg.privatlakarportal.web.controller.api;
 
 import javax.ws.rs.core.MediaType;
 
@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.service.RegisterService;
-import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
-import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
-import se.inera.privatlakarportal.service.postnummer.PostnummerService;
-import se.inera.privatlakarportal.web.controller.api.dto.*;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.service.RegisterService;
+import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
+import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
+import se.inera.intyg.privatlakarportal.service.postnummer.PostnummerService;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.*;
 
 /**
  * Created by pebe on 2015-06-25.
@@ -50,7 +50,8 @@ public class RegisterController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public GetRegistrationResponse getRegistration() {
         RegistrationWithHospInformation registrationWithHospInformation = registerService.getRegistration();
-        return new GetRegistrationResponse(registrationWithHospInformation.getRegistration(), registrationWithHospInformation.getHospInformation());
+        return new GetRegistrationResponse(registrationWithHospInformation.getRegistration(),
+                registrationWithHospInformation.getHospInformation());
     }
 
     @ApiOperation(value = "createRegistration", nickname = "create")

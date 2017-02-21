@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.web.controller.api.dto;
+package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import se.inera.privatlakarportal.service.model.User;
+import se.inera.intyg.privatlakarportal.service.model.User;
 
 /**
  * Created by pebe on 2015-08-21.

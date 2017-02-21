@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.pu.config;
+package se.inera.intyg.privatlakarportal.pu.config;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +36,7 @@ import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v1
  * Created by pebe on 2015-08-26.
  */
 @Configuration
-@ComponentScan("se.inera.privatlakarportal.pu.services")
+@ComponentScan("se.inera.intyg.privatlakarportal.pu.services")
 @EnableCaching
 @Import(PUStubConfiguration.class)
 @ImportResource("classpath:pu-services-config.xml")

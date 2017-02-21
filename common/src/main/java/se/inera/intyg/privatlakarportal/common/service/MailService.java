@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.common.service;
+package se.inera.intyg.privatlakarportal.common.service;
 
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 
 public interface MailService {
 

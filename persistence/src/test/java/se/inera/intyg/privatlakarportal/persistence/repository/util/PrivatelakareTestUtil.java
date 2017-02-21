@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.persistence.repository.util;
+package se.inera.intyg.privatlakarportal.persistence.repository.util;
 
 import java.time.LocalDate;
 import java.util.*;
 
-import se.inera.privatlakarportal.persistence.model.*;
+import se.inera.intyg.privatlakarportal.persistence.model.*;
 
 public final class PrivatelakareTestUtil {
 

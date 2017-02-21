@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.config;
+package se.inera.intyg.privatlakarportal.integration.config;
+
+// CHECKSTYLE:OFF LineLength
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
@@ -28,16 +30,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
-import se.inera.privatlakarportal.integration.privatepractioner.services.GetPrivatePractitionerResponderImpl;
-import se.inera.privatlakarportal.integration.privatepractioner.services.ValidatePrivatePractitionerResponderImpl;
+import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.GetPrivatePractitionerResponderImpl;
+import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.ValidatePrivatePractitionerResponderImpl;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitioner.v1.rivtabp21.GetPrivatePractitionerResponderInterface;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitioner.v1.rivtabp21.ValidatePrivatePractitionerResponderInterface;
 
+// CHECKSTYLE:ON LineLength
+
 @Configuration
 @ComponentScan({
-    "se.inera.privatlakarportal.integration.privatepractioner",
-    "se.inera.privatlakarportal.integration.terms"})
+        "se.inera.intyg.privatlakarportal.integration.privatepractioner",
+        "se.inera.intyg.privatlakarportal.integration.terms" })
 @ImportResource("classpath:wc-services.xml")
 public class WcIntegrationConfiguration {
 

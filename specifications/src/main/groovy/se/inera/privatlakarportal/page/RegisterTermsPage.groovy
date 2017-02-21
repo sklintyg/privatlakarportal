@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.page
+package se.inera.intyg.privatlakarportal.page
 
 class RegisterTermsPage extends StartPage {
     static url = "/#/registrera/steg3terms"

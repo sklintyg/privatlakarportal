@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.util;
+package se.inera.intyg.privatlakarportal.service.util;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,9 +33,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import org.springframework.stereotype.Service;
-import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
-import se.inera.privatlakarportal.persistence.model.*;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.intyg.privatlakarportal.persistence.model.*;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 @Service
 @Profile({"dev", "pp-init-data"})

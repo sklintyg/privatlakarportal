@@ -1,9 +1,9 @@
-package se.inera.privatlakarportal.page
+package se.inera.intyg.privatlakarportal.page
 
 import geb.Browser
 import geb.Page
 import org.openqa.selenium.JavascriptExecutor
-import se.inera.privatlakarportal.spec.util.NgClientSideScripts
+import se.inera.intyg.privatlakarportal.spec.util.NgClientSideScripts
 
 import java.util.concurrent.TimeUnit
 
@@ -27,7 +27,7 @@ abstract class AbstractPage extends Page {
      * @return return value from statement.
      */
     static public Object waitForJavascriptCallback(String statementPattern, Object... parameters) {
-        def driver = se.inera.privatlakarportal.spec.Browser.getDriver();
+        def driver = se.inera.intyg.privatlakarportal.spec.Browser.getDriver();
         driver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
         String script = "var callback = arguments[arguments.length - 1];" + String.format(statementPattern, parameters);
         JavascriptExecutor jse = (JavascriptExecutor) driver;

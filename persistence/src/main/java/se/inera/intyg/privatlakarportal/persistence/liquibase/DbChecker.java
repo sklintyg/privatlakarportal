@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.persistence.liquibase;
+package se.inera.intyg.privatlakarportal.persistence.liquibase;
 
 import liquibase.Liquibase;
 import liquibase.changelog.ChangeSet;
@@ -63,7 +63,8 @@ public class DbChecker {
                 for (ChangeSet changeSet : changeSets) {
                     errors.append('>').append(changeSet.toString()).append('\n');
                 }
-                throw new Error("Database version mismatch. Check liquibase status. Errors:\n" + errors.toString() + database.getDatabaseProductName()
+                throw new Error("Database version mismatch. Check liquibase status. Errors:\n" + errors.toString()
+                        + database.getDatabaseProductName()
                         + ", " + database);
             }
         } catch (liquibase.exception.LiquibaseException | SQLException e) {
@@ -72,8 +73,8 @@ public class DbChecker {
             if (connection != null) {
                 try {
                     connection.close();
-                } catch (DatabaseException e) {
-                     // Ignore. Nothing can be done.
+                } catch (DatabaseException ignore) {
+                    LOG.error("Could not close database connection. I have lost the will to live. Nothing can be done. We're doomed");
                 }
             }
         }

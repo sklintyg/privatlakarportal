@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.hsa.services;
+package se.inera.intyg.privatlakarportal.hsa.services;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,16 +24,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.ifv.hsawsresponder.v3.*;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.common.service.MailService;
-import se.inera.privatlakarportal.hsa.monitoring.MonitoringLogService;
-import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
-import se.inera.privatlakarportal.persistence.model.HospUppdatering;
-import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.model.Specialitet;
-import se.inera.privatlakarportal.persistence.repository.HospUppdateringRepository;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.common.service.MailService;
+import se.inera.intyg.privatlakarportal.hsa.monitoring.MonitoringLogService;
+import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
+import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
+import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 import javax.xml.ws.WebServiceException;
 import java.time.LocalDate;

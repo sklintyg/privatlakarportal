@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.common.utils;
+package se.inera.intyg.privatlakarportal.common.utils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 
 import java.util.HashSet;
 import java.util.Set;

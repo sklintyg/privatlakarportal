@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.common.service;
+package se.inera.intyg.privatlakarportal.common.service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,10 +39,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 
 @Service
 public class MailServiceImpl implements MailService {

@@ -1,9 +1,9 @@
 ﻿!contents -R2 -g -p -f -h
 
 !| Import|
-| se.inera.privatlakarportal.page |
-| se.inera.privatlakarportal.spec |
-| se.inera.privatlakarportal.spec.util |
+| se.inera.intyg.privatlakarportal.page |
+| se.inera.intyg.privatlakarportal.spec |
+| se.inera.intyg.privatlakarportal.spec.util |
 
 !| Config |
 | property | value |

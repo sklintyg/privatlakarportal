@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.postnummer;
+package se.inera.intyg.privatlakarportal.service.postnummer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import se.inera.privatlakarportal.service.postnummer.model.Omrade;
-import se.inera.privatlakarportal.service.postnummer.repo.PostnummerRepository;
-import se.inera.privatlakarportal.service.postnummer.repo.PostnummerRepositoryFactory;
+import se.inera.intyg.privatlakarportal.service.postnummer.model.Omrade;
+import se.inera.intyg.privatlakarportal.service.postnummer.repo.PostnummerRepository;
+import se.inera.intyg.privatlakarportal.service.postnummer.repo.PostnummerRepositoryFactory;
 
 import javax.annotation.PostConstruct;
 import java.util.List;

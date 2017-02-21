@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.page
+package se.inera.intyg.privatlakarportal.page
 
 class RegisterStep3AbortPage extends RegisterStep3Page {
     static url = "/#/registrera/steg3/avbryt"

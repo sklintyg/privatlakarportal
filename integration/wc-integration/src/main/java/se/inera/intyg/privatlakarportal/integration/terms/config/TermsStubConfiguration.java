@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.terms.config;
+package se.inera.intyg.privatlakarportal.integration.terms.config;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import se.inera.privatlakarportal.integration.terms.stub.TermsWebServiceStub;
+import se.inera.intyg.privatlakarportal.integration.terms.stub.TermsWebServiceStub;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

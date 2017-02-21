@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.terms.services;
+package se.inera.intyg.privatlakarportal.integration.terms.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -27,8 +27,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.integration.terms.services.dto.Terms;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionertermsresponder.v1.GetPrivatePractitionerTermsResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.terms.v1.AvtalType;
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.pu.stub;
+package se.inera.intyg.privatlakarportal.pu.stub;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -34,7 +34,8 @@ public class LookupResidentForFullProfileWsStub implements LookupResidentForFull
     private ResidentStore personer;
 
     @Override
-    public LookupResidentForFullProfileResponseType lookupResidentForFullProfile(String logicalAddress, LookupResidentForFullProfileType parameters) {
+    public LookupResidentForFullProfileResponseType lookupResidentForFullProfile(String logicalAddress,
+            LookupResidentForFullProfileType parameters) {
         validate(logicalAddress, parameters);
         LookupResidentForFullProfileResponseType response = new LookupResidentForFullProfileResponseType();
         for (String id : parameters.getPersonId()) {

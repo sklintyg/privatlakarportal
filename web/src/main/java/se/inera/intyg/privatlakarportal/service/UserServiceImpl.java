@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service;
+package se.inera.intyg.privatlakarportal.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,17 +25,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.inera.privatlakarportal.auth.PrivatlakarUser;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.pu.model.PersonSvar;
-import se.inera.privatlakarportal.pu.services.PUService;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.common.monitoring.util.HashUtility;
-import se.inera.privatlakarportal.service.model.User;
+import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.pu.model.PersonSvar;
+import se.inera.intyg.privatlakarportal.pu.services.PUService;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
+import se.inera.intyg.privatlakarportal.service.model.User;
 
 /**
  * Created by pebe on 2015-08-11.
@@ -100,7 +100,8 @@ public class UserServiceImpl implements UserService {
             } else if (personSvar.getStatus() == PersonSvar.Status.NOT_FOUND) {
                 LOG.warn("Person '{}' not found in puService", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
             } else {
-                LOG.error("puService returned error status for personId '{}'", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
+                LOG.error("puService returned error status for personId '{}'",
+                        HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
             }
         } catch (RuntimeException e) {
             LOG.error("Failed to contact puService", e);

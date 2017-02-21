@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.hsa.services;
+package se.inera.intyg.privatlakarportal.hsa.services;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.hsa.config;
+package se.inera.intyg.privatlakarportal.hsa.config;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
@@ -27,14 +27,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import se.inera.privatlakarportal.hsa.stub.BootstrapBean;
-import se.inera.privatlakarportal.hsa.stub.HsaServiceStub;
-import se.inera.privatlakarportal.hsa.stub.HsaWebServiceStub;
+import se.inera.intyg.privatlakarportal.hsa.stub.BootstrapBean;
+import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
+import se.inera.intyg.privatlakarportal.hsa.stub.HsaWebServiceStub;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
-@ComponentScan({"se.inera.privatlakarportal.common.config"})
+@ComponentScan({"se.inera.intyg.privatlakarportal.common.config"})
 @Profile({"dev", "hsa-stub"})
 public class HsaStubConfiguration {
 

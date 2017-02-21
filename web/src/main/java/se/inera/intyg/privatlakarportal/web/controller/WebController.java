@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.web.controller;
+package se.inera.intyg.privatlakarportal.web.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 

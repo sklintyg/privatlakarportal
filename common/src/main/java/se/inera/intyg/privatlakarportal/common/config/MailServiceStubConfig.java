@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.common.config;
+package se.inera.intyg.privatlakarportal.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,9 +25,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import se.inera.privatlakarportal.common.service.MailService;
-import se.inera.privatlakarportal.common.service.stub.MailServiceStub;
-import se.inera.privatlakarportal.common.service.stub.MailStubStore;
+import se.inera.intyg.privatlakarportal.common.service.MailService;
+import se.inera.intyg.privatlakarportal.common.service.stub.MailServiceStub;
+import se.inera.intyg.privatlakarportal.common.service.stub.MailStubStore;
 
 @Configuration
 @Profile({ "dev", "mail-stub" })

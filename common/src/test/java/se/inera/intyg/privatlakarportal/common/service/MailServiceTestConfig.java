@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.common.service;
+package se.inera.intyg.privatlakarportal.common.service;
 
 import java.util.Properties;
 
@@ -26,8 +26,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import se.inera.privatlakarportal.common.service.stub.JavaMailSenderAroundAdvice;
-import se.inera.privatlakarportal.common.service.stub.MailStore;
+import se.inera.intyg.privatlakarportal.common.service.stub.JavaMailSenderAroundAdvice;
+import se.inera.intyg.privatlakarportal.common.service.stub.MailStore;
 
 @Configuration
 @Profile("dev")

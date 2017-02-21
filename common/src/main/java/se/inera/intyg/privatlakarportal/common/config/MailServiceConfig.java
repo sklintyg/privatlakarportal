@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.common.config;
+package se.inera.intyg.privatlakarportal.common.config;
 
 import java.util.Properties;
 import java.util.concurrent.Executor;
@@ -36,8 +36,8 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import se.inera.privatlakarportal.common.service.MailService;
-import se.inera.privatlakarportal.common.service.MailServiceImpl;
+import se.inera.intyg.privatlakarportal.common.service.MailService;
+import se.inera.intyg.privatlakarportal.common.service.MailServiceImpl;
 
 @Configuration
 @PropertySource({ "file:${privatlakarportal.config.file}", "file:${privatlakarportal.mailresource.file}" })

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.hsa.services;
+package se.inera.intyg.privatlakarportal.hsa.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,19 +26,19 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.common.service.MailService;
-import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
-import se.inera.privatlakarportal.hsa.monitoring.MonitoringLogService;
-import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
-import se.inera.privatlakarportal.persistence.model.HospUppdatering;
-import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.model.Specialitet;
-import se.inera.privatlakarportal.persistence.repository.HospUppdateringRepository;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.common.service.MailService;
+import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
+import se.inera.intyg.privatlakarportal.hsa.monitoring.MonitoringLogService;
+import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
+import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
+import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 import javax.xml.ws.WebServiceException;
 import java.time.LocalDateTime;
@@ -83,7 +83,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     public void scheduledUpdateHospInformation() {
         String skipUpdate = System.getProperty("scheduled.update.skip", "false");
         LOG.debug("scheduled.update.skip = " + skipUpdate);
-        if (skipUpdate.equalsIgnoreCase("true")) {
+        if ("true".equalsIgnoreCase(skipUpdate)) {
             LOG.info("Skipping scheduled updateHospInformation");
         } else {
             LOG.info("Starting scheduled updateHospInformation");
@@ -206,7 +206,8 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             if (privatlakare.getSenasteHospUppdatering() == null
                     || privatlakare.getSenasteHospUppdatering().isBefore(hospLastUpdate)) {
 
-                LOG.debug("Hosp has been updated since last login for privlakare '{}'. Updating hosp information", privatlakare.getPersonId());
+                LOG.debug("Hosp has been updated since last login for privlakare '{}'. Updating hosp information",
+                        privatlakare.getPersonId());
 
                 try {
                     updateHospInformation(privatlakare, false);
@@ -228,13 +229,13 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     }
 
     private boolean isTimeToRemoveRegistration(LocalDateTime registrationDate) {
-        return DAYS.between(registrationDate.toLocalDate(), LocalDateTime.now().toLocalDate())
-                >= REMOVE_REGISTRATION_AFTER_DAYS;
+        return DAYS.between(registrationDate.toLocalDate(), LocalDateTime.now().toLocalDate()) >= REMOVE_REGISTRATION_AFTER_DAYS;
     }
 
     private List<Specialitet> getSpecialiteter(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {
         List<Specialitet> specialiteter = new ArrayList<>();
-        if (hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() != hospPersonResponse.getSpecialityNames().getSpecialityName()
+        if (hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() != hospPersonResponse.getSpecialityNames()
+                .getSpecialityName()
                 .size()) {
             LOG.error("getHospPerson getSpecialityCodes count "
                     + hospPersonResponse.getSpecialityCodes().getSpecialityCode().size()
@@ -253,7 +254,8 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         return specialiteter;
     }
 
-    private Set<LegitimeradYrkesgrupp> getLegitimeradeYrkesgrupper(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {
+    private Set<LegitimeradYrkesgrupp> getLegitimeradeYrkesgrupper(Privatlakare privatlakare,
+            GetHospPersonResponseType hospPersonResponse) {
         Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();
         if (hospPersonResponse.getHsaTitles().getHsaTitle().size() != hospPersonResponse.getTitleCodes().getTitleCode().size()) {
             LOG.error("getHospPerson getHsaTitles count "

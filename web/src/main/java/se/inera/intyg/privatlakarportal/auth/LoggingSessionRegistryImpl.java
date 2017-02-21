@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.auth;
+package se.inera.intyg.privatlakarportal.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistryImpl;
 
-import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
+import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
 
 /**
  * Implementation of SessionRegistry that performs audit logging of login and logout.

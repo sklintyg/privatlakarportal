@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.terms.services.config;
+package se.inera.intyg.privatlakarportal.integration.terms.services.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import se.inera.privatlakarportal.integration.terms.services.TermsWebServiceCalls;
-import se.inera.privatlakarportal.integration.terms.stub.TermsWebServiceStub;
+import se.inera.intyg.privatlakarportal.integration.terms.services.TermsWebServiceCalls;
+import se.inera.intyg.privatlakarportal.integration.terms.stub.TermsWebServiceStub;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
 
 @Configuration

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.privatepractioner.services;
+package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
 import java.time.LocalDateTime;
 
@@ -24,12 +24,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.inera.privatlakarportal.common.integration.kodverk.*;
-import se.inera.privatlakarportal.common.service.DateHelperService;
-import se.inera.privatlakarportal.common.utils.PrivatlakareUtils;
-import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.persistence.model.*;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.common.integration.kodverk.*;
+import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
+import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
+import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.intyg.privatlakarportal.persistence.model.*;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.types.v1.*;
 import se.riv.infrastructure.directory.privatepractitioner.v1.*;
@@ -138,7 +138,8 @@ public class IntegrationServiceImpl implements IntegrationService {
             } else {
                 response.setResultCode(ResultCodeEnum.ERROR);
                 response.setResultText(
-                        "Private practitioner with personal identity number: " + personalIdentityNumber + " is not authorized to use webcert.");
+                        "Private practitioner with personal identity number: " + personalIdentityNumber
+                                + " is not authorized to use webcert.");
             }
         }
 

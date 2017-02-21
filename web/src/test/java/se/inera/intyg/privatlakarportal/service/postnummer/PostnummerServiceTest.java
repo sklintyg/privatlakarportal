@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.postnummer;
+package se.inera.intyg.privatlakarportal.service.postnummer;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ import org.springframework.mock.env.MockPropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.inera.privatlakarportal.service.postnummer.model.Omrade;
+import se.inera.intyg.privatlakarportal.service.postnummer.model.Omrade;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +59,7 @@ public class PostnummerServiceTest {
         }
     }
 
-    @ComponentScan("se.inera.privatlakarportal.service.postnummer")
+    @ComponentScan("se.inera.intyg.privatlakarportal.service.postnummer")
     @Configuration
     public static class TestConfiguration {
     }

@@ -1,6 +1,6 @@
-package se.inera.privatlakarportal.page
+package se.inera.intyg.privatlakarportal.page
 
-import se.inera.privatlakarportal.spec.Browser
+import se.inera.intyg.privatlakarportal.spec.Browser
 
 class MinSidaPage extends AbstractPage {
     static url = "/#/minsida"

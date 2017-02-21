@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.privatepractioner.services;
+package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.http.ContentType;
 import org.junit.After;
 import org.junit.Before;
-import se.inera.privatlakarportal.integration.privatepractioner.services.util.RestUtil;
+import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.util.RestUtil;
 
 import static com.jayway.restassured.config.RestAssuredConfig.newConfig;
 import static com.jayway.restassured.config.SSLConfig.sslConfig;

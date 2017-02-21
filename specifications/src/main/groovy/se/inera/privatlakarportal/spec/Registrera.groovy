@@ -1,11 +1,11 @@
-package se.inera.privatlakarportal.spec
+package se.inera.intyg.privatlakarportal.spec
 
-import se.inera.privatlakarportal.page.RegisterStep1Page
-import se.inera.privatlakarportal.page.RegisterStep2Page
-import se.inera.privatlakarportal.page.RegisterStep3Page
-import se.inera.privatlakarportal.page.CompletePage
-import se.inera.privatlakarportal.page.TermsPage
-import se.inera.privatlakarportal.page.WaitingForHospPage
+import se.inera.intyg.privatlakarportal.page.RegisterStep1Page
+import se.inera.intyg.privatlakarportal.page.RegisterStep2Page
+import se.inera.intyg.privatlakarportal.page.RegisterStep3Page
+import se.inera.intyg.privatlakarportal.page.CompletePage
+import se.inera.intyg.privatlakarportal.page.TermsPage
+import se.inera.intyg.privatlakarportal.page.WaitingForHospPage
 
 class Registrera {
 

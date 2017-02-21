@@ -1,8 +1,8 @@
-package se.inera.privatlakarportal.spec
+package se.inera.intyg.privatlakarportal.spec
 
-import se.inera.privatlakarportal.page.ErrorPage
-import se.inera.privatlakarportal.page.StartPage
-import se.inera.privatlakarportal.page.TermsPage
+import se.inera.intyg.privatlakarportal.page.ErrorPage
+import se.inera.intyg.privatlakarportal.page.StartPage
+import se.inera.intyg.privatlakarportal.page.TermsPage
 
 class Startsida {
 

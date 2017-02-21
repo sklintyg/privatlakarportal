@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.page
+package se.inera.intyg.privatlakarportal.page
 
 class CompletePage extends AbstractPage {
     static at = { doneLoading() && $("#complete").isDisplayed() }

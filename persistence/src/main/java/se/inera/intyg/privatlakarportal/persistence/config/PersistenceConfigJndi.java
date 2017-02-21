@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.persistence.config;
+package se.inera.intyg.privatlakarportal.persistence.config;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -28,12 +28,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jndi.JndiTemplate;
 
-import se.inera.privatlakarportal.persistence.liquibase.DbChecker;
+import se.inera.intyg.privatlakarportal.persistence.liquibase.DbChecker;
 
 @Configuration
 @Profile("!dev")
-@ComponentScan("se.inera.privatlakarportal.persistence")
-@EnableJpaRepositories(basePackages = "se.inera.privatlakarportal.persistence")
+@ComponentScan("se.inera.intyg.privatlakarportal.persistence")
+@EnableJpaRepositories(basePackages = "se.inera.intyg.privatlakarportal.persistence")
 public class PersistenceConfigJndi extends PersistenceConfig {
 
     // CHECKSTYLE:OFF EmptyBlock

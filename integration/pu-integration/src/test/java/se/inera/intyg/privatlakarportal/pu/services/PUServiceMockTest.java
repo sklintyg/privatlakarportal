@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.pu.services;
+package se.inera.intyg.privatlakarportal.pu.services;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.privatlakarportal.pu.model.PersonSvar;
+import se.inera.intyg.privatlakarportal.pu.model.PersonSvar;
 import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v1.LookupResidentForFullProfileResponseType;
 import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v11.LookupResidentForFullProfileResponderInterface;
 import se.riv.population.residentmaster.types.v1.*;

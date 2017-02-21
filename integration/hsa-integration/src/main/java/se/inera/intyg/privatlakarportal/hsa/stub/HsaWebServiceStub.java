@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.hsa.stub;
+package se.inera.intyg.privatlakarportal.hsa.stub;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,54 +35,64 @@ public class HsaWebServiceStub implements HsaWsResponderInterface {
     private HsaServiceStub hsaServiceStub;
 
     @Override
-    public VpwGetPublicUnitsResponseType vpwGetPublicUnits(AttributedURIType logicalAddress, AttributedURIType id, VpwGetPublicUnitsType parameters) throws HsaWsFault {
+    public VpwGetPublicUnitsResponseType vpwGetPublicUnits(AttributedURIType logicalAddress, AttributedURIType id,
+            VpwGetPublicUnitsType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetCareUnitResponseType getCareUnit(AttributedURIType logicalAddress, AttributedURIType id, LookupHsaObjectType parameters) throws HsaWsFault {
+    public GetCareUnitResponseType getCareUnit(AttributedURIType logicalAddress, AttributedURIType id, LookupHsaObjectType parameters)
+            throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetStatisticsPersonResponseType getStatisticsPerson(AttributedURIType logicalAddress, AttributedURIType id, GetStatisticsPersonType parameters) throws HsaWsFault {
+    public GetStatisticsPersonResponseType getStatisticsPerson(AttributedURIType logicalAddress, AttributedURIType id,
+            GetStatisticsPersonType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public IsAuthorizedToSystemResponseType isAuthorizedToSystem(AttributedURIType logicalAddress, AttributedURIType id, IsAuthorizedToSystemType parameters) throws HsaWsFault {
+    public IsAuthorizedToSystemResponseType isAuthorizedToSystem(AttributedURIType logicalAddress, AttributedURIType id,
+            IsAuthorizedToSystemType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetCareUnitListResponseType getCareUnitList(AttributedURIType logicalAddress, AttributedURIType id, LookupHsaObjectType parameters) throws HsaWsFault {
+    public GetCareUnitListResponseType getCareUnitList(AttributedURIType logicalAddress, AttributedURIType id,
+            LookupHsaObjectType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetHospLastUpdateResponseType getHospLastUpdate(AttributedURIType logicalAddress, AttributedURIType id, GetHospLastUpdateType parameters) throws HsaWsFault {
+    public GetHospLastUpdateResponseType getHospLastUpdate(AttributedURIType logicalAddress, AttributedURIType id,
+            GetHospLastUpdateType parameters) throws HsaWsFault {
         GetHospLastUpdateResponseType response = new GetHospLastUpdateResponseType();
         response.setLastUpdate(hsaServiceStub.getHospLastUpdate());
         return response;
     }
 
     @Override
-    public GetHsaUnitResponseType getHsaUnit(AttributedURIType logicalAddress, AttributedURIType id, LookupHsaObjectType parameters) throws HsaWsFault {
+    public GetHsaUnitResponseType getHsaUnit(AttributedURIType logicalAddress, AttributedURIType id, LookupHsaObjectType parameters)
+            throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetPriceUnitsForAuthResponseType getPriceUnitsForAuth(AttributedURIType logicalAddress, AttributedURIType id, GetPriceUnitsForAuthType parameters) throws HsaWsFault {
+    public GetPriceUnitsForAuthResponseType getPriceUnitsForAuth(AttributedURIType logicalAddress, AttributedURIType id,
+            GetPriceUnitsForAuthType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetHsaPersonResponseType getHsaPerson(AttributedURIType logicalAddress, AttributedURIType id, GetHsaPersonType parameters) throws HsaWsFault {
+    public GetHsaPersonResponseType getHsaPerson(AttributedURIType logicalAddress, AttributedURIType id, GetHsaPersonType parameters)
+            throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetStatisticsNamesResponseType getStatisticsNames(AttributedURIType logicalAddress, AttributedURIType id, GetStatisticsNamesType parameters) throws HsaWsFault {
+    public GetStatisticsNamesResponseType getStatisticsNames(AttributedURIType logicalAddress, AttributedURIType id,
+            GetStatisticsNamesType parameters) throws HsaWsFault {
         return null;
     }
 
@@ -92,32 +102,38 @@ public class HsaWebServiceStub implements HsaWsResponderInterface {
     }
 
     @Override
-    public GetMiuForPersonResponseType getMiuForPerson(AttributedURIType logicalAddress, AttributedURIType id, GetMiuForPersonType parameters) throws HsaWsFault {
+    public GetMiuForPersonResponseType getMiuForPerson(AttributedURIType logicalAddress, AttributedURIType id,
+            GetMiuForPersonType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetStatisticsCareGiverResponseType getStatisticsCareGiver(AttributedURIType logicalAddress, AttributedURIType id, GetStatisticsCareGiverType parameters) throws HsaWsFault {
+    public GetStatisticsCareGiverResponseType getStatisticsCareGiver(AttributedURIType logicalAddress, AttributedURIType id,
+            GetStatisticsCareGiverType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public HsawsSimpleLookupResponseType hsawsSimpleLookup(AttributedURIType logicalAddress, AttributedURIType id, HsawsSimpleLookupType parameters) throws HsaWsFault {
+    public HsawsSimpleLookupResponseType hsawsSimpleLookup(AttributedURIType logicalAddress, AttributedURIType id,
+            HsawsSimpleLookupType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetStatisticsHsaUnitResponseType getStatisticsHsaUnit(AttributedURIType logicalAddress, AttributedURIType id, GetStatisticsHsaUnitType parameters) throws HsaWsFault {
+    public GetStatisticsHsaUnitResponseType getStatisticsHsaUnit(AttributedURIType logicalAddress, AttributedURIType id,
+            GetStatisticsHsaUnitType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetCareUnitMembersResponseType getCareUnitMembers(AttributedURIType logicalAddress, AttributedURIType id, LookupHsaObjectType parameters) throws HsaWsFault {
+    public GetCareUnitMembersResponseType getCareUnitMembers(AttributedURIType logicalAddress, AttributedURIType id,
+            LookupHsaObjectType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public GetHospPersonResponseType getHospPerson(AttributedURIType logicalAddress, AttributedURIType id, GetHospPersonType parameters) throws HsaWsFault {
+    public GetHospPersonResponseType getHospPerson(AttributedURIType logicalAddress, AttributedURIType id, GetHospPersonType parameters)
+            throws HsaWsFault {
 
         String personId = parameters.getPersonalIdentityNumber();
         HsaHospPerson hospPerson = hsaServiceStub.getHospPerson(personId);
@@ -161,14 +177,17 @@ public class HsaWebServiceStub implements HsaWsResponderInterface {
     }
 
     @Override
-    public GetInformationListResponseType getInformationList(AttributedURIType logicalAddress, AttributedURIType id, GetInformationListType parameters) throws HsaWsFault {
+    public GetInformationListResponseType getInformationList(AttributedURIType logicalAddress, AttributedURIType id,
+            GetInformationListType parameters) throws HsaWsFault {
         return null;
     }
 
     @Override
-    public HandleCertifierResponseType handleCertifier(AttributedURIType logicalAddress, AttributedURIType id, HandleCertifierType parameters) throws HsaWsFault {
+    public HandleCertifierResponseType handleCertifier(AttributedURIType logicalAddress, AttributedURIType id,
+            HandleCertifierType parameters) throws HsaWsFault {
 
-        LOG.debug("handleCertifier was called with personId '{}' certifierId '{}'", parameters.getPersonalIdentityNumber(), parameters.getCertifierId());
+        LOG.debug("handleCertifier was called with personId '{}' certifierId '{}'", parameters.getPersonalIdentityNumber(),
+                parameters.getCertifierId());
 
         HandleCertifierResponseType response = new HandleCertifierResponseType();
         response.setResult("OK");

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.common.integration.kodverk;
+package se.inera.intyg.privatlakarportal.common.integration.kodverk;
 
 import java.util.Collections;
 import java.util.HashMap;

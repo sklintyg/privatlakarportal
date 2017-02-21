@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.page
+package se.inera.intyg.privatlakarportal.page
 
 class WaitingForHospPage extends AbstractPage {
     static at = { doneLoading() && $("#waiting").isDisplayed() }

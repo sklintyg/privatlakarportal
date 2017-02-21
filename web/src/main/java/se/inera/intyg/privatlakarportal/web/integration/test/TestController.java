@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.web.integration.test;
+package se.inera.intyg.privatlakarportal.web.integration.test;
 
 import java.time.LocalDate;
 
@@ -29,14 +29,14 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
-import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.hsa.stub.HsaHospPerson;
-import se.inera.privatlakarportal.hsa.stub.HsaServiceStub;
-import se.inera.privatlakarportal.integration.privatepractioner.services.IntegrationService;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.service.CleanupService;
-import se.inera.privatlakarportal.service.RegisterService;
+import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.intyg.privatlakarportal.hsa.stub.HsaHospPerson;
+import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
+import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.IntegrationService;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.service.CleanupService;
+import se.inera.intyg.privatlakarportal.service.RegisterService;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
 /**

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.config;
+package se.inera.intyg.privatlakarportal.config;
 
 import java.util.List;
 import java.util.Properties;
@@ -37,11 +37,11 @@ import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({ "se.inera.privatlakarportal.web", "se.inera.privatlakarportal.common.service.stub" })
+@ComponentScan({ "se.inera.intyg.privatlakarportal.web", "se.inera.intyg.privatlakarportal.common.service.stub" })
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public ViewResolver viewResolver() {
@@ -65,6 +65,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // CHECKSTYLE:OFF MagicNumber
         int cachePeriod = 3600 * 24 * 15;
         registry.addResourceHandler("/index.html").addResourceLocations("/");
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/").setCachePeriod(cachePeriod);
@@ -72,6 +73,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components/");
         registry.addResourceHandler("/app/**").addResourceLocations("/app/");
         registry.addResourceHandler("/components/**").addResourceLocations("/components/");
+        // CHECKSTYLE:ON MagicNumber
     }
 
     @Override

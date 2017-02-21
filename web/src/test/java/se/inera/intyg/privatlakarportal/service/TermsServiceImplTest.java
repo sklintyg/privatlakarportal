@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service;
+package se.inera.intyg.privatlakarportal.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -29,9 +29,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.privatlakarportal.integration.terms.services.dto.Terms;
-import se.inera.privatlakarportal.persistence.model.MedgivandeText;
-import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
+import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
+import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
+import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 
 /**
  * Created by pebe on 2015-09-11.

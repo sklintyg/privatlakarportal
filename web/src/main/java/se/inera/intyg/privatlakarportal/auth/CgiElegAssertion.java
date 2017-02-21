@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.auth;
+package se.inera.intyg.privatlakarportal.auth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,8 @@ public class CgiElegAssertion {
         }
 
         if (!assertion.getAuthnStatements().isEmpty()) {
-            authenticationScheme = assertion.getAuthnStatements().get(0).getAuthnContext().getAuthnContextClassRef().getAuthnContextClassRef();
+            authenticationScheme = assertion.getAuthnStatements().get(0).getAuthnContext().getAuthnContextClassRef()
+                    .getAuthnContextClassRef();
         }
     }
 

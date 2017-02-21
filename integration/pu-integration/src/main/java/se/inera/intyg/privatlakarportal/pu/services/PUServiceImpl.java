@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.pu.services;
+package se.inera.intyg.privatlakarportal.pu.services;
 
 import com.google.common.annotations.VisibleForTesting;
 import org.slf4j.Logger;
@@ -26,8 +26,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import se.inera.privatlakarportal.pu.model.Person;
-import se.inera.privatlakarportal.pu.model.PersonSvar;
+import se.inera.intyg.privatlakarportal.pu.model.Person;
+import se.inera.intyg.privatlakarportal.pu.model.PersonSvar;
 import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v1.LookUpSpecificationType;
 import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v1.LookupResidentForFullProfileResponseType;
 import se.riv.population.residentmaster.lookupresidentforfullprofileresponder.v1.LookupResidentForFullProfileType;
@@ -50,9 +50,11 @@ public class PUServiceImpl implements PUService {
     @Value("${putjanst.logicaladdress}")
     private String logicaladdress;
 
+    // CHECKSTYLE:OFF LineLength
     @Override
-    @Cacheable(value = "personCache", key = "#personId", unless = "#result.status == T(se.inera.privatlakarportal.pu.model.PersonSvar$Status).ERROR")
+    @Cacheable(value = "personCache", key = "#personId", unless = "#result.status == T(se.inera.intyg.privatlakarportal.pu.model.PersonSvar$Status).ERROR")
     public PersonSvar getPerson(String personId) {
+        // CHECKSTYLE:ON LineLength
         String normalizedId = normalizeId(personId);
 
         LOG.debug("Looking up person '{}'({})", normalizedId, personId);
@@ -93,15 +95,18 @@ public class PUServiceImpl implements PUService {
     }
 
     private String normalizeId(String personId) {
+        // CHECKSTYLE:OFF MagicNumber
         if (personId.length() == 13) {
             return personId.substring(0, 8) + personId.substring(9);
         } else {
             return personId;
         }
+        // CHECKSTYLE:ON MagicNumber
     }
 
     private String buildAdress(SvenskAdressTYPE adress) {
-        return adress == null ? null : joinIgnoreNulls(", ", adress.getCareOf(), adress.getUtdelningsadress1(), adress.getUtdelningsadress2());
+        return adress == null ? null
+                : joinIgnoreNulls(", ", adress.getCareOf(), adress.getUtdelningsadress1(), adress.getUtdelningsadress2());
     }
 
     private String joinIgnoreNulls(String separator, String... values) {

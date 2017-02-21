@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.config;
+package se.inera.intyg.privatlakarportal.config;
 
 import javax.servlet.*;
 
@@ -29,12 +29,12 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.*;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import se.inera.privatlakarportal.common.config.MailServiceConfig;
-import se.inera.privatlakarportal.hsa.config.HsaConfiguration;
-import se.inera.privatlakarportal.integration.config.WcIntegrationConfiguration;
-import se.inera.privatlakarportal.persistence.config.PersistenceConfigDev;
-import se.inera.privatlakarportal.persistence.config.PersistenceConfigJndi;
-import se.inera.privatlakarportal.pu.config.PUConfiguration;
+import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;
+import se.inera.intyg.privatlakarportal.hsa.config.HsaConfiguration;
+import se.inera.intyg.privatlakarportal.integration.config.WcIntegrationConfiguration;
+import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigDev;
+import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigJndi;
+import se.inera.intyg.privatlakarportal.pu.config.PUConfiguration;
 
 public class ApplicationInitializer implements WebApplicationInitializer {
 
@@ -53,10 +53,12 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servlet.addMapping("/");
 
         // Spring security filter
-        FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
+        FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain",
+                DelegatingFilterProxy.class);
         springSecurityFilterChain.addMappingForUrlPatterns(null, false, "/*");
 
-        FilterRegistration.Dynamic hiddenHttpMethodFilter = servletContext.addFilter("hiddenHttpMethodFilter", HiddenHttpMethodFilter.class);
+        FilterRegistration.Dynamic hiddenHttpMethodFilter = servletContext.addFilter("hiddenHttpMethodFilter",
+                HiddenHttpMethodFilter.class);
         hiddenHttpMethodFilter.addMappingForUrlPatterns(null, false, "/*");
 
         registerCharachterEncodingFilter(servletContext);

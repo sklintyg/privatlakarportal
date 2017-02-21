@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.web.controller.api.dto;
+package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 
 @ApiModel(description = "Response-objekt för registration-tjänst")
 public class CreateRegistrationResponse {

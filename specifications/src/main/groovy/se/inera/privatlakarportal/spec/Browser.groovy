@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.spec
+package se.inera.intyg.privatlakarportal.spec
 
 import geb.driver.CachingDriverFactory
 
@@ -8,7 +8,7 @@ import org.openqa.selenium.TimeoutException
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.WebDriverWait
 
-import se.inera.privatlakarportal.page.AbstractPage
+import se.inera.intyg.privatlakarportal.page.AbstractPage
 
 import org.openqa.selenium.support.ui.ExpectedConditions
 

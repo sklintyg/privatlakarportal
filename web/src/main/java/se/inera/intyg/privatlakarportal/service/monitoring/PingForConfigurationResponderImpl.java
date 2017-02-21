@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.monitoring;
+package se.inera.intyg.privatlakarportal.service.monitoring;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +32,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import se.inera.privatlakarportal.service.monitoring.dto.HealthStatus;
+import se.inera.intyg.privatlakarportal.service.monitoring.dto.HealthStatus;
 import se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface;
 import se.riv.itintegration.monitoring.v1.ConfigurationType;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationResponseType;
@@ -59,9 +59,11 @@ public class PingForConfigurationResponderImpl implements PingForConfigurationRe
     private HealthCheckService healthCheck;
 
     @Override
+    // CHECKSTYLE:OFF LineLength
     public PingForConfigurationResponseType pingForConfiguration(
             @WebParam(partName = "LogicalAddress", name = "LogicalAddress", targetNamespace = "urn:riv:itintegration:registry:1", header = true) String logicalAddress,
             @WebParam(partName = "parameters", name = "PingForConfiguration", targetNamespace = "urn:riv:itintegration:monitoring:PingForConfigurationResponder:1") PingForConfigurationType parameters) {
+        // CHECKSTYLE:ON LineLength
         PingForConfigurationResponseType response = new PingForConfigurationResponseType();
         response.setPingDateTime(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
         LOG.info("Version String: " + projectVersion);

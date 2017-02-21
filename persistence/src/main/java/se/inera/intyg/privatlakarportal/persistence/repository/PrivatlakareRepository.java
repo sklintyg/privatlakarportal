@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.persistence.repository;
+package se.inera.intyg.privatlakarportal.persistence.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 
 /**
  * Created by pebe on 2015-06-24.

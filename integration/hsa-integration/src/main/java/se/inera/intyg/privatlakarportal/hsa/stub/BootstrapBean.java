@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.hsa.stub;
+package se.inera.intyg.privatlakarportal.hsa.stub;
 
 import java.io.IOException;
 import java.util.Arrays;

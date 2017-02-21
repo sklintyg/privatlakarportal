@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.spec.util
+package se.inera.intyg.privatlakarportal.spec.util
 
 import fitnesse.slim.converters.ConverterRegistry
 import fitnesse.slim.converters.StringConverter

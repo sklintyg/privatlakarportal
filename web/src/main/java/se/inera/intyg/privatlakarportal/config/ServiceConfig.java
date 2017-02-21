@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.config;
+package se.inera.intyg.privatlakarportal.config;
+
+// CHECKSTYLE:OFF LineLength
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,15 +37,17 @@ import org.springframework.web.context.support.ServletContextAttributeExporter;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
-import se.inera.privatlakarportal.service.monitoring.HealthCheckService;
-import se.inera.privatlakarportal.service.monitoring.PingForConfigurationResponderImpl;
+import se.inera.intyg.privatlakarportal.service.monitoring.HealthCheckService;
+import se.inera.intyg.privatlakarportal.service.monitoring.PingForConfigurationResponderImpl;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
+
+// CHECKSTYLE:ON LineLength
 
 /**
  * Created by pebe on 2015-09-07.
  */
 @Configuration
-@ComponentScan("se.inera.privatlakarportal.service, se.inera.privatlakarportal.common.service")
+@ComponentScan("se.inera.intyg.privatlakarportal.service, se.inera.intyg.privatlakarportal.common.service")
 @EnableScheduling
 public class ServiceConfig {
     @Autowired

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.web.controller.api;
+package se.inera.intyg.privatlakarportal.web.controller.api;
 
 import javax.ws.rs.core.MediaType;
 
@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import se.inera.privatlakarportal.common.integration.kodverk.*;
-import se.inera.privatlakarportal.web.controller.api.dto.GetConfigResponse;
+import se.inera.intyg.privatlakarportal.common.integration.kodverk.*;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetConfigResponse;
 
 /**
  * Created by pebe on 2015-08-28.

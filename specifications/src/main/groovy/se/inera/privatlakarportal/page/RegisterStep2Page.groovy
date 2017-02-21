@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.page
+package se.inera.intyg.privatlakarportal.page
 
 class RegisterStep2Page extends RegisterPage {
     static url = "/#/registrera/steg2"

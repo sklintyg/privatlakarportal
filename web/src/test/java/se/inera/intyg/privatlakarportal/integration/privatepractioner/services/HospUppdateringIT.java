@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.privatepractioner.services;
+package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
 import com.google.common.collect.Lists;
 import com.jayway.restassured.http.ContentType;
@@ -25,9 +25,9 @@ import org.json.simple.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import se.inera.privatlakarportal.common.model.Registration;
-import se.inera.privatlakarportal.integration.privatepractioner.services.util.RestUtil;
-import se.inera.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
+import se.inera.intyg.privatlakarportal.common.model.Registration;
+import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.util.RestUtil;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
 
 import java.util.Arrays;
 

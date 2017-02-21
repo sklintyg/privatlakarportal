@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service;
+package se.inera.intyg.privatlakarportal.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,10 +30,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.inera.privatlakarportal.common.service.DateHelperService;
-import se.inera.privatlakarportal.hsa.services.HospPersonService;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
+import se.inera.intyg.privatlakarportal.hsa.services.HospPersonService;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 /**
  * Created by pebe on 2015-09-30.
@@ -60,7 +60,7 @@ public class CleanupServiceImpl implements CleanupService {
     public void scheduledCleanupPrivatlakare() {
         String skipUpdate = System.getProperty("scheduled.update.skip", "false");
         LOG.debug("scheduled.update.skip = " + skipUpdate);
-        if (skipUpdate.equalsIgnoreCase("true")) {
+        if ("true".equalsIgnoreCase(skipUpdate)) {
             LOG.info("Skipping scheduled cleanupPrivatlakare");
         } else {
             LOG.info("Starting scheduled cleanupPrivatlakare");
@@ -95,7 +95,8 @@ public class CleanupServiceImpl implements CleanupService {
                         .getRegistreringsdatum().toString());
             } else {
                 LOG.warn(
-                        "Failed to remove from HSA certifier while cleanup tried to delete privatlakare '{}'. This operation will be retried during next cleanup cycle",
+                        "Failed to remove from HSA certifier while cleanup tried to delete privatlakare '{}'. "
+                        + "This operation will be retried during next cleanup cycle",
                         privatlakare.getPrivatlakareId());
             }
 

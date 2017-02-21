@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.postnummer.model;
+package se.inera.intyg.privatlakarportal.service.postnummer.model;
 
 /**
  * Created by pebe on 2015-08-12.
@@ -49,11 +49,13 @@ public class Omrade {
 
     @Override
     public int hashCode() {
+        // CHECKSTYLE:OFF MagicNumber
         int result = postnummer.hashCode();
         result = 31 * result + postort.hashCode();
         result = 31 * result + kommun.hashCode();
         result = 31 * result + lan.hashCode();
         return result;
+        // CHECKSTYLE:ON MagicNumber
     }
 
     public String getPostnummer() {

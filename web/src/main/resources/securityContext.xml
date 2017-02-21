@@ -50,7 +50,7 @@
     <property name="logErrors" value="true"/>
   </bean>
 
-  <bean id="elegUserDetailsService" class="se.inera.privatlakarportal.auth.ElegUserDetailsService"/>
+  <bean id="elegUserDetailsService" class="se.inera.intyg.privatlakarportal.auth.ElegUserDetailsService"/>
 
   <!-- Initialization of OpenSAML library-->
   <bean class="org.springframework.security.saml.SAMLBootstrap"/>
@@ -79,7 +79,7 @@
         class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
 
   <!-- SessionRegistry is needed for keeping track of authenticated sessions (i.e users), this impl performs audit logging of login and logouts. -->
-  <bean id="loggingSessionRegistry" class="se.inera.privatlakarportal.auth.LoggingSessionRegistryImpl" />
+  <bean id="loggingSessionRegistry" class="se.inera.intyg.privatlakarportal.auth.LoggingSessionRegistryImpl" />
 
   <!-- Session authentication strategy that registers authenticated sessions with the session registry -->
   <bean id="registerSessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
@@ -193,7 +193,7 @@
 
 
   <beans profile="dev,pp-security-dev,pp-security-test">
-    <bean id="fakeAuthFilter" class="se.inera.privatlakarportal.auth.FakeAuthenticationFilter">
+    <bean id="fakeAuthFilter" class="se.inera.intyg.privatlakarportal.auth.FakeAuthenticationFilter">
       <property name="authenticationManager" ref="authenticationManager"/>
       <property name="sessionAuthenticationStrategy" ref="registerSessionAuthenticationStrategy"/>
       <property name="authenticationSuccessHandler" ref="fakeSuccessHandler"/>
@@ -204,7 +204,7 @@
       <property name="defaultTargetUrl" value="/"/>
     </bean>
     <bean id="fakeElegAuthenticationProvider"
-        class="se.inera.privatlakarportal.auth.FakeElegAuthenticationProvider">
+        class="se.inera.intyg.privatlakarportal.auth.FakeElegAuthenticationProvider">
       <property name="elegUserDetailsService" ref="elegUserDetailsService"/>
     </bean>
   </beans>

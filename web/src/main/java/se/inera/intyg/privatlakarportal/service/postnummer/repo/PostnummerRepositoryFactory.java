@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.postnummer.repo;
+package se.inera.intyg.privatlakarportal.service.postnummer.repo;
 
 import java.io.*;
 
@@ -29,7 +29,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import se.inera.privatlakarportal.service.postnummer.model.Omrade;
+import se.inera.intyg.privatlakarportal.service.postnummer.model.Omrade;
 
 /**
  * Created by pebe on 2015-08-12.
@@ -95,6 +95,7 @@ public class PostnummerRepositoryFactory {
         }
 
         String[] elements = line.split(";");
+        // CHECKSTYLE:OFF MagicNumber
         if (elements.length != 7) {
             LOG.error("Unexpected line in postnummer file. Expected 7 elements separated by semicolon");
             return null;
@@ -107,6 +108,7 @@ public class PostnummerRepositoryFactory {
         // String kommunKod = elements[4];
         String kommun = elements[5];
         // String arKod = elements[6];
+        // CHECKSTYLE:ON MagicNumber
 
         return new Omrade(postnummer, postort, kommun, lan);
     }

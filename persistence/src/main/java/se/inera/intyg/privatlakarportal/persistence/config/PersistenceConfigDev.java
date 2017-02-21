@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.persistence.config;
+package se.inera.intyg.privatlakarportal.persistence.config;
 
 import java.sql.SQLException;
 
@@ -37,8 +37,8 @@ import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
 @Profile("dev")
-@ComponentScan("se.inera.privatlakarportal.persistence")
-@EnableJpaRepositories(basePackages = "se.inera.privatlakarportal.persistence")
+@ComponentScan("se.inera.intyg.privatlakarportal.persistence")
+@EnableJpaRepositories(basePackages = "se.inera.intyg.privatlakarportal.persistence")
 public class PersistenceConfigDev extends PersistenceConfig {
 
     @Value("${db.driver}")

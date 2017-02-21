@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.hsa.monitoring;
+package se.inera.intyg.privatlakarportal.hsa.monitoring;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import se.inera.privatlakarportal.common.monitoring.util.HashUtility;
-import se.inera.privatlakarportal.common.monitoring.util.LogMarkers;
+import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
+import se.inera.intyg.privatlakarportal.common.monitoring.util.LogMarkers;
 
 
 @Service("hsaMonitoringLogService")

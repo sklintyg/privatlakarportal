@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.integration.privatepractioner.services;
+package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -42,12 +42,12 @@ import org.unitils.reflectionassert.ReflectionComparatorMode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
-import se.inera.privatlakarportal.common.service.DateHelperService;
-import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
+import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.HoSPersonType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.ResultCodeEnum;

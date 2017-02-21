@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.web.controller.api;
+package se.inera.intyg.privatlakarportal.web.controller.api;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
-import se.inera.privatlakarportal.service.monitoring.HealthCheckServiceImpl;
-import se.inera.privatlakarportal.service.monitoring.dto.HealthStatus;
+import se.inera.intyg.privatlakarportal.service.monitoring.HealthCheckServiceImpl;
+import se.inera.intyg.privatlakarportal.service.monitoring.dto.HealthStatus;
 
 @Api(value = "/monitoring", description = "Healthcheck-api för Privatläkarportalen", produces = MediaType.APPLICATION_JSON)
 @RestController

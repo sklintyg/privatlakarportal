@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.postnummer.repo;
+package se.inera.intyg.privatlakarportal.service.postnummer.repo;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.privatlakarportal.service.postnummer.model.Omrade;
+import se.inera.intyg.privatlakarportal.service.postnummer.model.Omrade;
 
 /**
  * Created by pebe on 2015-08-12.

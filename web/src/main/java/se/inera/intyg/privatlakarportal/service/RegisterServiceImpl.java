@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service;
+package se.inera.intyg.privatlakarportal.service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,28 +34,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.common.model.Registration;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.common.service.DateHelperService;
-import se.inera.privatlakarportal.common.service.MailService;
-import se.inera.privatlakarportal.hsa.services.HospPersonService;
-import se.inera.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
-import se.inera.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
-import se.inera.privatlakarportal.persistence.model.Medgivande;
-import se.inera.privatlakarportal.persistence.model.MedgivandeText;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
-import se.inera.privatlakarportal.persistence.model.Specialitet;
-import se.inera.privatlakarportal.persistence.repository.MedgivandeTextRepository;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.service.model.HospInformation;
-import se.inera.privatlakarportal.service.model.RegistrationWithHospInformation;
-import se.inera.privatlakarportal.service.model.SaveRegistrationResponseStatus;
-import se.inera.privatlakarportal.service.monitoring.MonitoringLogService;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.common.model.Registration;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
+import se.inera.intyg.privatlakarportal.common.service.MailService;
+import se.inera.intyg.privatlakarportal.hsa.services.HospPersonService;
+import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.intyg.privatlakarportal.persistence.model.Medgivande;
+import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.model.PrivatlakareId;
+import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
+import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.service.model.HospInformation;
+import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
+import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
+import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
 
 /**
  * Created by pebe on 2015-06-26.
@@ -306,7 +306,9 @@ public class RegisterServiceImpl implements RegisterService {
      * @return
      */
     private String generateHsaId(PrivatlakareId privatlakareId) {
+        // CHECKSTYLE:OFF MagicNumber
         return "SE165565594230-WEBCERT" + StringUtils.leftPad(Integer.toString(privatlakareId.getId()), 5, '0');
+        // CHECKSTYLE:ON MagicNumber
     }
 
     private Set<Medgivande> createMedgivandeSet(Long godkantMedgivandeVersion, Privatlakare privatlakare) {

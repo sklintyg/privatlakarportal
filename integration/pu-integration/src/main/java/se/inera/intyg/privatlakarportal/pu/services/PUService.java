@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.pu.services;
+package se.inera.intyg.privatlakarportal.pu.services;
 
 import com.google.common.annotations.VisibleForTesting;
-import se.inera.privatlakarportal.pu.model.PersonSvar;
+import se.inera.intyg.privatlakarportal.pu.model.PersonSvar;
 
 public interface PUService {
 

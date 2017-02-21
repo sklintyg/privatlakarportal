@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.config;
+package se.inera.intyg.privatlakarportal.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 

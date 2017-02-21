@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.pu.model;
+package se.inera.intyg.privatlakarportal.pu.model;
 
 public class Person {
     private final String personnummer;
@@ -29,7 +29,8 @@ public class Person {
     private final String postort;
 
     // CHECKSTYLE:OFF ParameterNumber
-    public Person(String personnummer, boolean sekretessmarkering, String fornamn, String mellannamn, String efternamn, String postadress, String postnummer, String postort) {
+    public Person(String personnummer, boolean sekretessmarkering, String fornamn, String mellannamn, String efternamn, String postadress,
+            String postnummer, String postort) {
         this.personnummer = personnummer;
         this.sekretessmarkering = sekretessmarkering;
         this.fornamn = fornamn;

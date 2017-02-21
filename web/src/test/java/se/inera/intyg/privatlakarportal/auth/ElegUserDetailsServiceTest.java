@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.auth;
+package se.inera.intyg.privatlakarportal.auth;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -30,7 +30,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.opensaml.saml2.core.NameID;
 import org.springframework.security.saml.SAMLCredential;
 
-import se.inera.privatlakarportal.pu.services.PUService;
+import se.inera.intyg.privatlakarportal.pu.services.PUService;
 
 /**
  * Created by eriklupander on 2015-06-25.

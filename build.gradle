@@ -21,7 +21,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'se.inera.intyg:gradle-intyg-plugin:1.0.15'
+        classpath 'se.inera.intyg:gradle-intyg-plugin:1.1-SNAPSHOT'
         classpath 'se.inera.intyg:gradle-fitnesse-plugin:1.0.+'
         classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
         classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
@@ -36,6 +36,9 @@ allprojects {
         maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
         maven { url "http://repo.maven.apache.org/maven2" }
     }
+
+    // Errorprone has no mechanism (yet) for excluding generated code. We therefore disable it for hsa-integration.
+    ext.errorproneExclude = "privatlakarportal-hsa-integration"
 
     apply plugin: 'inera-intyg'
     apply plugin: 'maven'

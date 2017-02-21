@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.monitoring;
+package se.inera.intyg.privatlakarportal.service.monitoring;
 
-import se.inera.privatlakarportal.service.monitoring.dto.HealthStatus;
+import se.inera.intyg.privatlakarportal.service.monitoring.dto.HealthStatus;
 
 /**
  * Service for checking the health of the application.

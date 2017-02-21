@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.hsa.services;
+package se.inera.intyg.privatlakarportal.hsa.services;
 
 import java.time.LocalDateTime;
 
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 
 import se.inera.ifv.hsawsresponder.v3.*;
 import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 @Service
 public class HospPersonServiceImpl implements HospPersonService {

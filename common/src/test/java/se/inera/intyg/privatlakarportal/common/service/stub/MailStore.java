@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.common.service.stub;
+package se.inera.intyg.privatlakarportal.common.service.stub;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

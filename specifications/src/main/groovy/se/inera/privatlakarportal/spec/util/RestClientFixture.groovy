@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.spec.util
+package se.inera.intyg.privatlakarportal.spec.util
 
 import groovyx.net.http.RESTClient
 

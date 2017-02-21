@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.monitoring;
+package se.inera.intyg.privatlakarportal.service.monitoring;
 
 import java.sql.Time;
 import java.util.List;
@@ -38,9 +38,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
-import se.inera.privatlakarportal.persistence.model.PrivatlakareId;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
-import se.inera.privatlakarportal.service.monitoring.dto.HealthStatus;
+import se.inera.intyg.privatlakarportal.persistence.model.PrivatlakareId;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
+import se.inera.intyg.privatlakarportal.service.monitoring.dto.HealthStatus;
 
 /**
  * Service for getting the health status of the application.
@@ -67,6 +67,7 @@ public class HealthCheckServiceImpl implements HealthCheckService {
     @Autowired
     private PrivatlakareIdRepository privatlakareIdRepository;
 
+    @Override
     public HealthStatus checkHSA() {
         boolean ok;
         StopWatch stopWatch = new StopWatch();
@@ -83,6 +84,7 @@ public class HealthCheckServiceImpl implements HealthCheckService {
         return status;
     }
 
+    @Override
     @Transactional
     public HealthStatus checkDB() {
         boolean ok;
@@ -95,6 +97,7 @@ public class HealthCheckServiceImpl implements HealthCheckService {
         return status;
     }
 
+    @Override
     public HealthStatus checkNbrOfUsers() {
         boolean ok;
         long size = -1;
@@ -123,12 +126,14 @@ public class HealthCheckServiceImpl implements HealthCheckService {
         return new HealthStatus(nbrOfHsaId, true);
     }
 
+    @Override
     public HealthStatus checkUptime() {
         long uptime = System.currentTimeMillis() - START_TIME;
         LOG.info("Current system uptime is {}", DurationFormatUtils.formatDurationWords(uptime, true, true));
         return new HealthStatus(uptime, true);
     }
 
+    @Override
     public String checkUptimeAsString() {
         HealthStatus uptime = checkUptime();
         return DurationFormatUtils.formatDurationWords(uptime.getMeasurement(), true, true);

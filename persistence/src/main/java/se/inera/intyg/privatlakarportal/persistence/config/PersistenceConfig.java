@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.persistence.config;
+package se.inera.intyg.privatlakarportal.persistence.config;
 
 import java.util.Properties;
 
@@ -49,7 +49,7 @@ public abstract class PersistenceConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactoryBean.setPackagesToScan("se.inera.privatlakarportal.persistence");
+        entityManagerFactoryBean.setPackagesToScan("se.inera.intyg.privatlakarportal.persistence");
 
         Properties jpaProperties = new Properties();
 

@@ -1,4 +1,4 @@
-package se.inera.privatlakarportal.page
+package se.inera.intyg.privatlakarportal.page
 
 class StartPage extends AbstractPage {
     static url = "http://localhost:8090"

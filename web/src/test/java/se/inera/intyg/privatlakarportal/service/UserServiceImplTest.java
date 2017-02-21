@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service;
+package se.inera.intyg.privatlakarportal.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,16 +29,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import se.inera.privatlakarportal.auth.PrivatlakarUser;
-import se.inera.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.privatlakarportal.common.integration.json.CustomObjectMapper;
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.privatlakarportal.pu.model.Person;
-import se.inera.privatlakarportal.pu.model.PersonSvar;
-import se.inera.privatlakarportal.pu.services.PUService;
-import se.inera.privatlakarportal.service.model.User;
+import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.privatlakarportal.pu.model.Person;
+import se.inera.intyg.privatlakarportal.pu.model.PersonSvar;
+import se.inera.intyg.privatlakarportal.pu.services.PUService;
+import se.inera.intyg.privatlakarportal.service.model.User;
 
 import javax.xml.ws.WebServiceException;
 import java.io.IOException;

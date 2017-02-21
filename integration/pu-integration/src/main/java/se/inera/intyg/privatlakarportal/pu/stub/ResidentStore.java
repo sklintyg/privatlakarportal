@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.pu.stub;
+package se.inera.intyg.privatlakarportal.pu.stub;
 
 import se.riv.population.residentmaster.types.v1.ResidentType;
 

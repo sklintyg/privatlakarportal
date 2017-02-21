@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.privatlakarportal.service.monitoring;
+package se.inera.intyg.privatlakarportal.service.monitoring;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import se.inera.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.privatlakarportal.common.monitoring.util.HashUtility;
-import se.inera.privatlakarportal.common.monitoring.util.LogMarkers;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
+import se.inera.intyg.privatlakarportal.common.monitoring.util.LogMarkers;
 
 @Service("webMonitoringLogService")
 public class MonitoringLogServiceImpl implements MonitoringLogService {
@@ -75,7 +75,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         USER_LOGOUT("Logout user '{}' using scheme '{}'"),
         USER_DETAILS_CHANGED("Details for user '{}' changed");
 
-        private String message;
+        private final String message;
 
         private MonitoringEvent(String msg) {
             this.message = msg;

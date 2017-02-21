@@ -1,10 +1,10 @@
-package se.inera.privatlakarportal.spec.util
+package se.inera.intyg.privatlakarportal.spec.util
 
 import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.ContentType.URLENC
 import groovy.json.JsonOutput
 import groovyx.net.http.HttpResponseDecorator
-import se.inera.privatlakarportal.spec.Browser
+import se.inera.intyg.privatlakarportal.spec.Browser
 
 class RestClientUtils extends RestClientFixture{
 
