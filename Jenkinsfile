@@ -12,8 +12,7 @@ stage('checkout') {
 stage('build') {
     node {
         try {
-            shgradle "--refresh-dependencies clean build testReport sonarqube -PcodeQuality -DgruntColors=false \
-                  -PprojectId=privatlakarportal -PprojectName=Privatlakarportal -DbuildVersion=${buildVersion}"
+            shgradle "--refresh-dependencies clean build testReport sonarqube -PcodeQuality -DgruntColors=false -DbuildVersion=${buildVersion}"
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/allTests', \
                 reportFiles: 'index.html', reportName: 'JUnit results'
@@ -34,8 +33,7 @@ stage('deploy') {
 stage('restAssured') {
     node {
         try {
-            shgradle "restAssuredTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se/ \
-                 -DbuildVersion=${buildVersion} \
+            shgradle "restAssuredTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se/ -DbuildVersion=${buildVersion} \
                     --tests se.inera.intyg.privatlakarportal.integration.privatepractioner.services.HospUppdateringIT"
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
