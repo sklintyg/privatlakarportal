@@ -1,3 +1,8 @@
+// TODO: byggfel, pp
+// Eriks problem med parallella byggen
+// Versioner i rehab
+
+
 ext {
     ppSchemasVersion = "1.0.4"
     ppTermsSchemasVersion = "1.0.4"    
@@ -111,6 +116,10 @@ allprojects {
     }
 
 }
+
+task tagRelease(type: TagReleaseTask)
+
+task testReport(type: SharedTestReportTask)
 
 // Load environment specific settings, if the -Penv=xxx parameter is given on invocation
 task loadConfiguration {
