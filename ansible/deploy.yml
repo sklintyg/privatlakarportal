@@ -1,12 +1,13 @@
-# This playbook deploys privatlakarportalen 
+---
 
 - hosts: tomcat
   serial: 1
   become: yes
+  environment:
+    "{{ proxy_env }}"
   vars:
     # repo - values: 'snapshots or 'releases'
-    repo: snapshots
-    version: 1.0.0-SNAPSHOT
+    repo: releases
     config_version: master
 
   roles:

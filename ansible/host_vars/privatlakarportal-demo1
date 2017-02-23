@@ -10,3 +10,6 @@ proxy_env:
 # Configuration repository
 environment_name: "demo"
 config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
+
+#Most correspond to the same port as in the tools project
+tomcat_https_port: 8103
