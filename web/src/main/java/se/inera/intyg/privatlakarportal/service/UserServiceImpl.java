@@ -24,18 +24,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import se.inera.intyg.infra.integration.pu.model.PersonSvar;
+import se.inera.intyg.infra.integration.pu.services.PUService;
 import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
 import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.intyg.privatlakarportal.pu.model.PersonSvar;
-import se.inera.intyg.privatlakarportal.pu.services.PUService;
-import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
 import se.inera.intyg.privatlakarportal.service.model.User;
+import se.inera.intyg.schemas.contract.Personnummer;
+
+import java.util.Optional;
 
 /**
  * Created by pebe on 2015-08-11.
@@ -83,25 +85,35 @@ public class UserServiceImpl implements UserService {
         boolean nameUpdated = false;
         PersonSvar.Status personSvarStatus;
         try {
-            PersonSvar personSvar = puService.getPerson(privatlakarUser.getPersonalIdentityNumber());
-            personSvarStatus = personSvar.getStatus();
-            if (personSvar.getStatus() == PersonSvar.Status.FOUND && personSvar.getPerson() != null) {
-                String name = personSvar.getPerson().getFornamn() + " " + personSvar.getPerson().getEfternamn();
-                privatlakarUser.updateNameFromPuService(name);
+            Optional<Personnummer> personnummerOptional = Personnummer
+                    .createValidatedPersonnummerWithDash(privatlakarUser.getPersonalIdentityNumber());
+            if (personnummerOptional.isPresent()) {
 
-                // Check if name has changed and update in database
-                if (privatlakare != null && !name.equals(privatlakare.getFullstandigtNamn())) {
-                    LOG.info("Updated name for user '{}'", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
-                    privatlakare.setFullstandigtNamn(name);
-                    privatlakareRepository.save(privatlakare);
-                    nameUpdated = true;
+                PersonSvar personSvar = puService.getPerson(personnummerOptional.get());
+                personSvarStatus = personSvar.getStatus();
+
+                if (personSvar.getStatus() == PersonSvar.Status.FOUND && personSvar.getPerson() != null) {
+                    String name = personSvar.getPerson().getFornamn() + " " + personSvar.getPerson().getEfternamn();
+                    privatlakarUser.updateNameFromPuService(name);
+
+                    // Check if name has changed and update in database
+                    if (privatlakare != null && !name.equals(privatlakare.getFullstandigtNamn())) {
+                        LOG.info("Updated name for user '{}'", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
+                        privatlakare.setFullstandigtNamn(name);
+                        privatlakareRepository.save(privatlakare);
+                        nameUpdated = true;
+                    }
+
+                } else if (personSvar.getStatus() == PersonSvar.Status.NOT_FOUND) {
+                    LOG.warn("Person '{}' not found in puService", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
+                } else {
+                    LOG.error("puService returned error status for personId '{}'",
+                            HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
                 }
-
-            } else if (personSvar.getStatus() == PersonSvar.Status.NOT_FOUND) {
-                LOG.warn("Person '{}' not found in puService", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
             } else {
-                LOG.error("puService returned error status for personId '{}'",
+                LOG.error("puService could not parse personnummer, returning error status for personId '{}'",
                         HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
+                personSvarStatus = PersonSvar.Status.ERROR;
             }
         } catch (RuntimeException e) {
             LOG.error("Failed to contact puService", e);

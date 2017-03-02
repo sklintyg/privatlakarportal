@@ -18,23 +18,28 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
-import javax.servlet.*;
-
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.filter.*;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
-
+import se.inera.intyg.infra.cache.core.BasicCacheConfiguration;
+import se.inera.intyg.infra.integration.pu.cache.PuCacheConfiguration;
 import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;
 import se.inera.intyg.privatlakarportal.hsa.config.HsaConfiguration;
 import se.inera.intyg.privatlakarportal.integration.config.WcIntegrationConfiguration;
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigDev;
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigJndi;
-import se.inera.intyg.privatlakarportal.pu.config.PUConfiguration;
+
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 
 public class ApplicationInitializer implements WebApplicationInitializer {
 
@@ -42,7 +47,8 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(ApplicationConfig.class, PersistenceConfigJndi.class, PersistenceConfigDev.class, MailServiceConfig.class,
-                HsaConfiguration.class, PUConfiguration.class, WcIntegrationConfiguration.class, ServiceConfig.class);
+                HsaConfiguration.class, PuConfiguration.class, BasicCacheConfiguration.class, PuCacheConfiguration.class,
+                WcIntegrationConfiguration.class, ServiceConfig.class);
         servletContext.addListener(new ContextLoaderListener(appContext));
 
         AnnotationConfigWebApplicationContext webConfig = new AnnotationConfigWebApplicationContext();

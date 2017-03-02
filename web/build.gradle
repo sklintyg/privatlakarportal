@@ -59,7 +59,7 @@ gretty {
     httpPort = 8090
     contextPath = '/'
     logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
-    jvmArgs = ['-Dspring.profiles.active=dev',
+    jvmArgs = ['-Dspring.profiles.active=dev,caching-enabled',
                '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties',
                '-Dprivatlakarportal.mailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
                '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',
@@ -71,9 +71,9 @@ gretty {
 }
 
 dependencies {
-    compile project(":privatlakarportal-pu-integration")
     compile project(":privatlakarportal-wc-integration")
 
+    compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
 
     compile "org.springframework:spring-webmvc:${springContextVersion}"

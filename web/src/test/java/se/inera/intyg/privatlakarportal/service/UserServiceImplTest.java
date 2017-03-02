@@ -35,10 +35,11 @@ import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapp
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.intyg.privatlakarportal.pu.model.Person;
-import se.inera.intyg.privatlakarportal.pu.model.PersonSvar;
-import se.inera.intyg.privatlakarportal.pu.services.PUService;
+import se.inera.intyg.infra.integration.pu.model.Person;
+import se.inera.intyg.infra.integration.pu.model.PersonSvar;
+import se.inera.intyg.infra.integration.pu.services.PUService;
 import se.inera.intyg.privatlakarportal.service.model.User;
+import se.inera.intyg.schemas.contract.Personnummer;
 
 import javax.xml.ws.WebServiceException;
 import java.io.IOException;
@@ -54,6 +55,9 @@ import static org.mockito.Mockito.when;
 public class UserServiceImplTest {
 
     private static final String PERSON_ID = "191212121212";
+    public static final String PERSON_ID_INVALID = "inte-ett-personnummer";
+
+    private Personnummer personnummer;
 
     @Mock
     private PrivatlakareRepository privatlakareRepository;
@@ -64,7 +68,7 @@ public class UserServiceImplTest {
     @InjectMocks
     private UserServiceImpl userService;
 
-    private Privatlakare privatlakareAuthorized, privatlakareNoHosp, privatlakareNotAuthorized;
+    private Privatlakare privatlakareAuthorized, privatlakareNoHosp, privatlakareNotAuthorized, privatlakareInvalidPnr;
 
     @Before
     public void setupUser() throws IOException {
@@ -75,6 +79,10 @@ public class UserServiceImplTest {
             new ClassPathResource("UserServiceImplTest/test_not_authorized.json").getFile(), Privatlakare.class);
         privatlakareNoHosp = new CustomObjectMapper().readValue(
                 new ClassPathResource("UserServiceImplTest/test_no_hosp.json").getFile(), Privatlakare.class);
+        privatlakareInvalidPnr = new CustomObjectMapper().readValue(
+                new ClassPathResource("UserServiceImplTest/test_invalid_pnr.json").getFile(), Privatlakare.class);
+
+        personnummer = buildValidPersonnummer(PERSON_ID);
     }
 
     @Test
@@ -87,7 +95,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNoRegistration() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
-        when(puService.getPerson(PERSON_ID)).thenReturn(new PersonSvar(new Person(PERSON_ID, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -101,7 +109,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNotAuthorized() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareNotAuthorized);
-        when(puService.getPerson(PERSON_ID)).thenReturn(new PersonSvar(new Person(PERSON_ID, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -115,7 +123,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNoHosp() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareNoHosp);
-        when(puService.getPerson(PERSON_ID)).thenReturn(new PersonSvar(new Person(PERSON_ID, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -129,7 +137,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserRegistration() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareAuthorized);
-        when(puService.getPerson(PERSON_ID)).thenReturn(new PersonSvar(new Person(PERSON_ID, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -143,7 +151,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNewName() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareAuthorized);
-        when(puService.getPerson(PERSON_ID)).thenReturn(new PersonSvar(new Person(PERSON_ID, false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -157,7 +165,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNotInPUService() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
-        when(puService.getPerson(PERSON_ID)).thenReturn(new PersonSvar(null, PersonSvar.Status.NOT_FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(null, PersonSvar.Status.NOT_FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -171,7 +179,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserErrorFromPUService() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
-        when(puService.getPerson(PERSON_ID)).thenReturn(new PersonSvar(null, PersonSvar.Status.ERROR));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(null, PersonSvar.Status.ERROR));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -185,7 +193,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserCantContactPUService() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
-        when(puService.getPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
+        when(puService.getPerson(personnummer)).thenThrow(new WebServiceException("Could not send message"));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -200,6 +208,18 @@ public class UserServiceImplTest {
     public void testGetUserNoLoggedInUser() {
         SecurityContextHolder.clearContext();
         userService.getUserWithStatus();
+    }
+
+    @Test
+    public void testGetUserWithStatusInvalidPnr() {
+        SecurityContextHolder.setContext(getSecurityContext(PERSON_ID_INVALID, "Invalid pnr User"));
+        when(privatlakareRepository.findByPersonId(PERSON_ID_INVALID)).thenReturn(privatlakareInvalidPnr);
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(
+                new Person(new Personnummer(PERSON_ID_INVALID), false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+
+        User user = userService.getUserWithStatus();
+        assertEquals(PersonSvar.Status.ERROR, user.getPersonSvarStatus());
+
     }
 
     // Create a fake SecurityContext for a user
@@ -249,5 +269,9 @@ public class UserServiceImplTest {
                 };
             }
         };
+    }
+
+    private Personnummer buildValidPersonnummer(String pnr) {
+        return Personnummer.createValidatedPersonnummerWithDash(pnr).get();
     }
 }

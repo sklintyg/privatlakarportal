@@ -1,9 +1,0 @@
-dependencies {
-    compile project(":privatlakarportal-common")
-
-    compile "se.riv.population.residentmaster:population-residentmaster-schemas:${rivtaResidentMasterSchemasVersion}"
-
-    compile "net.sf.ehcache:ehcache:${ehCacheVersion}"
-
-    testCompile "org.unitils:unitils-core:${unitilsVersion}"
-}

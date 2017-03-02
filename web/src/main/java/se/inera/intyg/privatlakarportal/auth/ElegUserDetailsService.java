@@ -30,7 +30,7 @@ import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Component;
 
-import se.inera.intyg.privatlakarportal.pu.services.PUService;
+import se.inera.intyg.infra.integration.pu.services.PUService;
 
 /**
  * Created by eriklupander on 2015-06-16.

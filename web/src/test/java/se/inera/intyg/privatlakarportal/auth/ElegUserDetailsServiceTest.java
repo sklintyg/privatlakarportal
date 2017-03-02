@@ -30,7 +30,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.opensaml.saml2.core.NameID;
 import org.springframework.security.saml.SAMLCredential;
 
-import se.inera.intyg.privatlakarportal.pu.services.PUService;
+import se.inera.intyg.infra.integration.pu.services.PUService;
 
 /**
  * Created by eriklupander on 2015-06-25.
