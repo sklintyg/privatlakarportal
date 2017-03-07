@@ -18,17 +18,12 @@
  */
 package se.inera.intyg.privatlakarportal.web.integration.test;
 
-import java.time.LocalDate;
-
-import javax.ws.rs.core.MediaType;
-
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
-
-import io.swagger.annotations.Api;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
@@ -38,6 +33,9 @@ import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepos
 import se.inera.intyg.privatlakarportal.service.CleanupService;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
+
+import javax.ws.rs.core.MediaType;
+import java.time.LocalDate;
 
 /**
  * Created by pebe on 2015-09-02.

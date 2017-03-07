@@ -28,15 +28,7 @@ import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.u
 import static com.jayway.restassured.config.RestAssuredConfig.newConfig;
 import static com.jayway.restassured.config.SSLConfig.sslConfig;
 
-/**
- * Base class for "REST-ish" integrationTests using RestAssured.
- * <p/>
- * Created by marced on 19/11/15.
- */
 public abstract class BaseRestIntegrationTest {
-    /**
-     * Common setup for all tests.
-     */
     @Before
     public void setupBase() {
         RestAssured.reset();
