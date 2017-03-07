@@ -2,6 +2,7 @@
 
 def buildVersion = "1.4.${BUILD_NUMBER}"
 def infraVersion = "3.2.+"
+def commonVersion = "3.2.+"
 
 stage('checkout') {
     node {
@@ -47,7 +48,8 @@ stage('fitnesse') {
     node {
         try {
             wrap([$class: 'Xvfb']) {
-                shgradle "fitnesseTest -Penv=build-server -PfileOutput -PoutputFormat=html"
+                shgradle "fitnesseTest -Penv=build-server -PfileOutput -PoutputFormat=html \
+                          -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
             }
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
