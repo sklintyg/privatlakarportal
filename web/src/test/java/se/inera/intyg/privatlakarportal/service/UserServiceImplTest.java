@@ -95,7 +95,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNoRegistration() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -109,7 +109,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNotAuthorized() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareNotAuthorized);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -123,7 +123,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNoHosp() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareNoHosp);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -137,7 +137,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserRegistration() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareAuthorized);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -151,7 +151,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNewName() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareAuthorized);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -215,7 +215,7 @@ public class UserServiceImplTest {
         SecurityContextHolder.setContext(getSecurityContext(PERSON_ID_INVALID, "Invalid pnr User"));
         when(privatlakareRepository.findByPersonId(PERSON_ID_INVALID)).thenReturn(privatlakareInvalidPnr);
         when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(
-                new Person(new Personnummer(PERSON_ID_INVALID), false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+                new Person(new Personnummer(PERSON_ID_INVALID), false, false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PersonSvar.Status.ERROR, user.getPersonSvarStatus());
