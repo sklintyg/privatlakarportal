@@ -16,6 +16,7 @@ profiles: test
 # Configuration repository
 config_name: privatlakarportal-konfiguration
 config_repository: https://github.com/sklintyg/privatlakarportal-konfiguration.git
+config_version: "master"
 config_folder: "{{ inera_root }}/privatlakarportal-konfiguration"
 gitcrypt_key_name: "git-crypt4.key"
 gitcrypt_key_file: "./{{ gitcrypt_key_name }}"
