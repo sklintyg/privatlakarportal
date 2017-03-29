@@ -14,7 +14,7 @@ stage('deploy') {
         util.run({
                 def itVersion = util.latestVersion("privatlakarportal-web", baseVersion)
 
-                ansiblePlaybook(extraVars: [version: "${itVersion}", ansible_ssh_host: "164.40.180.105", deploy_from_repo: "true"],
+                ansiblePlaybook(extraVars: [version: "${itVersion}", ansible_ssh_host: "164.40.180.106", deploy_from_repo: "true"],
                                 installation: 'ansible-yum', inventory: 'ansible/privatlakarportal/demo', playbook: 'ansible/deploy.yml')
 
                 util.waitForServer('https://demo.registrering.intygstjanster.se/version.jsp')
