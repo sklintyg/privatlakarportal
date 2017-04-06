@@ -18,13 +18,26 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.PostConstruct;
+import javax.xml.ws.WebServiceException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -40,26 +53,15 @@ import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
 import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
-import javax.xml.ws.WebServiceException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static java.time.temporal.ChronoUnit.DAYS;
-
 /**
  * Created by pebe on 2015-09-03.
  */
 @Service
 public class HospUpdateServiceImpl implements HospUpdateService {
 
-    private static final int NOTIFY_USER_AFTER_DAYS = 10;
-
-    private static final int REMOVE_REGISTRATION_AFTER_DAYS = 30;
-
     private static final Logger LOG = LoggerFactory.getLogger(HospUpdateServiceImpl.class);
+
+    private static final long MINUTES_PER_DAY = 1440;
 
     @Autowired
     PrivatlakareRepository privatlakareRepository;
@@ -73,9 +75,22 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     @Autowired
     MailService mailService;
 
+    @Value("${privatlakarportal.hospupdate.interval}")
+    private long mailInterval;
+
+    @Value("${privatlakarportal.hospupdate.emails}")
+    private int numberOfEmails;
+
     @Autowired
     @Qualifier("hsaMonitoringLogService")
     private MonitoringLogService monitoringService;
+
+    private LocalDateTime lastUpdate;
+
+    @PostConstruct
+    private void setupTimeBetweenUpdates() {
+        lastUpdate = LocalDateTime.now();
+    }
 
     @Override
     @Scheduled(cron = "${privatlakarportal.hospupdate.cron}")
@@ -95,6 +110,8 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     public void updateHospInformation() {
         // Get our last hosp update time from database
         HospUppdatering hospUppdatering = hospUppdateringRepository.findSingle();
+
+        LocalDateTime now = LocalDateTime.now();
 
         // Get last hosp update time from HSA
         LocalDateTime hsaHospLastUpdate;
@@ -130,23 +147,15 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                         privatlakareRepository.save(privatlakare);
                         mailService.sendRegistrationStatusEmail(status, privatlakare);
                     } else if (status.equals(RegistrationStatus.WAITING_FOR_HOSP)) {
-                        if (isTimeToRemoveRegistration(privatlakare.getRegistreringsdatum())) {
-                            // Remove registration as this is the third attempt without success
-                            LOG.info("Removing {} from registration repo", privatlakare.getPersonId());
-                            privatlakareRepository.delete(privatlakare);
-                            mailService.sendRegistrationRemovedEmail(privatlakare);
-                            monitoringService.logRegistrationRemoved(privatlakare.getPersonId());
-                        } else if (isTimeToNotifyAboutAwaitingHospStatus(privatlakare.getRegistreringsdatum(),
-                                hsaHospLastUpdate)) {
-                            LOG.info("Sending AWAITING_HOSP mail to {}", privatlakare.getPersonId());
-                            mailService.sendRegistrationStatusEmail(status, privatlakare);
-                        }
+                        handleWaitingForHosp(now, privatlakare, status);
                     }
-                } catch (HospUpdateFailedToContactHsaException e) {
+                } catch (HospUpdateFailedToContactHsaException | WebServiceException e) {
                     LOG.error("Failed to contact HSA with error '{}'", e.getMessage());
                 }
             }
         }
+
+        lastUpdate = now;
     }
 
     @Override
@@ -223,13 +232,40 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         }
     }
 
-    /* Private helpers */
-    private boolean isTimeToNotifyAboutAwaitingHospStatus(LocalDateTime registreringsdatum, LocalDateTime lastHospUpdate) {
-        return DAYS.between(registreringsdatum.toLocalDate(), lastHospUpdate.toLocalDate()) >= NOTIFY_USER_AFTER_DAYS;
+    private void handleWaitingForHosp(LocalDateTime now, Privatlakare privatlakare, RegistrationStatus status) {
+        // We should only remove a privatlakare if the grace period has passed and we can remove it from HSA as well.
+        if (isTimeToRemoveRegistration(privatlakare.getRegistreringsdatum(), now)) {
+
+            if (hospPersonService.removeFromCertifier(privatlakare.getPersonId(), privatlakare.getHsaId(),
+                    "Inte kunnat verifiera läkarbehörighet på minst " + (mailInterval * numberOfEmails) / MINUTES_PER_DAY + " dagar")) {
+                // Remove registration as this is the third attempt without success
+                LOG.info("Removing {} from registration repo", privatlakare.getPersonId());
+                privatlakareRepository.delete(privatlakare);
+                mailService.sendRegistrationRemovedEmail(privatlakare);
+                monitoringService.logRegistrationRemoved(privatlakare.getPersonId());
+            } else {
+                // Try again later and only remove privatlakare if they are removed in HSA as well
+                LOG.warn("Could not contact HSA to remove privatlakare from certifier");
+                return;
+            }
+        } else {
+            for (int i = 1; i < numberOfEmails; i++) {
+                if (isTimeToNotifyAboutAwaitingHospStatus(privatlakare.getRegistreringsdatum(), i, now)) {
+                    LOG.info("Sending AWAITING_HOSP mail to {}", privatlakare.getPersonId());
+                    mailService.sendRegistrationStatusEmail(status, privatlakare);
+                    break; // Only ever send one email
+                }
+            }
+        }
     }
 
-    private boolean isTimeToRemoveRegistration(LocalDateTime registrationDate) {
-        return DAYS.between(registrationDate.toLocalDate(), LocalDateTime.now().toLocalDate()) >= REMOVE_REGISTRATION_AFTER_DAYS;
+    private boolean isTimeToNotifyAboutAwaitingHospStatus(LocalDateTime registreringsdatum, int n, LocalDateTime now) {
+        LocalDateTime date = registreringsdatum.plusMinutes(n * mailInterval);
+        return date.isAfter(lastUpdate) && date.isBefore(now);
+    }
+
+    private boolean isTimeToRemoveRegistration(LocalDateTime registrationDate, LocalDateTime now) {
+        return DAYS.between(registrationDate.toLocalDate(), now.toLocalDate()) >= (mailInterval * numberOfEmails) / MINUTES_PER_DAY;
     }
 
     private List<Specialitet> getSpecialiteter(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {

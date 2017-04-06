@@ -25,9 +25,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import se.inera.ifv.hsawsresponder.v3.*;
+import se.inera.ifv.hsawsresponder.v3.GetHospLastUpdateResponseType;
+import se.inera.ifv.hsawsresponder.v3.GetHospLastUpdateType;
+import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.ifv.hsawsresponder.v3.GetHospPersonType;
+import se.inera.ifv.hsawsresponder.v3.HandleCertifierResponseType;
+import se.inera.ifv.hsawsresponder.v3.HandleCertifierType;
 import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
-import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
 @Service
 public class HospPersonServiceImpl implements HospPersonService {
@@ -36,9 +40,6 @@ public class HospPersonServiceImpl implements HospPersonService {
 
     @Autowired
     private HSAWebServiceCalls client;
-
-    @Autowired
-    PrivatlakareRepository privatlakareRepository;
 
     @Override
     public GetHospPersonResponseType getHospPerson(String personId) {

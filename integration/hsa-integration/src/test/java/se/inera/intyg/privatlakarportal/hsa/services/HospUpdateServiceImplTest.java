@@ -18,11 +18,13 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.ifv.hsawsresponder.v3.*;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.common.service.MailService;
@@ -77,6 +79,12 @@ public class HospUpdateServiceImplTest {
 
     @InjectMocks
     private HospUpdateService hospUpdateService = new HospUpdateServiceImpl();
+
+    @Before
+    public void setup() {
+        ReflectionTestUtils.setField(hospUpdateService, "mailInterval", 14400);
+        ReflectionTestUtils.setField(hospUpdateService, "numberOfEmails", 3);
+    }
 
     @Test
     public void testUpdateHospInformationKanEjKontaktaHSA() throws HospUpdateFailedToContactHsaException {
@@ -429,6 +437,7 @@ public class HospUpdateServiceImplTest {
     }
 
     @Test public void testAwaitingHospNotificationMailSentCorrectly() {
+        ReflectionTestUtils.setField(hospUpdateService, "lastUpdate", LocalDateTime.now().minusMinutes(15000));
         HospUppdatering hospUppdatering = new HospUppdatering();
         hospUppdatering.setSenasteHospUppdatering(LocalDate.now().minusDays(15).atStartOfDay());
         when(hospUppdateringRepository.findSingle()).thenReturn(hospUppdatering);
@@ -505,16 +514,19 @@ public class HospUpdateServiceImplTest {
 
         // No hosp-data available for user
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
+        when(hospPersonService.removeFromCertifier(eq(PERSON_ID), anyString(), anyString())).thenReturn(true);
 
         hospUpdateService.scheduledUpdateHospInformation();
 
         verify(mailService).sendRegistrationRemovedEmail(privatlakare1);
         verify(monitoringLogService).logRegistrationRemoved(privatlakare1.getPersonId());
         verify(privatlakareRepository).delete(privatlakare1);
+        verify(hospPersonService).removeFromCertifier(eq(PERSON_ID), anyString(), anyString());
     }
 
     @Test public void testRegistrationNotRemovedWhileInAllowedTimeFrame() {
         LocalDateTime hospLastUpdate = LocalDate.parse("2015-09-15").atStartOfDay();
+        ReflectionTestUtils.setField(hospUpdateService, "lastUpdate", LocalDate.parse("2015-09-15").atStartOfDay());
         when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
 
         Privatlakare privatlakare1 = new Privatlakare();
@@ -532,6 +544,7 @@ public class HospUpdateServiceImplTest {
 
         verify(mailService, times(0)).sendRegistrationRemovedEmail(privatlakare1);
         verify(privatlakareRepository, times(0)).delete(privatlakare1);
+        verify(hospPersonService, times(0)).removeFromCertifier(anyString(), anyString(), anyString());
     }
 
     private GetHospPersonResponseType createGetHospPersonResponse() {
