@@ -123,6 +123,8 @@ public class TestController {
 
     @RequestMapping(value = "/hosp/update", method = RequestMethod.POST)
     public void updateHospInformation() {
+        hsaServiceStub.resetHospLastUpdate();
+        hospUpdateService.resetTimer();
         hospUpdateService.updateHospInformation();
     }
 

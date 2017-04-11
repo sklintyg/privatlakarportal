@@ -35,4 +35,9 @@ public interface HospUpdateService {
             throws HospUpdateFailedToContactHsaException;
 
     void checkForUpdatedHospInformation(Privatlakare privatlakare);
+
+    /**
+     * Only used for testing purposes. Do *NOT* use outside TestController.
+     */
+    void resetTimer();
 }

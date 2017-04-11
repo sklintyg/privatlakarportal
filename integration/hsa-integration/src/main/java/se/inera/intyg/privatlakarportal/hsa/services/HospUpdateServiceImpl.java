@@ -20,6 +20,7 @@ package se.inera.intyg.privatlakarportal.hsa.services;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -232,10 +233,15 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         }
     }
 
+    @Override
+    @Transactional
+    public void resetTimer() {
+        lastUpdate = LocalDate.MIN.atStartOfDay();
+    }
+
     private void handleWaitingForHosp(LocalDateTime now, Privatlakare privatlakare, RegistrationStatus status) {
         // We should only remove a privatlakare if the grace period has passed and we can remove it from HSA as well.
         if (isTimeToRemoveRegistration(privatlakare.getRegistreringsdatum(), now)) {
-
             if (hospPersonService.removeFromCertifier(privatlakare.getPersonId(), privatlakare.getHsaId(),
                     "Inte kunnat verifiera läkarbehörighet på minst " + (mailInterval * numberOfEmails) / MINUTES_PER_DAY + " dagar")) {
                 // Remove registration as this is the third attempt without success

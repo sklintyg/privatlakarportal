@@ -48,4 +48,8 @@ public class HsaServiceStub {
     public LocalDateTime getHospLastUpdate() {
         return hospLastUpdate;
     }
+
+    public void resetHospLastUpdate() {
+        hospLastUpdate = LocalDateTime.now();
+    }
 }
