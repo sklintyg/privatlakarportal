@@ -98,7 +98,9 @@ public class HsaWebServiceStub implements HsaWsResponderInterface {
 
     @Override
     public PingResponseType ping(AttributedURIType logicalAddress, AttributedURIType id, PingType parameters) throws HsaWsFault {
-        return null;
+        PingResponseType response = new PingResponseType();
+        response.setMessage("Pong.");
+        return response;
     }
 
     @Override

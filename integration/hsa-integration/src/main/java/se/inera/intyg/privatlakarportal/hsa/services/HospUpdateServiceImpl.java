@@ -18,7 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
-import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -184,8 +184,8 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         }
 
         if (hospPersonResponse == null) {
-            privatlakare.setLegitimeradeYrkesgrupper(new HashSet<LegitimeradYrkesgrupp>());
-            privatlakare.setSpecialiteter(new ArrayList<Specialitet>());
+            privatlakare.setLegitimeradeYrkesgrupper(new HashSet<>());
+            privatlakare.setSpecialiteter(new ArrayList<>());
             privatlakare.setForskrivarKod(null);
 
             monitoringService.logHospWaiting(privatlakare.getPersonId());
@@ -259,7 +259,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                 if (isTimeToNotifyAboutAwaitingHospStatus(privatlakare.getRegistreringsdatum(), i, now)) {
                     LOG.info("Sending AWAITING_HOSP mail to {}", privatlakare.getPersonId());
                     mailService.sendRegistrationStatusEmail(status, privatlakare);
-                    break; // Only ever send one email
+                    return; // Only ever send one email
                 }
             }
         }
@@ -271,7 +271,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     }
 
     private boolean isTimeToRemoveRegistration(LocalDateTime registrationDate, LocalDateTime now) {
-        return DAYS.between(registrationDate.toLocalDate(), now.toLocalDate()) >= (mailInterval * numberOfEmails) / MINUTES_PER_DAY;
+        return MINUTES.between(registrationDate, now) >= (mailInterval * numberOfEmails);
     }
 
     private List<Specialitet> getSpecialiteter(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {
