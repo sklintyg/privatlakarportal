@@ -123,9 +123,17 @@ public class TestController {
 
     @RequestMapping(value = "/hosp/update", method = RequestMethod.POST)
     public void updateHospInformation() {
-        hsaServiceStub.resetHospLastUpdate();
+        if (hsaServiceStub != null) {
+            hsaServiceStub.resetHospLastUpdate();
+        }
         hospUpdateService.resetTimer();
         hospUpdateService.updateHospInformation();
+    }
+
+    @Profile("hsa-stub")
+    @RequestMapping(value = "/hosp/reset", method = RequestMethod.GET)
+    public void resetHospUpdateTimers() {
+        hsaServiceStub.resetHospLastUpdate();
     }
 
     @RequestMapping(value = "/webcert/validatePrivatePractitioner/{id}", method = RequestMethod.POST)
