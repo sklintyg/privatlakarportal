@@ -154,9 +154,8 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                     LOG.error("Failed to contact HSA with error '{}'", e.getMessage());
                 }
             }
+            lastUpdate = now;
         }
-
-        lastUpdate = now;
     }
 
     @Override
