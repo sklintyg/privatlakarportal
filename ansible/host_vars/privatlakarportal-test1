@@ -1,3 +1,5 @@
+---
+
 # Spring profiles
 profiles: test,pp-security-test,hsa-stub,wc-stub,wc-pu-stub,mail-stub,testability-api,pp-init-data,caching-enabled
 

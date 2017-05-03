@@ -1,5 +1,4 @@
 ---
-# file: group_vars/all
 
 # General
 inera_root: /opt/inera
@@ -35,7 +34,6 @@ tomcat_conf: "{{ inera_tomcat_folder }}/conf"
 tomcat_bin:  "{{ inera_tomcat_folder }}/bin"
 tomcat_lib:  "{{ inera_tomcat_folder }}/lib"
 webapps_folder: "{{ inera_tomcat_folder }}/webapps"
-
 
 # Database configuration
 database_server: localhost
