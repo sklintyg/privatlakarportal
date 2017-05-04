@@ -18,16 +18,22 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
-import javax.ws.rs.core.MediaType;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.*;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import se.inera.intyg.privatlakarportal.common.integration.kodverk.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import se.inera.intyg.infra.dynamiclink.model.DynamicLink;
+import se.inera.intyg.infra.dynamiclink.service.DynamicLinkService;
+import se.inera.intyg.privatlakarportal.common.integration.kodverk.Befattningar;
+import se.inera.intyg.privatlakarportal.common.integration.kodverk.Vardformer;
+import se.inera.intyg.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetConfigResponse;
+
+import javax.ws.rs.core.MediaType;
+import java.util.Map;
 
 /**
  * Created by pebe on 2015-08-28.
@@ -40,6 +46,9 @@ public class ConfigController {
     @Autowired
     private Environment env;
 
+    @Autowired
+    private DynamicLinkService dynamicLinkService;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ApiOperation(value = "getConfig")
     public GetConfigResponse getConfig() {
@@ -49,5 +58,11 @@ public class ConfigController {
                 Befattningar.getBefattningar(),
                 Vardformer.getVardformer(),
                 Verksamhetstyper.getVerksamhetstyper());
+    }
+
+    @RequestMapping(value = "/links", method = RequestMethod.GET, produces = "application/json")
+    @ApiOperation(value = "/links")
+    public Map<String, DynamicLink> getLinks() {
+        return dynamicLinkService.getAllAsMap();
     }
 }

@@ -48,7 +48,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(ApplicationConfig.class, PersistenceConfigJndi.class, PersistenceConfigDev.class, MailServiceConfig.class,
                 HsaConfiguration.class, PuConfiguration.class, BasicCacheConfiguration.class, PuCacheConfiguration.class,
-                WcIntegrationConfiguration.class, ServiceConfig.class);
+                WcIntegrationConfiguration.class, ServiceConfig.class, DynamicLinkConfig.class);
         servletContext.addListener(new ContextLoaderListener(appContext));
 
         AnnotationConfigWebApplicationContext webConfig = new AnnotationConfigWebApplicationContext();

@@ -17,6 +17,10 @@ deferredBootstrapper.bootstrap({
             'use strict';
             return $http.get('/api/config');
         }],
+        LINKS: ['$http', function ($http) {
+            'use strict';
+            return $http.get('/api/config/links');
+        }],
         USER_DATA: ['$http', function ($http) {
             'use strict';
             return $http.get('/api/user');
@@ -92,7 +96,7 @@ app.constant('datepickerPopupConfig', {
 // Inject language resources
 app.run(
     function($log, $rootScope, $state, $window,
-        messageService, UserProxy, UserModel, USER_DATA) {
+        messageService, dynamicLinkService, UserProxy, UserModel, USER_DATA, LINKS) {
         'use strict';
 
         // Always scroll to top
@@ -109,6 +113,8 @@ app.run(
 
         /* jshint -W117 */
         messageService.addResources(ppMessages);// jshint ignore:line
+
+        dynamicLinkService.addLinks(LINKS);
 
         $window.animations = 0;
         $window.doneLoading = false;
