@@ -15,7 +15,7 @@
     src: "{{ app_resources_src }}"
     dest: "{{ app_resources_folder }}"
 
-- name: Copy stub resources
-  copy:
-    src: "{{ stub_resources_src }}"
-    dest: "{{ app_resources_folder }}"
+# - name: Copy stub resources
+#  copy:
+#    src: "{{ stub_resources_src }}"
+#    dest: "{{ app_resources_folder }}"
