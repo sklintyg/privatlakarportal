@@ -18,12 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.service.util;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +25,20 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
 import org.springframework.stereotype.Service;
 import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
-import se.inera.intyg.privatlakarportal.persistence.model.*;
+import se.inera.intyg.privatlakarportal.persistence.model.Befattning;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
+import se.inera.intyg.privatlakarportal.persistence.model.Vardform;
+import se.inera.intyg.privatlakarportal.persistence.model.Verksamhetstyp;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @Profile({"dev", "pp-init-data"})
@@ -51,7 +54,7 @@ public class PrivatlakarBootstrapBean {
 
         List<Resource> files = getResourceListing("bootstrap-privatlakare/*.json");
         for (Resource res : files) {
-            LOG.debug("Loading resource " + res.getFilename());
+            LOG.info("Loading privatlakare resource " + res.getFilename());
             addPrivatlakare(res);
         }
     }

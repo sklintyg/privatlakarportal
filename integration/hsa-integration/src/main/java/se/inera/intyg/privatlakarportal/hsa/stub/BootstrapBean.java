@@ -18,19 +18,17 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.stub;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class BootstrapBean {
     private static final Logger LOG = LoggerFactory.getLogger(BootstrapBean.class);
@@ -44,7 +42,7 @@ public class BootstrapBean {
     @PostConstruct
     public void bootstrapHospPerson() throws IOException {
         List<Resource> files = getResourceListing("classpath:bootstrap-hospperson/*.json");
-        LOG.debug("Bootstrapping {} hospPerson for HSA stub ...", files.size());
+        LOG.info("Bootstrapping {} hospPerson for HSA stub ...", files.size());
         for (Resource res : files) {
             addHospPerson(res);
         }
@@ -62,6 +60,6 @@ public class BootstrapBean {
     private void addHospPerson(Resource res) throws IOException {
         HsaHospPerson hospPerson = objectMapper.readValue(res.getFile(), HsaHospPerson.class);
         hsaServiceStub.addHospPerson(hospPerson);
-        LOG.debug("Loaded hospPerson " + hospPerson.getPersonalIdentityNumber());
+        LOG.info("Loaded hospPerson " + hospPerson.getPersonalIdentityNumber());
     }
 }
