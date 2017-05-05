@@ -7,9 +7,10 @@
 - name: create release directory
   file: path={{ releases_folder }} state=directory
 
-- name: download liquibase-runner-{{ version }}.zip
-  get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/{{ repo }}/se/inera/privatlakarportal/privatlakarportal-liquibase-runner/{{ version }}/privatlakarportal-liquibase-runner-{{ version }}.zip
-      dest={{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip
+- name: Download liquibase-runner-{{ version }}.zip
+  get_url:
+    url: https://build-inera.nordicmedtest.se/nexus/repository/{{ repo }}/se/inera/privatlakarportal/privatlakarportal-liquibase-runner/{{ version }}/privatlakarportal-liquibase-runner-{{ version }}.zip
+    dest: "{{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip"
   when: deploy_from_repo|bool
 
 - name: copy privatlakarportal-liquibase-runner-{{ version }}.zip
@@ -31,8 +32,9 @@
       JAVA_HOME: "{{ java_home }}"
 
 - name: Download privatlakarportal-web-{{ version }}.war
-  get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/{{ repo }}/se/inera/privatlakarportal/privatlakarportal-web/{{ version }}/privatlakarportal-web-{{ version }}.war
-      dest={{ releases_folder }}/privatlakarportal-web-{{ version }}.war
+  get_url:
+    url: "https://build-inera.nordicmedtest.se/nexus/repository/{{ repo }}/se/inera/privatlakarportal/privatlakarportal-web/{{ version }}/privatlakarportal-web-{{ version }}.war"
+    dest: "{{ releases_folder }}/privatlakarportal-web-{{ version }}.war"
   when: deploy_from_repo|bool
 
 - name: copy privatlakarportal-web-{{ version }}.war
