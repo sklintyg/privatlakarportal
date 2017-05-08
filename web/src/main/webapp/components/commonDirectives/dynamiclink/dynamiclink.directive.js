@@ -25,19 +25,22 @@ angular.module('privatlakareApp').directive('dynamiclink',
             return {
                 restrict: 'EA',
                 scope: {
-                    'key': '@'
+                    'key': '@',
+                    'linkclass': '@'
                 },
-                template: '<a href="{{ url }}" ng-attr-target="{{ target || undefined}}" ' +
-                    'ng-attr-title="{{ tooltip || undefined }}" ng-bind-html="text"></a>',
-                link: function(scope, element, attr) {
-                    var dynamicLink;
+                template: '<a href="{{ url }}" class="external-link {{ linkclass }}" ng-attr-target="{{ target || undefined}}" ' +
+                'ng-attr-title="{{ tooltip || undefined }}" ng-bind-html="text"></a>',
 
-                    attr.$observe('key', function(linkKey) {
-                        dynamicLink = dynamicLinkService.getLink(linkKey);
-                        scope.url = dynamicLink.url;
-                        scope.text = dynamicLink.text;
-                        scope.tooltip = dynamicLink.tooltip;
-                        scope.target = dynamicLink.target;
+                link: function(scope) {
+                    scope.$watch(function() {
+                        return dynamicLinkService.getLink(scope.key);
+                    }, function(value) {
+                        if (angular.isDefined(value)) {
+                            scope.url = value.url;
+                            scope.text = $sce.trustAsHtml(value.text);
+                            scope.tooltip = value.tooltip;
+                            scope.target = value.target;
+                        }
                     });
                 }
             };
