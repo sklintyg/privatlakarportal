@@ -60,7 +60,7 @@ public class Browser {
     }
 
     static String getRouteId() {
-        browser.getDriver().manage().getCookieNamed("ROUTEID") != null ? browser.getDriver().manage().getCookieNamed("ROUTEID").getValue() : "na"
+        browser.getDriver().manage().getCookieNamed("ROUTEID") != null ?: ".1"
     }
 
     static String deleteCookie(cookieName) {
