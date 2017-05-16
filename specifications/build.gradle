@@ -6,8 +6,7 @@ fitnesse {
     root = "FitNesseRoot"
     workingDir = "src/test/fitnesse"
     extraProperties = [
-        baseUrl: baseUrl,
-        seleniumDriver: seleniumDriver
+        baseUrl: baseUrl
     ]
     wikiStartPage = "PrivatlakarPortal.WebTests"
 
