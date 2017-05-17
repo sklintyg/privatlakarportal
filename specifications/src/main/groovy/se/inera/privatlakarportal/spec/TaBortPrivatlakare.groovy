@@ -23,11 +23,14 @@ public class TaBortPrivatlakare extends RestClientFixture {
                 requestContentType: JSON,
                 headers: ["Cookie":"ROUTEID=.1"]
         )
-        def resp2 = restClient.delete(
-                path: restPath + id,
-                requestContentType: JSON,
-                headers: ["Cookie":"ROUTEID=.2"]
-        )
+        def resp2
+        if (resp.status != true) {
+             resp2 = restClient.delete(
+                    path: restPath + id,
+                    requestContentType: JSON,
+                    headers: ["Cookie": "ROUTEID=.2"]
+            )
+        }
         responseStatus = resp.status || resp2.status
     }
 
