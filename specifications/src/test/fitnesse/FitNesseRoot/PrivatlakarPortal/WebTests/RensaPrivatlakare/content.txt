@@ -1,11 +1,11 @@
 !3 Ta bort testdata
 | !-TaBortPrivatlakare-! |
-| id           | resultat? |
-| 195206172339 | true      |
+| id           | 
+| 195206172339 | 
 
 | !-TaBortPrivatlakare-! |
-| id           | resultat? |
-| 191212121212 | true      |
+| id           | 
+| 191212121212 | 
 
 
 !3 Skapa privatläkare via REST
@@ -66,12 +66,12 @@
 
 !3 Ta bort testdata
 | !-TaBortPrivatlakare-! |
-| id           | resultat? |
-| 195206172339 | true      |
+| id           | 
+| 195206172339 | 
 
 | !-TaBortPrivatlakare-! |
-| id           | resultat? |
-| 191212121212 | true      |
+| id           | 
+| 191212121212 | 
 
 !3 Återställ tolvans hosp informatinon
 | !-LaggTillHospInformation-! |
