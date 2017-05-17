@@ -18,20 +18,35 @@ public class TaBortPrivatlakare extends RestClientFixture {
 
     public void execute() {
         RestClientUtils.login(restClient)
-        def resp = restClient.delete(
+        def resp
+        if (finns(id, ".1")) {
+        resp = restClient.delete(
                 path: restPath + id,
                 requestContentType: JSON,
                 headers: ["Cookie":"ROUTEID=.1"]
-        )
+        )}
         def resp2
-        if (resp.status != true) {
+        if (finns(id, ".2")) {
              resp2 = restClient.delete(
                     path: restPath + id,
                     requestContentType: JSON,
                     headers: ["Cookie": "ROUTEID=.2"]
             )
         }
-        responseStatus = resp.status || resp2.status
+        if (resp == null && resp2 == null) {
+            responseStatus = true
+        } else {
+            responseStatus = (resp != null && resp.status) || (resp2 != null && resp2.status)
+        }
+    }
+
+    private boolean finns(String pers, def route) {
+        def user = restClient.get(
+                path: 'test/registration/' + pers,
+                requestContentType: JSON,
+                headers: ["Cookie":"ROUTEID="+route]
+        )
+        user.data
     }
 
     public boolean resultat() {

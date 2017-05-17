@@ -39,7 +39,6 @@ class RensningPrivatlakare extends RestClientFixture{
                 requestContentType: JSON,
                 headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
         )
-        System.out.println(resp.data)
         resp.data
     }
 }
