@@ -25,7 +25,7 @@ class RegistreringsMail extends RestClientFixture {
                 requestContentType: JSON,
                 headers: ["Cookie":"ROUTEID=.2"]
         )
-        resp.status == "200" ? resp.status : resp2.status
+         resp.status || resp2.status
     }
 
     public String mailHarSkickats(String id) {
