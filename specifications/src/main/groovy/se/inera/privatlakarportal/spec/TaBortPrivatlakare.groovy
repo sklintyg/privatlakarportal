@@ -28,7 +28,7 @@ public class TaBortPrivatlakare extends RestClientFixture {
                 requestContentType: JSON,
                 headers: ["Cookie":"ROUTEID=.2"]
         )
-        responseStatus = resp.status == 200 ? resp.status : resp2.status
+        responseStatus = resp.status == "200" ? resp.status : resp2.status
     }
 
     public boolean resultat() {
