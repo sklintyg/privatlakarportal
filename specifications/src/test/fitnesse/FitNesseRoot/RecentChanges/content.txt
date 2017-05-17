@@ -1,3 +1,4 @@
+|ChromeSuite.PrivatlakarPortal.WebTests.RegistreraPrivatlakare||10:57:12 Wed, May 17, 2017|
 |ChromeSuite.PrivatlakarPortal.WebTests.RensaPrivatlakare||14:12:19 Tue, Apr 11, 2017|
 |ChromeSuite.PrivatlakarPortal.WebTests.HospUppdatering.TillbakadragenLakarbehorighet||10:12:35 Fri, Feb 03, 2017|
 |ChromeSuite.PrivatlakarPortal.WebTests.HospUppdatering.UppdateraTillLakare||14:18:10 Thu, Feb 02, 2017|

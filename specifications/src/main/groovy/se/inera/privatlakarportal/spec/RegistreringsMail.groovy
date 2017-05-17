@@ -18,20 +18,31 @@ class RegistreringsMail extends RestClientFixture {
         def resp = restClient.delete(
             path: restPath + "/clear",
             requestContentType: JSON,
-            headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
+            headers: ["Cookie":"ROUTEID=.1"]
         )
-        resp.status
+        def resp2 = restClient.delete(
+                path: restPath + "/clear",
+                requestContentType: JSON,
+                headers: ["Cookie":"ROUTEID=.2"]
+        )
+        resp.status == 200 ? resp.status : resp2.status
     }
 
     public String mailHarSkickats(String id) {
         def restClient = createRestClient()
-        def resp = restClient.get(
+        def node1 = restClient.get(
             path: restPath,
             requestContentType: JSON,
-            headers: ["Cookie":"ROUTEID="+Browser.getRouteId()]
+            headers: ["Cookie":"ROUTEID=.1"]
         )
-        mottaget = resp.data.containsKey(id)
-        responseValue = resp.data.get(id)
+        def node2 = restClient.get(
+                path: restPath,
+                requestContentType: JSON,
+                headers: ["Cookie":"ROUTEID=.2"]
+        )
+
+        mottaget = node1.data.containsKey(id) || node2.data.containsKey(id)
+        responseValue = node1.data.get(id) != null ? node1.data.get(id) : node2.data.get(id)
         //resp.data.hospInformation != null && resp.data.hospInformation.hsaTitles != null && resp.data.hospInformation.hsaTitles.contains("Läkare")
     }
 
