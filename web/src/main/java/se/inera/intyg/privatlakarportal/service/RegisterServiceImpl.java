@@ -276,6 +276,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
+    @Transactional
     public boolean removePrivatlakare(String personId) {
         Privatlakare toDelete = privatlakareRepository.findByPersonId(personId);
         if (toDelete == null) {
