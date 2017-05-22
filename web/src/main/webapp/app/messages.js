@@ -44,11 +44,11 @@ var ppMessages = {
         'common.error.invalid_state': '<strong>Operation är inte möjlig.</strong><br>Förmodligen har en annan användare ändrat informationen medan du arbetat på samma utkast. Ladda om sidan och försök igen',
         'common.error.sign.general': '<strong>Intyget kunde inte signeras.</strong><br>Försök igen senare.',
         'common.error.sign.netid': '<strong>Signering misslyckad.</strong><br>Intyget har inte signerats. Detta beror antingen på ett tekniskt fel eller att signeringen avbrutits. Försök igen senare eller kontakta din support.',
-        'common.error.sign.not_ready_yet': '<strong>Intyget är nu signerat.</strong><br>Tyvärr kan inte intyget visas än då det behandlas. Prova att ladda om sidan lite senare. Om problemet kvarstår, kontakta i första hand din lokala IT-avdelning och i andra hand Nationell kundservice på 0771-251010.',
+        'common.error.sign.not_ready_yet': '<strong>Intyget är nu signerat.</strong><br>Tyvärr kan inte intyget visas än då det behandlas. Prova att ladda om sidan lite senare. Om problemet kvarstår, kontakta i första hand din lokala IT-avdelning och i andra hand Ineras kundservice på 0771-251010.',
         'common.error.sign.concurrent_modification': '<strong>Det går inte att signera utkastet.</strong><br/>Utkastet har ändrats av en annan användare sedan du började arbeta på det. Ladda om sidan, kontrollera att uppgifterna stämmer och försök signera igen.<br/>Utkastet ändrades av ${name}.',
         'common.error.unknown_internal_problem': '<strong>Tekniskt fel i Webcert.</strong><br>Försök igen senare.',
         'common.error.data_not_found': '<strong>Intyget kunde inte hittas.</strong><br>Intyget är borttaget eller så saknas behörighet.',
-        'common.error.could_not_load_cert': '<strong>Intyget gick inte att läsa in.</strong><br>Prova att ladda om sidan. Om problemet kvarstår, kontakta i första hand din lokala IT-avdelning och i andra hand Nationell kundservice på 0771-251010.',
+        'common.error.could_not_load_cert': '<strong>Intyget gick inte att läsa in.</strong><br>Prova att ladda om sidan. Om problemet kvarstår, kontakta i första hand din lokala IT-avdelning och i andra hand Ineras kundservice på 0771-251010.',
         'common.error.could_not_load_cert_not_auth': '<strong>Kunde inte hämta intyget eftersom du saknar behörighet.</strong>',
         'common.error.module_problem': '<strong>Tekniskt fel i Webcert.</strong><br>Problem att kontakta intygsmodulen.',
         'common.error.discard.concurrent_modification': '<strong>Kan inte ta bort utkastet. Utkastet har ändrats av en annan användare medan du arbetat på samma utkast.</strong><br>Ladda om sidan och försök igen. Utkastet ändrades av: ${name}',
@@ -60,9 +60,9 @@ var ppMessages = {
 
         // General form errors
         'label.form.error.pastenotallowed': 'Du måste ange e-postadresserna genom att skriva in dem.',
-        'label.form.error.nopermission': '<p>Du har inte behörighet att logga in i Webcert. Det kan bero på att: </p><ul><li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.</li><li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li><li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. Kontakta Inera Nationell Kundservice för att ta reda på mer.</li></ul>',
-        'label.form.error.load': 'Kunde inte ladda formuläret. Försök igen senare. Kontakta Inera Nationell Kundservice om felet kvarstår.',
-        'label.villkor.error.cantload': 'Kunde inte hämta villkoren. Försök igen senare. Kontakta Inera Nationell Kundservice om felet kvarstår.',
+        'label.form.error.nopermission': '<p>Du har inte behörighet att logga in i Webcert. Det kan bero på att: </p><ul><li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.</li><li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li><li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. Kontakta Ineras Kundservice för att ta reda på mer.</li></ul>',
+        'label.form.error.load': 'Kunde inte ladda formuläret. Försök igen senare. Kontakta Ineras kundservice om felet kvarstår.',
+        'label.villkor.error.cantload': 'Kunde inte hämta villkoren. Försök igen senare. Kontakta Ineras Kundservice om felet kvarstår.',
 
         // Header
         'label.header.changeaccount': 'Ändra uppgifter',
