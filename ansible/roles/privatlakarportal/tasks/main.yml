@@ -60,6 +60,16 @@
     dest: "{{ webapps_folder }}/ROOT.war"
     remote_src: True
 
+- name: Remove privatlakarportal-liquibase-runner-{{ version }}.zip from releases
+  file:
+    state: absent
+    path: "{{ releases_folder }}/privatlakarportal-liquibase-runner-{{ version }}.zip"
+
+- name: Remove privatlakarportal-web-{{ version }}.war from releases
+  file:
+    state: absent
+    path: "{{ releases_folder }}/privatlakarportal-web-{{ version }}.war"
+
 - name: Create version file
   template:
     src: version.txt.j2
