@@ -2,10 +2,52 @@
 
 def baseVersion = "1.5.*"
 
-stage('checkout') {
+stage('checkout tools') {
+    node {
+        util.run {
+            dir('base_tools') {
+                git url: "https://github.com/sklintyg/tools.git", branch: "develop"
+            }
+        }
+    }
+}
+
+stage('checkout privatlakarportal') {
     node {
         git url: "https://github.com/sklintyg/privatlakarportal.git", branch: GIT_BRANCH
         util.run { checkout scm }
+    }
+}
+
+stage('run cleanup scripts') {
+    node {
+        util.run {
+            dir('base_tools') {
+                ansiblePlaybook(extraVars: [ansible_ssh_host: "164.40.180.106"], installation: 'ansible-yum',
+                        inventory: 'ansible/inventory/privatlakarportal/demo', playbook: 'ansible/cleanup.yml')
+            }
+        }
+    }
+}
+
+stage('provision (tools)') {
+    node {
+        util.run {
+            dir('base_tools') {
+                ansiblePlaybook(extraVars: [ansible_ssh_host: "164.40.180.106"], installation: 'ansible-yum',
+                        inventory: 'ansible/inventory/privatlakarportal/demo', playbook: 'ansible/provision.yml')
+            }
+        }
+    }
+}
+
+stage('provision') {
+    node {
+        util.run {
+            ansiblePlaybook(extraVars: [ansible_ssh_host: "164.40.180.106", gitcrypt_key_file: "/home/jenkins/git-crypt4.key"],
+                    installation: 'ansible-yum', inventory: 'ansible/inventory/privatlakarportal/demo',
+                    playbook: 'ansible/provision.yml')
+        }
     }
 }
 
