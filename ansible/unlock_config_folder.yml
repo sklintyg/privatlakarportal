@@ -1,7 +1,7 @@
 ---
 # This playbook unlocks the config repo folder
 
-- hosts: privatlakarportal-tomcat
+- hosts: tomcat
   serial: 1
   become: yes
   
