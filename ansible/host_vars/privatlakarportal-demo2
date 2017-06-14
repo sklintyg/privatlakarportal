@@ -3,6 +3,10 @@
 # Spring profiles
 profiles: test,pp-security-test,testability-api,hsa-stub,mail-stub
 
+#tomcat
+tomcat7_user: ine-app
+tomcat7_group: ine-app
+
 proxy_env:
   http_proxy: http://bf-proxy.sth:8888
   https_proxy: http://bf-proxy.sth:8888
