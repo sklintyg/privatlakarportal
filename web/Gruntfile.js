@@ -182,7 +182,6 @@ module.exports = function(grunt) {
             target: {
                 src: [
                     '<%= config.client %>/index.html',
-                    '<%= config.client %>/showcase/index.html',
                     'karma.conf.ci.js'
                 ],
                 ignorePath: '<%= config.client %>/',
@@ -237,7 +236,7 @@ module.exports = function(grunt) {
         // concat, minify and revision files. Creates configurations in memory so
         // additional tasks can operate on them
         useminPrepare: {
-            html: ['<%= config.client %>/index.html', '<%= config.client %>/showcase/index.html'],
+            html: ['<%= config.client %>/index.html'],
             options: {
                 dest: '<%= config.dist %>',
                 staging: '<%= config.tmp %>'
@@ -246,7 +245,7 @@ module.exports = function(grunt) {
 
         // Performs rewrites based on rev and the useminPrepare configuration
         usemin: {
-            html: ['<%= config.dist %>/{,*/}*.html', '<%= config.dist %>/showcase/index.html'],
+            html: ['<%= config.dist %>/{,*/}*.html'],
             css: ['<%= config.dist %>/{,*/}*.css'],
             js: ['<%= config.dist %>/{,*/}*.js'],
             options: {
@@ -307,15 +306,6 @@ module.exports = function(grunt) {
                 cwd: '<%= config.tmp %>',
                 src: ['{app,components}/**/*.html'],
                 dest: '<%= config.tmp %>/tmp-templates.js',
-            },
-            showcase: {
-                cwd: '<%= config.client %>',
-                src: ['{app,components}/**/*.html'],
-                dest: '<%= config.tmp %>/templates_showcase.js',
-                options: {
-                    usemin: '/showcase/showcase.js',
-                    prefix: '/'
-                }
             }
         },
 
@@ -331,7 +321,6 @@ module.exports = function(grunt) {
                         src: [
                             'assets/**/*',
                             'bower_components/**/*',
-                            'showcase/**/*',
                             'WEB-INF/**/*',
                             '*.*'
                         ]
@@ -451,9 +440,6 @@ module.exports = function(grunt) {
                 },
                 files: {
                     '<%= config.client %>/index.html': [
-                        '<%= config.client %>/{app,components}/**/*.css'
-                    ],
-                    '<%= config.client %>/showcase/index.html': [
                         '<%= config.client %>/{app,components}/**/*.css'
                     ]
                 }
