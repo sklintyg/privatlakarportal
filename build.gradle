@@ -1,5 +1,5 @@
 plugins {
-    id "se.inera.intyg.plugin.common" version "1.0.45" apply false
+    id "se.inera.intyg.plugin.common" version "1.0.56" apply false
     id "se.inera.intyg.plugin.fitnesse" version "1.0.8" apply false
     id "org.akhikhl.gretty" version "1.4.2" apply false
     id "com.moowork.node" version "1.1.1" apply false
@@ -96,14 +96,5 @@ allprojects {
 
 task tagRelease(type: TagReleaseTask)
 
-// Load environment specific settings, if the -Penv=xxx parameter is given on invocation.
-task loadConfiguration {
-    def environment = null
-    if (project.hasProperty('env')) {
-        environment = project.getProperty('env')
-    } else {
-        environment = "local"
-    }
-    logger.quiet "Loading configuration for environment '$environment'."
-    addProjectPropertiesFromFile(project, file("$rootDir/env-properties/${environment}/settings.properties"))
-}
+def environment = project.findProperty('env') ?: "local"
+se.inera.intyg.ProjectUtil.addProjectPropertiesFromFile(project, file("$rootDir/env-properties/${environment}/settings.properties"))
