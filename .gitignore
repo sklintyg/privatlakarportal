@@ -17,3 +17,4 @@ web/.sass-cache/
 *.iml
 *.DS_Store
 web/catalina.base_IS_UNDEFINED/
+out
