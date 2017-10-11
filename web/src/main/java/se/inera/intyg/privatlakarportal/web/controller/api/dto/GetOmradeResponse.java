@@ -18,7 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import se.inera.intyg.privatlakarportal.service.postnummer.model.Omrade;
+import se.inera.intyg.infra.integration.postnummer.model.Omrade;
 
 import java.util.List;
 

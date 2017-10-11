@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import se.inera.intyg.infra.integration.postnummer.service.PostnummerService;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
 import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
-import se.inera.intyg.privatlakarportal.service.postnummer.PostnummerService;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.*;
 
 /**
