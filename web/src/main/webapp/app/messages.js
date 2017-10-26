@@ -75,9 +75,8 @@ var ppMessages = {
         'label.start.1': 'Du lämnar uppgifter om dig själv och din verksamhet. Uppgifterna behövs för att du ska kunna använda alla funktioner i Webcert.',
         'label.start.2': 'Din yrkeslegitimation verifieras automatiskt mot Socialstyrelsens register över legitimerad hälso- och sjukvårdspersonal (HOSP).',
         'label.start.3': 'Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms">Webcerts användarvillkor</a> (endast första gången).',
-        'label.start.4': 'Du kan börja använda Webcert.',
 
-        'label.modal.title.webcertvillkor': 'Godkännande av användarvillkor',
+        'label.modal.title.webcertvillkor': 'Användarvillkor för Webcert',
         'label.modal.content.title.webcertvillkor': 'Användarvillkor för Webcert',
 
         // Register
