@@ -113,6 +113,7 @@ app.run(
 
         /* jshint -W117 */
         messageService.addResources(ppMessages);// jshint ignore:line
+        messageService.addLinks(LINKS);
 
         dynamicLinkService.addLinks(LINKS);
 

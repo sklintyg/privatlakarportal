@@ -69,6 +69,21 @@ var ppMessages = {
         'label.header.backtocomplete': 'Tillbaka',
         'label.header.backtoapp': 'Tillbaka',
 
+        // Footer
+        'label.footer.col.1.header': 'Webcert är en tjänst som drivs av Inera AB',
+        'label.footer.col.1.row.1': 'Box 11703, 118 93 Stockholm',
+        'label.footer.col.1.row.2': '<LINK:ineraMainPage>',
+        'label.footer.col.2.header': 'Kundtjänst',
+        'label.footer.col.2.row.1': 'Tel 0771 25 10 10',
+        'label.footer.col.2.row.2': '<LINK:ineraKundservicekontakt>',
+        'label.footer.col.3.header': 'Läs mer om inloggningen',
+        'label.footer.col.3.row.1': '<a ui-sref="app.siths">SITHS-kort</a>',
+        'label.footer.col.3.row.2': '<a ui-sref="app.eleg">E-legitimation</a>',
+        'label.footer.cookies': 'Webcert använder kakor (cookies). <a ng-click="openCookieDialog()">Läs mer om kakor</a>',
+
+        'footer.cookies.modal.title': 'Om kakor (cookies)',
+        'footer.cookies.modal.body': '<p>En kaka är en textfil som webbsidan begär att få spara på din dator för att möjliggöra automatisk inloggning i olika e-tjänster under 60 minuter efter det du identifierat dig med en e-legitimation.</p><p>Den här webbsidan innehåller två så kallade kakor (cookies):</p><ul><li>En sessionskaka som innehåller ett unikt slumptal för att identifiera just din inloggning och försvinner när webbläsaren stängs av.</li><li>En informationskaka om vilken av servrarna på vår webbplats som hanterade din inloggning och den kakan finns kvar i webbläsaren även efter omstart.</li></ul><p>Dessa två kakor behövs för att på ett säkert sätt låta dig komma åt olika e-tjänster som en inloggad och identifierad användare. Kakorna i sig innehåller inga personliga uppgifter och används inte av någon annan.</p><h3>Undvika kakor</h3><p>Vill du inte acceptera kakor kan din webbläsare ställas in så att du automatiskt nekar till lagring av kakor eller informeras varje gång en webbplats begär att få lagra en kaka. Genom webbläsaren kan också tidigare lagrade kakor raderas. Se webbläsarens hjälpsidor för mer information.</p><p>Väljer du att inte acceptera kakor så kan du inte identifiera dig med e-legitimation i denna e-tjänst.</p><p>Mer information om kakor kan du finna på <LINK:ptsCookiesModal>.</p>',
+
         // Start
         'label.start.header': 'Skapa konto i Webcert för privatläkare',
         'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett konto i Webcert.',

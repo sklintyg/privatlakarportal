@@ -1,0 +1,22 @@
+pp-footer {
+
+    color: #333;
+    background-color: #F3F4F6;
+    padding-top: 20px;
+    display: block;
+    flex-shrink: 0;
+
+    h3 {
+        font-size: 14px;
+        margin: 0 0 5px 0;
+    }
+
+    .pp-footer__cookie-link {
+        padding: 20px 0;
+    }
+
+    .container {
+        margin-top: 70px;
+    }
+
+}

@@ -67,8 +67,20 @@ html, body, .container-fluid {
   font-family: "Helvetica Neue", helvetica, arial, sans-serif;
   text-align: left; }
 
-body {
-  padding-bottom: 30px; }
+.app-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .app {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    > div {
+      flex: 1 0 auto;
+      padding-bottom: 30px;
+    }
+  }
+}
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: bold; }
@@ -97,17 +109,18 @@ a {
 
 a.backlink {
   display: inline-block;
-  line-height: 18px;
-  padding-left: 15px;
-  background: transparent url(/img/back-link-icon.gif) center left no-repeat; }
+  margin-top: 10px; }
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding-bottom: 10px; }
 
+.modal-dialog h2 {
+  padding: 0; }
+
 h1 {
-  font-size: 24px;
-  color: #008391; }
+  font-size: 18px;
+  color: #333333; }
 
 h1.backlink-heading {
   display: inline-block;
@@ -116,8 +129,8 @@ h1.backlink-heading {
 
 h2 {
   font-size: 16px;
-  line-height: 20px;
-  padding-top: 30px; }
+  line-height: 16px;
+}
 
 h2.less-top-padding {
   /* useful if h2 is placed immediately after h1 */
@@ -129,9 +142,11 @@ h2.less-top-padding {
   padding-bottom: 10px; }
 
 h3 {
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 20px; }
+  font-size: 14px;
+  line-height: 14px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
 
 h5.inline-heading {
   padding: 20px 0 5px 0; }
@@ -240,4 +255,5 @@ h5.inline-heading {
 @import 'appDirectives/postnummerRegionLookup/postnummerRegionLookup.scss';
 @import 'commonDirectives/fishbone/fishbone.scss';
 @import 'commonDirectives/ppTooltip/ppTooltip.scss';
+@import 'commonDirectives/ppfooter/ppFooter.directive.scss';
 // endinjector

@@ -24,9 +24,45 @@
     "target": "_blank"
   },
   {
+    "key": "ptsCookiesModal",
+    "url": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/",
+    "text": "Kommunikationsmyndigheten PTS sida om kakor",
+    "target": "_blank"
+  },
+  {
     "key": "ineraMainPage",
     "url": "http://www.inera.se",
     "text": "Inera AB",
+    "target": "_blank"
+  },
+  {
+    "key": "ineraKundservicekontakt",
+    "url": "https://www.inera.se/kundservice/kontakta-oss/",
+    "text": "Ineras kundservice",
+    "target": "_blank"
+  },
+  {
+    "key": "ineraFelanmalanFormular",
+    "url": "https://www.inera.se/kundservice/formular/felanmalan-och-support/formular-for-felanmalan-och-support/",
+    "text": "Ineras nationella kundservice",
+    "target": "_blank"
+  },
+  {
+    "key": "eleg",
+    "url": "https://www.bankid.com",
+    "text": "www.e-legitimation.se",
+    "target": "_blank"
+  },
+  {
+    "key": "elegTesta",
+    "url": "https://eid.primeportal.com/EID/Pages/Testa-e-legitimation.aspx",
+    "text": "Läs om tekniska krav och testa din e-legitimation",
+    "target": "_blank"
+  },
+  {
+    "key": "elegCGI",
+    "url": "https://eid.primeportal.com/EID/Pages/Testa-e-legitimation.aspx",
+    "text": "Läs mer om tekniska krav på CGI:s hemsida",
     "target": "_blank"
   }
 ]

@@ -89,6 +89,10 @@ angular.module('privatlakareApp').factory('messageService',
             dynamicLink += _links[linkKey].tooltip ? ' title="' + _links[linkKey].tooltip + '"' : '';
             dynamicLink += _links[linkKey].target ? ' target="' + _links[linkKey].target + '">' : '>';
             dynamicLink += _links[linkKey].text + '</a>';
+            if (_links[linkKey].target === '_blank') {
+                dynamicLink += ' <i class="glyphicon glyphicon-new-window"></i>';
+            }
+
             return dynamicLink;
         }
 

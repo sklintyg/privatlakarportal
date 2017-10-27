@@ -29,7 +29,8 @@ angular.module('privatlakareApp').directive('dynamiclink',
                     'linkclass': '@'
                 },
                 template: '<a href="{{ url }}" class="external-link {{ linkclass }}" ng-attr-target="{{ target || undefined}}" ' +
-                'ng-attr-title="{{ tooltip || undefined }}" ng-bind-html="text"></a>',
+                'ng-attr-title="{{ tooltip || undefined }}" ng-bind-html="text"></a> <i ng-if="target == \'_blank\'" ' +
+                'class="glyphicon glyphicon-new-window"></i>',
 
                 link: function(scope) {
                     scope.$watch(function() {
