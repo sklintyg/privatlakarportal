@@ -1,7 +1,6 @@
 /* jshint maxlen: false, unused: false */
 var ppMessages = {
     'sv': {
-
         'common.logout': 'Logga ut',
         'common.savelogout': 'Spara och logga ut',
         'common.resetchanges': 'Ångra ändringar',
@@ -108,60 +107,60 @@ var ppMessages = {
         'label.alert.pu': 'Ditt namn har uppdaterats från folkbokföringens register. För att ditt nya namn ska användas i Webcert behöver du logga ut ur Webcert och sedan logga in igen.',
 
         'label.form.personnummer': 'Personnummer',
-        'label.form.personnummer.help': 'Personnummer hämtas från den e-legitimation som används vid inloggning. Personnummer går inte att ändra.',
+        'label.form.personnummer.help': 'Personnummer hämtas från den e-legitimation som används vid inloggning och kan inte ändras.',
 
         'label.form.name': 'Namn',
-        'label.form.name.help': 'Namn hämtas från folkbokföringen. Namn går inte att ändra.',
+        'label.form.name.help': 'Namn hämtas från folkbokföringen och kan inte ändras.',
 
         'label.form.befattning.valjbefattning': 'Välj befattning',
-        'label.form.befattning': 'Befattning',
+        'label.form.befattning': 'Befattning*',
         'label.form.befattning.help': 'Välj din huvudsakliga befattning enligt AID-etikett (Arbetsidentifikation kommuner och landsting).',
         'label.form.befattning.error.required': 'Befattning måste anges innan du kan fortsätta.',
 
-        'label.form.verksamhetensnamn': 'Verksamhetens namn',
+        'label.form.verksamhetensnamn': 'Verksamhetens namn*',
         'label.form.verksamhetensnamn.help': 'Ange verksamhetens fullständiga namn.',
         'label.form.verksamhetensnamn.error.required': 'Verksamhetens namn måste anges innan du kan fortsätta.',
 
         'label.form.agarform': 'Ägarform',
-        'label.form.agarform.help': 'Ägarformen "Privat" är förvald och kan inte ändras. Ägarformen följer kodverket för HSA (Hälso- och sjukvårdens adressregister).',
+        'label.form.agarform.help': 'Ägarformen ”Privat” är förvald och kan inte ändras. Ägarformen följer kodverket för HSA (Hälso- och sjukvårdens adressregister).',
 
-        'label.form.vardform': 'Vårdform',
+        'label.form.vardform': 'Vårdform*',
         'label.form.vardform.help': 'Ange verksamhetens huvudsakliga vårdform enligt definition i Socialstyrelsens termbank.',
 
         'label.form.verksamhetstyp.valjverksamhetstyp': 'Välj verksamhetstyp',
-        'label.form.verksamhetstyp': 'Verksamhetstyp',
-        'label.form.verksamhetstyp.help': 'Välj den typ av verksamhet som huvudsakligen bedrivs. Med \'övrig medicinsk verksamhet\' avses paramedicinsk verksamhet som bedrivs av exempelvis sjukgymnaster, arbetsterapeuter, kiropraktorer och logopeder. Med \'övrig medicinsk serviceverksamhet\' avses all medicinsk serviceverksamhet undantaget laboratorieverksamhet och radiologisk verksamhet. Välj \'medicinsk verksamhet\' om den verksamhet du bedriver inte stämmer med några andra verksamhetstyper i denna lista.',
+        'label.form.verksamhetstyp': 'Verksamhetstyp*',
+        'label.form.verksamhetstyp.help': '<p>Välj den typ av verksamhet som huvudsakligen bedrivs.</p><p>Med \'övrig medicinsk verksamhet\' avses paramedicinsk verksamhet som bedrivs av exempelvis sjukgymnaster, arbetsterapeuter, kiropraktorer och logopeder.</p><p>Med \'övrig medicinsk serviceverksamhet\' avses all medicinsk serviceverksamhet undantaget laboratorieverksamhet och radiologisk verksamhet.</p>Välj \'medicinsk verksamhet\' om den verksamhet du bedriver inte stämmer med några andra verksamhetstyper i denna lista.',
         'label.form.verksamhetstyp.error.required': 'Verksamhetstyp måste anges innan du kan fortsätta.',
 
-        'label.form.arbetsplatskod': 'Arbetsplatskod <i>(valfritt)</i>',
-        'label.form.arbetsplatskod.help': 'Ange verksamhetens arbetsplatskod. Arbetsplatskod används för att identifiera vid vilken arbetsplats receptutfärdaren tjänstgör i samband med läkemedelsförskrivning. Vid intygsutfärdande används arbetsplatskod av Försäkringskassan för att samla in information om vid vilken arbetsplats den intygsutfärdande läkaren tjänstgör. Insamlingen sker på Socialstyrelsens uppdrag. Arbetsplatskod är inte en obligatorisk uppgift.',
+        'label.form.arbetsplatskod': 'Arbetsplatskod',
+        'label.form.arbetsplatskod.help': '<p>Ange verksamhetens arbetsplatskod. Arbetsplatskod används för att identifiera vid vilken arbetsplats receptutfärdaren tjänstgör i samband med läkemedelsförskrivning.</p><p>Vid intygsutfärdande används arbetsplatskod av Försäkringskassan för att samla in information om vid vilken arbetsplats den intygsutfärdande läkaren tjänstgör. Insamlingen sker på Socialstyrelsens uppdrag.</p>Arbetsplatskod är inte en obligatorisk uppgift.',
 
         // Step 2
         'label.form.kontaktuppgifter': 'Verksamhetens kontaktuppgifter',
         'label.step2intro': 'Ange verksamhetens kontaktuppgifter.',
 
-        'label.form.telefonnummer': 'Telefonnummer',
-        'label.form.telefonnummer.help': 'Ange det telefonnummer där du vill bli kontaktad om mottagaren av intyget behöver nå dig för kompletterade frågor.',
+        'label.form.telefonnummer': 'Telefonnummer*',
+        'label.form.telefonnummer.help': '<p>Ange det telefonnummer där du vill bli kontaktad om mottagaren av intyget behöver nå dig för kompletterade frågor.</p>Telefonnummer fylls i med siffror 0-9, tillåtna tecken är +, - och mellanslag.',
         'label.form.telefonnummer.popover': 'Telefonnummer fylls i med siffror 0-9.',
         'label.form.telefonnummer.error.required': 'Telefonnummer måste anges innan du kan fortsätta.',
 
-        'label.form.epost': 'E-postadress',
-        'label.form.epost.help': 'E-postadressen används för att kontakta dig då en mottagare av intyg behöver nå dig för kompletterande frågor samt då Inera behöver nå dig i ärenden som gäller användningen av Webcert. Till exempel för att meddela när du är godkänd för att använda Webcert',
+        'label.form.epost': 'E-postadress*',
+        'label.form.epost.help': 'E-postadressen används för att kontakta dig då en mottagare av intyg behöver nå dig för kompletterande frågor samt då Inera behöver nå dig i ärenden som gäller användningen av Webcert. Till exempel för att meddela när du är godkänd för att använda Webcert.',
         'label.form.epost.popover': 'Din e-postadress är viktig! Ange den e-postadress du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor.',
         'label.form.epost.error.required': 'E-postadress måste anges innan du kan fortsätta.',
         'label.form.epost.error.email': 'En korrekt e-postadress måste anges innan du kan fortsätta.',
 
-        'label.form.epost2': 'Upprepa e-postadress',
+        'label.form.epost2': 'Upprepa e-postadress*',
         'label.form.epost2.error.required': 'E-postadress måste anges innan du kan fortsätta.',
         'label.form.epost2.error.email': 'En korrekt e-postadress måste anges innan du kan fortsätta.',
         'label.form.epost2.error.confirmemail': 'E-postadressen är inte identisk med ovanstående angiven e-post.',
 
-        'label.form.adress': 'Postadress',
-        'label.form.adress.help': 'Ange den postadress (såsom gatuadress eller boxadress) som du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor. Postadressen är även nödvändig för Ineras eventuella fakturering för användning av Webcert.',
+        'label.form.adress': 'Postadress*',
+        'label.form.adress.help': '<p>Ange den postadress (såsom gatuadress eller boxadress) som du vill bli kontaktad på om mottagaren av intyget behöver nå dig för kompletterande frågor.</p> Postadressen är även nödvändig för Ineras eventuella fakturering för användning av Webcert.',
         'label.form.adress.error.required': 'Postadress måste anges innan du kan fortsätta.',
 
-        'label.form.postnummer': 'Postnummer',
-        'label.form.postnummer.help': 'Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag. Postort, kommun och län fylls i automatiskt.',
+        'label.form.postnummer': 'Postnummer*',
+        'label.form.postnummer.help': 'Ange postadressens postnummer i fem siffror 0-9, med eller utan mellanslag. Postort, kommun och län fylls sedan i automatiskt.',
         'label.form.postnummer.popover': 'Ange postadressens postnummer i fem siffor 0-9, med eller utan mellanslag. Postort, kommun och län fylls i automatiskt.',
         'label.form.postnummer.error.required': 'Postnummer måste anges innan du kan fortsätta.',
         'label.form.postnummer.error.format': 'Felaktigt postnummer. Postnummer måste anges på formaten XXXXX eller XXX XX.',
@@ -184,6 +183,7 @@ var ppMessages = {
 
         // Step 3 - summary
         'label.form.socialuppgifter': 'Socialstyrelsens uppgifter',
+        'label.form.socialuppgifter.intro': 'Nedanstående uppgifter är hämtade från Socialstyrelsen och kan inte ändras.',
         'label.step3intro': 'Kontrollera att sammanfattningen av din information stämmer innan du går vidare. Du kan justera de uppgifter som du själv har angett. Information hämtad från din e-legitimation och från Socialstyrelsens register går inte att redigera.',
         'label.godkannvillkor': 'Jag medger <a ui-sref=".terms">behandling av mina och verksamhetens uppgifter</a>.',
         'label.createaccount': 'Skapa konto',
@@ -200,11 +200,12 @@ var ppMessages = {
 
         // Waiting
         'label.waiting.header': 'Väntar på uppgifter om läkarlegitimation',
-        'label.waiting.text': '<p>Ditt konto är skapat.</p><p>Uppgifter om att du har läkarlegitimation behöver dock hämtas från Socialstyrelsen. När uppgifterna har hämtats får du ett mejl till din registrerade mejladress om att du kan börja använda Webcert.</p><p>Om uppgifter om din läkarlegitimation efter 10 dagar fortfarande inte kunnat hämtas hos Socialstyrelsen får du ett mejl om detta. Du bör då kontakta Socialstyrelsen för att verifiera att dina legitimationsuppgifter är korrekta. De uppgifter du har lämnat om dig själv och din verksamhet i Webcert är sparade. Du kan ändra dem när du vill.</p><p>När du första gången går till Webcert för att skriva intyg måste du godkänna de villkor som gäller för att använda tjänsten.</p>',
-        'label.waiting.gotoyouraccount': 'Gå till ditt konto',
+        'label.waiting.text': '<p>Ditt konto är skapat.</p><p>Uppgifter om att du har läkarlegitimation behöver dock hämtas från Socialstyrelsen. När uppgifterna har hämtats får du ett mejl till din registrerade mejladress om att du kan börja använda Webcert.</p><p>Om uppgifter om din läkarlegitimation efter 10 dagar fortfarande inte kunnat hämtas hos Socialstyrelsen får du ett mejl om detta. Du bör då kontakta Socialstyrelsen för att verifiera att dina legitimationsuppgifter är korrekta.</p><p>De uppgifter du har lämnat om dig själv och din verksamhet i Webcert är sparade. Du kan ändra dem när du vill.</p>',
+        'label.waiting.gotoyouraccount': 'Gå till Min sida',
 
         // Min sida
-        'heading.mypage': 'Min sida'
+        'heading.mypage': 'Min sida',
+        'label.minsida.intro': 'Här kan du se och administrera dina registrerade uppgifter.'
     },
     'en': {
         'common.ok': 'OK',
