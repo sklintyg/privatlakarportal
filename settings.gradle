@@ -7,11 +7,12 @@ pluginManagement {
 
 rootProject.name = 'privatlakarportal'
 
-include ':web', ':specifications', ':integration/hsa-integration', ':integration/wc-integration', ':persistence', ':common'
+include ':web', ':specifications', ':integration/hsa-integration', ':integration/wc-integration', ':persistence', ':common', ':test'
 include ':tools/liquibase-runner'
 
 project(':web').name = 'privatlakarportal-web'
 project(':specifications').name = 'privatlakarportal-specifications'
+project(':test').name = 'privatlakarportal-test'
 project(':integration/hsa-integration').name = 'privatlakarportal-hsa-integration'
 project(':integration/wc-integration').name = 'privatlakarportal-wc-integration'
 project(':persistence').name = 'privatlakarportal-persistence'
