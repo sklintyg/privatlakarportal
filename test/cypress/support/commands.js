@@ -25,15 +25,15 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add("login", (loginId) => {
-    cy.visit(Cypress.env('ppUrl') + '/welcome.html');
+    cy.visit('/welcome.html');
     cy.get('#jsonSelect').select(loginId);
     cy.get('#loginBtn').click();
 });
 
 function taBortPrivatlakare(route, id) {
-    return cy.request('GET', Cypress.env('ppUrl') + '/api/test/registration/' + id, {'headers':{'Cookie':'ROUTEID='+route}}).then((resp) => {
+    return cy.request('GET', '/api/test/registration/' + id, {'headers':{'Cookie':'ROUTEID='+route}}).then((resp) => {
         if (resp.body) {
-            return cy.request('DELETE', Cypress.env('ppUrl') + '/api/test/registration/remove/'+id, {'headers': {'Cookie': 'ROUTEID=' + route}});
+            return cy.request('DELETE', '/api/test/registration/remove/'+id, {'headers': {'Cookie': 'ROUTEID=' + route}});
         } else {
             return resp;
         }
@@ -51,16 +51,16 @@ Cypress.Commands.add("taBortPrivatlakare", (id) => {
 });
 
 Cypress.Commands.add("rensaMailStubbe", () => {
-    cy.request('DELETE', Cypress.env('ppUrl') + '/api/stub/mails/clear', {'headers':{'Cookie':'ROUTEID=.1'}});
-    cy.request('DELETE', Cypress.env('ppUrl') + '/api/stub/mails/clear', {'headers':{'Cookie':'ROUTEID=.2'}});
+    cy.request('DELETE', '/api/stub/mails/clear', {'headers':{'Cookie':'ROUTEID=.1'}});
+    cy.request('DELETE', '/api/stub/mails/clear', {'headers':{'Cookie':'ROUTEID=.2'}});
 });
 
 Cypress.Commands.add("hamtaMailFranStubbe", (mailId) => {
-    cy.request('GET', Cypress.env('ppUrl') + '/api/stub/mails', {'headers':{'Cookie':'ROUTEID=.1'}}).then((resp) => {
+    cy.request('GET', '/api/stub/mails', {'headers':{'Cookie':'ROUTEID=.1'}}).then((resp) => {
         if (resp.body[mailId]) {
             return resp.body[mailId];
         }
-        return cy.request('GET', Cypress.env('ppUrl') + + 'api/stub/mails', {'headers':{'Cookie':'ROUTEID=.2'}}.then((resp2) => {
+        return cy.request('GET', '/api/stub/mails', {'headers':{'Cookie':'ROUTEID=.2'}}.then((resp2) => {
             if (resp2.body[mailId]) {
                 return resp2.body[mailId];
             }
