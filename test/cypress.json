@@ -1,5 +1,7 @@
 {
-  "baseUrl":"http://localhost:8090",
+  "env": {
+    "host": "http://localhost:8090"
+  },
   "screenshotsFolder": "build/test-results/screenshots/",
   "videosFolder": "build/test-results/videos/"
 }

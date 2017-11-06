@@ -47,7 +47,7 @@ stage('restAssured') {
 stage('cypress') {
     node {
         try {
-            shgradle "cypressTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se"
+            shgradle "cypressTest -DppUrl=http://privatlakarportal.inera.nordicmedtest.se"
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'test/build/test-results', \
                 reportFiles: 'mochawesome.html', reportName: 'Cypress results'

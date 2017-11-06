@@ -15,10 +15,10 @@ node {
 task cypressTest(type: NodeTask, dependsOn: [yarn] ) {
     outputs.upToDateWhen { false }
 
-    def baseUrl = System.properties['baseUrl'] ?: "http://localhost:8090"
+    def ppUrl = System.properties['ppUrl'] ?: "http://localhost:8090"
 
     script = file('node_modules/cypress/bin/cypress')
-    args = ['run', '--reporter', 'mochawesome', '--reporter-options', 'reportDir=build/test-results', '--env', 'baseUrl='+baseUrl]
+    args = ['run', '--reporter', 'mochawesome', '--reporter-options', 'reportDir=build/test-results', '--env', 'ppUrl='+ppUrl]
 }
 
 dependencies {
