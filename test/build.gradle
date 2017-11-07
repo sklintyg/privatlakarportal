@@ -18,7 +18,7 @@ task cypressTest(type: NodeTask, dependsOn: [yarn] ) {
     def baseUrl = System.properties['baseUrl'] ?: "http://localhost:8090"
 
     script = file('node_modules/cypress/bin/cypress')
-    args = ['run', '--reporter', 'mochawesome', '--reporter-options', 'reportDir=build/test-results', '--config', 'baseUrl='+baseUrl]
+    args = ['run', '--reporter', 'mochawesome', '--reporter-options', 'inlineAssets=true,reportDir=build/test-results', '--config', 'baseUrl='+baseUrl]
 }
 
 dependencies {
