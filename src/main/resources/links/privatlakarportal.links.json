@@ -1,7 +1,7 @@
 [
   {
     "key": "ineraNationellKundservice",
-    "url": "http://www.inera.se/felanmalan",
+    "url": "https://www.inera.se/felanmalan",
     "text": "Ineras kundservice.",
     "target": "_blank"
   },
@@ -32,13 +32,13 @@
   {
     "key": "ineraMainPage",
     "url": "https://www.inera.se",
-    "text": "Inera AB",
+    "text": "www.inera.se",
     "target": "_blank"
   },
   {
     "key": "ineraKundservicekontakt",
     "url": "https://www.inera.se/kundservice/kontakta-oss/",
-    "text": "Ineras kundservice",
+    "text": "Hjälp och support",
     "target": "_blank"
   },
   {
