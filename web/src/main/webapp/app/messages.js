@@ -5,6 +5,7 @@ var ppMessages = {
         'common.savelogout': 'Spara och logga ut',
         'common.resetchanges': 'Ångra ändringar',
         'common.continue': 'Fortsätt',
+        'common.continue.step1': 'Skapa konto',
         'common.yes': 'Ja',
         'common.no': 'Nej',
         'common.yes.caps': 'JA',
