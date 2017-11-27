@@ -33,7 +33,7 @@ angular.module('privatlakareApp').factory('wcModalService',
             return $modal.open(
                 {
                     backdrop: 'static',
-                    keyboard: false,
+                    keyboard: true,
                     modalFade: false,
 
                     controller: modal.controller,

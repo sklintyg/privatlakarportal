@@ -96,9 +96,17 @@ angular.module('privatlakareApp').factory('ModalViewService',
 
             $modalInstance.result.then(function () {
                 $log.info('Modal closed at: ' + new Date());
+                popState();
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
+                popState();
             });
+
+            function popState() {
+                if ($state.current.url === '/terms') {
+                    $state.go('^');
+                }
+            }
         }
 
         return {
