@@ -6,6 +6,11 @@
             <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+  <context-param>
+    <param-name>logbackConfigParameter</param-name>
+    <param-value>privatlakarportal.logback.file</param-value>
+  </context-param>
+
   <error-page>
     <error-code>403</error-code>
     <location>/error.jsp?reason=denied</location>
