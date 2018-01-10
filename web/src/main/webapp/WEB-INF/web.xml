@@ -11,6 +11,12 @@
     <param-value>privatlakarportal.logback.file</param-value>
   </context-param>
 
+  <!-- Listener for external logback configuration file -->
+  <listener>
+    <listener-class>se.inera.intyg.privatlakarportal.logging.LogbackConfiguratorContextListener</listener-class>
+  </listener>
+
+
   <error-page>
     <error-code>403</error-code>
     <location>/error.jsp?reason=denied</location>
