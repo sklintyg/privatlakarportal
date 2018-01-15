@@ -73,6 +73,16 @@ gretty {
                '-XX:MaxPermSize=256M']
 }
 
+license {
+    sourceSets {
+        main {
+            resources {
+                srcDirs  = ["src/main/webapp/app", "src/main/webapp/components"]
+            }
+        }
+    }
+}
+
 dependencies {
     compile project(":privatlakarportal-wc-integration")
 
