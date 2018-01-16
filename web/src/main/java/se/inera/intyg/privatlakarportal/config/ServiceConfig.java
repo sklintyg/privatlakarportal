@@ -20,10 +20,13 @@ package se.inera.intyg.privatlakarportal.config;
 
 // CHECKSTYLE:OFF LineLength
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.cxf.Bus;
+import org.apache.cxf.feature.LoggingFeature;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +59,9 @@ public class ServiceConfig {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private Bus cxfBus;
+
     @Value("${terms.ws.services.url}")
     private String termsUrl;
 
@@ -80,11 +86,17 @@ public class ServiceConfig {
 
     @Bean
     public EndpointImpl pingForConfigurationEndpoint() {
-        Bus bus = (Bus) applicationContext.getBean(Bus.DEFAULT_BUS_ID);
         Object implementor = pingForConfigurationResponder();
-        EndpointImpl endpoint = new EndpointImpl(bus, implementor);
+        EndpointImpl endpoint = new EndpointImpl(cxfBus, implementor);
         endpoint.publish("/ping-for-configuration");
         return endpoint;
+    }
+
+    @Bean
+    public LoggingFeature loggingFeature() {
+        LoggingFeature loggingFeature = new LoggingFeature();
+        loggingFeature.setPrettyLogging(true);
+        return loggingFeature;
     }
 
     @Bean

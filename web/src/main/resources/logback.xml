@@ -53,6 +53,8 @@
 
   <logger name="se.inera.intyg.privatlakarportal" level="info"/>
 
+  <logger name="org.apache.cxf.service" level="info"/>
+
   <root>
     <level value="info" />
     <appender-ref ref="STDOUT" />

@@ -18,6 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
+import org.apache.cxf.Bus;
+import org.apache.cxf.feature.LoggingFeature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -25,10 +28,17 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @Configuration
 @PropertySource({ "file:${privatlakarportal.config.file}", "file:${credentials.file}", "classpath:version.properties"})
 @ImportResource({ "classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml"})
 public class ApplicationConfig {
+
+    @Autowired
+    private Bus cxfBus;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
@@ -41,5 +51,20 @@ public class ApplicationConfig {
         source.setBasename("version");
         source.setUseCodeAsDefaultMessage(true);
         return source;
+    }
+
+    @PostConstruct
+    public Bus cxfBus() {
+        cxfBus.setFeatures(
+                new ArrayList<>(Arrays.asList(loggingFeature())));
+
+        return cxfBus;
+    }
+
+    @Bean
+    public LoggingFeature loggingFeature() {
+        LoggingFeature loggingFeature = new LoggingFeature();
+        loggingFeature.setPrettyLogging(true);
+        return loggingFeature;
     }
 }
