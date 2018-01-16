@@ -20,8 +20,6 @@ package se.inera.intyg.privatlakarportal.config;
 
 // CHECKSTYLE:OFF LineLength
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
