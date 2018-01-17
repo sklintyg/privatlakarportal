@@ -27,7 +27,7 @@ stage('deploy') {
         util.run {
             ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false"], \
                 installation: 'ansible-yum', inventory: 'ansible/inventory/privatlakarportal/test', playbook: 'ansible/deploy.yml'
-            util.waitForServer('http://privatlakarportal.inera.nordicmedtest.se/version.jsp')
+            util.waitForServer('http://privatlakarportal.inera.nordicmedtest.se/version.jsp', false)
         }
     }
 }
