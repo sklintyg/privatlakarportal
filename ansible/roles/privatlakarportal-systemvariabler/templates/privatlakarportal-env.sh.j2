@@ -1,4 +1,4 @@
-ENV_CFG="-Dspring.profiles.active={{ profiles }}  {% if tomcat_https_port is defined %}-Dprivatlakarportal.host.url=http://127.0.0.1:{{ tomcat_https_port}}{% endif %}"
+ENV_CFG="-Dspring.profiles.active={{ profiles }}  {% if tomcat_https_port is defined %}-Dprivatlakarportal.host.url=http://127.0.0.1:{{ tomcat_https_port}}{% endif %} {% if skip_hosp_update is defined %}-Dscheduled.update.skip=true{% endif %}"
 JVM_CFG="-Xms1024m -Xmx1024m -Dfile.encoding=UTF-8 -Djsse.enableSNIExtension=false"
 PRIVATLAKARPORTAL_CFG="-Dprivatlakarportal.config.folder={{ config_etc_folder }} -Dprivatlakarportal.config.file={{ config_etc_folder }}/privatlakarportal.properties -Dlogback.configurationFile={{ config_etc_folder }}/privatlakarportal-logback.xml -Dprivatlakarportal.mailresource.file={{ config_etc_folder }}/privatlakarportal.mailresource.properties"
 PRIVATLAKARPORTAL_RESOURCES="-Dprivatlakarportal.resources.folder={{ app_resources_folder }}"
