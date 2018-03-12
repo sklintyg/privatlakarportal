@@ -52,7 +52,7 @@ public class TermsStubConfiguration {
         Bus bus = (Bus) applicationContext.getBean(Bus.DEFAULT_BUS_ID);
         Object implementor = termsWebServiceStub();
         EndpointImpl endpoint = new EndpointImpl(bus, implementor);
-        endpoint.publish("/terms");
+        endpoint.publish("/stubs/get-private-practitioner-terms/v1.0");
         return endpoint;
     }
 }
