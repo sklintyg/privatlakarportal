@@ -272,6 +272,6 @@ public class UserServiceImplTest {
     }
 
     private Personnummer buildValidPersonnummer(String pnr) {
-        return Personnummer.createValidatedPersonnummerWithDash(pnr).get();
+        return Personnummer.createPersonnummerWithDash(pnr).get();
     }
 }

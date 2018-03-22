@@ -86,9 +86,9 @@ public class UserServiceImpl implements UserService {
         PersonSvar.Status personSvarStatus;
         try {
             Optional<Personnummer> personnummerOptional = Personnummer
-                    .createValidatedPersonnummerWithDash(privatlakarUser.getPersonalIdentityNumber());
-            if (personnummerOptional.isPresent()) {
+                    .createPersonnummer(privatlakarUser.getPersonalIdentityNumber());
 
+            if (personnummerOptional.isPresent()) {
                 PersonSvar personSvar = puService.getPerson(personnummerOptional.get());
                 personSvarStatus = personSvar.getStatus();
 
