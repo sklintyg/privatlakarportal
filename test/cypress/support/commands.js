@@ -28,6 +28,7 @@ Cypress.Commands.add("login", (loginId) => {
     cy.visit('/welcome.html');
     cy.get('#jsonSelect').select(loginId);
     cy.get('#loginBtn').click();
+    cy.window().should('have.property', 'disableAnimations');
     cy.window().then((window) => {
         window.disableAnimations();
     });
