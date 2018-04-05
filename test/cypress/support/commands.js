@@ -28,6 +28,9 @@ Cypress.Commands.add("login", (loginId) => {
     cy.visit('/welcome.html');
     cy.get('#jsonSelect').select(loginId);
     cy.get('#loginBtn').click();
+    cy.window().then((window) => {
+        window.disableAnimations();
+    });
 });
 
 function taBortPrivatlakare(route, id) {

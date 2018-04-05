@@ -95,9 +95,14 @@ app.constant('datepickerPopupConfig', {
 
 // Inject language resources
 app.run(
-    function($log, $rootScope, $state, $window,
+    function($log, $rootScope, $state, $window, $animate,
         messageService, dynamicLinkService, UserProxy, UserModel, USER_DATA, LINKS) {
         'use strict';
+
+        // For testability
+        $window.disableAnimations = function() {
+            $animate.enabled(false);
+        };
 
         // Always scroll to top
         $rootScope.$on('$stateChangeSuccess',function(){
