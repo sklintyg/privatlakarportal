@@ -24,8 +24,7 @@ angular.module('privatlakareApp').factory('WindowUnload',
                             return;
                         }
 
-                        var message = 'Om du väljer "Lämna sidan" sparas inte dina inmatade uppgifter. ' +
-                            'Om du väljer "Stanna kvar på sidan" kan du spara ändringarna och sedan stänga webbläsaren.';
+                        var message = 'Om du lämnar sidan sparas inte dina ändringar.';
                         if (typeof event === 'undefined') {
                             event = $window.event;
                         }

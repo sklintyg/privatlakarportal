@@ -92,11 +92,7 @@ angular.module('privatlakareApp').factory('TermsService',
         }
 
         function _openTerms(modalModel) {
-            function popState() {
-                if ($state.current.url === '/terms') {
-                    $state.go('^');
-                }
-            }
+
 
             modalModel.options.buttons = [
                 {
@@ -106,7 +102,6 @@ angular.module('privatlakareApp').factory('TermsService',
                     className: 'btn-success',
                     clickFn: function($modalInstance) {
                         $modalInstance.close();
-                        popState();
                     }
                 },
                 {
@@ -122,7 +117,7 @@ angular.module('privatlakareApp').factory('TermsService',
             ];
 
             modalModel.modalInstance = wcModalService.open(modalModel.options);
-        }
+            }
 
         return {
             loadTerms: _loadTerms,

@@ -1,16 +1,16 @@
-/**
- * Copyright (C) 2016 Inera AB (http://www.inera.se)
+/*
+ * Copyright (C) 2017 Inera AB (http://www.inera.se)
  *
- * This file is part of privatlakarportal (https://github.com/sklintyg/privatlakarportal).
+ * This file is part of sklintyg (https://github.com/sklintyg).
  *
- * privatlakarportal is free software: you can redistribute it and/or modify
+ * sklintyg is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * privatlakarportal is distributed in the hope that it will be useful,
+ * sklintyg is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import se.inera.intyg.infra.integration.postnummer.service.PostnummerService;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
 import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
-import se.inera.intyg.privatlakarportal.service.postnummer.PostnummerService;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.*;
 
 /**

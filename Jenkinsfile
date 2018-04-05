@@ -1,8 +1,8 @@
 #!groovy
 
-def buildVersion = "1.5.${BUILD_NUMBER}"
-def infraVersion = "3.4.+"
-def commonVersion = "3.4.+"
+def buildVersion = "1.6.0.${BUILD_NUMBER}"
+def infraVersion = "3.5.0.+"
+def commonVersion = "3.5.0.+"
 
 stage('checkout') {
     node {
@@ -25,9 +25,9 @@ stage('build') {
 stage('deploy') {
     node {
         util.run {
-            ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false", config_version: "PP-1.5"], \
+            ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false", config_version: "PP-1.6"], \
                 installation: 'ansible-yum', inventory: 'ansible/inventory/privatlakarportal/test', playbook: 'ansible/deploy.yml'
-            util.waitForServer('http://privatlakarportal.inera.nordicmedtest.se/version.jsp')
+            util.waitForServer('http://privatlakarportal.inera.nordicmedtest.se/version.jsp', false)
         }
     }
 }
@@ -44,19 +44,30 @@ stage('restAssured') {
     }
 }
 
-stage('fitnesse') {
+stage('cypress') {
     node {
         try {
-            wrap([$class: 'Xvfb']) {
-                shgradle "fitnesseTest -Penv=build-server -PfileOutput -PoutputFormat=html \
-                          -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
-            }
+            shgradle "cypressTest -DbaseUrl=https://privatlakarportal.inera.nordicmedtest.se"
         } finally {
-            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
-                reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
+            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'test/build/test-results', \
+                reportFiles: 'mochawesome.html', reportName: 'Cypress results'
         }
     }
 }
+
+//stage('fitnesse') {
+//    node {
+//        try {
+//            wrap([$class: 'Xvfb']) {
+//                shgradle "fitnesseTest -Penv=build-server -PfileOutput -PoutputFormat=html \
+//                          -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+//            }
+//        } finally {
+//            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
+//                reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
+//        }
+//    }
+//}
 
 stage('tag and upload') {
     node {

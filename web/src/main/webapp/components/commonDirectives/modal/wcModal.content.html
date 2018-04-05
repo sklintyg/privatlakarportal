@@ -6,7 +6,7 @@
        style="min-height:{{modal.contentMinHeight}}">
 
     <div id="{{modal.dialogId}}" class="modal-header">
-      <button class="close" ng-click="close()" ng-if="modal.showClose">×</button>
+      <button class="close" ng-click="$dismiss()" ng-if="modal.showClose">×</button>
       <h3 ng-focus="model.focus" tabindex="-1">
         <span message key="{{modal.titleId}}"></span>
       </h3>

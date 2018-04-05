@@ -11,7 +11,6 @@ angular.module('privatlakareApp').directive('message',
                     'params': '='
                 },
                 replace: true,
-                template: '<span ng-bind-html="resultValue"></span>',
                 link: function(scope, element, attr) {
                     var result;
                     // observe changes to interpolated attribute
@@ -40,7 +39,8 @@ angular.module('privatlakareApp').directive('message',
                         }
 
                         // now get the value to display..
-                        scope.resultValue = $compile($sce.trustAsHtml(result))(scope)[0];
+                        element.html(result);
+                        $compile(element.contents())(scope.$parent);
                     });
                 }
             };

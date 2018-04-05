@@ -32,7 +32,7 @@ angular.module('privatlakareApp').factory('AppTermsModalModel',
                 contentMinHeight: undefined,
                 bodyOverflowY: 'scroll',
                 buttons: [],
-                showClose: false
+                showClose: true
             };
 
             return data;

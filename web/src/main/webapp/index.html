@@ -19,6 +19,7 @@
 <!-- build:css({build/.tmp,src/main/webapp}) app/app.css -->
 <link rel="stylesheet" href="app/app.css">
 <!-- injector:css -->
+<link rel="stylesheet" href="/app/about/siths/siths.css">
 <link rel="stylesheet" href="/app/app.css">
 <link rel="stylesheet" href="/app/header/header.css">
 <link rel="stylesheet" href="/app/navbar/navbar.css">
@@ -57,10 +58,12 @@
   </div>
 
   <!-- Site content here -->
-  <div ui-view="dialogs"></div>
-  <div ui-view="header"></div>
-  <div ui-view="navbar"></div>
-  <div ui-view="app"></div>
+  <div class="app-wrapper">
+    <div ui-view="dialogs"></div>
+    <div ui-view="header"></div>
+    <div ui-view="navbar"></div>
+    <div class="app" ui-view="app"></div>
+  </div>
 
   <!--[if lt IE 9]>
   <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -86,6 +89,8 @@
   <!-- build:js({build/.tmp,src/main/webapp}) app/app.main.js -->
   <script src="app/app.main.js"></script>
   <!-- injector:js -->
+  <script src="app/about/eleg/eleg.js"></script>
+  <script src="app/about/siths/siths.js"></script>
   <script src="app/app.controller.js"></script>
   <script src="app/app.js"></script>
   <script src="app/boot/boot.controller.js"></script>
@@ -142,10 +147,12 @@
   <script src="components/commonDirectives/modal/modalView.service.js"></script>
   <script src="components/commonDirectives/modal/wcModal.directive.js"></script>
   <script src="components/commonDirectives/modal/wcModal.service.js"></script>
+  <script src="components/commonDirectives/ppCollapse/ppCollapse.directive.js"></script>
   <script src="components/commonDirectives/ppCookieBanner/ppCookieBanner.animation.js"></script>
   <script src="components/commonDirectives/ppCookieBanner/ppCookieBanner.directive.js"></script>
   <script src="components/commonDirectives/ppField/ppField.directive.js"></script>
   <script src="components/commonDirectives/ppFocusMe/ppFocusMe.directive.js"></script>
+  <script src="components/commonDirectives/ppFooter/ppFooter.directive.js"></script>
   <script src="components/commonDirectives/ppSpinner/ppSpinner.directive.js"></script>
   <script src="components/commonDirectives/ppTooltip/ppTooltip.directive.js"></script>
   <script src="components/commonDirectives/validation/validateConfirmEmail.directive.js"></script>

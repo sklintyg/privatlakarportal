@@ -58,7 +58,7 @@ angular.module('privatlakareApp').factory('UserModel',
                     statusText = 'Privatläkare';
                     break;
                 default:
-                    statusText = 'Ej registrerad användare';
+                    statusText = 'Ej registrerad ännu';
                 }
                 return statusText;
             },
