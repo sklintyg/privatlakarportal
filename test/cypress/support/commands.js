@@ -28,29 +28,34 @@ Cypress.Commands.add("login", (loginId) => {
     cy.visit('/welcome.html');
     cy.get('#jsonSelect').select(loginId);
     cy.get('#loginBtn').click();
-    cy.window().should('have.property', 'disableAnimations');
-    cy.window().then((window) => {
-        window.disableAnimations();
+    cy.window().should('have.property', 'disableAnimations').then((disableAnimations) => {
+        disableAnimations();
     });
 });
 
-function taBortPrivatlakare(route, id) {
-    return cy.request('GET', '/api/test/registration/' + id, {'headers':{'Cookie':'ROUTEID='+route}}).then((resp) => {
+Cypress.Commands.add("skapaPrivatlakare", () => {
+    cy.visit('/welcome.html');
+    cy.get('#jsonSelect').select('0');
+    cy.get('#loginBtn').click();
+    return cy.request('GET', '/api/user/', {'headers':{'Cookie':'ROUTEID=.1'}}).then((resp) => {
         if (resp.body) {
-            return cy.request('DELETE', '/api/test/registration/remove/'+id, {'headers': {'Cookie': 'ROUTEID=' + route}});
+            cy.fixture('specialistlakare.json').then((userJson) => {
+                userJson.godkantMedgivandeVersion = 1;
+                return cy.request({method: 'POST', url: '/api/registration/create', body:userJson, 'headers': {'Cookie': 'ROUTEID=.1'}});
+            });
         } else {
             return resp;
         }
     });
-}
+});
 
 Cypress.Commands.add("taBortPrivatlakare", (id) => {
-    Cypress.Promise.join(taBortPrivatlakare('.1', id), taBortPrivatlakare('.2', id)).then((res1, res2) => {
-        cy.log('taBortPrivatlakare',res1.body,res1.status, res2.body,res2.status);
-        if (res1.status != 200) {
-            return res1;
+    return cy.request('GET', '/api/test/registration/' + id, {'headers':{'Cookie':'ROUTEID=.1'}}).then((resp) => {
+        if (resp.body) {
+            return cy.request('DELETE', '/api/test/registration/remove/'+id, {'headers': {'Cookie': 'ROUTEID=.1'}});
+        } else {
+            return resp;
         }
-        return res2;
     });
 });
 
@@ -69,5 +74,11 @@ Cypress.Commands.add("hamtaMailFranStubbe", (mailId) => {
                 return resp2.body[mailId];
             }
         }));
+    });
+});
+
+Cypress.Commands.add("bytNamnPrivatLakare", (id, namn) => {
+    cy.request({method: 'POST', url: '/api/test/registration/setname/' + id, body:{namn}}).then((resp) => {
+        cy.log('bytNamnPrivatLakare', resp);
     });
 });

@@ -1,0 +1,17 @@
+{
+    "registration": {
+        "befattning": "Specialistläkare",
+        "verksamhetensNamn": "Fitnesse verksamhet",
+        "agarForm": "Privat",
+        "vardform": "Hemsjukvård",
+        "verksamhetstyp": "Primärvårdsverksamhet",
+        "arbetsplatskod": "770088",
+        "telefonnummer": "987654321",
+        "epost": "test@example.com",
+        "adress": "gatuadress",
+        "postnummer": "13100",
+        "postort": "NACKA",
+        "kommun": "NACKA",
+        "lan": "STOCKHOLM"
+    }
+}
