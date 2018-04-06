@@ -37,11 +37,11 @@ Cypress.Commands.add("skapaPrivatlakare", () => {
     cy.visit('/welcome.html');
     cy.get('#jsonSelect').select('0');
     cy.get('#loginBtn').click();
-    return cy.request('GET', '/api/user/', {'headers':{'Cookie':'ROUTEID=.1'}}).then((resp) => {
+    return cy.request('GET', '/api/user/').then((resp) => {
         if (resp.body) {
             cy.fixture('specialistlakare.json').then((userJson) => {
                 userJson.godkantMedgivandeVersion = 1;
-                return cy.request({method: 'POST', url: '/api/registration/create', body:userJson, 'headers': {'Cookie': 'ROUTEID=.1'}});
+                return cy.request({method: 'POST', url: '/api/registration/create', body:userJson});
             });
         } else {
             return resp;
@@ -50,9 +50,9 @@ Cypress.Commands.add("skapaPrivatlakare", () => {
 });
 
 Cypress.Commands.add("taBortPrivatlakare", (id) => {
-    return cy.request('GET', '/api/test/registration/' + id, {'headers':{'Cookie':'ROUTEID=.1'}}).then((resp) => {
+    return cy.request('GET', '/api/test/registration/' + id).then((resp) => {
         if (resp.body) {
-            return cy.request('DELETE', '/api/test/registration/remove/'+id, {'headers': {'Cookie': 'ROUTEID=.1'}});
+            return cy.request('DELETE', '/api/test/registration/remove/'+id);
         } else {
             return resp;
         }
@@ -60,20 +60,14 @@ Cypress.Commands.add("taBortPrivatlakare", (id) => {
 });
 
 Cypress.Commands.add("rensaMailStubbe", () => {
-    cy.request('DELETE', '/api/stub/mails/clear', {'headers':{'Cookie':'ROUTEID=.1'}});
-    cy.request('DELETE', '/api/stub/mails/clear', {'headers':{'Cookie':'ROUTEID=.2'}});
+    cy.request('DELETE', '/api/stub/mails/clear');
 });
 
 Cypress.Commands.add("hamtaMailFranStubbe", (mailId) => {
-    cy.request('GET', '/api/stub/mails', {'headers':{'Cookie':'ROUTEID=.1'}}).then((resp) => {
+    cy.request('GET', '/api/stub/mails').then((resp) => {
         if (resp.body[mailId]) {
             return resp.body[mailId];
         }
-        return cy.request('GET', '/api/stub/mails', {'headers':{'Cookie':'ROUTEID=.2'}}.then((resp2) => {
-            if (resp2.body[mailId]) {
-                return resp2.body[mailId];
-            }
-        }));
     });
 });
 
