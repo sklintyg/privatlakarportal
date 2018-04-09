@@ -18,5 +18,6 @@ describe('Personuppgifter', function() {
         cy.login('0');
 
         cy.get('#nyttNamnInformation').should('be.visible');
+        cy.taBortPrivatlakare('199008252398').its('status').should('eq', 200);
     })
 });

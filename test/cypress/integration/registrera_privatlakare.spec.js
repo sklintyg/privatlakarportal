@@ -15,19 +15,19 @@ describe('Registrera Privatläkare', function() {
         // Fyll i steg 1
         cy.get('#step1').should('be.visible');
         cy.get('#befattning').select('Specialistläkare');
-        cy.get('#verksamhetensnamn').type('Fitnesse verksamhet');
+        cy.get('#verksamhetensnamn').clear().type('Fitnesse verksamhet');
         cy.get('#vardform').select('Hemsjukvård');
         cy.get('#verksamhetstyp').select('Primärvårdsverksamhet');
-        cy.get('#arbetsplatskod').type('770088');
+        cy.get('#arbetsplatskod').clear().type('770088');
         cy.get('#continueBtn').click();
 
         // Fyll i steg 2
         cy.get('#step2').should('be.visible');
-        cy.get('#telefonnummer').type('987654321');
-        cy.get('#epost').type('test@example.com');
-        cy.get('#epost2').type('test@example.com');
-        cy.get('#adress').type('gatuadress');
-        cy.get('#postnummer').type('13100');
+        cy.get('#telefonnummer').clear().type('987654321');
+        cy.get('#epost').clear().type('test@example.com');
+        cy.get('#epost2').clear().type('test@example.com');
+        cy.get('#adress').clear().type('gatuadress');
+        cy.get('#postnummer').clear().type('13100');
         cy.get('#continueBtn').click();
 
         // Verifiera steg 3
@@ -75,6 +75,7 @@ describe('Registrera Privatläkare', function() {
         cy.get('#complete').should('be.visible');
 
         cy.hamtaMailFranStubbe('199008252398').should('eq', 'Registration klar');
+        cy.taBortPrivatlakare('199008252398').its('status').should('eq', 200);
     });
 
 });
