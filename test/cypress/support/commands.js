@@ -33,13 +33,23 @@ Cypress.Commands.add("login", (loginId) => {
     });
 });
 
-Cypress.Commands.add("skapaPrivatlakare", () => {
-    cy.visit('/welcome.html');
-    cy.get('#jsonSelect').select('0');
-    cy.get('#loginBtn').click();
+function fakeLogin(firstName, lastName, personId) {
+    if (!firstName) {
+        firstName = "Oskar";
+        lastName = "Johansson";
+        personId = "199008252398";
+    }
+    var loginData = {
+        "firstName": firstName, "lastName": lastName, "personId": personId
+    };
+    cy.request({method: 'POST', url: '/fake?userJsonDisplay=' + JSON.stringify(loginData)});
+}
+
+Cypress.Commands.add("skapaPrivatlakare", (firstName, lastName, personId) => {
+    fakeLogin(firstName, lastName, personId);
     return cy.request('GET', '/api/user/').then((resp) => {
         if (resp.body) {
-            cy.fixture('specialistlakare.json').then((userJson) => {
+            return cy.fixture('specialistlakare.json').then((userJson) => {
                 userJson.godkantMedgivandeVersion = 1;
                 return cy.request({method: 'POST', url: '/api/registration/create', body:userJson});
             });
@@ -72,7 +82,40 @@ Cypress.Commands.add("hamtaMailFranStubbe", (mailId) => {
 });
 
 Cypress.Commands.add("bytNamnPrivatLakare", (id, namn) => {
-    cy.request({method: 'POST', url: '/api/test/registration/setname/' + id, body:{namn}}).then((resp) => {
-        cy.log('bytNamnPrivatLakare', resp);
-    });
+    cy.request({method: 'POST', url: '/api/test/registration/setname/' + id, body:{namn}});
+});
+
+Cypress.Commands.add("sattRegistreringsdatumForPrivatlakare", (id, date) => {
+    return cy.request({method: 'POST', url: '/api/test/registration/setregistrationdate/' + id, body:date});
+});
+
+Cypress.Commands.add("korHospUppdatering", () => {
+    return cy.request({method: 'POST', url: '/api/test/hosp/update'});
+});
+
+Cypress.Commands.add("finnsPrivatlakare", (personId) => {
+    return cy.request({method: 'GET', url: '/api/test/registration/' + personId});
+});
+
+Cypress.Commands.add("loggaInGenomWebcert", (personId) => {
+    return cy.request({method: 'POST', url: '/api/test/webcert/validatePrivatePractitioner/' + personId});
+});
+
+Cypress.Commands.add("taBortHospInformation", (personId) => {
+    return cy.request({method: 'DELETE', url: '/api/test/hosp/remove/' + personId});
+});
+
+Cypress.Commands.add("laggTillHospInformation", (personId, lakarbehorighet) => {
+    var hospInfo = {
+        'personalIdentityNumber': personId,
+        'personalPrescriptionCode': '1234567',
+        'educationCodes': [],
+        'restrictions': [],
+        'restrictionCodes': [],
+        'specialityCodes': lakarbehorighet ? ['32', '74'] : [],
+        'specialityNames': lakarbehorighet ? ['Klinisk fysiologi','Nukleärmedicin'] : [],
+        'titleCodes': lakarbehorighet ? ['LK'] : [],
+        'hsaTitles': lakarbehorighet ? ['Läkare'] : []
+    };
+    cy.request({method: 'POST', url: '/api/test/hosp/add', body:hospInfo});
 });
