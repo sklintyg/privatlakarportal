@@ -22,6 +22,16 @@ stage('build') {
     }
 }
 
+stage('provision') {
+    node {
+        util.run {
+            ansiblePlaybook(extraVars: [ansible_ssh_port: "22", gitcrypt_key_file: "/home/jenkins/git-crypt4.key"],
+                    installation: 'ansible-yum', inventory: 'ansible/inventory/privatlakarportal/test',
+                    playbook: 'ansible/provision.yml')
+        }
+    }
+}
+
 stage('deploy') {
     node {
         util.run {
