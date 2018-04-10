@@ -1,6 +1,6 @@
 describe('Rensa Privatläkare', function() {
 
-    it('Testa lägga till användare, modifiera registreringsdatum, ta bort hosp data', function() {
+    it.skip('Testa lägga till användare, modifiera registreringsdatum, ta bort hosp data', function() {
         //Rensa
         cy.taBortPrivatlakare('195206172339').its('status').should('eq', 200);
         cy.taBortPrivatlakare('191212121212').its('status').should('eq', 200);
