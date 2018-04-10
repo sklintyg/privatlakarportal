@@ -24,6 +24,8 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+var WAIT_BEFORE_HOSP_UPDATE_MS = 1000;
+
 Cypress.Commands.add("login", (loginId) => {
     cy.visit('/welcome.html');
     cy.get('#jsonSelect').select(loginId);
@@ -90,6 +92,7 @@ Cypress.Commands.add("sattRegistreringsdatumForPrivatlakare", (id, date) => {
 });
 
 Cypress.Commands.add("korHospUppdatering", () => {
+    cy.wait(WAIT_BEFORE_HOSP_UPDATE_MS);
     return cy.request({method: 'POST', url: '/api/test/hosp/update'});
 });
 

@@ -52,7 +52,9 @@ describe('Redigera Privatläkare', function() {
         cy.get('#legitimeradYrkesgrupp').should('have.text', 'Läkare');
         cy.get('#specialitet').should('have.text', 'specialityName1, specialityName2');
         cy.get('#forskrivarkod').should('have.text', '1234567');
+    });
 
+    after(function() {
         cy.taBortPrivatlakare('199008252398').its('status').should('eq', 200);
     });
 

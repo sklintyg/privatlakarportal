@@ -6,7 +6,7 @@ describe('Personuppgifter', function() {
         cy.login('3');
 
         cy.url().should('contain', '/error')
-    })
+    });
 
     it('Uppdatera namn om nya personuppgifter finns', function() {
         cy.taBortPrivatlakare('199008252398').its('status').should('eq', 200);
@@ -18,6 +18,9 @@ describe('Personuppgifter', function() {
         cy.login('0');
 
         cy.get('#nyttNamnInformation').should('be.visible');
+    });
+
+    after(function() {
         cy.taBortPrivatlakare('199008252398').its('status').should('eq', 200);
-    })
+    });
 });

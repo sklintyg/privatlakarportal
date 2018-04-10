@@ -51,7 +51,7 @@
     </encoder>
   </appender>
 
-  <logger name="se.inera.intyg.privatlakarportal" level="info"/>
+  <logger name="se.inera.intyg.privatlakarportal" level="debug"/>
 
   <logger name="org.apache.cxf.service" level="info"/>
 

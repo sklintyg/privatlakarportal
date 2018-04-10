@@ -1,4 +1,4 @@
-describe('Registrera Privatläkare', function() {
+describe('Registrera Privatläkare utan hosp', function() {
 
     it('Fyll i registrering', function() {
 
@@ -74,6 +74,11 @@ describe('Registrera Privatläkare', function() {
 
         cy.hamtaMailFranStubbe('195206172339').its('body').should('be.empty');
         cy.taBortPrivatlakare('195206172339').its('status').should('eq', 200);
+    });
+
+    after(function() {
+        cy.taBortPrivatlakare('195206172339').its('status').should('eq', 200);
+        cy.rensaMailStubbe().its('status').should('eq', 200);
     });
 
 });

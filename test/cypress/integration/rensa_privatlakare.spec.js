@@ -1,6 +1,6 @@
 describe('Rensa Privatläkare', function() {
 
-    it('rensa', function() {
+    it('Testa lägga till användare, modifiera registreringsdatum, ta bort hosp data', function() {
         //Rensa
         cy.taBortPrivatlakare('195206172339').its('status').should('eq', 200);
         cy.taBortPrivatlakare('191212121212').its('status').should('eq', 200);
@@ -20,8 +20,6 @@ describe('Rensa Privatläkare', function() {
         cy.sattRegistreringsdatumForPrivatlakare('195206172339', '1980-01-01').its('status').should('eq', 200);
         cy.sattRegistreringsdatumForPrivatlakare('191212121212', '1980-01-01').its('status').should('eq', 200);
 
-        cy.wait(1000);
-
         //Trigga rensningsrutin
         cy.korHospUppdatering().its('status').should('eq', 200);
 
@@ -38,7 +36,6 @@ describe('Rensa Privatläkare', function() {
         cy.taBortHospInformation('191212121212').its('status').should('eq', 200);
 
         //Vänta på att det slagit igenom
-        cy.wait(1000);
         cy.korHospUppdatering().its('status').should('eq', 200);
 
         //Verifiera att det inte går att logga in med tolvan.
@@ -46,14 +43,15 @@ describe('Rensa Privatläkare', function() {
 
         //Tolvan ska inte bli borttagen efter en hospuppdatering eftersom han tidigare loggat in.
         cy.finnsPrivatlakare('191212121212').its('body').should('have.property', 'personId');
+    });
 
+    after(function() {
         //Rensa
         cy.taBortPrivatlakare('195206172339').its('status').should('eq', 200);
         cy.taBortPrivatlakare('191212121212').its('status').should('eq', 200);
 
         //Återställ tolvans hosp
         cy.laggTillHospInformation('191212121212', true);
-
     });
 
 });

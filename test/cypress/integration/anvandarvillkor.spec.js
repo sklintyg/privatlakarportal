@@ -14,7 +14,9 @@ describe('Användarvillkor', function() {
 
         cy.get('#dismissBtn').click();
         cy.get('.modal-dialog').should('not.be.visible');
+    });
 
+    after(function() {
         cy.taBortPrivatlakare('199008252398').its('status').should('eq', 200);
-    })
+    });
 });

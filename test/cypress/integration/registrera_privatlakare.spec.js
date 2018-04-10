@@ -75,7 +75,11 @@ describe('Registrera Privatläkare', function() {
         cy.get('#complete').should('be.visible');
 
         cy.hamtaMailFranStubbe('199008252398').should('eq', 'Registration klar');
+    });
+
+    after(function () {
         cy.taBortPrivatlakare('199008252398').its('status').should('eq', 200);
+        cy.rensaMailStubbe().its('status').should('eq', 200);
     });
 
 });
