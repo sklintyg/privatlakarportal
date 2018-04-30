@@ -13,7 +13,7 @@ ext {
 
     rivtaItintegrationMonitoringSchemasVersion = "1.0.0.4"
 
-    schemasContractVersion = "2.1.6"
+    schemasContractVersion = "2.1.7"
 
     activeMQSpringVersion = "5.9.1"
     aspectJVersion = "1.6.11"
