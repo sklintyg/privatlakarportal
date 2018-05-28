@@ -18,33 +18,24 @@
  */
 package se.inera.intyg.privatlakarportal.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.time.LocalDate;
-
-import javax.mail.MessagingException;
-
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
-
-import se.inera.ifv.hsawsresponder.v3.*;
+import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
+import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
 import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -57,11 +48,38 @@ import se.inera.intyg.privatlakarportal.common.service.stub.MailStubStore;
 import se.inera.intyg.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
-import se.inera.intyg.privatlakarportal.persistence.model.*;
-import se.inera.intyg.privatlakarportal.persistence.repository.*;
+import se.inera.intyg.privatlakarportal.persistence.model.Befattning;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.intyg.privatlakarportal.persistence.model.Medgivande;
+import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.model.PrivatlakareId;
+import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
+import se.inera.intyg.privatlakarportal.persistence.model.Vardform;
+import se.inera.intyg.privatlakarportal.persistence.model.Verksamhetstyp;
+import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
+import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.intyg.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
-import se.inera.intyg.privatlakarportal.service.model.*;
+import se.inera.intyg.privatlakarportal.service.model.HospInformation;
+import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
+import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
+
+import javax.mail.MessagingException;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
@@ -154,7 +172,7 @@ public class RegisterServiceImplTest {
         medgivandeText.setDatum(LocalDate.parse("2015-08-01").atStartOfDay());
         medgivandeText.setMedgivandeText("Medgivandetext");
         medgivandeText.setVersion(1L);
-        when(medgivandeTextRepository.findOne(1L)).thenReturn(medgivandeText);
+        when(medgivandeTextRepository.findById(1L)).thenReturn(Optional.of(medgivandeText));
 
         when(dateHelperService.now()).thenReturn(LocalDate.parse("2015-09-09").atStartOfDay());
 
@@ -270,6 +288,7 @@ public class RegisterServiceImplTest {
 
     @Test
     public void testCreateRegistrationLakareFelMedgivandeVersion() {
+        when(medgivandeTextRepository.findById(2L)).thenReturn(Optional.empty());
 
         thrown.expect(PrivatlakarportalServiceException.class);
         thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
@@ -284,6 +303,7 @@ public class RegisterServiceImplTest {
 
     @Test
     public void testCreateRegistrationEjLakare() throws HospUpdateFailedToContactHsaException {
+        //when(medgivandeTextRepository.findById(anyLong())).thenReturn(Optional.of());
 
         PrivatlakareId privatlakareId = new PrivatlakareId();
         privatlakareId.setId(1);

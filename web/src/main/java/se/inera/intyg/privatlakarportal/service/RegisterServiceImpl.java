@@ -18,11 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -32,7 +27,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -56,6 +50,12 @@ import se.inera.intyg.privatlakarportal.service.model.HospInformation;
 import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by pebe on 2015-06-26.
@@ -313,8 +313,8 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     private Set<Medgivande> createMedgivandeSet(Long godkantMedgivandeVersion, Privatlakare privatlakare) {
-        MedgivandeText medgivandeText = medgivandeTextRepository.findOne(godkantMedgivandeVersion);
-        if (medgivandeText == null) {
+        Optional<MedgivandeText> medgivandeTextOptional = medgivandeTextRepository.findById(godkantMedgivandeVersion);
+        if (!medgivandeTextOptional.isPresent()) {
             LOG.error("createRegistration: Could not find medgivandetext with version '{}'", godkantMedgivandeVersion);
             throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
@@ -322,7 +322,7 @@ public class RegisterServiceImpl implements RegisterService {
         }
         Medgivande medgivande = new Medgivande();
         medgivande.setGodkandDatum(dateHelperService.now());
-        medgivande.setMedgivandeText(medgivandeText);
+        medgivande.setMedgivandeText(medgivandeTextOptional.get());
         medgivande.setPrivatlakare(privatlakare);
         Set<Medgivande> medgivandeSet = new HashSet<>();
         medgivandeSet.add(medgivande);
