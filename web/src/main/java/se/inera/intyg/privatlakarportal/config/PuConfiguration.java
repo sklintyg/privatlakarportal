@@ -27,7 +27,7 @@ import org.springframework.context.annotation.ImportResource;
  * Created by eriklupander on 2017-03-01.
  */
 @Configuration
-@ImportResource("classpath:pu-services-config.xml")
+@ImportResource({"classpath:pu-services-config.xml", "classpath:pu-ignite-config.xml"})
 @Import(PuStubConfiguration.class)
 @ComponentScan("se.inera.intyg.infra.integration.pu.services")
 public class PuConfiguration {

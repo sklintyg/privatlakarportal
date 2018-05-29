@@ -28,7 +28,6 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
-import se.inera.intyg.infra.integration.pu.cache.PuCacheConfiguration;
 import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;
 import se.inera.intyg.privatlakarportal.hsa.config.HsaConfiguration;
 import se.inera.intyg.privatlakarportal.integration.config.WcIntegrationConfiguration;
@@ -46,7 +45,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(ApplicationConfig.class, PersistenceConfigJndi.class, PersistenceConfigDev.class, MailServiceConfig.class,
-                HsaConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class, PuCacheConfiguration.class,
+                HsaConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
                 WcIntegrationConfiguration.class, ServiceConfig.class, DynamicLinkConfig.class, PostnummerserviceConfig.class);
         servletContext.addListener(new ContextLoaderListener(appContext));
 
