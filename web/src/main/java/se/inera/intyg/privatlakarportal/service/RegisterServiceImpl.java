@@ -54,7 +54,6 @@ import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -313,8 +312,8 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     private Set<Medgivande> createMedgivandeSet(Long godkantMedgivandeVersion, Privatlakare privatlakare) {
-        Optional<MedgivandeText> medgivandeTextOptional = medgivandeTextRepository.findById(godkantMedgivandeVersion);
-        if (!medgivandeTextOptional.isPresent()) {
+        MedgivandeText medgivandeText = medgivandeTextRepository.findOne(godkantMedgivandeVersion);
+        if (medgivandeText == null) {
             LOG.error("createRegistration: Could not find medgivandetext with version '{}'", godkantMedgivandeVersion);
             throw new PrivatlakarportalServiceException(
                     PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
@@ -322,7 +321,7 @@ public class RegisterServiceImpl implements RegisterService {
         }
         Medgivande medgivande = new Medgivande();
         medgivande.setGodkandDatum(dateHelperService.now());
-        medgivande.setMedgivandeText(medgivandeTextOptional.get());
+        medgivande.setMedgivandeText(medgivandeText);
         medgivande.setPrivatlakare(privatlakare);
         Set<Medgivande> medgivandeSet = new HashSet<>();
         medgivandeSet.add(medgivande);

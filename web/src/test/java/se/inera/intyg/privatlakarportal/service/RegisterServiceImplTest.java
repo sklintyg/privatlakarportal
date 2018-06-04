@@ -69,7 +69,6 @@ import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -172,7 +171,7 @@ public class RegisterServiceImplTest {
         medgivandeText.setDatum(LocalDate.parse("2015-08-01").atStartOfDay());
         medgivandeText.setMedgivandeText("Medgivandetext");
         medgivandeText.setVersion(1L);
-        when(medgivandeTextRepository.findById(1L)).thenReturn(Optional.of(medgivandeText));
+        when(medgivandeTextRepository.findOne(1L)).thenReturn(medgivandeText);
 
         when(dateHelperService.now()).thenReturn(LocalDate.parse("2015-09-09").atStartOfDay());
 
@@ -288,7 +287,7 @@ public class RegisterServiceImplTest {
 
     @Test
     public void testCreateRegistrationLakareFelMedgivandeVersion() {
-        when(medgivandeTextRepository.findById(2L)).thenReturn(Optional.empty());
+        when(medgivandeTextRepository.findOne(2L)).thenReturn(null);
 
         thrown.expect(PrivatlakarportalServiceException.class);
         thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
