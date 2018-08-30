@@ -28,6 +28,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+import se.inera.intyg.infra.security.filter.SecurityHeadersFilter;
 import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;
 import se.inera.intyg.privatlakarportal.hsa.config.HsaConfiguration;
 import se.inera.intyg.privatlakarportal.integration.config.WcIntegrationConfiguration;
@@ -67,6 +68,8 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
         registerCharachterEncodingFilter(servletContext);
 
+        registerSecurityHeadersFilter(servletContext);
+
         // CXF services filter
         ServletRegistration.Dynamic cxfServlet = servletContext.addServlet("services", new CXFServlet());
         cxfServlet.setLoadOnStartup(1);
@@ -83,4 +86,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         cef.setEncoding("UTF-8");
         aContext.addFilter("characterEncodingFilter", cef).addMappingForUrlPatterns(null, true, "/*");
     }
+
+    private void registerSecurityHeadersFilter(ServletContext servletContext) {
+        SecurityHeadersFilter filter = new SecurityHeadersFilter();
+        servletContext.addFilter("securityHeadersFilter", filter).addMappingForUrlPatterns(null, true, "/*");
+    }
+
 }

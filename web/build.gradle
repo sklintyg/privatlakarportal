@@ -79,6 +79,7 @@ dependencies {
     compile "se.inera.intyg.infra:dynamiclink:${infraVersion}"
     compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
     compile "se.inera.intyg.infra:postnummerservice-integration:${infraVersion}"
+    compile "se.inera.intyg.infra:security-filter:${infraVersion}"
 
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
 
