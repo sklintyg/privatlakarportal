@@ -16,20 +16,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.persistence.repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
+package se.inera.intyg.privatlakarportal.web.integration.test.dto;
 
 import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
 
-/**
- * Created by pebe on 2015-09-09.
- */
-@Transactional(transactionManager = "transactionManager")
-public interface MedgivandeTextRepository extends JpaRepository<MedgivandeText, Long> {
+import java.time.LocalDateTime;
 
-    @Query("SELECT m from MedgivandeText m WHERE m.version = (SELECT MAX(m2.version) FROM MedgivandeText m2)")
-    MedgivandeText findLatest();
+public class MedgivandeTextDto {
+
+    private String medgivandeText;
+    private LocalDateTime datum;
+
+    public MedgivandeTextDto() {
+    }
+
+    public MedgivandeTextDto(MedgivandeText mt) {
+        this.medgivandeText = mt.getMedgivandeText();
+        this.datum = mt.getDatum();
+    }
+
+    public String getMedgivandeText() {
+        return medgivandeText;
+    }
+
+    public void setMedgivandeText(String medgivandeText) {
+        this.medgivandeText = medgivandeText;
+    }
+
+    public LocalDateTime getDatum() {
+        return datum;
+    }
+
+    public void setDatum(LocalDateTime datum) {
+        this.datum = datum;
+    }
 }

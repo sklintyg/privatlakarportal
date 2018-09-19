@@ -18,10 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.web.integration.test;
 
-import java.time.LocalDate;
-
-import javax.ws.rs.core.MediaType;
-
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.swagger.annotations.Api;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
@@ -41,7 +36,11 @@ import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.I
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
+import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
+
+import javax.ws.rs.core.MediaType;
+import java.time.LocalDate;
 
 /**
  * Created by pebe on 2015-09-02.
@@ -75,8 +74,8 @@ public class TestController {
 
     @RequestMapping(value = "/registration/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Privatlakare getPrivatlakare(@PathVariable("id") String personId) {
-        return privatlakareRepository.findByPersonId(personId);
+    public PrivatlakareDto getPrivatlakare(@PathVariable("id") String personId) {
+        return registerService.getPrivatlakare(personId);
     }
 
     @RequestMapping(value = "/registration/remove/{id}", method = RequestMethod.DELETE)

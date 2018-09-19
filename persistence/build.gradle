@@ -7,11 +7,12 @@ dependencies {
     compile "org.jadira.usertype:usertype.extended:${usertypeVersion}"
     compile "org.liquibase:liquibase-core:${liquibaseVersion}"
     compile "org.springframework.data:spring-data-jpa:${springDataJpaVersion}"
-    compile "org.springframework:spring-jms:${springContextVersion}"
+ //   compile "org.springframework:spring-jms:${springContextVersion}"
     compile "org.springframework:spring-orm:${springContextVersion}"
 
-    compileOnly "org.apache.geronimo.specs:geronimo-jms_1.1_spec:${geronimoJmsVersion}"
+    testCompile "org.springframework:spring-test:${springContextVersion}"
+   // compileOnly "org.apache.geronimo.specs:geronimo-jms_1.1_spec:${geronimoJmsVersion}"
 
-    testCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
-    testCompile "org.apache.activemq:activemq-spring:${activeMQSpringVersion}"
+    //testCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    //testCompile "org.apache.activemq:activemq-spring:${activeMQSpringVersion}"
 }

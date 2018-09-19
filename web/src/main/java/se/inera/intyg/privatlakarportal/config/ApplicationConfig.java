@@ -27,14 +27,17 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import se.inera.intyg.infra.security.filter.PrincipalUpdatedFilter;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 @Configuration
+@EnableTransactionManagement
 @PropertySource({ "classpath:default.properties",
-                  "file:${privatlakarportal.config.file}",
+                  "file:${config.file}",
                   "file:${credentials.file}",
                   "classpath:version.properties"})
 @ImportResource({ "classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml"})
@@ -69,5 +72,10 @@ public class ApplicationConfig {
         LoggingFeature loggingFeature = new LoggingFeature();
         loggingFeature.setPrettyLogging(true);
         return loggingFeature;
+    }
+
+    @Bean
+    public PrincipalUpdatedFilter principalUpdatedFilter() {
+        return new PrincipalUpdatedFilter();
     }
 }

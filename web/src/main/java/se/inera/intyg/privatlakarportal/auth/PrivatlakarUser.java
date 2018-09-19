@@ -26,6 +26,7 @@ import java.io.Serializable;
 public class PrivatlakarUser implements Serializable {
 
     private static final long serialVersionUID = 8711015219408194075L;
+    private static final int THIRTYONE = 31;
 
     private String personalIdentityNumber;
     private String name;
@@ -63,4 +64,27 @@ public class PrivatlakarUser implements Serializable {
         nameFromPuService = true;
     }
 
+    // CHECKSTYLE:OFF NeedBraces
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PrivatlakarUser)) return false;
+
+        PrivatlakarUser that = (PrivatlakarUser) o;
+
+        if (nameFromPuService != that.nameFromPuService) return false;
+        if (!personalIdentityNumber.equals(that.personalIdentityNumber)) return false;
+        if (!name.equals(that.name)) return false;
+        return authenticationScheme.equals(that.authenticationScheme);
+    }
+    // CHECKSTYLE:ON NeedBraces
+
+    @Override
+    public int hashCode() {
+        int result = personalIdentityNumber.hashCode();
+        result = THIRTYONE * result + name.hashCode();
+        result = THIRTYONE * result + authenticationScheme.hashCode();
+        result = THIRTYONE * result + (nameFromPuService ? 1 : 0);
+        return result;
+    }
 }

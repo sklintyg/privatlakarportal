@@ -73,3 +73,9 @@ stage('tag and upload') {
 	shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -Dprivatlakarportal.useMinifiedJavaScript"
     }
 }
+
+stage('propagate') {
+    node {
+        build job: "privatlakarportal-dintyg-build", wait: false, parameters: [[$class: 'StringParameterValue', name: 'PRIVATLAKARPORTAL_BUILD_VERSION', value: buildVersion]]
+    }
+}

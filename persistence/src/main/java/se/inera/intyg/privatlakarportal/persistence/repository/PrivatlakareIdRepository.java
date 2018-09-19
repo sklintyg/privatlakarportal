@@ -20,12 +20,14 @@ package se.inera.intyg.privatlakarportal.persistence.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.intyg.privatlakarportal.persistence.model.PrivatlakareId;
 
 /**
  * Created by pebe on 2015-06-24.
  */
+@Transactional(transactionManager = "transactionManager")
 public interface PrivatlakareIdRepository extends JpaRepository<PrivatlakareId, Integer> {
 
     @Query("SELECT max(pi.id) FROM PrivatlakareId pi")

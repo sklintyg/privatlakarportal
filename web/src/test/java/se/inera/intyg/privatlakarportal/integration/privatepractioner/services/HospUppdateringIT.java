@@ -19,6 +19,7 @@
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
 import com.google.common.collect.Lists;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.json.simple.JSONObject;
@@ -46,6 +47,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
     public void setup() {
         // Logga in
         String session = createAuthSession(FORNAMN, EFTERNAMN, PERSONNUMMER);
+        RestAssured.sessionId = session;
 
         // Ta bort hosp-info
         given()
@@ -226,13 +228,13 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
         // Se till att uppdaterat namn finns
         given()
             .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
+            //.cookie("ROUTEID", RestUtil.routeId)
         .get("api/user");
 
         // Skapa registrering
         given()
             .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
+            //.cookie("ROUTEID", RestUtil.routeId)
             .body(createValidRegistration())
         .expect()
             .statusCode(200)
@@ -242,7 +244,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
         // Ändra registreringsdatum så att städningen ska triggas
         given()
             .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
+           // .cookie("ROUTEID", RestUtil.routeId)
             .body("2017-01-15")
         .when()
             .post("api/test/registration/setregistrationdate/" + PERSONNUMMER);
@@ -250,7 +252,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
         // Trigga hosp-uppdatering
         given()
             .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
+            //.cookie("ROUTEID", RestUtil.routeId)
         .expect()
             .statusCode(200)
         .when()
@@ -259,7 +261,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
         // Verifiera att mail om borttagen registrering gått iväg
         given()
             .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
+            //.cookie("ROUTEID", RestUtil.routeId)
         .when()
             .get("api/stub/mails")
         .then()
@@ -269,7 +271,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
         // Försök hämta registreringsinfo, denna ska vara rensad
         given()
             .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
+            //.cookie("ROUTEID", RestUtil.routeId)
         .when()
             .get("api/test/registration/" + PERSONNUMMER)
         .then()

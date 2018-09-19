@@ -51,7 +51,7 @@ public final class RestUtil {
                 .when().post("/fake").getCookies();
 
         routeId = cookies.containsKey("ROUTEID") ? cookies.get("ROUTEID") : "nah";
-        return cookies.get("JSESSIONID");
+        return cookies.get("SESSION");
     }
 
 }

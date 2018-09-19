@@ -66,17 +66,17 @@ gretty {
     inplaceMode = 'hard'
 
     jvmArgs = ['-Dspring.profiles.active=dev,caching-enabled',
-               '-Dprivatlakarportal.config.file=' + projectDir + '/src/main/resources/dev.properties',
-               '-Dprivatlakarportal.mailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
+               '-Dconfig.file=' + projectDir + '/src/main/resources/dev.properties',
+               '-Dmailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
                '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',
-               '-Dprivatlakarportal.resources.folder=/' + projectDir + '/../src/main/resources',
-               '-XX:MaxPermSize=256M']
+               '-Dresources.folder=/' + projectDir + '/../src/main/resources']
 }
 
 dependencies {
     compile project(":privatlakarportal-wc-integration")
 
     compile "se.inera.intyg.infra:dynamiclink:${infraVersion}"
+    compile "se.inera.intyg.infra:monitoring:${infraVersion}"
     compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
     compile "se.inera.intyg.infra:postnummerservice-integration:${infraVersion}"
     compile "se.inera.intyg.infra:security-filter:${infraVersion}"
@@ -90,6 +90,7 @@ dependencies {
     compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
     compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecurityExtensionsVersion}"
     compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
+    compile "org.springframework.session:spring-session:${springSessionVersion}"
     compile "com.googlecode.json-simple:json-simple:${jsonSimpleVersion}"
     compile "wsdl4j:wsdl4j:${wsdl4jVersion}"
     compile "io.springfox:springfox-swagger2:${swaggerVersion}"

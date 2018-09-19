@@ -43,15 +43,16 @@ import java.util.Optional;
  * Created by pebe on 2015-08-11.
  */
 @Service
+@Transactional(transactionManager = "transactionManager")
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
-    PrivatlakareRepository privatlakareRepository;
+    private PrivatlakareRepository privatlakareRepository;
 
     @Autowired
-    PUService puService;
+    private PUService puService;
 
     @Override
     public PrivatlakarUser getUser() {
@@ -62,7 +63,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public User getUserWithStatus() {
         PrivatlakarUser privatlakarUser = getUser();
 

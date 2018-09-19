@@ -18,22 +18,39 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import se.inera.intyg.privatlakarportal.common.integration.kodverk.*;
+import se.inera.intyg.privatlakarportal.common.integration.kodverk.Befattningar;
+import se.inera.intyg.privatlakarportal.common.integration.kodverk.Vardformer;
+import se.inera.intyg.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
 import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
 import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.intyg.privatlakarportal.persistence.model.*;
+import se.inera.intyg.privatlakarportal.persistence.model.Befattning;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
+import se.inera.intyg.privatlakarportal.persistence.model.Vardform;
+import se.inera.intyg.privatlakarportal.persistence.model.Verksamhetstyp;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
-import se.riv.infrastructure.directory.privatepractitioner.types.v1.*;
-import se.riv.infrastructure.directory.privatepractitioner.v1.*;
+import se.riv.infrastructure.directory.privatepractitioner.types.v1.ArbetsplatsKod;
+import se.riv.infrastructure.directory.privatepractitioner.types.v1.CV;
+import se.riv.infrastructure.directory.privatepractitioner.types.v1.HsaId;
+import se.riv.infrastructure.directory.privatepractitioner.types.v1.PersonId;
+import se.riv.infrastructure.directory.privatepractitioner.v1.BefattningType;
+import se.riv.infrastructure.directory.privatepractitioner.v1.EnhetType;
+import se.riv.infrastructure.directory.privatepractitioner.v1.GeografiskIndelningType;
+import se.riv.infrastructure.directory.privatepractitioner.v1.HoSPersonType;
+import se.riv.infrastructure.directory.privatepractitioner.v1.LegitimeradYrkesgruppType;
+import se.riv.infrastructure.directory.privatepractitioner.v1.ResultCodeEnum;
+import se.riv.infrastructure.directory.privatepractitioner.v1.SpecialitetType;
+import se.riv.infrastructure.directory.privatepractitioner.v1.VardgivareType;
+import se.riv.infrastructure.directory.privatepractitioner.v1.VerksamhetType;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by pebe on 2015-08-17.
@@ -119,7 +136,7 @@ public class IntegrationServiceImpl implements IntegrationService {
     }
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "transactionManager")
     public ValidatePrivatePractitionerResponseType validatePrivatePractitionerByPersonId(String personalIdentityNumber) {
 
         ValidatePrivatePractitionerResponseType response = new ValidatePrivatePractitionerResponseType();

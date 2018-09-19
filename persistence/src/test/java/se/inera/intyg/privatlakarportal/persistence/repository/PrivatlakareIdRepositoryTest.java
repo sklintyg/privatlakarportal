@@ -34,7 +34,7 @@ import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigTest
 import se.inera.intyg.privatlakarportal.persistence.model.PrivatlakareId;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { PersistenceConfigTest.class, PersistenceConfigDev.class })
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { PersistenceConfigDev.class })
 @ActiveProfiles({ "dev" })
 public class PrivatlakareIdRepositoryTest {
 

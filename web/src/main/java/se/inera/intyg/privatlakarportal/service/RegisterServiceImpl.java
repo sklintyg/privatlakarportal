@@ -50,6 +50,7 @@ import se.inera.intyg.privatlakarportal.service.model.HospInformation;
 import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
+import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -112,7 +113,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "transactionManager")
     public RegistrationWithHospInformation getRegistration() {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber());
 
@@ -171,7 +172,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "transactionManager")
     public RegistrationStatus createRegistration(Registration registration, Long godkantMedgivandeVersion) {
 
         if (registration == null || !registration.checkIsValid()) {
@@ -250,6 +251,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
+    @Transactional(transactionManager = "transactionManager")
     public SaveRegistrationResponseStatus saveRegistration(Registration registration) {
         if (registration == null || !registration.checkIsValid()) {
             throw new PrivatlakarportalServiceException(
@@ -275,7 +277,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "transactionManager")
     public boolean removePrivatlakare(String personId) {
         Privatlakare toDelete = privatlakareRepository.findByPersonId(personId);
         if (toDelete == null) {
@@ -294,6 +296,16 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public void injectHsaInterval(int hsaIdNotificationInterval) {
         this.hsaIdNotificationInterval = hsaIdNotificationInterval;
+    }
+
+    @Override
+    @Transactional(transactionManager = "transactionManager")
+    public PrivatlakareDto getPrivatlakare(String personId) {
+        Privatlakare privatlakare = privatlakareRepository.findByPersonId(personId);
+        if (privatlakare != null) {
+            return new PrivatlakareDto(privatlakare);
+        }
+        return null;
     }
 
     /* Private helpers */

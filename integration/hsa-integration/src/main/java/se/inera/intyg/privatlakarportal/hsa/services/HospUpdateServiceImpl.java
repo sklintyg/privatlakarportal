@@ -18,18 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
-import static java.time.temporal.ChronoUnit.MINUTES;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.PostConstruct;
-import javax.xml.ws.WebServiceException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +26,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -53,6 +40,17 @@ import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
 import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
+
+import javax.annotation.PostConstruct;
+import javax.xml.ws.WebServiceException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
  * Created by pebe on 2015-09-03.
@@ -108,6 +106,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     }
 
     @Override
+    @Transactional(transactionManager = "transactionManager")
     public void updateHospInformation() {
         // Get our last hosp update time from database
         HospUppdatering hospUppdatering = hospUppdateringRepository.findSingle();
@@ -159,6 +158,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     }
 
     @Override
+    @Transactional(transactionManager = "transactionManager")
     public RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier)
             throws HospUpdateFailedToContactHsaException {
 
@@ -183,15 +183,34 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         }
 
         if (hospPersonResponse == null) {
-            privatlakare.setLegitimeradeYrkesgrupper(new HashSet<>());
-            privatlakare.setSpecialiteter(new ArrayList<>());
+            if (privatlakare.getLegitimeradeYrkesgrupper() != null) {
+                privatlakare.getLegitimeradeYrkesgrupper().clear();
+            }
+            if (privatlakare.getSpecialiteter() != null) {
+                privatlakare.getSpecialiteter().clear();
+            }
             privatlakare.setForskrivarKod(null);
 
             monitoringService.logHospWaiting(privatlakare.getPersonId());
             return RegistrationStatus.WAITING_FOR_HOSP;
         } else {
-            privatlakare.setSpecialiteter(getSpecialiteter(privatlakare, hospPersonResponse));
-            privatlakare.setLegitimeradeYrkesgrupper(getLegitimeradeYrkesgrupper(privatlakare, hospPersonResponse));
+
+            List<Specialitet> specialiteter = getSpecialiteter(privatlakare, hospPersonResponse);
+            if (privatlakare.getSpecialiteter() != null) {
+                privatlakare.getSpecialiteter().clear();
+                privatlakare.getSpecialiteter().addAll(specialiteter);
+            } else {
+                privatlakare.setSpecialiteter(specialiteter);
+            }
+
+
+            Set<LegitimeradYrkesgrupp> legitimeradeYrkesgrupper = getLegitimeradeYrkesgrupper(privatlakare, hospPersonResponse);
+            if (privatlakare.getLegitimeradeYrkesgrupper() != null) {
+                privatlakare.getLegitimeradeYrkesgrupper().clear();
+                privatlakare.getLegitimeradeYrkesgrupper().addAll(legitimeradeYrkesgrupper);
+            } else {
+                privatlakare.setLegitimeradeYrkesgrupper(legitimeradeYrkesgrupper);
+            }
             privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
 
             if (PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
@@ -208,7 +227,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     }
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "transactionManager")
     public void checkForUpdatedHospInformation(Privatlakare privatlakare) {
         try {
             LocalDateTime hospLastUpdate = hospPersonService.getHospLastUpdate();

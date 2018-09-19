@@ -18,13 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.service.monitoring;
 
-import java.sql.Time;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
@@ -35,12 +28,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
 import se.inera.intyg.privatlakarportal.persistence.model.PrivatlakareId;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.intyg.privatlakarportal.service.monitoring.dto.HealthStatus;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.sql.Time;
+import java.util.List;
 
 /**
  * Service for getting the health status of the application.
@@ -85,7 +82,7 @@ public class HealthCheckServiceImpl implements HealthCheckService {
     }
 
     @Override
-    @Transactional
+   //  @Transactional
     public HealthStatus checkDB() {
         boolean ok;
         StopWatch stopWatch = new StopWatch();

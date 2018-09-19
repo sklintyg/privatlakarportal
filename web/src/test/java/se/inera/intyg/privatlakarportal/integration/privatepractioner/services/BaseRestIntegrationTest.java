@@ -35,7 +35,8 @@ public abstract class BaseRestIntegrationTest {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
-        RestAssured.config = newConfig().sslConfig(sslConfig().allowAllHostnames());
+        RestAssured.config = newConfig().sslConfig(sslConfig().allowAllHostnames())
+                .sessionConfig(RestAssured.config().getSessionConfig().sessionIdName("SESSION"));
     }
 
     @After

@@ -18,8 +18,8 @@
  */
 package se.inera.intyg.privatlakarportal.persistence.repository;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -36,15 +36,16 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigDev;
-import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigTest;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.util.PrivatelakareTestUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { PersistenceConfigTest.class, PersistenceConfigDev.class })
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { PersistenceConfigDev.class })
 @ActiveProfiles({ "dev" })
+@Transactional
 public class PrivatlakareRepositoryTest {
 
     @Autowired
@@ -86,11 +87,11 @@ public class PrivatlakareRepositoryTest {
         assertThat(read.getVardgivareSlutdatum(), is(equalTo(saved.getVardgivareSlutdatum())));
         assertThat(read.getVardgivareStartdatum(), is(equalTo(saved.getVardgivareStartdatum())));
 
-        assertThat(read.getBefattningar(), is(equalTo(saved.getBefattningar())));
-        assertThat(read.getLegitimeradeYrkesgrupper(), is(equalTo(saved.getLegitimeradeYrkesgrupper())));
+        assertArrayEquals(read.getBefattningar().toArray(), saved.getBefattningar().toArray());
+        assertArrayEquals(read.getLegitimeradeYrkesgrupper().toArray(), saved.getLegitimeradeYrkesgrupper().toArray());
         assertArrayEquals(read.getSpecialiteter().toArray(), saved.getSpecialiteter().toArray());
-        assertThat(read.getVerksamhetstyper(), is(equalTo(saved.getVerksamhetstyper())));
-        assertThat(read.getVardformer(), is(equalTo(saved.getVardformer())));
+        assertArrayEquals(read.getVerksamhetstyper().toArray(), saved.getVerksamhetstyper().toArray());
+        assertArrayEquals(read.getVardformer().toArray(), saved.getVardformer().toArray());
     }
 
     @Test

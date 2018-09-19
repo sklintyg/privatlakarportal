@@ -40,6 +40,7 @@ public abstract class BaseIntegrationTest {
         RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType("application/xml;charset=utf-8").build();
+        RestAssured.config = RestAssured.config().sessionConfig(RestAssured.config().getSessionConfig().sessionIdName("SESSION"));
 
     }
 

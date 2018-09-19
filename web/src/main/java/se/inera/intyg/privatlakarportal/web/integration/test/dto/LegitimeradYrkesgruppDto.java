@@ -16,21 +16,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.persistence.repository;
+package se.inera.intyg.privatlakarportal.web.integration.test.dto;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 
-import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
+public class LegitimeradYrkesgruppDto {
 
-/**
- * Created by pebe on 2015-09-03.
- */
-@Transactional(transactionManager = "transactionManager")
-public interface HospUppdateringRepository extends JpaRepository<HospUppdatering, Integer> {
+    private String kod;
+    private String namn;
 
-    @Query("SELECT h from HospUppdatering h WHERE h.id = 1")
-    HospUppdatering findSingle();
+    public LegitimeradYrkesgruppDto() {
+    }
 
+    public LegitimeradYrkesgruppDto(LegitimeradYrkesgrupp lg) {
+        this.kod = lg.getKod();
+        this.namn = lg.getNamn();
+    }
+
+    public String getKod() {
+        return kod;
+    }
+
+    public void setKod(String kod) {
+        this.kod = kod;
+    }
+
+    public String getNamn() {
+        return namn;
+    }
+
+    public void setNamn(String namn) {
+        this.namn = namn;
+    }
 }

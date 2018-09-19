@@ -20,7 +20,10 @@ package se.inera.intyg.privatlakarportal.service;
 
 import se.inera.intyg.privatlakarportal.common.model.Registration;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.intyg.privatlakarportal.service.model.*;
+import se.inera.intyg.privatlakarportal.service.model.HospInformation;
+import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
+import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
+import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto;
 
 /**
  * Created by pebe on 2015-06-25.
@@ -38,4 +41,6 @@ public interface RegisterService {
     boolean removePrivatlakare(String personId);
 
     void injectHsaInterval(int hsaIdNotificationInterval);
+
+    PrivatlakareDto getPrivatlakare(String personId);
 }
