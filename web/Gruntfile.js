@@ -5,6 +5,8 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-connect-proxy');
 
+    var sass = require('node-sass');
+
     // Load grunt tasks automatically, when needed
     require('jit-grunt')(grunt, {
         connect: 'grunt-contrib-connect',
@@ -368,6 +370,7 @@ module.exports = function(grunt) {
         // Compiles Sass to CSS
         sass: {
             options: {
+                implementation: sass,
                 includePaths: [
                     '<%= config.client %>/bower_components',
                     '<%= config.client %>/app',
