@@ -99,6 +99,8 @@ dependencies {
         transitive = false;
     }
 
+    compile "mysql:mysql-connector-java:${mysqlVersion}"
+
     compileOnly "javax.servlet:javax.servlet-api:${servletApiVersion}"
     compileOnly "jstl:jstl:${jstlVersion}"
 
