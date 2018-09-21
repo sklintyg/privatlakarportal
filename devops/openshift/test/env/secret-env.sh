@@ -1,6 +1,12 @@
 #!/bin/bash
 # Assign backing service addresses from the outer environment
 
+export DB_USERNAME=${DATABASE_USERNAME:-intyg}
+export DB_PASSWORD=${DATABASE_PASSWORD:-intyg}
+export DB_NAME=${DATABASE_NAME:-privatlakarportaltest}
+export DB_SERVER=mysql
+export DB_PORT=$MYSQL_SERVICE_PORT
+
 export REDIS_PASSWORD=${REDIS_PASSWORD:-redis}
 export REDIS_PORT=$REDIS_SERVICE_PORT
 export REDIS_HOST=$REDIS_SERVICE_HOST
@@ -19,5 +25,4 @@ export CATALINA_OPTS_APPEND="\
 -Dresources.folder=/tmp/resources \
 -Dfile.encoding=UTF-8 \
 -DbaseUrl=http://${APP_NAME}:8080 \
--Dwebcert.baseUrl=http://webcert-${APP_NAME}:8080/ \
--Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl"
+-Dwebcert.baseUrl=http://webcert-${APP_NAME}:8080"
