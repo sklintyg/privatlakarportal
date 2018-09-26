@@ -1,7 +1,7 @@
 ---
 
 # Spring profiles
-profiles: test,pp-security-test,testability-api,hsa-stub,mail-stub
+profiles: test,pp-security-test,testability-api,hsa-stub,mail-stub,caching-enabled
 
 #tomcat
 tomcat7_user: ine-app

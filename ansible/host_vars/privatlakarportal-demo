@@ -1,7 +1,7 @@
 ---
 
 # Spring profiles
-profiles: test,pp-security-test,testability-api,hsa-stub,mail-stub
+profiles: test,pp-security-test,testability-api,hsa-stub,mail-stub,caching-enabled
 
 proxy_env:
   http_proxy: http://bf-proxy.sth:8888
