@@ -31,6 +31,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import se.inera.intyg.infra.monitoring.MonitoringConfiguration;
 import se.inera.intyg.infra.security.filter.SecurityHeadersFilter;
 import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;
+import se.inera.intyg.privatlakarportal.common.monitoring.util.LogbackConfiguratorContextListener;
 import se.inera.intyg.privatlakarportal.hsa.config.HsaConfiguration;
 import se.inera.intyg.privatlakarportal.integration.config.WcIntegrationConfiguration;
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfig;
@@ -98,6 +99,9 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         // Listeners for session audit logging
         servletContext.addListener(new HttpSessionEventPublisher());
         servletContext.addListener(new RequestContextListener());
+
+        servletContext.setInitParameter("logbackConfigParameter", "logback.file");
+        servletContext.addListener(new LogbackConfiguratorContextListener());
     }
 
     private void registerCharachterEncodingFilter(ServletContext aContext) {
