@@ -2,7 +2,6 @@
 
 def buildVersion = "1.8.0.${BUILD_NUMBER}"
 def infraVersion = "3.7.0.+"
-def commonVersion = "3.7.0.+"
 
 stage('checkout') {
     node {
@@ -76,6 +75,12 @@ stage('tag and upload') {
 
 stage('propagate') {
     node {
-        build job: "privatlakarportal-dintyg-build", wait: false, parameters: [[$class: 'StringParameterValue', name: 'PRIVATLAKARPORTAL_BUILD_VERSION', value: buildVersion]]
+        gitRef = "v${buildVersion}"
+        build job: "privatlakarportal-dintyg-build", wait: false, parameters: [
+                [$class: 'StringParameterValue', name: 'PRIVATLAKARPORTAL_BUILD_VERSION', value: buildVersion],
+                [$class: 'StringParameterValue', name: 'INFRA_VERSION', value: infraVersion],
+                [$class: 'StringParameterValue', name: 'GIT_REF', value: gitRef]
+        ]
     }
 }
+
