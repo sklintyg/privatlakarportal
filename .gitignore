@@ -18,3 +18,7 @@ web/.sass-cache/
 *.DS_Store
 web/catalina.base_IS_UNDEFINED/
 out
+
+*.jks
+*.p12
+secret-*
