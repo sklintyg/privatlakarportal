@@ -12,8 +12,6 @@ env:
     value: $INFRA_VERSION
   - name: buildVersion
     value: $PRIVATLAKARPORTAL_BUILD_VERSION
-  - name: commonVersion
-    value: $COMMON_VERSION
   - name: gitRef
     value: $GIT_REF
   - name: gitUrl
