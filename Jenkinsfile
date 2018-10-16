@@ -79,6 +79,7 @@ stage('propagate') {
         build job: "privatlakarportal-dintyg-build", wait: false, parameters: [
                 [$class: 'StringParameterValue', name: 'PRIVATLAKARPORTAL_BUILD_VERSION', value: buildVersion],
                 [$class: 'StringParameterValue', name: 'INFRA_VERSION', value: infraVersion],
+                [$class: 'StringParameterValue', name: 'COMMON_VERSION', value: commonVersion],
                 [$class: 'StringParameterValue', name: 'GIT_REF', value: gitRef]
         ]
     }
