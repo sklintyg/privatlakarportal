@@ -37,6 +37,7 @@
         <button id="resetBtn" class="btn btn-secondary" ng-click="reset()" ng-disabled="registerForm.$pristine">
           <span message key="common.resetchanges"></span>
         </button>
+        <a id="termsLink" ui-sref=".terms({terms:'webcert'})">Webcerts användarvillkor</a>
       </div>
 
       <div alert-message alert-show="viewState.infoMessage.save" alert-severity="info" class="top-pad"></div>

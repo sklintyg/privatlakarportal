@@ -58,5 +58,22 @@ angular.module('privatlakareApp')
                         }
                     }
                 }
-            });
+            }).state('app.minsida.terms', {
+            url: '/terms',
+            onEnter: openPortalTerms,
+            onExit: closeTerms,
+            params: {
+                terms: null,
+                termsData: null
+            },
+            data: {
+                rule: function(fromState) {
+                    if (fromState.name !== 'app.minsida') {
+                        return {
+                            to: 'app.minsida'
+                        };
+                    }
+                }
+            }
+        });
     });
