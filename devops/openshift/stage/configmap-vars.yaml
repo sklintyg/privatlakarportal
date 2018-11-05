@@ -5,7 +5,7 @@ data:
   PRIVATLAKARPORTAL_HOST_URL: "<value>"
   WEBCERT_HOST_URL: "https://verifiering.webcert.intygstjanster.se"
   WEBCERT_INTERNAL_HOST_URL: "http://webcert:8080/services/stubs"
-  LOGBACK_FILE: "/opt/${app.name}/config/logback-ocp.xml"
+  LOGBACK_FILE: "classpath:logback-ocp.xml"
   REDIS_HOST: "ind-sint-redis1.ind1.sth.basefarm.net;ind-sint-redis2.ind1.sth.basefarm.net;ind-sint-redis3.ind1.sth.basefarm.net"
   REDIS_PORT: "26379;26379;26379"
   REDIS_SENTINEL_MASTER_NAME: "ind-sint-redis"
