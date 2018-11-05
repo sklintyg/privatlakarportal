@@ -30,18 +30,18 @@ Note that we strongly recommend using a git account that has read-only (e.g. pub
 
 ##### Create pipeline
 
-    ~/intyg/oc/./oc process -f ~/intyg/tools/devops/openshift/pipelinetemplate-test-webapp-new.yaml -p APP_NAME=privatlakarportal-test -p STAGE=test -p SECRET=nosecret -p TESTS="restAssuredTest" | ~/intyg/oc/./oc apply -f -
+    > oc process -f ~/intyg/tools/devops/openshift/pipelinetemplate-test-webapp.yaml -p APP_NAME=privatlakarportal-test -p STAGE=test -p SECRET=nosecret -p TESTS="restAssuredTest" | oc apply -f -
 
 ##### Create env var secret and config map
 
-    oc create -f test/configmap-vars.yaml
-    oc create -f test/secret-vars.yaml
+    > oc create -f test/configmap-vars.yaml
+    > oc create -f test/secret-vars.yaml
     
 ##### Create file secret and config map
 
-    oc create configmap "privatlakarportal-test-config" --from-file=test/config/
-    oc create secret generic "privatlakarportal-test-env" --from-file=test/env/ --type=Opaque
-    oc create secret generic "privatlakarportal-test-certifikat" --from-file=test/certifikat/ --type=Opaque
+    > oc create configmap "privatlakarportal-test-config" --from-file=test/config/
+    > oc create secret generic "privatlakarportal-test-env" --from-file=test/env/ --type=Opaque
+    > oc create secret generic "privatlakarportal-test-certifikat" --from-file=test/certifikat/ --type=Opaque
     
 ##### Run pipeline
 Typically triggered from Jenkins, but it's possible to trigger a pipeline manually, just remember to specify the required parameters.
@@ -49,26 +49,26 @@ Typically triggered from Jenkins, but it's possible to trigger a pipeline manual
 ## Staging deploy
 
 - If necessary, open staging/secret-vars.yaml and replace <placeholder> with real values. Save, but do **not** commit. 
-- Make sure _staging/configmap-vars.yaml_ contains the expected env vars.
+- Make sure _stage/configmap-vars.yaml_ contains the expected env vars.
 
 ##### Create env var secret and config map
 
-    oc create -f staging/configmap-vars.yaml
-    oc create -f staging/secret-vars.yaml
+    > oc create -f stage/configmap-vars.yaml
+    > oc create -f stage/secret-vars.yaml
     
 ##### Create file secret and config map
 
-    oc create configmap "privatlakarportal-staging-config" --from-file=staging/config/
-    oc create secret generic "privatlakarportal-staging-env" --from-file=staging/env/ --type=Opaque
+    > oc create configmap "privatlakarportal-stage-config" --from-file=staging/config/
+    > oc create secret generic "privatlakarportal-stage-env" --from-file=staging/env/ --type=Opaque
     
 ##### Create certificate secret (optional)
 Certificates are typically pre-installed into the staging "project". If necessary, the JKS / P12 files can be copied into _staging/certifikat_ and then installed into the project:    
     
-    oc create secret generic "privatlakarportal-staging-certifikat" --from-file=staging/certifikat/ --type=Opaque
+    > oc create secret generic "privatlakarportal-staging-certifikat" --from-file=staging/certifikat/ --type=Opaque
 
 ##### Deploy
 
-    oc process -f ~/intyg/tools/devops/openshift/deploytemplate-webapp-new.yaml \
+    > oc process -f ~/intyg/tools/devops/openshift/deploytemplate-webapp-new.yaml \
     -p APP_NAME=privatlakarportal-staging \
     -p IMAGE=docker-registry.default.svc:5000/dintyg/privatlakarportal-staging:devtest9 \
     -p STAGE=staging -p DATABASE_NAME=privatlakarportalstaging \

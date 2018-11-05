@@ -1,0 +1,34 @@
+apiVersion: v1
+data:
+  SPRING_PROFILES_ACTIVE: "qa,pp-security-test,caching-enabled"
+  HSA_WS_SERVICES_URL: "https://wstest.hsa.sjunet.org/svr-hsaws2/hsaws"
+  PRIVATLAKARPORTAL_HOST_URL: "<value>"
+  WEBCERT_HOST_URL: "https://verifiering.webcert.intygstjanster.se"
+  WEBCERT_INTERNAL_HOST_URL: "http://webcert:8080/services/stubs"
+  LOGBACK_FILE: "classpath:logback-ocp.xml"
+  REDIS_HOST: "ind-sint-redis1.ind1.sth.basefarm.net;ind-sint-redis2.ind1.sth.basefarm.net;ind-sint-redis3.ind1.sth.basefarm.net"
+  REDIS_PORT: "26379;26379;26379"
+  REDIS_SENTINEL_MASTER_NAME: "ind-sint-redis"
+  MAIL_HOST: "mailout.sth.basefarm.net"
+  DB_PORT: "3306"
+  DB_SERVER: "ind-sint-mysqlvip.ind1.sth.basefarm.net"
+  DB_NAME: "${database.name}"
+  PUTJANST_LOGICALADDRESS: "SE165565594230-1000"
+  HSA_WS_SERVICE_LOGICALADDRESS: "<value>"
+  NTJP_BASE_URL: "https://qa.esb.ntjp.se/vp"
+  NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/qa.eintyg.inera.sjunet.org.p12"
+  NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore.jks"
+  NTJP_WS_CERTIFICATE_TYPE: "PKCS12"
+  NTJP_WS_TRUSTSTORE_TYPE: "JKS"
+  WEBCERT_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore-mvk-sso.jks"
+  WEBCERT_WS_TRUSTSTORE_TYPE: "JKS"
+  CGI_ELEG_SAML_KEYSTORE_FILE: "file://${certificate.folder}/login.certificate.jks"
+  CGI_ELEG_SAML_KEYSTORE_ALIAS: "<value>"
+  HSA_WS_CERTIFICATE_FILE: "${certificate.folder}/<value>.p12"
+  HSA_WS_CERTIFICATE_TYPE: "PKCS12"
+  HSA_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore.jks"
+  HSA_WS_TRUSTSTORE_TYPE: "JKS"
+kind: ConfigMap
+metadata:
+  name: privatlakarportal-stage-configmap-envvar
+type: Opaque
