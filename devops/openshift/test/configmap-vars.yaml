@@ -15,7 +15,7 @@ data:
   DB_NAME: "${database.name}"
   PUTJANST_LOGICALADDRESS: "PUTEST"
   HSA_WS_SERVICE_LOGICALADDRESS: ""
-  NTJP_BASE_URL: "http://${app.name}:8080/services/stub"
+  NTJP_BASE_URL: "http://${app.name}:8080/services/stubs"
   NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/test.intygstjanster.sjunet.org.jks"
   NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore.jks"
   NTJP_WS_CERTIFICATE_TYPE: "JKS"
