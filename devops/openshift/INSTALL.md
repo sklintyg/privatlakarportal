@@ -170,6 +170,7 @@ Open _&lt;env>/configmap-vars.yaml_ and replace `<value>` with expected values. 
 	DB_SERVER: "<value>"
 	DB_NAME: "${database.name}"
 	PUTJANST_LOGICALADDRESS: "<value>"
+	HSA_WS_SERVICE_LOGICALADDRESS: "<value>"
 	NTJP_BASE_URL: "<value>"
 	NTJP_WS_CERTIFICATE_FILE: "<value>"
 	NTJP_WS_TRUSTSTORE_FILE: "<value>"
