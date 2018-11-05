@@ -237,7 +237,7 @@ We're all set for deploying the application. As stated in the pre-reqs, the "dep
 
 **NOTE 1** You need to reference the correct docker image from the Nexus!! You must replace \<replaceme\> with a correct path to the image to deploy!!
 
-**NOTE 2** Please specify the `DATABASE_NAME` actual MySQL database. Default is ** privatlakarportal**.
+**NOTE 2** Please specify the `DATABASE_NAME` actual MySQL database. Default is **privatlakarportal**.
 
 Run the following command to create a deployment:
 
