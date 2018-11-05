@@ -14,6 +14,7 @@ data:
   DB_SERVER: "ind-sint-mysqlvip.ind1.sth.basefarm.net"
   DB_NAME: "${database.name}"
   PUTJANST_LOGICALADDRESS: "SE165565594230-1000"
+  HSA_WS_SERVICE_LOGICALADDRESS: "<value>"
   NTJP_BASE_URL: "https://qa.esb.ntjp.se/vp"
   NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/qa.eintyg.inera.sjunet.org.p12"
   NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore.jks"
