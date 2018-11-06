@@ -93,7 +93,7 @@ Replace `<version>` below with the actual application version.
 
 Fetch the actual version of the tool, the example below runs `wget` to retrieve the package (tarball).
 
-    > wget https://build-inera.nordicmedtest.se/nexus/repository/releases/se/inera/intyg/privatlakarportal/privatlakarportal-liquibase-runner/<version>/privatlakarportal-liquibase-runner-<version>.tar
+	> https://build-inera.nordicmedtest.se/nexus/repository/releases/se/inera/privatlakarportal/privatlakarportal-liquibase-runner/<version>/privatlakarportal-liquibase-runner-<version>.jar
 
 
 Download the tool to a computer with Java installed and access to the database in question.
