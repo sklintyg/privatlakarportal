@@ -1,7 +1,7 @@
 angular.module('privatlakareApp')
     .controller('MinsidaCtrl', function($scope, $state, $log, $window, $timeout,
         HospModel, HospService, HospViewState, MinsidaViewState, ObjectHelper, RegisterModel, RegisterProxy,
-        UserModel, WindowUnload) {
+        UserModel, WindowUnload, $sessionStorage) {
         'use strict';
 
         /**
@@ -10,6 +10,14 @@ angular.module('privatlakareApp')
         $scope.user = UserModel.get();
         $scope.registerModel = RegisterModel.reset();
         $scope.viewState = MinsidaViewState.reset();
+
+        $scope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
+            if (from.name === 'app.minsida.terms') {
+                if ($sessionStorage.appTermsModalModel && $sessionStorage.appTermsModalModel.options) {
+                    $sessionStorage.appTermsModalModel.options.modalInstance.close();
+                }
+            }
+        }); 
 
         /**
          * Supporting functions
