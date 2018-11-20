@@ -18,6 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,24 +32,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import javax.xml.ws.WebServiceException;
+import java.io.IOException;
+import java.util.Collection;
+import se.inera.intyg.infra.integration.pu.model.Person;
+import se.inera.intyg.infra.integration.pu.model.PersonSvar;
+import se.inera.intyg.infra.integration.pu.services.PUService;
 import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.intyg.infra.integration.pu.model.Person;
-import se.inera.intyg.infra.integration.pu.model.PersonSvar;
-import se.inera.intyg.infra.integration.pu.services.PUService;
 import se.inera.intyg.privatlakarportal.service.model.User;
 import se.inera.intyg.schemas.contract.Personnummer;
-
-import javax.xml.ws.WebServiceException;
-import java.io.IOException;
-import java.util.Collection;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by pebe on 2015-09-11.
@@ -95,7 +94,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNoRegistration() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(PersonSvar.found(new Person(personnummer, false, false, "Test", "", "User", "", "", "")));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -109,7 +108,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNotAuthorized() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareNotAuthorized);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(PersonSvar.found(new Person(personnummer, false, false, "Test", "", "User", "", "", "")));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -123,7 +122,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNoHosp() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareNoHosp);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(PersonSvar.found(new Person(personnummer, false, false, "Test", "", "User", "", "", "")));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -137,7 +136,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserRegistration() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareAuthorized);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Test", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(PersonSvar.found(new Person(personnummer, false, false, "Test", "", "User", "", "", "")));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -151,7 +150,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNewName() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakareAuthorized);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(new Person(personnummer, false, false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(PersonSvar.found(new Person(personnummer, false, false, "Ny", "", "User", "", "", "")));
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -165,7 +164,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserNotInPUService() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(null, PersonSvar.Status.NOT_FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(PersonSvar.notFound());
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -179,7 +178,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserErrorFromPUService() {
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(null, PersonSvar.Status.ERROR));
+        when(puService.getPerson(personnummer)).thenReturn(PersonSvar.error());
 
         User user = userService.getUserWithStatus();
         assertEquals(PERSON_ID, user.getPersonalIdentityNumber());
@@ -214,8 +213,8 @@ public class UserServiceImplTest {
     public void testGetUserWithStatusInvalidPnr() {
         SecurityContextHolder.setContext(getSecurityContext(PERSON_ID_INVALID, "Invalid pnr User"));
         when(privatlakareRepository.findByPersonId(PERSON_ID_INVALID)).thenReturn(privatlakareInvalidPnr);
-        when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(
-                new Person(createPnr(PERSON_ID_INVALID), false, false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+        when(puService.getPerson(personnummer)).thenReturn(PersonSvar.found(
+                new Person(createPnr(PERSON_ID_INVALID), false, false, "Ny", "", "User", "", "", "")));
 
         User user = userService.getUserWithStatus();
         assertEquals(PersonSvar.Status.ERROR, user.getPersonSvarStatus());
