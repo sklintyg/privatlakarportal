@@ -21,32 +21,8 @@
     <!-- logback config for the Openshift Container Platform (OCP). Stream to stdout, use layout and appenders from infra. -->
 
     <property name="APP_NAME" value="${APP_NAME:-privatlakarportal}"/>
-    <property name="TIMESTAMP" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level"/>
-    <property name="SESSION" value="%X{req.sessionInfo:--}"/>
-    <property name="TRACE" value="%X{req.traceId:--}"/>
-    <property name="LINE" value="--- %-40.40logger{39} : %msg%n%rEx"/>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
-            <markers>Monitoring,Validation</markers>
-            <onMatch>DENY</onMatch>
-            <onMismatch>ACCEPT</onMismatch>
-        </filter>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${TIMESTAMP} [console,${SESSION},${TRACE}] ${LINE}</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="MONITORING" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
-            <marker>Monitoring</marker>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${TIMESTAMP} [monitoring,${SESSION},${TRACE},%user] ${LINE}</pattern>
-        </encoder>
-    </appender>
+    <include resource="logback-ocp-base.xml"/>
 
     <logger name="org.opensaml" level="INFO" />
 
