@@ -41,6 +41,7 @@
   <security:http security="none" pattern="/version.jsp"/>
   <security:http security="none" pattern="/healthcheck.jsp"/>
   <security:http security="none" pattern="/api/monitoring/**"/>
+  <security:http security="none" pattern="/metrics"/>
   <security:http security="none" pattern="/favicon.ico"/>
   <security:http security="none" pattern="/error.jsp"/>
 
