@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -55,7 +55,7 @@ import static org.mockito.Mockito.when;
 public class UserServiceImplTest {
 
     private static final String PERSON_ID = "191212121212";
-    public static final String PERSON_ID_INVALID = "inte-ett-personnummer";
+    public static final String PERSON_ID_INVALID = "191212121214";
 
     private Personnummer personnummer;
 
@@ -82,7 +82,7 @@ public class UserServiceImplTest {
         privatlakareInvalidPnr = new CustomObjectMapper().readValue(
                 new ClassPathResource("UserServiceImplTest/test_invalid_pnr.json").getFile(), Privatlakare.class);
 
-        personnummer = buildValidPersonnummer(PERSON_ID);
+        personnummer = createPnr(PERSON_ID);
     }
 
     @Test
@@ -215,7 +215,7 @@ public class UserServiceImplTest {
         SecurityContextHolder.setContext(getSecurityContext(PERSON_ID_INVALID, "Invalid pnr User"));
         when(privatlakareRepository.findByPersonId(PERSON_ID_INVALID)).thenReturn(privatlakareInvalidPnr);
         when(puService.getPerson(personnummer)).thenReturn(new PersonSvar(
-                new Person(new Personnummer(PERSON_ID_INVALID), false, false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
+                new Person(createPnr(PERSON_ID_INVALID), false, false, "Ny", "", "User", "", "", ""), PersonSvar.Status.FOUND));
 
         User user = userService.getUserWithStatus();
         assertEquals(PersonSvar.Status.ERROR, user.getPersonSvarStatus());
@@ -271,7 +271,7 @@ public class UserServiceImplTest {
         };
     }
 
-    private Personnummer buildValidPersonnummer(String pnr) {
-        return Personnummer.createValidatedPersonnummerWithDash(pnr).get();
+    private Personnummer createPnr(String pnr) {
+        return Personnummer.createPersonnummer(pnr).get();
     }
 }

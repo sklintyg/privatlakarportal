@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -38,6 +38,7 @@ public final class Befattningar {
 
     static {
         Map<String, String> map = new HashMap<>();
+        map.put("201010", "Överläkare");
         map.put("201011", "Distriktsläkare/Specialist allmänmedicin");
         map.put("201012", "Skolläkare");
         map.put("201013", "Företagsläkare");

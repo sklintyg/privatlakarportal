@@ -1,5 +1,5 @@
 plugins {
-    id "se.inera.intyg.plugin.common" version "1.0.59" apply false
+    id "se.inera.intyg.plugin.common" version "1.0.62" apply false
     id "se.inera.intyg.plugin.fitnesse" version "1.0.8" apply false
     id "org.akhikhl.gretty" version "1.4.2" apply false
     id "com.moowork.node" version "1.1.1" apply false
@@ -9,9 +9,12 @@ ext {
     infraVersion = System.properties['infraVersion'] ?: '0-SNAPSHOT'
 
     ppSchemasVersion = "1.0.4"
-    ppTermsSchemasVersion = "1.0.4"    
+    ppTermsSchemasVersion = "1.0.4"
+
     rivtaItintegrationMonitoringSchemasVersion = "1.0.0.4"
-    
+
+    schemasContractVersion = "2.1.6"
+
     activeMQSpringVersion = "5.9.1"
     aspectJVersion = "1.6.11"
     commonsCodecVersion = "1.10"
@@ -62,7 +65,7 @@ allprojects {
     }
 
     // Findbugs does not work very well with groovy code. Hence we exclude groovy projects.
-    ext.findbugsExclude = ".*specifications\$"
+    ext.spotbugsExclude = ".*specifications\$"
 
     // Errorprone has no mechanism (yet) for excluding generated code. We therefore disable it for hsa-integration.
     ext.errorproneExclude = "privatlakarportal-hsa-integration"
@@ -73,7 +76,7 @@ allprojects {
     dependencies {
         compile "ch.qos.logback:logback-classic:${logbackVersion}"
         compile "org.slf4j:slf4j-api:${slf4jVersion}"
-        
+
         testCompile "junit:junit:${junitVersion}"
         testCompile "org.mockito:mockito-core:${mockitoAllVersion}"
         testCompile "org.springframework:spring-test:${springContextVersion}"

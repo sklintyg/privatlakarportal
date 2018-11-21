@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -86,9 +86,9 @@ public class UserServiceImpl implements UserService {
         PersonSvar.Status personSvarStatus;
         try {
             Optional<Personnummer> personnummerOptional = Personnummer
-                    .createValidatedPersonnummerWithDash(privatlakarUser.getPersonalIdentityNumber());
-            if (personnummerOptional.isPresent()) {
+                    .createPersonnummer(privatlakarUser.getPersonalIdentityNumber());
 
+            if (personnummerOptional.isPresent()) {
                 PersonSvar personSvar = puService.getPerson(personnummerOptional.get());
                 personSvarStatus = personSvar.getStatus();
 

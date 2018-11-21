@@ -1,7 +1,8 @@
 # Privatlakarportal
+
 Tjänst för inloggning av privatläkare.
 
-##Komma igång med lokal installation
+## Komma igång med lokal installation
 
 Den här sektionen beskriver hur man bygger applikationen för att kunna köras helt fristående.
 
@@ -35,3 +36,12 @@ För att starta applikationen i debugläge används:
     
 Applikationen kommer då att starta upp med debugPort = **5010**. Det är denna port du ska använda när du sätter upp din 
 debug-konfiguration i din utvecklingsmiljö.
+
+### Visa databasen
+
+Man kan även komma åt H2-databasen som startas:
+
+    $ open http://localhost:9090/
+
+Fyll i JDBC URL'n: `jdbc:h2:tcp://localhost:8093/mem:datajpa`
+(inera/inera)

@@ -1,8 +1,8 @@
 #!groovy
 
-def buildVersion = "1.6.0.${BUILD_NUMBER}"
-def infraVersion = "3.5.0.+"
-def commonVersion = "3.5.0.+"
+def buildVersion = "1.7.0.${BUILD_NUMBER}"
+def infraVersion = "3.6.0.+"
+def commonVersion = "3.6.0.+"
 
 stage('checkout') {
     node {
@@ -35,8 +35,7 @@ stage('deploy') {
 stage('restAssured') {
     node {
         try {
-            shgradle "restAssuredTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se/ -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} \
-                    --tests se.inera.intyg.privatlakarportal.integration.privatepractioner.services.HospUppdateringIT"
+            shgradle "restAssuredTest -DbaseUrl=http://privatlakarportal.inera.nordicmedtest.se/ -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion}"
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
                reportFiles: 'index.html', reportName: 'RestAssured results'

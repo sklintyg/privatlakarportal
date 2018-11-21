@@ -41,6 +41,9 @@ public class HsaStubConfiguration {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private Bus cxfBus;
+
     @Bean
     BootstrapBean bootstrap() {
         return new BootstrapBean();
@@ -63,9 +66,8 @@ public class HsaStubConfiguration {
 
     @Bean
     public EndpointImpl hsaWsResponder() {
-        Bus bus = (Bus) applicationContext.getBean(Bus.DEFAULT_BUS_ID);
         Object implementor = hsaWebServiceStub();
-        EndpointImpl endpoint = new EndpointImpl(bus, implementor);
+        EndpointImpl endpoint = new EndpointImpl(cxfBus, implementor);
         endpoint.publish("/hsa");
         return endpoint;
     }

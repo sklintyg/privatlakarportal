@@ -17,3 +17,6 @@ config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
 
 #Most correspond to the same port as in the tools project
 tomcat_https_port: 8104
+
+#Skip hosp updates for this node
+skip_hosp_update: true

@@ -1,16 +1,30 @@
+/*
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.privatlakarportal.spec
 
 import geb.driver.CachingDriverFactory
-
 import org.openqa.selenium.Alert
 import org.openqa.selenium.Cookie
 import org.openqa.selenium.TimeoutException
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.support.ui.WebDriverWait
-
-import se.inera.intyg.privatlakarportal.page.AbstractPage
-
 import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.WebDriverWait
 
 public class Browser {
 

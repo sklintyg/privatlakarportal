@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -48,6 +48,7 @@ public final class Verksamhetstyper {
         map.put("17", "Radiologisk verksamhet");
         map.put("18", "Tandvårdsverksamhet");
         map.put("20", "Övrig medicinsk serviceverksamhet");
+        map.put("21", "Vård-, Omsorg- och Omvårdnadsverksamhet");
         VERKSAMHETSTYP_MAP = Collections.unmodifiableMap(map);
     }
 

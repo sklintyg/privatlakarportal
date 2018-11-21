@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -51,6 +51,9 @@ public class WcIntegrationConfiguration {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private Bus cxfBus;
+
     @Bean
     public GetPrivatePractitionerResponderInterface getPrivatePractitionerResponder() {
         return new GetPrivatePractitionerResponderImpl();
@@ -63,18 +66,16 @@ public class WcIntegrationConfiguration {
 
     @Bean
     public EndpointImpl getPrivatePractitionerEndpoint() {
-        Bus bus = (Bus) applicationContext.getBean(Bus.DEFAULT_BUS_ID);
         Object implementor = getPrivatePractitionerResponder();
-        EndpointImpl endpoint = new EndpointImpl(bus, implementor);
+        EndpointImpl endpoint = new EndpointImpl(cxfBus, implementor);
         endpoint.publish("/get-private-practitioner/v1.0");
         return endpoint;
     }
 
     @Bean
     public EndpointImpl validatePrivatePractitionerEndpoint() {
-        Bus bus = (Bus) applicationContext.getBean(Bus.DEFAULT_BUS_ID);
         Object implementor = validatePrivatePractitionerResponder();
-        EndpointImpl endpoint = new EndpointImpl(bus, implementor);
+        EndpointImpl endpoint = new EndpointImpl(cxfBus, implementor);
         endpoint.publish("/validate-private-practitioner/v1.0");
         return endpoint;
     }

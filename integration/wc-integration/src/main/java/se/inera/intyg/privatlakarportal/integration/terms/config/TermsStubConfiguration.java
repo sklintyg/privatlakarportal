@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -52,7 +52,7 @@ public class TermsStubConfiguration {
         Bus bus = (Bus) applicationContext.getBean(Bus.DEFAULT_BUS_ID);
         Object implementor = termsWebServiceStub();
         EndpointImpl endpoint = new EndpointImpl(bus, implementor);
-        endpoint.publish("/terms");
+        endpoint.publish("/stubs/get-private-practitioner-terms/v1.0");
         return endpoint;
     }
 }
