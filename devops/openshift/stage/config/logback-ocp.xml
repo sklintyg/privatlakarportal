@@ -24,10 +24,6 @@
 
     <include resource="logback-ocp-base.xml"/>
 
-    <logger name="org.opensaml" level="INFO" />
-
-    <logger name="se.inera.intyg.privatlakarportal" level="info"/>
-
     <logger name="se.inera.intyg.privatlakarportal.hsa.monitoring.MonitoringLogService" level="info" additivity="false">
         <appender-ref ref="MONITORING"/>
     </logger>
