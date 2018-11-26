@@ -74,7 +74,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/test/hosp/add");
 
         // Se till att uppdaterat namn finns
-        spec().get("api/user");
+        spec(100).get("api/user");
 
         // Skapa registrering
         spec().body(createValidRegistration())
@@ -84,14 +84,14 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/registration/create");
 
         // Verifiera läkarbehörighet
-        spec(200).when()
+        spec(500).when()
             .get("api/registration")
         .then()
             .assertThat()
                   .body("hospInformation.hsaTitles", Matchers.contains("Läkare"));
 
         // Logga in genom webcert
-        spec(100).when()
+        spec().when()
             .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
         .then()
             .assertThat()
@@ -186,14 +186,14 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/test/hosp/update");
 
         // Verifiera att mail om borttagen registrering gått iväg
-        spec().when()
+        spec(200).when()
             .get("api/stub/mails")
         .then()
             .assertThat()
                 .body(PERSONNUMMER, Matchers.equalTo("Registrering borttagen"));
 
         // Försök hämta registreringsinfo, denna ska vara rensad
-        spec(500).when()
+        spec(200).when()
             .get("api/test/registration/" + PERSONNUMMER)
         .then()
             .assertThat()
