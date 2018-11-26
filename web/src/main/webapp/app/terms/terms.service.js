@@ -96,22 +96,22 @@ angular.module('privatlakareApp').factory('TermsService',
 
             modalModel.options.buttons = [
                 {
-                    name: 'close',
-                    text: 'common.close',
-                    id: 'dismissBtn',
-                    className: 'btn-success',
-                    clickFn: function($modalInstance) {
-                        $modalInstance.close();
-                    }
-                },
-                {
                     name: 'print',
                     text: 'common.print',
                     id: 'printBtn',
+                    className: 'btn-success',
                     clickFn: function($modalInstance, content) {
                         if(content.terms.loadedOK) {
                             _printTerms(content);
                         }
+                    }
+                },
+                {
+                    name: 'close',
+                    text: 'common.close',
+                    id: 'dismissBtn',
+                    clickFn: function($modalInstance) {
+                        $modalInstance.close();
                     }
                 }
             ];
