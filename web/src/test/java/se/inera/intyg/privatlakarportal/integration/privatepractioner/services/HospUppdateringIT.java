@@ -18,21 +18,19 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
-import com.google.common.collect.Lists;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.http.ContentType;
+import java.util.Arrays;
+
 import org.hamcrest.Matchers;
 import org.json.simple.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.common.collect.Lists;
+import com.jayway.restassured.RestAssured;
+
 import se.inera.intyg.privatlakarportal.common.model.Registration;
-import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.util.RestUtil;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
-
-import java.util.Arrays;
-
-import static com.jayway.restassured.RestAssured.given;
 
 /**
  * Created by stillor on 2/3/17.
@@ -50,103 +48,67 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
         RestAssured.sessionId = session;
 
         // Ta bort hosp-info
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec().when()
             .delete("api/test/hosp/remove/" + PERSONNUMMER);
 
         // Ta bort registrering
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .delete("api/test/registration/remove/" + PERSONNUMMER);
+        spec().delete("api/test/registration/remove/" + PERSONNUMMER);
 
         // Rensa mail-stubbe
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .delete("api/stub/mails/clear");
+        spec().delete("api/stub/mails/clear");
     }
 
     @After
-    public void cleanup() throws InterruptedException {
-        Thread.sleep(500);
+    public void cleanup() {
+        sleep(200);
     }
 
+
     @Test
-    public void testTillbakadragenLakarbehorighet() throws InterruptedException {
+    public void testTillbakadragenLakarbehorighet() {
         // Lägg till i hosp
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-                .body(createHospInformation(PERSONNUMMER))
+        spec().body(createHospInformation(PERSONNUMMER))
         .expect()
             .statusCode(200)
         .when()
             .post("api/test/hosp/add");
 
         // Se till att uppdaterat namn finns
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .get("api/user");
+        spec().get("api/user");
 
         // Skapa registrering
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-            .body(createValidRegistration())
+        spec().body(createValidRegistration())
         .expect()
             .statusCode(200)
         .when()
             .post("api/registration/create");
 
-        Thread.sleep(500);
-
         // Verifiera läkarbehörighet
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec(200).when()
             .get("api/registration")
         .then()
             .assertThat()
                   .body("hospInformation.hsaTitles", Matchers.contains("Läkare"));
 
         // Logga in genom webcert
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec(100).when()
             .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
         .then()
             .assertThat()
                 .body("resultCode", Matchers.equalTo("OK"));
 
         // Ta bort behörighet
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec().when()
             .delete("api/test/hosp/remove/" + PERSONNUMMER);
 
         // Trigga hosp-uppdatering
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .expect()
+        spec().expect()
             .statusCode(200)
         .when()
             .post("api/test/hosp/update");
 
-        Thread.sleep(500);
-
         // Logga in med ERROR som resultat
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec(500).when()
             .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
         .then()
             .assertThat()
@@ -156,67 +118,44 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
     @Test
     public void testUppdateraTillLakare() throws InterruptedException {
         // Se till att uppdaterat namn finns
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .get("api/user");
+        spec().get("api/user");
 
         // Skapa registrering
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-            .body(createValidRegistration())
+        spec().body(createValidRegistration())
         .expect()
             .statusCode(200)
         .when()
             .post("api/registration/create");
 
         // Verifiera läkarbehörighet saknas
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec(200).when()
             .get("api/registration")
         .then()
             .assertThat()
                 .body("hospInformation.hsaTitles", Matchers.isEmptyOrNullString());
 
         // Lägg till i hosp
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-            .body(createHospInformation(PERSONNUMMER))
+        spec().body(createHospInformation(PERSONNUMMER))
         .expect()
             .statusCode(200)
         .when()
             .post("api/test/hosp/add");
 
         // Trigga hosp-uppdatering
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .expect()
+        spec().expect()
             .statusCode(200)
         .when()
             .post("api/test/hosp/update");
 
-        Thread.sleep(500);
-
         // Verifiera läkarbehörighet
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec(500).when()
             .get("api/registration")
         .then()
             .assertThat()
                 .body("hospInformation.hsaTitles", Matchers.contains("Läkare"));
 
         // Verifiera att mail mottagits i stubbe
-        given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec().when()
             .get("api/stub/mails")
         .then()
             .assertThat()
@@ -226,53 +165,35 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
     @Test
     public void testRemovalStrategy() {
         // Se till att uppdaterat namn finns
-        given()
-            .contentType(ContentType.JSON)
-            //.cookie("ROUTEID", RestUtil.routeId)
-        .get("api/user");
+        spec().get("api/user");
 
         // Skapa registrering
-        given()
-            .contentType(ContentType.JSON)
-            //.cookie("ROUTEID", RestUtil.routeId)
-            .body(createValidRegistration())
+        spec().body(createValidRegistration())
         .expect()
             .statusCode(200)
         .when()
             .post("api/registration/create");
 
         // Ändra registreringsdatum så att städningen ska triggas
-        given()
-            .contentType(ContentType.JSON)
-           // .cookie("ROUTEID", RestUtil.routeId)
-            .body("2017-01-15")
+        spec(200).body("2017-01-15")
         .when()
             .post("api/test/registration/setregistrationdate/" + PERSONNUMMER);
 
         // Trigga hosp-uppdatering
-        given()
-            .contentType(ContentType.JSON)
-            //.cookie("ROUTEID", RestUtil.routeId)
-        .expect()
+        spec().expect()
             .statusCode(200)
         .when()
             .post("api/test/hosp/update");
 
         // Verifiera att mail om borttagen registrering gått iväg
-        given()
-            .contentType(ContentType.JSON)
-            //.cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec().when()
             .get("api/stub/mails")
         .then()
             .assertThat()
                 .body(PERSONNUMMER, Matchers.equalTo("Registrering borttagen"));
 
         // Försök hämta registreringsinfo, denna ska vara rensad
-        given()
-            .contentType(ContentType.JSON)
-            //.cookie("ROUTEID", RestUtil.routeId)
-        .when()
+        spec(500).when()
             .get("api/test/registration/" + PERSONNUMMER)
         .then()
             .assertThat()
