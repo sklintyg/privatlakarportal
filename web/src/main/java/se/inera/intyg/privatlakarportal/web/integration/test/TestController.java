@@ -86,6 +86,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/registration/setname/{id}", method = RequestMethod.POST)
+    @Transactional
     public boolean setNamePrivatlakare(@PathVariable("id") String personId, @RequestBody String name) {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(personId);
         if (privatlakare == null) {
