@@ -142,13 +142,13 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/test/hosp/add");
 
         // Trigga hosp-uppdatering
-        spec().expect()
+        spec(200).expect()
             .statusCode(200)
         .when()
             .post("api/test/hosp/update");
 
         // Verifiera läkarbehörighet
-        spec(500).when()
+        spec(200).when()
             .get("api/registration")
         .then()
             .assertThat()
