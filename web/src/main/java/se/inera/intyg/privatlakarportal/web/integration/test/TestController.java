@@ -18,7 +18,10 @@
  */
 package se.inera.intyg.privatlakarportal.web.integration.test;
 
-import io.swagger.annotations.Api;
+import java.time.LocalDate;
+
+import javax.ws.rs.core.MediaType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.Api;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
@@ -39,9 +44,6 @@ import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepos
 import se.inera.intyg.privatlakarportal.service.RegisterService;
 import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
-
-import javax.ws.rs.core.MediaType;
-import java.time.LocalDate;
 
 /**
  * Created by pebe on 2015-09-02.
@@ -86,7 +88,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/registration/setname/{id}", method = RequestMethod.POST)
-    @Transactional
+    @Transactional(transactionManager = "transactionManager")
     public boolean setNamePrivatlakare(@PathVariable("id") String personId, @RequestBody String name) {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(personId);
         if (privatlakare == null) {
@@ -99,7 +101,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/registration/setregistrationdate/{id}", method = RequestMethod.POST)
-    @Transactional
+    @Transactional(transactionManager = "transactionManager")
     public boolean setRegistrationDatePrivatlakare(@PathVariable("id") String personId, @RequestBody String date) {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(personId);
         if (privatlakare == null) {
@@ -124,6 +126,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/hosp/update", method = RequestMethod.POST)
+    @Transactional(transactionManager = "transactionManager")
     public void updateHospInformation() {
         if (hsaServiceStub != null) {
             hsaServiceStub.resetHospLastUpdate();
