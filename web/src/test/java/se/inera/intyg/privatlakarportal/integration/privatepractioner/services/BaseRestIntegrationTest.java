@@ -21,10 +21,13 @@ package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.specification.RequestSpecification;
 import org.junit.After;
 import org.junit.Before;
 import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.util.RestUtil;
 
+
+import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.config.RestAssuredConfig.newConfig;
 import static com.jayway.restassured.config.SSLConfig.sslConfig;
 
@@ -33,7 +36,7 @@ public abstract class BaseRestIntegrationTest {
     public void setupBase() {
         RestAssured.reset();
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
+        RestAssured.baseURI = System.getProperty("integration.tests.baseUrl", "http://localhost:8090");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
         RestAssured.config = newConfig().sslConfig(sslConfig().allowAllHostnames())
                 .sessionConfig(RestAssured.config().getSessionConfig().sessionIdName("SESSION"));
@@ -49,5 +52,26 @@ public abstract class BaseRestIntegrationTest {
         RestAssured.sessionId = sessionId;
         return sessionId;
     }
+
+
+    void sleep(long milllis) {
+        try {
+            Thread.sleep(milllis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    RequestSpecification spec() {
+        return given()
+                .contentType(ContentType.JSON)
+                .cookie("ROUTEID", RestUtil.routeId);
+    }
+
+    RequestSpecification spec(long delayInMillis) {
+        sleep(delayInMillis);
+        return spec();
+    }
+
 
 }
