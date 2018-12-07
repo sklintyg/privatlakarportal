@@ -7,25 +7,25 @@
   },
   {
     "key": "ineraNationellKundserviceFelanmalan",
-    "url": "http://www.inera.se/felanmalan",
+    "url": "https://www.inera.se/felanmalan",
     "text": "Kontaktinformation till Ineras kundservice (extern länk)",
     "target": "_blank"
   },
   {
     "key": "ptsCookies",
-    "url": "http://www.pts.se/sv/Bransch/Regler/Lagar/Lag-om-elektronisk-kommunikation/Cookies-kakor/",
+    "url": "https://pts.se/sv/privat/internet/integritet/kakor-cookies/",
     "text": "Mer om kakor (cookies) på Post- och telestyrelsens webbplats",
     "target": "_blank"
   },
   {
     "key": "ptsCookiesBanner",
-    "url": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/",
+    "url": "https://pts.se/sv/privat/internet/integritet/kakor-cookies/",
     "text": "Post- och telestyrelsens webbplats",
     "target": "_blank"
   },
   {
     "key": "ptsCookiesModal",
-    "url": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/",
+    "url": "https://pts.se/sv/privat/internet/integritet/kakor-cookies/",
     "text": "Kommunikationsmyndigheten PTS sida om kakor",
     "target": "_blank"
   },
