@@ -1,7 +1,7 @@
 
 # OPENSHIFT INSTALLATION GUIDE
 
-Installation of web application privatlakarportal (PP) on openshift.
+Installation of Web application privatlakarportal (PP) on openshift.
 
 ## 1 Pre-Installation Requirements
 
@@ -28,15 +28,15 @@ Provided elsewhere:
 
 For all backing services their actual addresses and user accounts have to be known prior to start the installation procedure.  
 
-### 1.3 Integration / Firewall
+### 1.2 Integration / Firewall
 
 PP communicates in/out with the Inera Service Platform and thus needs firewall rules for that access.
 
-### 1.4 Certificates
+### 1.3 Certificates
 
 PP requires certificates, keystores and truststores for Inera Service Platform, CGI IdP, Webcert and HSA Web Service. The operations provider is responsible for installing these certificates in the appropriate OpenShift "secret", see detailed instructions in the OpenShift section.
 
-### 1.5 Message Queues
+### 1.4 Message Queues
 
 None.
 
@@ -76,7 +76,7 @@ To run database migration tool:
 
 1. All Pre-Installation Requirements are fulfilled, se above
 2. Check if a database migration is required
-3. Ensure that the env secret and secret-envvar are up to date
+3. Ensure that the secrets env, certifikat and secret-envvar are up to date
 4. Ensure that the configmap and configmap-envvar are up to date
 5. Check that deployment works as expected 
 6. Fine-tune memory settings for container and java process
@@ -161,7 +161,6 @@ Open _&lt;env>/configmap-vars.yaml_ and replace `<value>` with expected values. 
 	PRIVATLAKARPORTAL_HOST_URL: "<value>"
 	WEBCERT_HOST_URL: "<value>"
 	WEBCERT_INTERNAL_HOST_URL: "<value>"
-	LOGBACK_FILE: "<value>"
 	REDIS_HOST: "<value>"
 	REDIS_PORT: "<value>"
 	REDIS_SENTINEL_MASTER_NAME: "<value>"
@@ -194,11 +193,11 @@ Note 2: Other properties might be used to define a `<value>`. As an example is t
             
 ##### 2.4.1 Redis Sentinel Configuration
 
-Redis sentinel needs at least three addresses to work correctly. These are specified in the _redis.host_ and _redis.port_ properties respectively (in Java property file format):
+Redis sentinel needs at least three addresses to work correctly. These are specified in the `REDIS_HOST` and `REDIS_PORT` properties respectively (in Java property file format):
 
-    redis.host=host1;host2;host3
-    redis.port=26379;26379;26379
-    redis.sentinel.master.name=master
+    REDIS_HOST: "host1;host2;host3"
+    REDIS_PORT: "26379;26379;26379"
+    REDIS_SENTINEL_MASTER_NAME: "master"
     
 ### 2.5 Prepare Certificates
 
