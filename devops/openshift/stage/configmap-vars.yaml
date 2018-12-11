@@ -21,7 +21,6 @@ data:
   NTJP_WS_TRUSTSTORE_TYPE: "JKS"
   WEBCERT_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore.jks"
   WEBCERT_WS_TRUSTSTORE_TYPE: "JKS"
-  WEBCERT_INTERNAL_HOST_URL: "http://webcert:8080/services"
   CGI_ELEG_SAML_KEYSTORE_FILE: "file://${certificate.folder}/verifiering.registrering.intygstjanster.sjunet.org.jks"
   CGI_ELEG_SAML_KEYSTORE_ALIAS: "verifiering.registrering.intygstjanster.sjunet.org"
   HSA_WS_CERTIFICATE_FILE: "${certificate.folder}/verifiering.registrering.intygstjanster.sjunet.org.p12"
