@@ -193,7 +193,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
                 .body(PERSONNUMMER, Matchers.equalTo("Registrering borttagen"));
 
         // Försök hämta registreringsinfo, denna ska vara rensad
-        spec(100).when()
+        spec(500).when()
             .get("api/test/registration/" + PERSONNUMMER)
         .then()
             .assertThat()
