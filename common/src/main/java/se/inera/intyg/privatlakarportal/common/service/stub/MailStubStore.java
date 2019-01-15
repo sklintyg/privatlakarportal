@@ -21,11 +21,30 @@ package se.inera.intyg.privatlakarportal.common.service.stub;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
+import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.support.collections.DefaultRedisMap;
+
 public class MailStubStore {
-    private Map<String, String> store = new HashMap<String, String>();
+    private static final String MAILSTUBSTORE = "mailstubstore";
+    private Map<String, String> store = new HashMap<>(); // Default hashmap used for unit-tests
+
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
+
+    @PostConstruct
+    public void init() {
+        stringRedisTemplate = new StringRedisTemplate();
+        stringRedisTemplate.setConnectionFactory(redisConnectionFactory);
+        stringRedisTemplate.afterPropertiesSet();
+        store = new DefaultRedisMap<>(MAILSTUBSTORE, stringRedisTemplate);
+    }
 
     public void addMail(String id, String mail) {
         store.put(id, mail);

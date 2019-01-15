@@ -12,6 +12,7 @@ dependencies {
     compile "commons-codec:commons-codec:${commonsCodecVersion}"
     compile "commons-io:commons-io:${commonsIOVersion}"
     compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
+    compile "org.springframework.data:spring-data-redis:${springDataRedisVersion}"
 
     compileOnly "javax.servlet:javax.servlet-api:${servletApiVersion}"
 
