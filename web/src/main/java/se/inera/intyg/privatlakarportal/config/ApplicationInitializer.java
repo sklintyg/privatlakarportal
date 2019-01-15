@@ -18,7 +18,11 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
-import io.prometheus.client.exporter.MetricsServlet;
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
+
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.WebApplicationInitializer;
@@ -29,7 +33,10 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import io.prometheus.client.exporter.MetricsServlet;
 import se.inera.intyg.infra.monitoring.MonitoringConfiguration;
+import se.inera.intyg.infra.security.filter.RequestContextHolderUpdateFilter;
 import se.inera.intyg.infra.security.filter.SecurityHeadersFilter;
 import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;
 import se.inera.intyg.privatlakarportal.common.monitoring.util.LogbackConfiguratorContextListener;
@@ -37,11 +44,6 @@ import se.inera.intyg.privatlakarportal.hsa.config.HsaConfiguration;
 import se.inera.intyg.privatlakarportal.integration.config.WcIntegrationConfiguration;
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfig;
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigDev;
-
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
 
 public class ApplicationInitializer implements WebApplicationInitializer {
 
@@ -71,6 +73,11 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         FilterRegistration.Dynamic springSessionRepositoryFilter = servletContext.addFilter("springSessionRepositoryFilter",
                 DelegatingFilterProxy.class);
         springSessionRepositoryFilter.addMappingForUrlPatterns(null, false, "/*");
+
+        // Update RequestContext with spring session
+        FilterRegistration.Dynamic requestContextHolderUpdateFilter = servletContext.addFilter("requestContextHolderUpdateFilter",
+                RequestContextHolderUpdateFilter.class);
+        requestContextHolderUpdateFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // Spring security filter
         FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain",
