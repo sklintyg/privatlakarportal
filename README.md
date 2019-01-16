@@ -41,7 +41,4 @@ debug-konfiguration i din utvecklingsmiljö.
 
 Man kan även komma åt H2-databasen som startas:
 
-    $ open http://localhost:9090/
-
-Fyll i JDBC URL'n: `jdbc:h2:tcp://localhost:8093/mem:datajpa`
-(inera/inera)
+    $ open http://localhost:8091/

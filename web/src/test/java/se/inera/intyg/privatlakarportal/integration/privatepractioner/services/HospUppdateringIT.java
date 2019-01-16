@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import com.google.common.collect.Lists;
 import com.jayway.restassured.RestAssured;
-
+import com.jayway.restassured.specification.RequestSpecification;
 import se.inera.intyg.privatlakarportal.common.model.Registration;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
 
@@ -63,6 +63,11 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
         sleep(200);
     }
 
+    @Override
+    RequestSpecification spec() {
+        sleep(100);
+        return super.spec();// super.spec(100);
+    }
 
     @Test
     public void testTillbakadragenLakarbehorighet() {
@@ -74,7 +79,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/test/hosp/add");
 
         // Se till att uppdaterat namn finns
-        spec(100).get("api/user");
+        spec().get("api/user");
 
         // Skapa registrering
         spec().body(createValidRegistration())
@@ -84,31 +89,31 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/registration/create");
 
         // Verifiera läkarbehörighet
-        spec(100).when()
+        spec().when()
             .get("api/registration")
         .then()
             .assertThat()
                   .body("hospInformation.hsaTitles", Matchers.contains("Läkare"));
 
         // Logga in genom webcert
-        spec(100).when()
+        spec().when()
             .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
         .then()
             .assertThat()
                 .body("resultCode", Matchers.equalTo("OK"));
 
         // Ta bort behörighet
-        spec(100).when()
+        spec().when()
             .delete("api/test/hosp/remove/" + PERSONNUMMER);
 
         // Trigga hosp-uppdatering
-        spec(100).expect()
+        spec().expect()
             .statusCode(200)
         .when()
             .post("api/test/hosp/update");
 
         // Logga in med ERROR som resultat
-        spec(100).when()
+        spec().when()
             .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
         .then()
             .assertThat()
@@ -128,7 +133,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/registration/create");
 
         // Verifiera läkarbehörighet saknas
-        spec(100).when()
+        spec().when()
             .get("api/registration")
         .then()
             .assertThat()
@@ -142,20 +147,20 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/test/hosp/add");
 
         // Trigga hosp-uppdatering
-        spec(100).expect()
+        spec().expect()
             .statusCode(200)
         .when()
             .post("api/test/hosp/update");
 
         // Verifiera läkarbehörighet
-        spec(100).when()
+        spec().when()
             .get("api/registration")
         .then()
             .assertThat()
                 .body("hospInformation.hsaTitles", Matchers.contains("Läkare"));
 
         // Verifiera att mail mottagits i stubbe
-        spec(100).when()
+        spec().when()
             .get("api/stub/mails")
         .then()
             .assertThat()
@@ -175,25 +180,25 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/registration/create");
 
         // Ändra registreringsdatum så att städningen ska triggas
-        spec(100).body("2017-01-15")
+        spec().body("2017-01-15")
         .when()
             .post("api/test/registration/setregistrationdate/" + PERSONNUMMER);
 
         // Trigga hosp-uppdatering
-        spec(100).expect()
+        spec().expect()
             .statusCode(200)
         .when()
             .post("api/test/hosp/update");
 
         // Verifiera att mail om borttagen registrering gått iväg
-        spec(100).when()
+        spec().when()
             .get("api/stub/mails")
         .then()
             .assertThat()
                 .body(PERSONNUMMER, Matchers.equalTo("Registrering borttagen"));
 
         // Försök hämta registreringsinfo, denna ska vara rensad
-        spec(500).when()
+        spec().when()
             .get("api/test/registration/" + PERSONNUMMER)
         .then()
             .assertThat()

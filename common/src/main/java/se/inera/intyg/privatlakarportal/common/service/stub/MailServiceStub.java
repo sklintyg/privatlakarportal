@@ -24,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
@@ -50,7 +49,6 @@ public class MailServiceStub implements MailService {
     private MailStubStore mailStore;
 
     @Override
-    @Async
     public void sendHsaGenerationStatusEmail() {
         LOG.info("Sending registration status email to {}", adminEpost);
         try {
@@ -61,7 +59,6 @@ public class MailServiceStub implements MailService {
     }
 
     @Override
-    @Async
     public void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare) throws PrivatlakarportalServiceException {
         LOG.info("Sending registration status email to {}", privatlakare.getEpost());
         try {

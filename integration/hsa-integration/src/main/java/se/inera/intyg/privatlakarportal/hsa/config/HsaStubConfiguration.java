@@ -18,6 +18,8 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.config;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +29,34 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import se.inera.intyg.infra.rediscache.core.RedisCacheOptionsSetter;
 import se.inera.intyg.privatlakarportal.hsa.stub.BootstrapBean;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaWebServiceStub;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 @ComponentScan({"se.inera.intyg.privatlakarportal.common.config"})
 @Profile({"dev", "hsa-stub"})
 public class HsaStubConfiguration {
 
+    public static final String CACHE_NAME = "hsaservicestub";
+
+    private String cacheExpirySeconds = "3600";
+
     @Autowired
     private ApplicationContext applicationContext;
 
     @Autowired
     private Bus cxfBus;
+
+    @Autowired
+    private RedisCacheOptionsSetter redisCacheOptionsSetter;
+
+    @PostConstruct
+    public void init() {
+        redisCacheOptionsSetter.createCache(CACHE_NAME, cacheExpirySeconds);
+    }
 
     @Bean
     BootstrapBean bootstrap() {

@@ -18,11 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.common.service.stub;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -50,7 +48,7 @@ public class MailStubStore {
         store.put(id, mail);
     }
 
-    public Map<String, String> getMails() throws IOException, MessagingException {
+    public Map<String, String> getMails() {
         return store;
     }
 

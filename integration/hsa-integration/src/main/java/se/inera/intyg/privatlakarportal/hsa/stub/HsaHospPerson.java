@@ -18,19 +18,20 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.stub;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HsaHospPerson {
+public class HsaHospPerson implements Serializable {
     String personalIdentityNumber;
     String personalPrescriptionCode;
-    List<String> educationCodes = new ArrayList<String>();
-    List<String> restrictions = new ArrayList<String>();
-    List<String> restrictionCodes = new ArrayList<String>();
-    List<String> titleCodes = new ArrayList<String>();
-    List<String> specialityCodes = new ArrayList<String>();
-    List<String> specialityNames = new ArrayList<String>();
-    List<String> hsaTitles = new ArrayList<String>();
+    List<String> educationCodes = new ArrayList<>();
+    List<String> restrictions = new ArrayList<>();
+    List<String> restrictionCodes = new ArrayList<>();
+    List<String> titleCodes = new ArrayList<>();
+    List<String> specialityCodes = new ArrayList<>();
+    List<String> specialityNames = new ArrayList<>();
+    List<String> hsaTitles = new ArrayList<>();
 
     public String getPersonalIdentityNumber() {
         return personalIdentityNumber;

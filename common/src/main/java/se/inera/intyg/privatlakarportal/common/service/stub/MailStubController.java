@@ -18,10 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.common.service.stub;
 
-import java.io.IOException;
 import java.util.Map;
-
-import javax.mail.MessagingException;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +36,13 @@ public class MailStubController {
     private MailStubStore mailStore;
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-    public Map<String, String> getMails() throws MessagingException, IOException {
+    public Map<String, String> getMails() {
         return mailStore.getMails();
     }
 
     @RequestMapping(value = "/clear", method = RequestMethod.DELETE)
-    public Response deleteMailbox() throws IOException, MessagingException {
-        mailStore.getMails().clear();
+    public Response deleteMailbox() {
+        mailStore.clear();
         return Response.ok().build();
     }
 }
