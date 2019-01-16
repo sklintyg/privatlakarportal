@@ -65,7 +65,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
 
     @Override
     RequestSpecification spec() {
-        sleep(100);
+        sleep(300);
         return super.spec();// super.spec(100);
     }
 
