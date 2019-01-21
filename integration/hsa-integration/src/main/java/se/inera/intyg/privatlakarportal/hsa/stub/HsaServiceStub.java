@@ -33,7 +33,7 @@ import se.inera.intyg.privatlakarportal.hsa.config.HsaStubConfiguration;
 
 @Service
 public class HsaServiceStub {
-    private LocalDateTime hospLastUpdate;
+    private static final String HOSP_LAST_UPDATE = "HOSP_LAST_UPDATE";
 
     // inject the actual template
     @Autowired
@@ -44,26 +44,29 @@ public class HsaServiceStub {
     @Resource(name = "rediscache")
     private ValueOperations<String, HsaHospPerson> valueOps;
 
+    @Resource(name = "rediscache")
+    private ValueOperations<String, LocalDateTime> valueOpsLastUpdate;
+
     public HsaHospPerson getHospPerson(String personId) {
         return valueOps.get(assembleCacheKey(personId));
     }
 
     public void addHospPerson(HsaHospPerson hospPerson) {
         valueOps.set(assembleCacheKey(hospPerson.getPersonalIdentityNumber()), hospPerson);
-        hospLastUpdate = LocalDateTime.now();
+        resetHospLastUpdate();
     }
 
     public void removeHospPerson(String id) {
         valueOps.getOperations().delete(assembleCacheKey(id));
-        hospLastUpdate = LocalDateTime.now();
+        resetHospLastUpdate();
     }
 
     public LocalDateTime getHospLastUpdate() {
-        return hospLastUpdate;
+        return valueOpsLastUpdate.get(HOSP_LAST_UPDATE);
     }
 
     public void resetHospLastUpdate() {
-        hospLastUpdate = LocalDateTime.now();
+        valueOpsLastUpdate.set(HOSP_LAST_UPDATE, LocalDateTime.now());
     }
 
     private String assembleCacheKey(String id) {
