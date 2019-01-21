@@ -22,13 +22,11 @@ import java.util.Arrays;
 
 import org.hamcrest.Matchers;
 import org.json.simple.JSONObject;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
 import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.specification.RequestSpecification;
 import se.inera.intyg.privatlakarportal.common.model.Registration;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
 
@@ -43,30 +41,19 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
 
     @Before
     public void setup() {
-        // Logga in
-        String session = createAuthSession(FORNAMN, EFTERNAMN, PERSONNUMMER);
-        RestAssured.sessionId = session;
-
         // Ta bort hosp-info
         spec().when()
-            .delete("api/test/hosp/remove/" + PERSONNUMMER);
+                .delete("api/test/hosp/remove/" + PERSONNUMMER);
 
         // Ta bort registrering
         spec().delete("api/test/registration/remove/" + PERSONNUMMER);
 
         // Rensa mail-stubbe
         spec().delete("api/stub/mails/clear");
-    }
 
-    @After
-    public void cleanup() {
-        sleep(200);
-    }
-
-    @Override
-    RequestSpecification spec() {
-        sleep(500);
-        return super.spec();
+        // Logga in
+        String session = createAuthSession(FORNAMN, EFTERNAMN, PERSONNUMMER);
+        RestAssured.sessionId = session;
     }
 
     @Test
@@ -121,7 +108,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
     }
 
     @Test
-    public void testUppdateraTillLakare() throws InterruptedException {
+    public void testUppdateraTillLakare() {
         // Se till att uppdaterat namn finns
         spec().get("api/user");
 
@@ -170,7 +157,9 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
     @Test
     public void testRemovalStrategy() {
         // Se till att uppdaterat namn finns
-        spec().get("api/user");
+        spec().expect()
+                .statusCode(200)
+            .when().get("api/user");
 
         // Skapa registrering
         spec().body(createValidRegistration())
@@ -181,6 +170,8 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
 
         // Ändra registreringsdatum så att städningen ska triggas
         spec().body("2017-01-15")
+            .expect()
+                .statusCode(200)
         .when()
             .post("api/test/registration/setregistrationdate/" + PERSONNUMMER);
 
@@ -225,7 +216,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
         registration.setKommun("Test kommun");
 
         registrationRequest.setRegistration(registration);
-        registrationRequest.setGodkantMedgivandeVersion(new Long(1));
+        registrationRequest.setGodkantMedgivandeVersion(1L);
         return registrationRequest;
     }
 

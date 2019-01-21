@@ -19,7 +19,7 @@
 package se.inera.intyg.privatlakarportal.web.integration.test;
 
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
@@ -39,7 +39,9 @@ import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
 import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.IntegrationService;
+import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
 import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto;
@@ -61,6 +63,9 @@ public class TestController {
 
     @Autowired
     private PrivatlakareRepository privatlakareRepository;
+
+    @Autowired
+    private HospUppdateringRepository hospUppdateringRepository;
 
     @Autowired(required = false)
     private HsaServiceStub hsaServiceStub;
@@ -131,6 +136,15 @@ public class TestController {
         if (hsaServiceStub != null) {
             hsaServiceStub.resetHospLastUpdate();
         }
+        HospUppdatering hospUppdatering = hospUppdateringRepository.findSingle();
+        // Save hosp update time in database
+        if (hospUppdatering == null) {
+            hospUppdatering = new HospUppdatering(LocalDateTime.now().minusYears(10));
+        } else {
+            hospUppdatering.setSenasteHospUppdatering(LocalDateTime.now().minusYears(10));
+        }
+
+        hospUppdateringRepository.save(hospUppdatering);
         hospUpdateService.resetTimer();
         hospUpdateService.updateHospInformation();
     }

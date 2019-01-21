@@ -18,6 +18,15 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.annotation.PostConstruct;
+import javax.xml.ws.WebServiceException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +35,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -40,15 +50,6 @@ import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
 import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
-
-import javax.annotation.PostConstruct;
-import javax.xml.ws.WebServiceException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
@@ -147,6 +148,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                         privatlakareRepository.save(privatlakare);
                         mailService.sendRegistrationStatusEmail(status, privatlakare);
                     } else if (status.equals(RegistrationStatus.WAITING_FOR_HOSP)) {
+                        privatlakareRepository.save(privatlakare);
                         handleWaitingForHosp(now, privatlakare, status);
                     }
                 } catch (HospUpdateFailedToContactHsaException | WebServiceException e) {
