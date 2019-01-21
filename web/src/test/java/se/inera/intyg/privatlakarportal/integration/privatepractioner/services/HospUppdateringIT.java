@@ -41,6 +41,10 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
 
     @Before
     public void setup() {
+        // Logga in
+        String session = createAuthSession(FORNAMN, EFTERNAMN, PERSONNUMMER);
+        RestAssured.sessionId = session;
+
         // Ta bort hosp-info
         spec().when()
                 .delete("api/test/hosp/remove/" + PERSONNUMMER);
@@ -50,10 +54,6 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
 
         // Rensa mail-stubbe
         spec().delete("api/stub/mails/clear");
-
-        // Logga in
-        String session = createAuthSession(FORNAMN, EFTERNAMN, PERSONNUMMER);
-        RestAssured.sessionId = session;
     }
 
     @Test

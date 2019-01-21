@@ -5,6 +5,3 @@ profiles: test,pp-security-test,hsa-stub,wc-stub,wc-pu-stub,mail-stub,testabilit
 
 # Configuration repository
 environment_name: "test"
-
-#Skip hosp updates for this node
-skip_hosp_update: true
