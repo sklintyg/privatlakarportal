@@ -39,6 +39,8 @@ dependencies {
     compile "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
     compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:${jacksonVersion}"
     compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
+    compile "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
+    compile "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
 
     wsdlgen "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion}"
     wsdlgen "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion}"

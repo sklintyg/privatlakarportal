@@ -36,6 +36,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.javacrumbs.shedlock.core.SchedulerLock;
 import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -60,6 +61,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 public class HospUpdateServiceImpl implements HospUpdateService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HospUpdateServiceImpl.class);
+    private static final String JOB_NAME = "hospupdate.cron";
 
     private static final long MINUTES_PER_DAY = 1440;
 
@@ -94,6 +96,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
 
     @Override
     @Scheduled(cron = "${privatlakarportal.hospupdate.cron}")
+    @SchedulerLock(name = JOB_NAME)
     @Transactional
     public void scheduledUpdateHospInformation() {
         String skipUpdate = System.getProperty("scheduled.update.skip", "false");

@@ -41,6 +41,7 @@ import se.inera.intyg.infra.security.filter.SecurityHeadersFilter;
 import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;
 import se.inera.intyg.privatlakarportal.common.monitoring.util.LogbackConfiguratorContextListener;
 import se.inera.intyg.privatlakarportal.hsa.config.HsaConfiguration;
+import se.inera.intyg.privatlakarportal.hsa.config.JobConfiguration;
 import se.inera.intyg.privatlakarportal.integration.config.WcIntegrationConfiguration;
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfig;
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigDev;
@@ -51,7 +52,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(ApplicationConfig.class, PersistenceConfigDev.class, MailServiceConfig.class,
-                HsaConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
+                HsaConfiguration.class, JobConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
                 WcIntegrationConfiguration.class, ServiceConfig.class, DynamicLinkConfig.class, PostnummerserviceConfig.class,
                 PersistenceConfig.class, PersistenceConfigDev.class, MonitoringConfiguration.class);
 

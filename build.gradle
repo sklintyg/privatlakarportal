@@ -50,6 +50,7 @@ ext {
     unitilsVersion = "3.3"
     usertypeVersion = "5.0.0.GA"
     wsdl4jVersion = "1.6.3"
+    shedlockSpringVersion = "0.18.2"
 
     h2Version = "1.3.171"
     junitVersion = "4.12"
