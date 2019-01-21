@@ -19,28 +19,42 @@
 package se.inera.intyg.privatlakarportal.hsa.stub;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+
+import se.inera.intyg.privatlakarportal.hsa.config.HsaStubConfiguration;
 
 @Service
 public class HsaServiceStub {
     private LocalDateTime hospLastUpdate;
 
-    private Map<String, HsaHospPerson> store = new HashMap<>();
+    // inject the actual template
+    @Autowired
+    @Qualifier("rediscache")
+    private RedisTemplate<Object, Object> redisTemplate;
+
+    // inject the template as ValueOperations
+    @Resource(name = "rediscache")
+    private ValueOperations<String, HsaHospPerson> valueOps;
 
     public HsaHospPerson getHospPerson(String personId) {
-        return store.get(personId);
+        return valueOps.get(assembleCacheKey(personId));
     }
 
     public void addHospPerson(HsaHospPerson hospPerson) {
-        store.put(hospPerson.getPersonalIdentityNumber(), hospPerson);
+        valueOps.set(assembleCacheKey(hospPerson.getPersonalIdentityNumber()), hospPerson);
         hospLastUpdate = LocalDateTime.now();
     }
 
     public void removeHospPerson(String id) {
-        store.remove(id);
+        valueOps.getOperations().delete(assembleCacheKey(id));
         hospLastUpdate = LocalDateTime.now();
     }
 
@@ -50,5 +64,10 @@ public class HsaServiceStub {
 
     public void resetHospLastUpdate() {
         hospLastUpdate = LocalDateTime.now();
+    }
+
+    private String assembleCacheKey(String id) {
+        return Stream.of(HsaStubConfiguration.CACHE_NAME, id)
+                .collect(Collectors.joining(":"));
     }
 }
