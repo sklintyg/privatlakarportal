@@ -92,7 +92,7 @@ public class CgiElegAssertion {
 
     private String getValue(Attribute attribute) {
         List<String> values = getValues(attribute);
-        return (values.isEmpty()) ? null : values.get(0);
+        return values.isEmpty() ? null : values.get(0);
     }
 
     private List<String> getValues(Attribute attribute) {

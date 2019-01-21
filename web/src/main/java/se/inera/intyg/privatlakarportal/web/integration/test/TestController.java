@@ -57,6 +57,7 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 public class TestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
+    private static final int YEARS_BACK_IN_TIME = 10;
 
     @Autowired
     private RegisterService registerService;
@@ -139,9 +140,9 @@ public class TestController {
         HospUppdatering hospUppdatering = hospUppdateringRepository.findSingle();
         // Save hosp update time in database
         if (hospUppdatering == null) {
-            hospUppdatering = new HospUppdatering(LocalDateTime.now().minusYears(10));
+            hospUppdatering = new HospUppdatering(LocalDateTime.now().minusYears(YEARS_BACK_IN_TIME));
         } else {
-            hospUppdatering.setSenasteHospUppdatering(LocalDateTime.now().minusYears(10));
+            hospUppdatering.setSenasteHospUppdatering(LocalDateTime.now().minusYears(YEARS_BACK_IN_TIME));
         }
 
         hospUppdateringRepository.save(hospUppdatering);
