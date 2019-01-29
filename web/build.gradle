@@ -1,5 +1,5 @@
 apply plugin: 'war'
-apply plugin: 'org.gretty'
+apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.moowork.grunt'
 apply plugin: 'idea'
 
@@ -41,11 +41,6 @@ if (project.hasProperty('privatlakarportal.useMinifiedJavaScript')) {
 
 war.dependsOn createVersionPropertyFile
 
-task npmInstall(overwrite: true, type: NpmTask, dependsOn: 'npmSetup') {
-    npmCommand = 'install'
-    inputs.file('package.json')
-}
-
 task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
     script = file('node_modules/bower/bin/bower')
     args = ["--config.storage.cache=${gradle.getGradleUserHomeDir()}/caches/bower/cache",
@@ -53,13 +48,6 @@ task bowerInstall(type: NodeTask, dependsOn:npmInstall) {
             "--config.storage.registry=${gradle.getGradleUserHomeDir()}/caches/bower/registry",
             'install']
     inputs.files file('bower.json')
-
-    def outputDir = file('src/main/webapp/bower_components')
-
-    if(outputDir.exists()) {
-        outputDir.deleteDir()
-    }
-
     outputs.files file('src/main/webapp/bower_components')
 }
 
@@ -78,8 +66,6 @@ task zipResources(type: ArchiveDirectoryTask) {
 build.dependsOn zipResources
 
 gretty {
-    servletContainer = 'jetty9'
-
     contextPath = '/'
     logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
     integrationTestTask = null
@@ -121,7 +107,7 @@ dependencies {
     compile "io.springfox:springfox-swagger2:${swaggerVersion}"
     compile "io.springfox:springfox-swagger-ui:${swaggerVersion}"
     compile("io.swagger:swagger-jaxrs:${swaggerJaxRsVersion}") {
-        transitive = false
+        transitive = false;
     }
 
     compile "mysql:mysql-connector-java:${mysqlVersion}"

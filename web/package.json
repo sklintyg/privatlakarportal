@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "a": "^2.1.2",
     "bower": "1.8.8",
     "compass-mixins": "0.12.7",
     "connect-livereload": "0.4.0",
@@ -43,11 +42,7 @@
     "karma-mocha-reporter": "2.2.0",
     "karma-ng-html2js-preprocessor": "1.0.0",
     "karma-phantomjs-launcher": "1.0.2",
-    "l": "^0.6.0",
-    "n": "^2.1.12",
     "node-sass": "^4.11.0",
-    "s": "^0.1.1",
-    "t": "^0.5.1",
     "time-grunt": "1.4.0"
   },
   "devDependencies": {
