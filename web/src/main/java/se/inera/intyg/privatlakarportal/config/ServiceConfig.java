@@ -20,26 +20,16 @@ package se.inera.intyg.privatlakarportal.config;
 
 // CHECKSTYLE:OFF LineLength
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.cxf.Bus;
 import org.apache.cxf.feature.LoggingFeature;
-import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.context.support.ServletContextAttributeExporter;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
-import se.inera.intyg.privatlakarportal.service.monitoring.HealthCheckService;
-import se.inera.intyg.privatlakarportal.service.monitoring.PingForConfigurationResponderImpl;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
 
 // CHECKSTYLE:ON LineLength
@@ -51,43 +41,12 @@ import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitione
 @ComponentScan("se.inera.intyg.privatlakarportal.service, se.inera.intyg.privatlakarportal.common.service")
 @EnableScheduling
 public class ServiceConfig {
-    @Autowired
-    HealthCheckService healtCheckService;
-
-    @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
-    private Bus cxfBus;
-
     @Value("${terms.ws.services.url}")
     private String termsUrl;
 
     @Bean
-    public ServletContextAttributeExporter contextAttributes() {
-        final Map<String, Object> attributes = new HashMap<String, Object>();
-        attributes.put("healthcheck", healtCheckService);
-        final ServletContextAttributeExporter exporter = new ServletContextAttributeExporter();
-        exporter.setAttributes(attributes);
-        return exporter;
-    }
-
-    @Bean
     public JacksonJsonProvider jacksonJsonProvider() {
         return new JacksonJsonProvider();
-    }
-
-    @Bean
-    public PingForConfigurationResponderImpl pingForConfigurationResponder() {
-        return new PingForConfigurationResponderImpl();
-    }
-
-    @Bean
-    public EndpointImpl pingForConfigurationEndpoint() {
-        Object implementor = pingForConfigurationResponder();
-        EndpointImpl endpoint = new EndpointImpl(cxfBus, implementor);
-        endpoint.publish("/ping-for-configuration");
-        return endpoint;
     }
 
     @Bean
