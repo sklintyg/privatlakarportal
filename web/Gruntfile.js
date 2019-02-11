@@ -3,8 +3,6 @@
 
 module.exports = function(grunt) {
 
-    grunt.loadNpmTasks('grunt-connect-proxy');
-
     var sass = require('node-sass');
 
     // Load grunt tasks automatically, when needed
@@ -12,27 +10,13 @@ module.exports = function(grunt) {
         connect: 'grunt-contrib-connect',
         useminPrepare: 'grunt-usemin',
         ngtemplates: 'grunt-angular-templates',
-        protractor: 'grunt-protractor-runner',
-        injector: 'grunt-injector',
-        configureProxies: 'grunt-connect-proxy'
+        injector: 'grunt-injector'
     });
 
     // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);
 
-    // connect middleware for enabling post requests through
-    function enablePost(req, res, next) {
-
-/*        console.log(req.method);
-        console.log(req.url);
-        console.log(req.headers);
-        console.log('Setting full access control.');
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-*/
-        return next();
-    }
+    var serveStatic = require('serve-static');
 
     // Define the configuration for all the tasks
     grunt.initConfig({
@@ -53,25 +37,35 @@ module.exports = function(grunt) {
                     hostname: '*',
                     middleware: function(connect, options, middlewares) {
                         return [
-                            enablePost,
                             require('connect-livereload')(),
-                            connect.static('src/main/webapp'),
-                            require('grunt-connect-proxy/lib/utils').proxyRequest
+                            connect().use(
+                                '/index.html',
+                                serveStatic(__dirname + '/src/main/webapp/index.html') // jshint ignore:line
+                            ),
+                            connect().use(
+                                '/welcome.html',
+                                serveStatic(__dirname + '/src/main/webapp/welcome.html') // jshint ignore:line
+                            ),
+                            connect().use(
+                                '/app',
+                                serveStatic(__dirname + '/src/main/webapp/app') // jshint ignore:line
+                            ),
+                            connect().use(
+                                '/components',
+                                serveStatic(__dirname + '/src/main/webapp/components') // jshint ignore:line
+                            ),
+                            require('http-proxy-middleware')({
+                                target: 'http://localhost:8090',
+                                logLevel: 'info'
+                            })
                         ];
                     }
-                },
-                proxies: [
-                    {
-                        context: '/',
-                        host: 'localhost',
-                        port: 8090
-                    }
-                ]
+                }
             }
         },
         open: {
             dev: {
-                url: 'http://localhost:9091'
+                url: 'http://localhost:9091/welcome.html'
             }
         },
         watch: {
@@ -105,7 +99,7 @@ module.exports = function(grunt) {
             sass: {
                 files: [
                     '<%= config.client %>/{app,components}/**/*.{scss,sass}'],
-                tasks: ['sass', 'autoprefixer']
+                tasks: ['sass', 'postcss']
             },
             gruntfile: {
                 files: ['Gruntfile.js']
@@ -131,7 +125,6 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '<%= config.client %>/.jshintrc',
                 reporter: require('jshint-stylish'),
-                reporterOutput: '',
                 force: false
             },
             all: [
@@ -163,19 +156,15 @@ module.exports = function(grunt) {
         },
 
         // Add vendor prefixed styles
-        autoprefixer: {
+        postcss: {
             options: {
-                browsers: ['last 1 version']
+                map: false,
+                processors: [
+                    require('autoprefixer')({browsers: ['last 2 versions', 'ie 11']}) // add vendor prefixes
+                ]
             },
             dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= config.tmp %>/',
-                        src: '{,*/}*.css',
-                        dest: '<%= config.tmp %>/'
-                    }
-                ]
+                src: '<%= config.client %>/app/*.css'
             }
         },
 
@@ -303,11 +292,6 @@ module.exports = function(grunt) {
                 options: {
                     prefix: '/'
                 }
-            },
-            tmp: {
-                cwd: '<%= config.tmp %>',
-                src: ['{app,components}/**/*.html'],
-                dest: '<%= config.tmp %>/tmp-templates.js',
             }
         },
 
@@ -348,19 +332,6 @@ module.exports = function(grunt) {
             unit: {
                 configFile: 'karma.conf.ci.js',
                 singleRun: true
-            }
-        },
-
-        protractor: {
-            options: {
-                configFile: 'protractor.conf.js'
-            },
-            chrome: {
-                options: {
-                    args: {
-                        browser: 'chrome'
-                    }
-                }
             }
         },
 
@@ -466,56 +437,29 @@ module.exports = function(grunt) {
         this.async();
     });
 
-    grunt.registerTask('serve', function(target) {
+    grunt.registerTask('serve', [
+        'injector:sass',
+        'sass',
+        'postcss',
+        'injector',
+        'wiredep',
+        'connect:dev',
+        'wait',
+        'open',
+        'watch'
+    ]);
 
-        grunt.task.run([
-            'injector:sass',
-            'sass',
-            'injector',
-            'wiredep',
-            'autoprefixer',
-            'configureProxies:dev',
-            'connect:dev',
-            'wait',
-            'open',
-            'watch'
-        ]);
-    });
-
-    grunt.registerTask('test', function(target) {
-        if (target === 'client') {
-            return grunt.task.run([
-                'injector:sass',
-                'sass',
-                'injector',
-                'autoprefixer',
-                'karma'
-            ]);
-        }
-
-        else if (target === 'e2e') {
-            return grunt.task.run([
-                'injector:sass',
-                'injector',
-                'wiredep',
-                'autoprefixer',
-                'express:dev',
-                'protractor'
-            ]);
-        }
-
-        else {
-            grunt.task.run([
-                'test:client'
-            ]);
-        }
-    });
+    grunt.registerTask('test', [
+        'injector',
+        'karma'
+    ]);
 
     grunt.registerTask('build_no_minify', [
         'clean:dist',
         'jshint',
         'injector:sass',
         'sass',
+        'postcss',
         'injector:scripts',
         'injector:css',
         'wiredep',
@@ -528,11 +472,11 @@ module.exports = function(grunt) {
         'copy:dist',
         'injector:sass',
         'sass',
+        'postcss',
         'injector:scripts',
         'injector:css',
         'wiredep',
         'useminPrepare',
-        'autoprefixer',
         'ngtemplates',
         'karma',
         'concat',

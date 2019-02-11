@@ -250,11 +250,14 @@ button.close {
 // injector
 @import 'boot/boot.scss';
 @import 'error/error.scss';
+@import 'header/header.scss';
 @import 'minsida/minsida.scss';
+@import 'navbar/navbar.scss';
 @import 'print.scss';
 @import 'register/step1/step1.scss';
 @import 'register/step3/step3.scss';
 @import 'terms/terms.scss';
+@import 'vendor-override.scss';
 @import 'appDirectives/formKontaktUppgifter/formKontaktUppgifter.scss';
 @import 'appDirectives/postnummerRegionLookup/postnummerRegionLookup.scss';
 @import 'commonDirectives/fishbone/fishbone.scss';
