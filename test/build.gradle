@@ -1,4 +1,5 @@
 apply plugin: 'com.moowork.grunt'
+apply plugin: 'idea'
 
 idea {
     module {
