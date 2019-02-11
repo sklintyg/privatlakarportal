@@ -1,7 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "cypress": "^2.1.0",
+    "cypress": "^3.1.5",
     "mocha": "^3.5.0",
     "mochawesome": "^1.5.3"
   },
