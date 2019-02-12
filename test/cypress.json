@@ -1,6 +1,13 @@
 {
-  "baseUrl": "http://localhost:8090",
   "screenshotsFolder": "build/test-results/screenshots/",
-  "videosFolder": "build/test-results/videos/",
-  "videoRecording": false
+  "video": false,
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "reportDir": "build/test-results",
+    "inlineAssets": true,
+    "quiet": true,
+    "overwrite": false,
+    "html": false,
+    "json": true
+  }
 }
