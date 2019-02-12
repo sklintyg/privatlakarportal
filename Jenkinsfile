@@ -13,7 +13,7 @@ stage('checkout') {
 stage('build') {
     node {
         try {
-            shgradle "--refresh-dependencies clean build testReport sonarqube -PcodeQuality -DgruntColors=false -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -Dprivatlakarportal.useMinifiedJavaScript"
+            shgradle "--refresh-dependencies clean build testReport sonarqube -PcodeQuality -DgruntColors=false -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -DuseMinifiedJavaScript"
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/allTests', \
                 reportFiles: 'index.html', reportName: 'JUnit results'
@@ -69,7 +69,7 @@ stage('cypress') {
 
 stage('tag and upload') {
     node {
-	shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -Dprivatlakarportal.useMinifiedJavaScript"
+	shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -DuseMinifiedJavaScript"
     }
 }
 
