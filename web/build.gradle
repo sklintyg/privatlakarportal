@@ -33,7 +33,7 @@ node {
     npmWorkDir = file("${rootProject.projectDir}/.gradle/npm")
 }
 
-if (project.hasProperty('privatlakarportal.useMinifiedJavaScript')) {
+if (project.hasProperty('useMinifiedJavaScript')) {
     war {
         webAppDirName = 'build/webapp'
     }
