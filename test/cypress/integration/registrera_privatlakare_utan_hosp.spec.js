@@ -28,6 +28,7 @@ describe('Registrera Privatläkare utan hosp', function() {
         cy.get('#epost2').clear().type('test@example.com');
         cy.get('#adress').clear().type('gatuadress');
         cy.get('#postnummer').clear().type('13100');
+        cy.wait(300);
         cy.get('#continueBtn').click();
 
         // Verifiera steg 3
@@ -61,6 +62,7 @@ describe('Registrera Privatläkare utan hosp', function() {
 
         // Stäng användarvillkor
         cy.get('#dismissBtn').click();
+        cy.wait(300);
         cy.get('.modal-dialog').should('not.be.visible');
 
         // Godkänn användarvillkoren
@@ -71,6 +73,7 @@ describe('Registrera Privatläkare utan hosp', function() {
 
         // Klar sidan visas
         cy.get('#waiting').should('be.visible');
+        cy.wait(300);
 
         cy.hamtaMailFranStubbe('195206172339').its('body').should('be.empty');
         cy.taBortPrivatlakare('195206172339').its('status').should('eq', 200);

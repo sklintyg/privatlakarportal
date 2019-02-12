@@ -28,6 +28,7 @@ describe('Registrera Privatläkare', function() {
         cy.get('#epost2').clear().type('test@example.com');
         cy.get('#adress').clear().type('gatuadress');
         cy.get('#postnummer').clear().type('13100');
+        cy.wait(300);
         cy.get('#continueBtn').click();
 
         // Verifiera steg 3
@@ -63,6 +64,7 @@ describe('Registrera Privatläkare', function() {
 
         // Stäng användarvillkor
         cy.get('#dismissBtn').click();
+        cy.wait(300);
         cy.get('.modal-dialog').should('not.be.visible');
 
         // Godkänn användarvillkoren
@@ -73,6 +75,7 @@ describe('Registrera Privatläkare', function() {
 
         // Klar sidan visas
         cy.get('#complete').should('be.visible');
+        cy.wait(300);
 
         cy.hamtaMailFranStubbe('199008252398').should('eq', 'Registration klar');
     });
