@@ -9,10 +9,12 @@ describe('Användarvillkor', function() {
         cy.get('.modal-dialog').should('not.be.visible');
 
         cy.get('#termsLink').click();
+        cy.wait(300);
         cy.get('.modal-dialog').should('be.visible');
         cy.get('#termsModal').should('not.be.empty');
 
         cy.get('#dismissBtn').click();
+        cy.wait(300);
         cy.get('.modal-dialog').should('not.be.visible');
     });
 
