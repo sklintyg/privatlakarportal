@@ -52,7 +52,7 @@ public class PrivatlakarBootstrapBean {
     @PostConstruct
     public void initData() {
 
-        List<Resource> files = getResourceListing("bootstrap-privatlakare/*.json");
+        List<Resource> files = getResourceListing("classpath:bootstrap-privatlakare/*.json");
         for (Resource res : files) {
             LOG.info("Loading privatlakare resource " + res.getFilename());
             addPrivatlakare(res);

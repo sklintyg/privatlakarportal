@@ -45,7 +45,7 @@ public class MedgivandeBootstrapBean {
     @PostConstruct
     public void initData() {
 
-        List<Resource> files = getResourceListing("bootstrap-medgivande/*.json");
+        List<Resource> files = getResourceListing("classpath:bootstrap-medgivande/*.json");
         for (Resource res : files) {
             LOG.info("Loading medgivande resource " + res.getFilename());
             addMedgivandeText(res);
