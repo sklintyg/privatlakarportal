@@ -83,7 +83,7 @@ gretty {
                '-Dconfig.file=' + projectDir + '/src/main/resources/dev.properties',
                '-Dmailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
                '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',
-               '-Dresources.folder=/' + projectDir + '/../src/main/resources']
+               '-Dresources.folder=classpath:']
 }
 
 dependencies {
@@ -123,4 +123,6 @@ dependencies {
     testCompile "org.antlr:ST4:${stringTemplateVersion}"
     testCompile "com.jayway.restassured:rest-assured:${restAssuredVersion}"
     testCompile "com.jayway.restassured:json-schema-validator:${restAssuredVersion}"
+
+    gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }

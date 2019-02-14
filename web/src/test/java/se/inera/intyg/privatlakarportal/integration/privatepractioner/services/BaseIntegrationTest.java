@@ -37,7 +37,7 @@ public abstract class BaseIntegrationTest {
     @Before
     public void setupBase() {
         RestAssured.reset();
-        RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
+        RestAssured.baseURI = System.getProperty("integration.tests.baseUrl", "http://127.0.0.1:8090");
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType("application/xml;charset=utf-8").build();
         RestAssured.config = RestAssured.config().sessionConfig(RestAssured.config().getSessionConfig().sessionIdName("SESSION"));

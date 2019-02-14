@@ -7,6 +7,7 @@ plugins {
 
 ext {
     infraVersion = System.properties['infraVersion'] ?: '0-SNAPSHOT'
+    refDataVersion = System.properties['refDataVersion'] ?: '1.0.0.+'
 
     ppSchemasVersion = "1.0.4"
     ppTermsSchemasVersion = "1.0.4"
@@ -82,6 +83,7 @@ allprojects {
         compile "ch.qos.logback:logback-classic:${logbackVersion}"
         compile "org.slf4j:slf4j-api:${slf4jVersion}"
 
+        testCompile "se.inera.intyg.refdata:refdata:${refDataVersion}"
         testCompile "junit:junit:${junitVersion}"
         testCompile "org.mockito:mockito-core:${mockitoAllVersion}"
         testCompile "org.springframework:spring-test:${springContextVersion}"
