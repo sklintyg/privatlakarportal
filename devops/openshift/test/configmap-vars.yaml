@@ -11,7 +11,7 @@ data:
   REDIS_SENTINEL_MASTER_NAME: "master"
   MAIL_HOST: "nmtmail.nordicmedtest.se"
   DB_PORT: "${mysql.service.port}"
-  DB_SERVER: "mysql"
+  DB_SERVER: "${mysql.service.host}"
   DB_NAME: "${database.name}"
   PUTJANST_LOGICALADDRESS: "PUTEST"
   HSA_WS_SERVICE_LOGICALADDRESS: ""
