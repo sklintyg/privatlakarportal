@@ -148,7 +148,7 @@ public class Privatlakare {
     public boolean equals(Object o) {
         if (this == o) {
             return true;
-        } else if (o == null || getClass() != o.getClass()) {
+        } else if (!(o instanceof Privatlakare)) {
             return false;
         } else {
             Privatlakare other = (Privatlakare) o;

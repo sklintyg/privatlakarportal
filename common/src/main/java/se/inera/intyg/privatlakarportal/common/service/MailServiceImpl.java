@@ -18,14 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.common.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +30,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.io.InputStream;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
@@ -149,21 +146,18 @@ public class MailServiceImpl implements MailService {
         String htmlSubjectString = null;
         // Set correct subject depending on status
         switch (status) {
-        case AUTHORIZED:
-            htmlSubjectString = approvedSubject;
-            break;
-        case NOT_AUTHORIZED:
-            htmlSubjectString = notApprovedSubject;
-            break;
-        case NOT_STARTED:
-            // Ignored
-            break;
-        case WAITING_FOR_HOSP:
-            htmlSubjectString = awaitingHospSubject;
-            break;
-        default:
-            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
-                    "Something unforseen happened while sending registration verification email.");
+            case AUTHORIZED:
+                htmlSubjectString = approvedSubject;
+                break;
+            case NOT_AUTHORIZED:
+                htmlSubjectString = notApprovedSubject;
+                break;
+            case NOT_STARTED:
+                // Ignored
+                break;
+            case WAITING_FOR_HOSP:
+                htmlSubjectString = awaitingHospSubject;
+                break;
         }
         return htmlSubjectString;
     }
@@ -173,21 +167,18 @@ public class MailServiceImpl implements MailService {
 
         // Set correct content depending on status
         switch (status) {
-        case AUTHORIZED:
-            htmlBodyString = approvedBody;
-            break;
-        case NOT_AUTHORIZED:
-            htmlBodyString = notApprovedBody;
-            break;
-        case NOT_STARTED:
-            // Ignored
-            break;
-        case WAITING_FOR_HOSP:
-            htmlBodyString = awaitingHospBody;
-            break;
-        default:
-            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
-                    "Something unforseen happened while sending registration verification email.");
+            case AUTHORIZED:
+                htmlBodyString = approvedBody;
+                break;
+            case NOT_AUTHORIZED:
+                htmlBodyString = notApprovedBody;
+                break;
+            case NOT_STARTED:
+                // Ignored
+                break;
+            case WAITING_FOR_HOSP:
+                htmlBodyString = awaitingHospBody;
+                break;
         }
         return htmlBodyString;
     }

@@ -20,11 +20,11 @@
 package se.inera.ifv.privatlakarportal.spi.authorization.impl;
 // CHECKSTYLE:ON PackageName
 
+import com.google.common.base.Throwables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.ifv.hsaws.v3.HsaWsFault;
 import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
 import se.inera.ifv.hsawsresponder.v3.GetHospLastUpdateResponseType;
@@ -36,8 +36,6 @@ import se.inera.ifv.hsawsresponder.v3.HandleCertifierType;
 import se.inera.ifv.hsawsresponder.v3.PingResponseType;
 import se.inera.ifv.hsawsresponder.v3.PingType;
 import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
-
-import com.google.common.base.Throwables;
 
 public class HSAWebServiceCalls {
 
@@ -71,7 +69,8 @@ public class HSAWebServiceCalls {
 
         } catch (HsaWsFault ex) {
             LOG.warn("Exception={}", ex.getMessage());
-            Throwables.propagate(ex);
+            Throwables.throwIfUnchecked(ex);
+            throw new RuntimeException(ex);
         }
     }
 
@@ -80,8 +79,8 @@ public class HSAWebServiceCalls {
             return hsaWebServiceClient.handleCertifier(logicalAddressHeader, messageId, parameters);
         } catch (HsaWsFault ex) {
             LOG.error("Failed to call callHandleCertifier with certifierId '{}'", parameters.getCertifierId());
-            Throwables.propagate(ex);
-            return null;
+            Throwables.throwIfUnchecked(ex);
+            throw new RuntimeException(ex);
         }
     }
 
@@ -90,8 +89,8 @@ public class HSAWebServiceCalls {
             return hsaWebServiceClient.getHospPerson(logicalAddressHeader, messageId, parameters);
         } catch (HsaWsFault ex) {
             LOG.error("Failed to call callGetHospPerson with id '{}'", HashUtility.hash(parameters.getPersonalIdentityNumber()));
-            Throwables.propagate(ex);
-            return null;
+            Throwables.throwIfUnchecked(ex);
+            throw new RuntimeException(ex);
         }
     }
 
@@ -100,8 +99,8 @@ public class HSAWebServiceCalls {
             return hsaWebServiceClient.getHospLastUpdate(logicalAddressHeader, messageId, parameters);
         } catch (HsaWsFault ex) {
             LOG.error("Failed to call callGetHospLastUpdate");
-            Throwables.propagate(ex);
-            return null;
+            Throwables.throwIfUnchecked(ex);
+            throw new RuntimeException(ex);
         }
     }
 }

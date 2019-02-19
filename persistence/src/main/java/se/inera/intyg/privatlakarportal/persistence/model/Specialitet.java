@@ -57,7 +57,7 @@ public class Specialitet {
     public boolean equals(Object o) {
         if (this == o) {
             return true;
-        } else if (o == null || getClass() != o.getClass()) {
+        } else if (!(o instanceof Specialitet)) {
             return false;
         } else {
             Specialitet other = (Specialitet) o;

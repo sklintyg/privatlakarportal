@@ -53,7 +53,7 @@ public class Befattning {
     public boolean equals(Object o) {
         if (this == o) {
             return true;
-        } else if (o == null || getClass() != o.getClass()) {
+        } else if (!(o instanceof Befattning)) {
             return false;
         } else {
             Befattning other = (Befattning) o;

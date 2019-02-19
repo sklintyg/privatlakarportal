@@ -18,14 +18,12 @@
  */
 package se.inera.intyg.privatlakarportal.common.service.stub;
 
-import javax.mail.MessagingException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+import javax.mail.MessagingException;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
@@ -82,20 +80,17 @@ public class MailServiceStub implements MailService {
         String htmlString = null;
 
         switch (status) {
-        case AUTHORIZED:
-            htmlString = AUTHORIZED_BODY;
-            break;
-        case NOT_AUTHORIZED:
-            htmlString = NOT_AUTHORIZED_BODY;
-            break;
-        case NOT_STARTED:
-            break;
-        case WAITING_FOR_HOSP:
-            htmlString = WAITING_FOR_HOSP_BODY;
-            break;
-        default:
-            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
-                    "Something unforseen happened while sending registration verification email.");
+            case AUTHORIZED:
+                htmlString = AUTHORIZED_BODY;
+                break;
+            case NOT_AUTHORIZED:
+                htmlString = NOT_AUTHORIZED_BODY;
+                break;
+            case NOT_STARTED:
+                break;
+            case WAITING_FOR_HOSP:
+                htmlString = WAITING_FOR_HOSP_BODY;
+                break;
         }
         return htmlString;
     }
