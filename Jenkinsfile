@@ -53,20 +53,6 @@ stage('cypress') {
     }
 }
 
-//stage('fitnesse') {
-//    node {
-//        try {
-//            wrap([$class: 'Xvfb']) {
-//                shgradle "fitnesseTest -Penv=build-server -PfileOutput -PoutputFormat=html \
-//                          -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
-//            }
-//        } finally {
-//            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
-//                reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
-//        }
-//    }
-//}
-
 stage('tag and upload') {
     node {
 	shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -DuseMinifiedJavaScript"
