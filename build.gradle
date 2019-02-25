@@ -7,7 +7,7 @@ plugins {
 
 ext {
     infraVersion = System.properties['infraVersion'] ?: '0-SNAPSHOT'
-    refDataVersion = System.properties['refDataVersion'] ?: '1.0.0.+'
+    refDataVersion = System.properties['refDataVersion'] ?: '0-SNAPSHOT'
 
     ppSchemasVersion = "1.0.4"
     ppTermsSchemasVersion = "1.0.4"
