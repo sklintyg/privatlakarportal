@@ -8,6 +8,6 @@ export CATALINA_OPTS_APPEND="\
 -Dmailresource.file=/opt/$APP_NAME/config/mailresource.properties
 -Dcertificate.folder=/opt/$APP_NAME/certifikat \
 -Dcredentials.file=/opt/$APP_NAME/env/secret-env.properties \
--Dresources.folder=/tmp/resources \
+-Dresources.folder=classpath: \
 -Dfile.encoding=UTF-8 \
 -DbaseUrl=http://${APP_NAME}:8080"
