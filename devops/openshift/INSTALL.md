@@ -285,4 +285,4 @@ The pod(s) running privatlakarportal should become available within a few minute
 
 ### 3.9 Routes
 
-To publish PP a corresponding OCP route has to be created. The internal service address is _http://privatlakarportal-&lt;env>:8080_. The internal service listens on port 8080. The route should only accept `HTTPS` and is responsible of TLS termination.
+To publish PP a corresponding OCP route has to be created. The internal service listens on port 8080. The route should only accept `HTTPS` and is responsible of TLS termination.
