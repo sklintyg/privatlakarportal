@@ -8,9 +8,13 @@ Installation of Web application Privatläkarportal (PP) on OpenShift.
 
 ### 1.1 New configuration properties
 
-The following configuration properties have been added:
+The following configuration property has been added:
 
 * `REFDATA_URL` -- Location of reference data, see below
+
+The following configuration property has to be removed:
+
+* `POSTNUMMER_FILE` -- Default setting shall be used
 
 ### 1.2 Configuration of reference data
 
