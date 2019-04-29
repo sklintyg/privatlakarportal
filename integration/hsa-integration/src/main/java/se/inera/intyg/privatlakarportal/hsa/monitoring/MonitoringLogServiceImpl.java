@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
+import se.inera.intyg.schemas.contract.util.HashUtility;
 import se.inera.intyg.privatlakarportal.common.monitoring.util.LogMarkers;
 
 

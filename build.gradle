@@ -14,7 +14,7 @@ ext {
 
     rivtaItintegrationMonitoringSchemasVersion = "1.0.0.4"
 
-    schemasContractVersion = "2.1.7"
+    schemasContractVersion = "2.1.8"
 
     aspectJVersion = "1.6.11"
     commonsCodecVersion = "1.10"

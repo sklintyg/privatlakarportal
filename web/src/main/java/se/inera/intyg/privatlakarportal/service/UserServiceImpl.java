@@ -30,7 +30,7 @@ import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
+import se.inera.intyg.schemas.contract.util.HashUtility;
 import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;

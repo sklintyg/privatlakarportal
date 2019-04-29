@@ -22,9 +22,9 @@ stage('build') {
     }
 }
 
-stage('tag and upload') {
+stage('tag') {
     node {
-	    shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -DuseMinifiedJavaScript"
+	    shgradle tagRelease -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -DuseMinifiedJavaScript"
     }
 }
 
@@ -39,6 +39,12 @@ stage('propagate') {
                 [$class: 'StringParameterValue', name: 'GIT_REF', value: gitRef],
                 [$class: 'StringParameterValue', name: 'RELEASE_FLAG', value: releaseFlag]
         ]
+    }
+}
+
+stage('notify') {
+    node {
+        util.notifySuccess()
     }
 }
 
