@@ -35,7 +35,7 @@ import se.inera.ifv.hsawsresponder.v3.HandleCertifierResponseType;
 import se.inera.ifv.hsawsresponder.v3.HandleCertifierType;
 import se.inera.ifv.hsawsresponder.v3.PingResponseType;
 import se.inera.ifv.hsawsresponder.v3.PingType;
-import se.inera.intyg.privatlakarportal.common.monitoring.util.HashUtility;
+import se.inera.intyg.schemas.contract.util.HashUtility;
 
 public class HSAWebServiceCalls {
 
