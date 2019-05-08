@@ -3,6 +3,7 @@
 def buildVersion = "1.11.0.${BUILD_NUMBER}"
 def infraVersion = "3.10.0.+"
 def refDataVersion = "1.0-SNAPSHOT"
+def versionFlags = "-DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -DrefDataVersion=${refDataVersion}"
 
 stage('checkout') {
     node {
@@ -14,7 +15,7 @@ stage('checkout') {
 stage('build') {
     node {
         try {
-            shgradle "--refresh-dependencies clean build testReport sonarqube -PcodeQuality -DgruntColors=false -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -DuseMinifiedJavaScript"
+            shgradle "--refresh-dependencies clean build testReport sonarqube -PcodeQuality -DgruntColors=false ${versionFlags} -DuseMinifiedJavaScript"
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/allTests', \
                 reportFiles: 'index.html', reportName: 'JUnit results'
@@ -24,7 +25,7 @@ stage('build') {
 
 stage('tag') {
     node {
-	    shgradle tagRelease -DbuildVersion=${buildVersion} -DinfraVersion=${infraVersion} -DuseMinifiedJavaScript"
+	    shgradle "tagRelease ${versionFlags} -DuseMinifiedJavaScript"
     }
 }
 
