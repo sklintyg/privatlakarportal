@@ -1,7 +1,14 @@
 const cypress = require('cypress');
 const marge = require('mochawesome-report-generator');
 const { merge } = require('mochawesome-merge');
+const fs = require('fs');
 
+
+const dir = 'build/test-results';
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
 
 // https://github.com/cypress-io/cypress/issues/1946
 
@@ -17,7 +24,7 @@ process.argv.forEach(function (val) {
 });
 
 const options = {
-    "reportDir": "build/test-results"
+    "reportDir": dir
 };
 
 const cypressOption = {
@@ -40,5 +47,5 @@ cypress.run(cypressOption).then(
 });
 
 function generateReport(options) {
-    return merge(options).then(report => marge.create(report, options))
+    return merge(options).then(report => marge.create(report, options));
 }
