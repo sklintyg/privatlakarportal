@@ -1,10 +1,10 @@
 {
   "private": true,
   "devDependencies": {
-    "cypress": "^3.1.5",
+    "cypress": "^3.2.0",
     "mocha": "^5.2.0",
-    "mochawesome": "^3.1.1",
-    "mochawesome-merge": "^1.0.5"
+    "mochawesome": "^3.1.2",
+    "mochawesome-merge": "^1.0.7"
   },
   "scripts": {
     "cypress:open": "cypress open",
