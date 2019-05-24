@@ -40,6 +40,10 @@
         <appender-ref ref="PP_MONITORING"/>
     </logger>
 
+    <logger name="se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService" level="info" additivity="false">
+        <appender-ref ref="PP_MONITORING"/>
+    </logger>
+
     <root level="WARN">
         <appender-ref ref="CONSOLE"/>
     </root>
