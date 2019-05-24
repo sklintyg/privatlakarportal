@@ -5,8 +5,11 @@ Installation of Web application Privatläkarportal (PP) on OpenShift.
 
 ## 1 Updates since 2019-1 (release notes)
 
+### 1.1 Database schema
 
-### 1.1 New configuration properties
+Database schema doesn't need any updates.
+
+### 1.2 New configuration properties
 
 The following configuration properties have been added:
 
@@ -64,7 +67,10 @@ Not applicable for PP.
 
 ### 2.5 Database
 
-A database for the application must have been created.  It's recommended to use character set `utf8mb4` and case-sensitive collation. 
+A database for the application must have been created.  It's recommended to use character set `utf8mb4` and case-sensitive collation.
+
+_Note: It's of great importance to know if an update includes database schema changes. Breaking changes shall be avoided as far as possible._   
+ 
 
 ### 2.6 Access to Software Artifacts
 
