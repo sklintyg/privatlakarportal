@@ -20,27 +20,13 @@ package se.inera.intyg.privatlakarportal.service.monitoring;
 
 import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
-import se.inera.intyg.privatlakarportal.persistence.model.PrivatlakareId;
-import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.sql.Time;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,8 +50,6 @@ import java.util.List;
 @Component
 public class HealthMonitor extends Collector {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HealthMonitor.class);
-
     private static final String PREFIX = "health_";
     private static final String NORMAL = "_normal";
     private static final String VALUE = "_value";
@@ -75,16 +59,6 @@ public class HealthMonitor extends Collector {
     private static final Gauge UPTIME = Gauge.build()
             .name(PREFIX + "uptime" + VALUE)
             .help("Current uptime in seconds")
-            .register();
-
-    private static final Gauge LOGGED_IN_USERS = Gauge.build()
-            .name(PREFIX + "logged_in_users" + VALUE)
-            .help("Current number of logged in users")
-            .register();
-
-    private static final Gauge USED_HSA_IDS = Gauge.build()
-            .name(PREFIX + "used_hsa_ids" + VALUE)
-            .help("Current number of used HSA ids")
             .register();
 
     private static final Gauge DB_ACCESSIBLE = Gauge.build()
@@ -98,10 +72,8 @@ public class HealthMonitor extends Collector {
             .register();
 
     private static final long MILLIS_PER_SECOND = 1000L;
-    private static final String CURR_TIME_SQL = "SELECT CURRENT_TIME()";
 
-    @Value("${app.name}")
-    private String appName;
+    private static final String PING_SQL = "SELECT 1";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -109,73 +81,55 @@ public class HealthMonitor extends Collector {
     @Autowired
     private HSAWebServiceCalls hsaService;
 
-    @Autowired
-    private PrivatlakareIdRepository privatlakareIdRepository;
+    @FunctionalInterface
+    interface Tester {
+        void run() throws Exception;
+    }
 
-    @Autowired
-    @Qualifier("rediscache")
-    private RedisTemplate<Object, Object> redisTemplate;
-
-    // Runs a lua script to count number of keys matching our session keys.
-    private RedisScript<Long> redisScript;
-
+    /**
+     * Registers this class as a prometheus collector.
+     */
     @PostConstruct
     public void init() {
-        redisScript = new DefaultRedisScript<>(
-                "return #redis.call('keys','spring:session:" + appName + ":index:*')", Long.class);
         this.register();
     }
 
+    /**
+     * Somewhat hacky way of updating our gauges "on-demand" (each being registered itself as a collector),
+     * with this method always returning an empty list of MetricFamilySamples.
+     *
+     * @return
+     *      Always returns an empty list.
+     */
     @Override
     public List<MetricFamilySamples> collect() {
         long secondsSinceStart = (System.currentTimeMillis() - START_TIME) / MILLIS_PER_SECOND;
 
+        // Update the gauges.
         UPTIME.set(secondsSinceStart);
-        LOGGED_IN_USERS.set(countSessions());
-        USED_HSA_IDS.set(countNbrOfUsedHsaId());
-        DB_ACCESSIBLE.set(checkTimeFromDb() ? 0 : 1);
+        DB_ACCESSIBLE.set(checkDbConnection() ? 0 : 1);
         HSA_WS_ACCESSIBLE.set(pingHsaWs() ? 0 : 1);
 
         return Collections.emptyList();
     }
 
-    private int countSessions() {
-        Long numberOfUsers = redisTemplate.execute(redisScript, Collections.emptyList());
-        return numberOfUsers.intValue();
-    }
-
-    private boolean checkTimeFromDb() {
-        Time timestamp;
-        try {
-            Query query = entityManager.createNativeQuery(CURR_TIME_SQL);
-            timestamp = (Time) query.getSingleResult();
-        } catch (Exception e) {
-            return false;
-        }
-        return timestamp != null;
+    private boolean checkDbConnection() {
+        return invoke(() -> entityManager.createNativeQuery(PING_SQL).getSingleResult());
     }
 
     private boolean pingHsaWs() {
-        try {
+        return invoke(() -> {
             hsaService.callPing();
-            return true;
+        });
+    }
+
+    private boolean invoke(Tester tester) {
+        try {
+            tester.run();
         } catch (Exception e) {
             return false;
         }
+        return true;
     }
 
-    private int countNbrOfUsedHsaId() {
-        try {
-            int nbrOfHsaId = 0;
-            Page<PrivatlakareId> ids = privatlakareIdRepository.findAll(new PageRequest(0, 1, new Sort(Sort.Direction.DESC, "id")));
-
-            if (!ids.getContent().isEmpty()) {
-                nbrOfHsaId = ids.getContent().get(0).getId();
-            }
-            return nbrOfHsaId;
-        } catch (Exception e) {
-            LOG.error("Error in countNbrOfUsedHsaId: " + e.getClass().getName() + " with message: " + e.getMessage());
-            return -1;
-        }
-    }
 }
