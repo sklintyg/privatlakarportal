@@ -57,7 +57,7 @@ var ppMessages = {
 
         // General form errors
         'label.form.error.pastenotallowed': 'Du måste ange e-postadresserna genom att skriva in dem.',
-        'label.form.error.nopermission': '<p>Du har inte behörighet att logga in i Webcert. Det kan bero på att: </p><ul><li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.</li><li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li><li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. För att ta reda på mer, kontakta </li></ul>',
+        'label.form.error.nopermission': '<p>Du har inte behörighet att logga in i Webcert. Det kan bero på att: </p><ul><li>dina legitimationsuppgifter inte har hämtats från Socialstyrelsens register ännu. Om du har fått mejl upprepade gånger om att uppgifterna inte kunnat hämtas bör du kontakta Socialstyrelsen.</li><li>du enligt Socialstyrelsens uppgifter inte är legitimerad läkare.</li><li>Inera AB av någon anledning har beslutat att stänga av dig från tjänsten. För att ta reda på mer, kontakta <LINK:ineraNationellKundservice></li></ul>',
         'label.form.error.load': 'Kunde inte ladda formuläret. Försök igen senare. Kontakta Inera Support om felet kvarstår.',
         'label.villkor.error.cantload': 'Kunde inte hämta villkoren. Försök igen senare. Kontakta Inera Support om felet kvarstår.',
 
