@@ -30,16 +30,17 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.io.InputStream;
-import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
-import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -196,8 +197,7 @@ public class MailServiceImpl implements MailService {
     }
 
     private byte[] getLogo() throws IOException {
-        InputStream is = null;
-        is = Thread.currentThread().getContextClassLoader().getResourceAsStream(INERA_LOGO);
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(INERA_LOGO);
         byte[] bytes = IOUtils.toByteArray(is);
         LOG.debug("Getting file as bytes");
         return bytes;
