@@ -29,6 +29,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Exposes health metrics as Prometheus values. To simplify any 3rd party scraping applications, all metrics produced
@@ -75,6 +76,8 @@ public class HealthMonitor extends Collector {
 
     private static final String PING_SQL = "SELECT 1";
 
+    private AtomicBoolean initialized = new AtomicBoolean();
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -92,6 +95,7 @@ public class HealthMonitor extends Collector {
     @PostConstruct
     public void init() {
         this.register();
+        initialized.set(true);
     }
 
     /**
@@ -103,12 +107,14 @@ public class HealthMonitor extends Collector {
      */
     @Override
     public List<MetricFamilySamples> collect() {
-        long secondsSinceStart = (System.currentTimeMillis() - START_TIME) / MILLIS_PER_SECOND;
+        if (initialized.get()) {
+            long secondsSinceStart = (System.currentTimeMillis() - START_TIME) / MILLIS_PER_SECOND;
 
-        // Update the gauges.
-        UPTIME.set(secondsSinceStart);
-        DB_ACCESSIBLE.set(checkDbConnection() ? 0 : 1);
-        HSA_WS_ACCESSIBLE.set(pingHsaWs() ? 0 : 1);
+            // Update the gauges.
+            UPTIME.set(secondsSinceStart);
+            DB_ACCESSIBLE.set(checkDbConnection() ? 0 : 1);
+            HSA_WS_ACCESSIBLE.set(pingHsaWs() ? 0 : 1);
+        }
 
         return Collections.emptyList();
     }
@@ -118,9 +124,7 @@ public class HealthMonitor extends Collector {
     }
 
     private boolean pingHsaWs() {
-        return invoke(() -> {
-            hsaService.callPing();
-        });
+        return invoke(() -> hsaService.callPing());
     }
 
     private boolean invoke(Tester tester) {

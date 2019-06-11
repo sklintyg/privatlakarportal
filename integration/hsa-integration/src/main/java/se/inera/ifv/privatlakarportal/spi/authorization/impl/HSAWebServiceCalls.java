@@ -24,6 +24,8 @@ import com.google.common.base.Throwables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.ifv.hsaws.v3.HsaWsFault;
 import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
@@ -37,22 +39,24 @@ import se.inera.ifv.hsawsresponder.v3.PingResponseType;
 import se.inera.ifv.hsawsresponder.v3.PingType;
 import se.inera.intyg.schemas.contract.util.HashUtility;
 
+@Service
 public class HSAWebServiceCalls {
+
+    private static final Logger LOG = LoggerFactory.getLogger(HSAWebServiceCalls.class);
 
     @Autowired
     private HsaWsResponderInterface hsaWebServiceClient;
 
-    private static final Logger LOG = LoggerFactory.getLogger(HSAWebServiceCalls.class);
+    @Value("${hsa.ws.service.logicaladdress}")
+    private String logicalAddress;
 
-    private AttributedURIType logicalAddressHeader = new AttributedURIType();
-
-    private AttributedURIType messageId = new AttributedURIType();
+    private String messageId;
 
     /**
-     * @param hsaLogicalAddress the hsaLogicalAddress to set
+     * @param messageId the message identifier
      */
-    public void setHsaLogicalAddress(String hsaLogicalAddress) {
-        logicalAddressHeader.setValue(hsaLogicalAddress);
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     /**
@@ -64,7 +68,7 @@ public class HSAWebServiceCalls {
 
         try {
             PingType pingtype = new PingType();
-            PingResponseType response = hsaWebServiceClient.ping(logicalAddressHeader, messageId, pingtype);
+            PingResponseType response = hsaWebServiceClient.ping(getLogiclaAddress(), getMessageId(), pingtype);
             LOG.debug("Response:" + response.getMessage());
 
         } catch (HsaWsFault ex) {
@@ -76,7 +80,7 @@ public class HSAWebServiceCalls {
 
     public HandleCertifierResponseType callHandleCertifier(HandleCertifierType parameters) {
         try {
-            return hsaWebServiceClient.handleCertifier(logicalAddressHeader, messageId, parameters);
+            return hsaWebServiceClient.handleCertifier(getLogiclaAddress(), getMessageId(), parameters);
         } catch (HsaWsFault ex) {
             LOG.error("Failed to call callHandleCertifier with certifierId '{}'", parameters.getCertifierId());
             Throwables.throwIfUnchecked(ex);
@@ -86,7 +90,7 @@ public class HSAWebServiceCalls {
 
     public GetHospPersonResponseType callGetHospPerson(GetHospPersonType parameters) {
         try {
-            return hsaWebServiceClient.getHospPerson(logicalAddressHeader, messageId, parameters);
+            return hsaWebServiceClient.getHospPerson(getLogiclaAddress(), getMessageId(), parameters);
         } catch (HsaWsFault ex) {
             LOG.error("Failed to call callGetHospPerson with id '{}'", HashUtility.hash(parameters.getPersonalIdentityNumber()));
             Throwables.throwIfUnchecked(ex);
@@ -96,11 +100,26 @@ public class HSAWebServiceCalls {
 
     public GetHospLastUpdateResponseType callGetHospLastUpdate(GetHospLastUpdateType parameters) {
         try {
-            return hsaWebServiceClient.getHospLastUpdate(logicalAddressHeader, messageId, parameters);
+            return hsaWebServiceClient.getHospLastUpdate(getLogiclaAddress(), getMessageId(), parameters);
         } catch (HsaWsFault ex) {
             LOG.error("Failed to call callGetHospLastUpdate");
             Throwables.throwIfUnchecked(ex);
             throw new RuntimeException(ex);
         }
     }
+
+    private AttributedURIType createAttributedURIType(String value) {
+        AttributedURIType type = new AttributedURIType();
+        type.setValue(value);
+        return type;
+    }
+
+    private AttributedURIType getLogiclaAddress() {
+        return createAttributedURIType(logicalAddress);
+    }
+
+    private AttributedURIType getMessageId() {
+        return createAttributedURIType(messageId);
+    }
+
 }
