@@ -65,9 +65,9 @@ ext {
 allprojects {
     repositories {
         mavenLocal()
-        maven { url "https://build-inera.nordicmedtest.se/nexus/repository/snapshots/" }
         maven { url "https://build-inera.nordicmedtest.se/nexus/repository/releases/" }
         maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+        maven { url "https://build-inera.nordicmedtest.se/nexus/repository/snapshots/" }
         maven { url "http://repo.maven.apache.org/maven2" }
     }
 
