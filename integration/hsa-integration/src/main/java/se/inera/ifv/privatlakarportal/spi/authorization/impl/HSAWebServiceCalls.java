@@ -39,10 +39,10 @@ import se.inera.intyg.schemas.contract.util.HashUtility;
 
 public class HSAWebServiceCalls {
 
+    private static final Logger LOG = LoggerFactory.getLogger(HSAWebServiceCalls.class);
+
     @Autowired
     private HsaWsResponderInterface hsaWebServiceClient;
-
-    private static final Logger LOG = LoggerFactory.getLogger(HSAWebServiceCalls.class);
 
     private AttributedURIType logicalAddressHeader = new AttributedURIType();
 
