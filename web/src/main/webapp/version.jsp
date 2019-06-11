@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" session="false" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="sv">
@@ -8,7 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta name="ROBOTS" content="nofollow, noindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
 <title>Version</title>
 </head>
 <body>
