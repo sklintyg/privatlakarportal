@@ -28,6 +28,7 @@ var WAIT_BEFORE_HOSP_UPDATE_MS = 1000;
 
 Cypress.Commands.add("login", (loginId) => {
     cy.visit('/welcome.html');
+    cy.wait(200);
     cy.get('#jsonSelect').select(loginId);
     cy.get('#loginBtn').click();
     cy.window().should('have.property', 'disableAnimations').then((disableAnimations) => {
