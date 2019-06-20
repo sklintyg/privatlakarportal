@@ -6,15 +6,12 @@ describe('Redigera Privatläkare', function() {
 
         //Sapa privatläkare via REST
         cy.skapaPrivatlakare().its('status').should('eq', 200);
-        cy.log('User created')
 
         //Logga in som privatläkare
         cy.login('0');
-        cy.log('User logged in')
 
         //Gå till min sida
         cy.get('#minsida').should('be.visible');
-        cy.log('Page loaded')
 
         //Fyll i registrering
         cy.get('#befattning').select('202010');
@@ -28,13 +25,13 @@ describe('Redigera Privatläkare', function() {
         cy.get('#adress').clear().type('Gatuadressen');
         cy.get('#postnummer').clear().type('13100');
         cy.get('#saveBtn').click();
+
+        cy.get('#loginForm').should('be.visible');
     });
 
     it('verifiera', function() {
-        cy.wait(200)
         //Logga in som privatläkare
         cy.login('0');
-        cy.log('User logged in')
 
         //Gå till min sida
         cy.get('#minsida').should('be.visible');
