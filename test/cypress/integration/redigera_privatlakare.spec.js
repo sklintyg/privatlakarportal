@@ -1,6 +1,12 @@
 describe('Redigera Privatläkare', function() {
 
     it('redigera', function() {
+        cy.server();
+        cy.route({
+            method: 'GET',
+            url: '**api/registration/omrade/**'
+        }).as('postnummer-api');
+
         //Rensa
         cy.taBortPrivatlakare('199008252398').its('status').should('eq', 200);
 
@@ -9,12 +15,6 @@ describe('Redigera Privatläkare', function() {
 
         //Logga in som privatläkare
         cy.login('0');
-
-        cy.server();
-        cy.route({
-            method: 'GET',
-            url: '**api/registration/omrade/**'
-        }).as('postnummer-api');
 
         //Gå till min sida
         cy.get('#minsida').should('be.visible');
