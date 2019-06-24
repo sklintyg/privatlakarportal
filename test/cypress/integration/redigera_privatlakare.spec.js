@@ -10,10 +10,17 @@ describe('Redigera Privatläkare', function() {
         //Logga in som privatläkare
         cy.login('0');
 
+        cy.server();
+        cy.route({
+            method: 'GET',
+            url: '**api/registration/omrade/**'
+        }).as('postnummer-api');
+
         //Gå till min sida
         cy.get('#minsida').should('be.visible');
 
         //Fyll i registrering
+        cy.wait('@postnummer-api');
         cy.get('#befattning').select('202010');
         cy.get('#verksamhetensnamn').clear().type('Fitnesse verksamhet');
         cy.get('#vardform').select('03');
@@ -24,6 +31,8 @@ describe('Redigera Privatläkare', function() {
         cy.get('#epost2').clear().type('test@example.com');
         cy.get('#adress').clear().type('Gatuadressen');
         cy.get('#postnummer').clear().type('13100');
+        cy.wait('@postnummer-api');
+        cy.wait(100);
         cy.get('#saveBtn').click();
 
         cy.get('#loginForm').should('be.visible');
