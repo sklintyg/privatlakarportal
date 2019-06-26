@@ -30,13 +30,18 @@ import java.time.temporal.ChronoField;
  */
 public final class LocalDateAdapter {
 
-    private static final ZoneId TIMEZONE = ZoneId.of("Europe/Stockholm");
+    private static final ZoneId TIMEZONE = ZoneId.systemDefault();
+
     private static final String ISO_DATE_PATTERN = "yyyy-MM-dd";
     private static final String ISO_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
+
     // CHECKSTYLE:OFF MagicNumber
-    private static final DateTimeFormatter ISO_DATETIME_FORMATTER = new DateTimeFormatterBuilder().appendPattern(ISO_DATE_TIME_PATTERN)
-            .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true).toFormatter();
+    private static final DateTimeFormatter ISO_DATETIME_FORMATTER = new DateTimeFormatterBuilder()
+            .appendPattern(ISO_DATE_TIME_PATTERN)
+            .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true)
+            .toFormatter();
     // CHECKSTYLE:ON MagicNumber
+
     private static final String XSD_DATE_TIMEZONE_REGEXP = "[0-9]{4}-[0-9]{2}-[0-9]{2}([+-].*|Z)";
     private static final String XSD_DATETIME_TIMEZONE_REGEXP = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.?[0-9]*([+-].*|Z)";
 
