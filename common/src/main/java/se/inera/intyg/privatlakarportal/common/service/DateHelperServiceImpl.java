@@ -21,7 +21,6 @@ package se.inera.intyg.privatlakarportal.common.service;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 /**
  * Created by pebe on 2015-09-10.
@@ -34,6 +33,6 @@ public class DateHelperServiceImpl implements DateHelperService {
      */
     @Override
     public LocalDateTime now() {
-        return LocalDateTime.now(ZoneId.systemDefault());
+        return LocalDateTime.now();
     }
 }
