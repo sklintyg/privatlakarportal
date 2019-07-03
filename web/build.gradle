@@ -1,5 +1,5 @@
 apply plugin: 'war'
-apply plugin: 'org.akhikhl.gretty'
+apply plugin: 'org.gretty'
 apply plugin: 'com.moowork.grunt'
 apply plugin: 'idea'
 
@@ -69,8 +69,11 @@ task zipResources(type: ArchiveDirectoryTask) {
 build.dependsOn zipResources
 
 gretty {
+    servletContainer = 'jetty9'
     contextPath = '/'
+    
     logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
+    
     integrationTestTask = null
     scanInterval = 0
     httpPort = 8090
