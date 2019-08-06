@@ -42,3 +42,21 @@ debug-konfiguration i din utvecklingsmiljö.
 Man kan även komma åt H2-databasen som startas:
 
     $ open http://localhost:8091/
+
+### Testa Privatläkerportal med lokal Webcert
+
+För att använda Privatläkarportalen (PP) tillsammans med Webcert (WC) i utvecklingsmiljön krävs det att både WebCert och PP är igång. Då både PP och WC använder sig av stubbat data i utvecklingsmiljön så krävs det att samma data finns upplagt i både PP och WC. Följande person kan användas då denna finns tillgägnlig i båda tjänster:
+	Frida Kranstege (Privatläkare, Godkänd)
+
+Gör så här för att testa att WC kan anropa och hämta information från PP i utvecklingsmiljön.
+
+1. Starta PP enligt tidigare instruktion
+2. Sätt följande properties i filen `webcert/webcert-dev.properties` i WC, vilket gör att WC anropar PP istället för en lokal stubbe. Notera att lokal stubbe för PP fortfarande startar, men att trafiken istället går till PP.
+	```
+    privatepractitioner.base.url=http://localhost:8090/services
+	privatepractitioner.portal.registration.url=http://localhost:8090
+    ```
+3. Starta WC
+4. Starta en browser och gå till WC på http://localhost:9088/welcome.html
+5. Välj "Frida Kranstege (Privatläkare, Godkänd)" och klicka på "Logga in"
+6. Nu valideras användaren gentemot lokal PP på localhost:8090
