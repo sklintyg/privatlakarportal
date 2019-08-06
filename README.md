@@ -43,7 +43,7 @@ Man kan även komma åt H2-databasen som startas:
 
     $ open http://localhost:8091/
 
-### Testa Privatläkerportal med lokal Webcert
+### Testa Privatläkarportalen med lokal Webcert
 
 För att använda Privatläkarportalen (PP) tillsammans med Webcert (WC) i utvecklingsmiljön krävs det att både WebCert och PP är igång. Då både PP och WC använder sig av stubbat data i utvecklingsmiljön så krävs det att samma data finns upplagt i både PP och WC. Följande person kan användas då denna finns tillgägnlig i båda tjänster:
 	Frida Kranstege (Privatläkare, Godkänd)
