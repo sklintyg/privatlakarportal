@@ -8,10 +8,10 @@ ext {
     infraVersion = System.properties['infraVersion'] ?: '0-SNAPSHOT'
     refDataVersion = System.properties['refDataVersion'] ?: '1.0-SNAPSHOT'
 
-    ppSchemasVersion = "1.0.4"
-    ppTermsSchemasVersion = "1.0.4"
+    ppSchemasVersion = "1.0.5"
+    ppTermsSchemasVersion = "1.0.5"
 
-    rivtaItintegrationMonitoringSchemasVersion = "1.0.0.4"
+    rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5"
 
     schemasContractVersion = "2.1.8"
 
