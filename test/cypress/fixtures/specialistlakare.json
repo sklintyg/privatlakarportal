@@ -1,17 +1,17 @@
 {
-    "registration": {
-        "befattning": "202010",
-        "verksamhetensNamn": "Fitnesse verksamhet",
-        "agarForm": "Privat",
-        "vardform": "03",
-        "verksamhetstyp": "12",
-        "arbetsplatskod": "770088",
-        "telefonnummer": "987654321",
-        "epost": "test@example.com",
-        "adress": "gatuadress",
-        "postnummer": "13100",
-        "postort": "NACKA",
-        "kommun": "NACKA",
-        "lan": "STOCKHOLM"
-    }
+  "registration": {
+    "befattning": "202010",
+    "verksamhetensNamn": "Fitnesse verksamhet",
+    "agarForm": "Privat",
+    "vardform": "03",
+    "verksamhetstyp": "12",
+    "arbetsplatskod": "770088",
+    "telefonnummer": "987654321",
+    "epost": "test@example.com",
+    "adress": "gatuadress",
+    "postnummer": "13100",
+    "postort": "NACKA",
+    "kommun": "NACKA",
+    "lan": "STOCKHOLM"
+  }
 }

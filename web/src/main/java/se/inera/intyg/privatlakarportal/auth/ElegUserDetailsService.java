@@ -29,7 +29,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Component;
-
 import se.inera.intyg.infra.integration.pu.services.PUService;
 
 /**
@@ -55,7 +54,7 @@ public class ElegUserDetailsService implements SAMLUserDetailsService {
 
             if (samlCredential.getAuthenticationAssertion() != null) {
                 String authnContextClassRef = samlCredential.getAuthenticationAssertion().getAuthnStatements().get(0).getAuthnContext()
-                        .getAuthnContextClassRef().getAuthnContextClassRef();
+                    .getAuthnContextClassRef().getAuthnContextClassRef();
                 privatlakarUser.setAuthenticationScheme(authnContextClassRef);
             }
 
@@ -80,7 +79,7 @@ public class ElegUserDetailsService implements SAMLUserDetailsService {
                             return xmlObject.getDOM().getTextContent();
                         }
                         throw new IllegalArgumentException(
-                                "Cannot parse SAML2 response attribute '" + attributeName + "', is not XSString or DOM is null");
+                            "Cannot parse SAML2 response attribute '" + attributeName + "', is not XSString or DOM is null");
                     }
                 }
             }

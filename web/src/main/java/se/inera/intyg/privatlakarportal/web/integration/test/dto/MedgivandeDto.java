@@ -18,9 +18,8 @@
  */
 package se.inera.intyg.privatlakarportal.web.integration.test.dto;
 
-import se.inera.intyg.privatlakarportal.persistence.model.Medgivande;
-
 import java.time.LocalDateTime;
+import se.inera.intyg.privatlakarportal.persistence.model.Medgivande;
 
 public class MedgivandeDto {
 

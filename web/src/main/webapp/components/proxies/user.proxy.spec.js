@@ -1,38 +1,38 @@
 describe('Proxy: UserProxy', function() {
-    'use strict';
+  'use strict';
 
-    // Load the module and mock away everything that is not necessary.
-    beforeEach(angular.mock.module('htmlTemplates'));
-    beforeEach(angular.mock.module('privatlakareApp', function(/*$provide*/) {
+  // Load the module and mock away everything that is not necessary.
+  beforeEach(angular.mock.module('htmlTemplates'));
+  beforeEach(angular.mock.module('privatlakareApp', function(/*$provide*/) {
 
-    }));
+  }));
 
-    var UserProxy, mockResponse, $rootScope, $httpBackend;
-    
-    // Initialize the controller and a mock scope
+  var UserProxy, mockResponse, $rootScope, $httpBackend;
 
-    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _UserProxy_, _mockResponse_) {
-        $httpBackend = _$httpBackend_;
-        UserProxy = _UserProxy_;
-        $rootScope = _$rootScope_;
-        mockResponse = _mockResponse_;
-    }));
+  // Initialize the controller and a mock scope
 
-    describe('UserProxy', function() {
-        it('should get the logged in user', function() {
+  beforeEach(inject(function(_$rootScope_, _$httpBackend_, _UserProxy_, _mockResponse_) {
+    $httpBackend = _$httpBackend_;
+    UserProxy = _UserProxy_;
+    $rootScope = _$rootScope_;
+    mockResponse = _mockResponse_;
+  }));
 
-            var onSuccess = jasmine.createSpy('onSuccess');
-            var onError = jasmine.createSpy('onError');
+  describe('UserProxy', function() {
+    it('should get the logged in user', function() {
 
-            $httpBackend.expectGET('/api/user').respond(mockResponse.userOK);
+      var onSuccess = jasmine.createSpy('onSuccess');
+      var onError = jasmine.createSpy('onError');
 
-            UserProxy.getUser().then(onSuccess, onError);
-            $httpBackend.flush();
-            // promises are resolved/dispatched only on next $digest cycle
-            $rootScope.$apply();
+      $httpBackend.expectGET('/api/user').respond(mockResponse.userOK);
 
-            expect(onSuccess).toHaveBeenCalledWith(mockResponse.userModel);
-            expect(onError).not.toHaveBeenCalled();
-        });
+      UserProxy.getUser().then(onSuccess, onError);
+      $httpBackend.flush();
+      // promises are resolved/dispatched only on next $digest cycle
+      $rootScope.$apply();
+
+      expect(onSuccess).toHaveBeenCalledWith(mockResponse.userModel);
+      expect(onError).not.toHaveBeenCalled();
     });
+  });
 });

@@ -19,19 +19,21 @@
 package se.inera.intyg.privatlakarportal.common.service;
 
 import java.util.Properties;
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-
 import se.inera.intyg.privatlakarportal.common.service.stub.JavaMailSenderAroundAdvice;
 import se.inera.intyg.privatlakarportal.common.service.stub.MailStore;
 
 @Configuration
 @Profile("dev")
-@PropertySource({ "classpath:MailServiceTest/test.properties" })
+@PropertySource({"classpath:MailServiceTest/test.properties"})
 @EnableAspectJAutoProxy
 public class MailServiceTestConfig {
 

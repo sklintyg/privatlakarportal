@@ -18,6 +18,10 @@
  */
 package se.inera.intyg.privatlakarportal.service.util;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +33,10 @@ import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapp
 import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
 import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
 @Service
 @DependsOn("dbUpdate")
 public class MedgivandeBootstrapBean {
+
     private static final Logger LOG = LoggerFactory.getLogger(MedgivandeBootstrapBean.class);
 
     @Autowired

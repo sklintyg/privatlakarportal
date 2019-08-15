@@ -18,9 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
-import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 
 /**
  * Created by pebe on 2015-09-03.
@@ -32,7 +32,7 @@ public interface HospUpdateService {
     void updateHospInformation();
 
     RegistrationStatus updateHospInformation(Privatlakare privatlakare, boolean shouldRegisterInCertifier)
-            throws HospUpdateFailedToContactHsaException;
+        throws HospUpdateFailedToContactHsaException;
 
     void checkForUpdatedHospInformation(Privatlakare privatlakare);
 

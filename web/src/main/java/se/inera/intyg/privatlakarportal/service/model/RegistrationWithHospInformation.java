@@ -24,6 +24,7 @@ import se.inera.intyg.privatlakarportal.common.model.Registration;
  * Created by pebe on 2015-08-17.
  */
 public class RegistrationWithHospInformation {
+
     private Registration registration;
 
     private HospInformation hospInformation;

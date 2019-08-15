@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="sv" id="ng-app" ng-app="PpWelcomeApp">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="ROBOTS" content="nofollow, noindex"/>
+<meta name="ROBOTS" content="nofollow, noindex" />
 
 <title>Privatläkarportalen test inloggning</title>
 
@@ -23,34 +23,34 @@
 
   var loginArr = [
     {
-      "firstName" : "Oskar",
-      "lastName" : "Johansson",
-      "personId" : "199008252398"
+      "firstName": "Oskar",
+      "lastName": "Johansson",
+      "personId": "199008252398"
     },
     {
       "firstName": "Tolvan",
       "lastName": "Privatläkarsson",
-      "personId" : "191212121212"
+      "personId": "191212121212"
     },
     {
-      "firstName" : "Nina",
-      "lastName" : "Greger",
-      "personId" : "197309069289"
+      "firstName": "Nina",
+      "lastName": "Greger",
+      "personId": "197309069289"
     },
     {
-      "firstName" : "Åke",
-      "lastName" : "Jansson",
-      "personId" : "191704109279"
+      "firstName": "Åke",
+      "lastName": "Jansson",
+      "personId": "191704109279"
     },
     {
-      "firstName" : "Daniel",
-      "lastName" : "Pärsson",
-      "personId" : "195206172339"
+      "firstName": "Daniel",
+      "lastName": "Pärsson",
+      "personId": "195206172339"
     },
     {
-      "firstName" : "Maj",
-      "lastName" : "Pärsson",
-      "personId" : "192011189228"
+      "firstName": "Maj",
+      "lastName": "Pärsson",
+      "personId": "192011189228"
     }
   ];
 
@@ -71,22 +71,21 @@
     'PpWelcomeApp.controllers'
   ]);
 
-  angular.module('PpWelcomeApp.controllers', []).
-      controller('welcomeController', function($scope) {
-        $scope.loginModel = loginArr;
-        $scope.selectedIndex = '0';
-        $scope.$watch('selectedIndex', function(newSelected, oldVal) {
-          var jsonEl = angular.element( document.querySelector( '#userJson' ) );
-          var jsonElView = angular.element( document.querySelector( '#userJsonDisplay' ) );
-          var selector = angular.element( document.querySelector( '#jsonSelect' ) );
-          //jsonEl.value = escape(JSON.stringify(loginArr[selector.selectedIndex], undefined, 2));
-          //console.log("newselected : " + newSelected + ", old : " + oldVal);
-          var loginJson = JSON.stringify($scope.loginModel[newSelected], undefined, 1);
-          jsonElView.text( loginJson );
-          jsonEl.text( escape( loginJson ) );
-        });
+  angular.module('PpWelcomeApp.controllers', []).controller('welcomeController', function($scope) {
+    $scope.loginModel = loginArr;
+    $scope.selectedIndex = '0';
+    $scope.$watch('selectedIndex', function(newSelected, oldVal) {
+      var jsonEl = angular.element(document.querySelector('#userJson'));
+      var jsonElView = angular.element(document.querySelector('#userJsonDisplay'));
+      var selector = angular.element(document.querySelector('#jsonSelect'));
+      //jsonEl.value = escape(JSON.stringify(loginArr[selector.selectedIndex], undefined, 2));
+      //console.log("newselected : " + newSelected + ", old : " + oldVal);
+      var loginJson = JSON.stringify($scope.loginModel[newSelected], undefined, 1);
+      jsonElView.text(loginJson);
+      jsonEl.text(escape(loginJson));
+    });
 
-      });
+  });
 </script>
 </head>
 <body ng-controller="welcomeController">
@@ -104,15 +103,24 @@
           <div class="form-group col-xs-8">
 
             <h4>Mallar</h4>
-            <select id="jsonSelect" name="jsonSelect" ng-model="selectedIndex" size="15" style="width: 100%" class="form-control" autofocus>
+            <select id="jsonSelect" name="jsonSelect" ng-model="selectedIndex" size="15" style="width: 100%"
+                    class="form-control" autofocus>
               <option value="0" id="private-practicioner-1">Oskar Johansson (Ej registrerad, NOT_STARTED)</option>
-              <option value="1" id="private-practicioner-2">Tolvan Privatläkarsson (Registrerad, AUTHORIZED, godkänd=true, läkare=true)</option>
-              <option value="2" id="private-practicioner-3">Nina Greger (Registrerad - Väntar på HoSP, WAITING_FOR_HOSP, godkänd=true, läkare="ej behörig")</option>
-              <option value="3" id="private-practicioner-4">Åke Jansson (Ej registrerad - Ej i PU-tjänst, NOT_STARTED)</option>
-              <option value="4" id="private-practicioner-5">Daniel Pärsson (Ej registrerad - Ej i HoSP, NOT_STARTED)</option>
-              <option value="5" id="private-practicioner-6">Maj Pärsson (Registrerad, NOT_AUTHORIZED, godkänd=false, läkare=true)</option>
+              <option value="1" id="private-practicioner-2">Tolvan Privatläkarsson (Registrerad, AUTHORIZED,
+                godkänd=true, läkare=true)
+              </option>
+              <option value="2" id="private-practicioner-3">Nina Greger (Registrerad - Väntar på HoSP, WAITING_FOR_HOSP,
+                godkänd=true, läkare="ej behörig")
+              </option>
+              <option value="3" id="private-practicioner-4">Åke Jansson (Ej registrerad - Ej i PU-tjänst, NOT_STARTED)
+              </option>
+              <option value="4" id="private-practicioner-5">Daniel Pärsson (Ej registrerad - Ej i HoSP, NOT_STARTED)
+              </option>
+              <option value="5" id="private-practicioner-6">Maj Pärsson (Registrerad, NOT_AUTHORIZED, godkänd=false,
+                läkare=true)
+              </option>
             </select>
-            <a href="/swagger-ui/index.html" target="_blank">REST-dokumentation</a><br/>
+            <a href="/swagger-ui/index.html" target="_blank">REST-dokumentation</a><br />
 
             <input id="loginBtn" type="submit" value="Logga in" class="btn btn-primary"
                    style="margin-top: 20px;width: 100%">
@@ -122,7 +130,7 @@
           <div class="form-group col-xs-4">
             <p>
             <h4>Inloggningsprofil</h4>
-            <input type="hidden" id="userJson" name="userjson"/>
+            <input type="hidden" id="userJson" name="userjson" />
             <textarea id="userJsonDisplay" name="userJsonDisplay" class="field form-control"
                       style="height: 200px;width: 100%;">
             </textarea>

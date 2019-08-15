@@ -18,12 +18,11 @@
  */
 package se.inera.intyg.privatlakarportal.web.integration.test.dto;
 
-import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 
 public class PrivatlakareDto {
 
@@ -123,7 +122,7 @@ public class PrivatlakareDto {
         this.vardformer = entity.getVardformer().stream().map(vf -> new VardformDto(vf)).collect(Collectors.toSet());
         this.specialiteter = entity.getSpecialiteter().stream().map(sp -> new SpecialitetDto(sp)).collect(Collectors.toList());
         this.legitimeradeYrkesgrupper = entity.getLegitimeradeYrkesgrupper().stream().map(ly -> new LegitimeradYrkesgruppDto(ly))
-                .collect(Collectors.toSet());
+            .collect(Collectors.toSet());
 
         this.medgivande = entity.getMedgivande().stream().map(m -> new MedgivandeDto(m)).collect(Collectors.toSet());
         this.befattningar = entity.getBefattningar().stream().map(b -> new BefattningDto(b)).collect(Collectors.toSet());

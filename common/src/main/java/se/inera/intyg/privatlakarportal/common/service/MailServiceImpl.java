@@ -18,6 +18,12 @@
  */
 package se.inera.intyg.privatlakarportal.common.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +40,6 @@ import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorC
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.io.IOException;
-import java.io.InputStream;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -110,7 +109,7 @@ public class MailServiceImpl implements MailService {
         try {
             LOG.info("Sending registration status email to {}", privatlakare.getEpost());
             MimeMessage message = createMessage(privatlakare.getEpost(), messageSubjectFromRegistrationStatus(status),
-                    messageBodyFromRegistrationStatus(status));
+                messageBodyFromRegistrationStatus(status));
             message.saveChanges();
             mailSender.send(message);
         } catch (MessagingException | PrivatlakarportalServiceException | MailException | IOException e) {
@@ -125,7 +124,7 @@ public class MailServiceImpl implements MailService {
         try {
             LOG.info("Sending registration status email to {}", privatlakare.getEpost());
             MimeMessage message = createMessage(privatlakare.getEpost(), registrationRemovedSubject,
-                    registrationRemovedBody);
+                registrationRemovedBody);
             message.saveChanges();
             mailSender.send(message);
         } catch (MessagingException | PrivatlakarportalServiceException | MailException | IOException e) {
@@ -138,7 +137,7 @@ public class MailServiceImpl implements MailService {
         MimeMessage message = mailSender.createMimeMessage();
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress(email));
+            new InternetAddress(email));
         buildEmailContent(message, subject, body);
         return message;
     }

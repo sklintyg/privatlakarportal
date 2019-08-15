@@ -22,17 +22,16 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
-
 import se.inera.intyg.privatlakarportal.hsa.config.HsaStubConfiguration;
 
 @Service
 public class HsaServiceStub {
+
     private static final String HOSP_LAST_UPDATE = "HOSP_LAST_UPDATE";
 
     // inject the actual template
@@ -71,6 +70,6 @@ public class HsaServiceStub {
 
     private String assembleCacheKey(String id) {
         return Stream.of(HsaStubConfiguration.CACHE_NAME, id)
-                .collect(Collectors.joining(":"));
+            .collect(Collectors.joining(":"));
     }
 }

@@ -20,7 +20,6 @@ package se.inera.intyg.privatlakarportal.config;
 
 import java.util.List;
 import java.util.Properties;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -36,13 +35,13 @@ import org.springframework.web.servlet.mvc.WebContentInterceptor;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-
 import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({ "se.inera.intyg.privatlakarportal.web", "se.inera.intyg.privatlakarportal.common.service.stub" })
+@ComponentScan({"se.inera.intyg.privatlakarportal.web", "se.inera.intyg.privatlakarportal.common.service.stub"})
 public class WebConfig extends WebMvcConfigurerAdapter {
+
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();

@@ -18,10 +18,10 @@
  */
 package se.inera.intyg.privatlakarportal.web.integration.test;
 
+import io.swagger.annotations.Api;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.ws.rs.core.MediaType;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.swagger.annotations.Api;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
@@ -53,7 +51,7 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 @Api(value = "/test", description = "Rest-api för test-tjänster.", produces = MediaType.APPLICATION_JSON, tags = "testability, test")
 @RestController
 @RequestMapping("/api/test")
-@Profile({ "dev", "testability-api" })
+@Profile({"dev", "testability-api"})
 public class TestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);

@@ -1,25 +1,25 @@
 angular.module('privatlakareApp').factory('PostnummerHelper',
     function(ObjectHelper) {
-        'use strict';
+      'use strict';
 
-        function _cleanPostnummer(postnr) {
-            if(!ObjectHelper.isDefined(postnr)) {
-                return;
-            }
-
-            postnr = postnr.trim();
-            postnr = postnr.replaceAll(' ', '');
-            return postnr;
+      function _cleanPostnummer(postnr) {
+        if (!ObjectHelper.isDefined(postnr)) {
+          return;
         }
 
-        function _isValidPostnummer(postnr) {
-            var cleanPostnr = _cleanPostnummer(postnr);
-            return (ObjectHelper.isDefined(cleanPostnr) && (cleanPostnr.length === 5) && !isNaN(Number(cleanPostnr)));
-        }
+        postnr = postnr.trim();
+        postnr = postnr.replaceAll(' ', '');
+        return postnr;
+      }
 
-        return {
-            cleanPostnummer: _cleanPostnummer,
-            isValidPostnummer: _isValidPostnummer
-        };
+      function _isValidPostnummer(postnr) {
+        var cleanPostnr = _cleanPostnummer(postnr);
+        return (ObjectHelper.isDefined(cleanPostnr) && (cleanPostnr.length === 5) && !isNaN(Number(cleanPostnr)));
+      }
+
+      return {
+        cleanPostnummer: _cleanPostnummer,
+        isValidPostnummer: _isValidPostnummer
+      };
     }
 );

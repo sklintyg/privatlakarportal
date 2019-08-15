@@ -1,11 +1,15 @@
 {
-"personalIdentityNumber": "195206142597",
-"personalPrescriptionCode": "1111111",
-"educationCodes":[],
-"restrictions":[],
-"restrictionCodes":[],
-"specialityCodes":[],
-"specialityNames":[],
-"titleCodes":["LK"],
-"hsaTitles":["Läkare"]
+  "personalIdentityNumber": "195206142597",
+  "personalPrescriptionCode": "1111111",
+  "educationCodes": [],
+  "restrictions": [],
+  "restrictionCodes": [],
+  "specialityCodes": [],
+  "specialityNames": [],
+  "titleCodes": [
+    "LK"
+  ],
+  "hsaTitles": [
+    "Läkare"
+  ]
 }

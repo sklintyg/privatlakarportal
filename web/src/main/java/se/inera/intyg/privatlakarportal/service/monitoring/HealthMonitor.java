@@ -20,31 +20,28 @@ package se.inera.intyg.privatlakarportal.service.monitoring;
 
 import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
- * Exposes health metrics as Prometheus values. To simplify any 3rd party scraping applications, all metrics produced
- * by this component uses the following conventions:
+ * Exposes health metrics as Prometheus values. To simplify any 3rd party scraping applications, all metrics produced by this component uses
+ * the following conventions:
  *
- * All metrics are prefixed with "health_"
- * All metrics are suffixed with their type, either "_normal" that indicates a boolean value 0 or 1 OR
- * "_value" that indiciates a numeric metric of some kind.
+ * All metrics are prefixed with "health_" All metrics are suffixed with their type, either "_normal" that indicates a boolean value 0 or 1
+ * OR "_value" that indiciates a numeric metric of some kind.
  *
  * Note that NORMAL values uses 0 to indicate OK state and 1 to indicate a problem.
  *
- * The implementation is somewhat quirky, registering an instace of this class as a Collector, so the
- * {@link Collector#collect()} method is invoked by the Prometheus registry on-demand. That makes it possible for us
- * to update the Gauges defined and registered in this collector with new values as part of the normal collect()
- * lifecycle.
+ * The implementation is somewhat quirky, registering an instace of this class as a Collector, so the {@link Collector#collect()} method is
+ * invoked by the Prometheus registry on-demand. That makes it possible for us to update the Gauges defined and registered in this collector
+ * with new values as part of the normal collect() lifecycle.
  *
  * @author eriklupander
  */
@@ -58,19 +55,19 @@ public class HealthMonitor extends Collector {
     private static final long START_TIME = System.currentTimeMillis();
 
     private static final Gauge UPTIME = Gauge.build()
-            .name(PREFIX + "uptime" + VALUE)
-            .help("Current uptime in seconds")
-            .register();
+        .name(PREFIX + "uptime" + VALUE)
+        .help("Current uptime in seconds")
+        .register();
 
     private static final Gauge DB_ACCESSIBLE = Gauge.build()
-            .name(PREFIX + "db_accessible" + NORMAL)
-            .help("0 == OK 1 == NOT OK")
-            .register();
+        .name(PREFIX + "db_accessible" + NORMAL)
+        .help("0 == OK 1 == NOT OK")
+        .register();
 
     private static final Gauge HSA_WS_ACCESSIBLE = Gauge.build()
-            .name(PREFIX + "hsa_ws_accessible" + NORMAL)
-            .help("0 == OK 1 == NOT OK")
-            .register();
+        .name(PREFIX + "hsa_ws_accessible" + NORMAL)
+        .help("0 == OK 1 == NOT OK")
+        .register();
 
     private static final long MILLIS_PER_SECOND = 1000L;
 
@@ -86,6 +83,7 @@ public class HealthMonitor extends Collector {
 
     @FunctionalInterface
     interface Tester {
+
         void run() throws Exception;
     }
 
@@ -99,11 +97,10 @@ public class HealthMonitor extends Collector {
     }
 
     /**
-     * Somewhat hacky way of updating our gauges "on-demand" (each being registered itself as a collector),
-     * with this method always returning an empty list of MetricFamilySamples.
+     * Somewhat hacky way of updating our gauges "on-demand" (each being registered itself as a collector), with this method always
+     * returning an empty list of MetricFamilySamples.
      *
-     * @return
-     *      Always returns an empty list.
+     * @return Always returns an empty list.
      */
     @Override
     public List<MetricFamilySamples> collect() {

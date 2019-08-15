@@ -18,6 +18,8 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
+import static org.mockito.Mockito.verify;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,10 +28,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
 
-import static org.mockito.Mockito.verify;
-
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterControllerTest {
+
     @Mock
     private RegisterService registerService;
 

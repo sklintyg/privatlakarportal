@@ -1,66 +1,66 @@
 describe('Proxy: OmradeProxy', function() {
-    'use strict';
+  'use strict';
 
-    // Load the module and mock away everything that is not necessary.
-    beforeEach(angular.mock.module('htmlTemplates'));
-    beforeEach(angular.mock.module('privatlakareApp', function(/*$provide*/) {
+  // Load the module and mock away everything that is not necessary.
+  beforeEach(angular.mock.module('htmlTemplates'));
+  beforeEach(angular.mock.module('privatlakareApp', function(/*$provide*/) {
 
-    }));
+  }));
 
-    var OmradeProxy, mockResponse, $rootScope, $httpBackend, PostnummerHelper;
-    
-    // Initialize the controller and a mock scope
+  var OmradeProxy, mockResponse, $rootScope, $httpBackend, PostnummerHelper;
 
-    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _OmradeProxy_, _mockResponse_, _PostnummerHelper_) {
-        $httpBackend = _$httpBackend_;
-        OmradeProxy = _OmradeProxy_;
-        $rootScope = _$rootScope_;
-        mockResponse = _mockResponse_;
-        PostnummerHelper = _PostnummerHelper_;
-    }));
+  // Initialize the controller and a mock scope
 
-    describe('OmradeProxy', function() {
-        it('should get the omrade list info for the supplied postnummer', function() {
+  beforeEach(inject(function(_$rootScope_, _$httpBackend_, _OmradeProxy_, _mockResponse_, _PostnummerHelper_) {
+    $httpBackend = _$httpBackend_;
+    OmradeProxy = _OmradeProxy_;
+    $rootScope = _$rootScope_;
+    mockResponse = _mockResponse_;
+    PostnummerHelper = _PostnummerHelper_;
+  }));
 
-            function testOmradeProxySuccess(postnummer) {
-                var onSuccess = jasmine.createSpy('onSuccess');
-                var onError = jasmine.createSpy('onError');
+  describe('OmradeProxy', function() {
+    it('should get the omrade list info for the supplied postnummer', function() {
 
-                var cleanedpostnr = PostnummerHelper.cleanPostnummer(postnummer);
+      function testOmradeProxySuccess(postnummer) {
+        var onSuccess = jasmine.createSpy('onSuccess');
+        var onError = jasmine.createSpy('onError');
 
-                $httpBackend.expectGET('/api/registration/omrade/' + cleanedpostnr).respond(mockResponse.omradeOK);
+        var cleanedpostnr = PostnummerHelper.cleanPostnummer(postnummer);
 
-                OmradeProxy.getOmradeList(cleanedpostnr).then(onSuccess, onError);
-                $httpBackend.flush();
-                // promises are resolved/dispatched only on next $digest cycle
-                $rootScope.$apply();
+        $httpBackend.expectGET('/api/registration/omrade/' + cleanedpostnr).respond(mockResponse.omradeOK);
 
-                expect(onSuccess).toHaveBeenCalledWith(mockResponse.omradeModel);
-                expect(onError).not.toHaveBeenCalled();
-            }
+        OmradeProxy.getOmradeList(cleanedpostnr).then(onSuccess, onError);
+        $httpBackend.flush();
+        // promises are resolved/dispatched only on next $digest cycle
+        $rootScope.$apply();
 
-            // Success
-            testOmradeProxySuccess('13155');
-            testOmradeProxySuccess('131 55');
-            testOmradeProxySuccess(' 131 55 ');
+        expect(onSuccess).toHaveBeenCalledWith(mockResponse.omradeModel);
+        expect(onError).not.toHaveBeenCalled();
+      }
 
-            // Fail
-            function testOmradeProxyFail(postnummer) {
-                var onSuccess = jasmine.createSpy('onSuccess2');
-                var onError = jasmine.createSpy('onError2');
+      // Success
+      testOmradeProxySuccess('13155');
+      testOmradeProxySuccess('131 55');
+      testOmradeProxySuccess(' 131 55 ');
 
-                OmradeProxy.getOmradeList(postnummer).then(onSuccess, onError);
-                // promises are resolved/dispatched only on next $digest cycle
-                $rootScope.$apply();
+      // Fail
+      function testOmradeProxyFail(postnummer) {
+        var onSuccess = jasmine.createSpy('onSuccess2');
+        var onError = jasmine.createSpy('onError2');
 
-                expect(onSuccess).not.toHaveBeenCalled();
-                expect(onError).toHaveBeenCalledWith(null);
-            }
+        OmradeProxy.getOmradeList(postnummer).then(onSuccess, onError);
+        // promises are resolved/dispatched only on next $digest cycle
+        $rootScope.$apply();
 
-            testOmradeProxyFail(13155);
-            testOmradeProxyFail('asf öaösff');
-            testOmradeProxyFail(null);
-            testOmradeProxyFail(undefined);
-        });
+        expect(onSuccess).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(null);
+      }
+
+      testOmradeProxyFail(13155);
+      testOmradeProxyFail('asf öaösff');
+      testOmradeProxyFail(null);
+      testOmradeProxyFail(undefined);
     });
+  });
 });

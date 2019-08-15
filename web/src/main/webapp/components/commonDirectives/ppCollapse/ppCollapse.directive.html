@@ -1,7 +1,8 @@
 <div>
   <p>
     <a ng-click="isCollapsed=!isCollapsed">
-      {{label}} <i class="glyphicon" ng-class="{'glyphicon-menu-down': isCollapsed, 'glyphicon-menu-up': !isCollapsed}"></i>
+      {{label}} <i class="glyphicon"
+                   ng-class="{'glyphicon-menu-down': isCollapsed, 'glyphicon-menu-up': !isCollapsed}"></i>
     </a>
   </p>
   <div uib-collapse="isCollapsed">

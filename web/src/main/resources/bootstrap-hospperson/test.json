@@ -1,11 +1,30 @@
 {
-    "personalIdentityNumber": "191212121212",
-    "personalPrescriptionCode": "1234567",
-    "educationCodes":["educationCode1","educationCode2"],
-    "restrictions":["restriction1","restriction2"],
-    "restrictionCodes":["restrictionCode1","restrictionCode2"],
-    "titleCodes":["LK"],
-    "specialityCodes":["32","74"],
-    "specialityNames":["Klinisk fysiologi","Nukleärmedicin"],
-    "hsaTitles":["Läkare"]
+  "personalIdentityNumber": "191212121212",
+  "personalPrescriptionCode": "1234567",
+  "educationCodes": [
+    "educationCode1",
+    "educationCode2"
+  ],
+  "restrictions": [
+    "restriction1",
+    "restriction2"
+  ],
+  "restrictionCodes": [
+    "restrictionCode1",
+    "restrictionCode2"
+  ],
+  "titleCodes": [
+    "LK"
+  ],
+  "specialityCodes": [
+    "32",
+    "74"
+  ],
+  "specialityNames": [
+    "Klinisk fysiologi",
+    "Nukleärmedicin"
+  ],
+  "hsaTitles": [
+    "Läkare"
+  ]
 }

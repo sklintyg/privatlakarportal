@@ -18,17 +18,15 @@
  */
 package se.inera.intyg.privatlakarportal.logging;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
-import se.inera.intyg.schemas.contract.util.HashUtility;
 import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
+import se.inera.intyg.schemas.contract.util.HashUtility;
 
 /**
- * Logback converter that returns information about the current user.
- * User info is retrieved from the Spring Security context. If no context
+ * Logback converter that returns information about the current user. User info is retrieved from the Spring Security context. If no context
  * is available a NO USER is returned.
  *
  * @author nikpet

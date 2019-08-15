@@ -3,21 +3,21 @@
  */
 angular.module('privatlakareApp').directive('alertSingle',
     [
-        function() {
-            'use strict';
+      function() {
+        'use strict';
 
-            return {
-                restrict: 'A',
-                transclude: true,
-                scope: {
-                    'alertModel' : '=',
-                    'alertMessageId' : '@'
-                },
-                controller: function($scope) {
-                    $scope.close = function() {
-                        $scope.alertModel = false;
-                    };
-                },
-                templateUrl: '/components/commonDirectives/alertSingle/alertSingle.directive.html'
+        return {
+          restrict: 'A',
+          transclude: true,
+          scope: {
+            'alertModel': '=',
+            'alertMessageId': '@'
+          },
+          controller: function($scope) {
+            $scope.close = function() {
+              $scope.alertModel = false;
             };
-        }]);
+          },
+          templateUrl: '/components/commonDirectives/alertSingle/alertSingle.directive.html'
+        };
+      }]);
