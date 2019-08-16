@@ -16,14 +16,14 @@ node {
     npmWorkDir = file("${rootProject.projectDir}/.gradle/npm")
 }
 
-task cypressTest(type: NodeTask, dependsOn: [npmInstall]) {
+task cypressTest(type: NodeTask, dependsOn: [npmInstall] ) {
     outputs.upToDateWhen { false }
 
     project.delete(files("${buildDir}/test-results"))
 
     def baseUrl = System.properties['baseUrl'] ?: "http://localhost:8090"
 
-    script = file('scripts/run.js')
+    script = file( 'scripts/run.js' )
     args = ['baseUrl=' + baseUrl]
 
 }

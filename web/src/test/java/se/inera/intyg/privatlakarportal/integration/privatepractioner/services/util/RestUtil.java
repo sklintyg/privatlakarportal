@@ -18,12 +18,13 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services.util;
 
-import static com.jayway.restassured.RestAssured.given;
-
 import com.jayway.restassured.http.ContentType;
-import java.util.Map;
-import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
+import static com.jayway.restassured.RestAssured.given;
 
 /**
  * Created by stillor on 2/3/17.
@@ -42,10 +43,10 @@ public final class RestUtil {
         jsonBody.put("personId", personId);
 
         Map<String, String> cookies =
-            given()
-                .contentType(ContentType.URLENC)
-                .body("userJsonDisplay=" + jsonBody.toJSONString())
-                .redirects().follow(false)
+                given()
+                    .contentType(ContentType.URLENC)
+                    .body("userJsonDisplay=" + jsonBody.toJSONString())
+                    .redirects().follow(false)
                 .expect().statusCode(HttpServletResponse.SC_FOUND)
                 .when().post("/fake").getCookies();
 

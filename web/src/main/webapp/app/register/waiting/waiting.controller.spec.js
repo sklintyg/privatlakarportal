@@ -1,20 +1,20 @@
 describe('Controller: WaitingCtrl', function() {
-  'use strict';
+    'use strict';
 
-  // load the controller's module
-  beforeEach(module('privatlakareApp'));
+    // load the controller's module
+    beforeEach(module('privatlakareApp'));
 
-  var scope;
+    var scope;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope) {
-    scope = $rootScope.$new();
-    $controller('WaitingCtrl', {
-      $scope: scope
+    // Initialize the controller and a mock scope
+    beforeEach(inject(function($controller, $rootScope) {
+        scope = $rootScope.$new();
+        $controller('WaitingCtrl', {
+            $scope: scope
+        });
+    }));
+
+    it('should ...', function() {
+        expect(1).toEqual(1);
     });
-  }));
-
-  it('should ...', function() {
-    expect(1).toEqual(1);
-  });
 });

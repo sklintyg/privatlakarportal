@@ -18,23 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import javax.xml.ws.WebServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,11 +25,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
-import se.inera.ifv.hsawsresponder.v3.SpecialityCodesType;
-import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
-import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
+import se.inera.ifv.hsawsresponder.v3.*;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.common.service.MailService;
 import se.inera.intyg.privatlakarportal.hsa.monitoring.MonitoringLogService;
@@ -57,6 +36,20 @@ import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
 import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
+
+import javax.xml.ws.WebServiceException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by pebe on 2015-09-04.
@@ -221,8 +214,7 @@ public class HospUpdateServiceImplTest {
         privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
 
-        when(hospPersonService.addToCertifier(eq(PERSON_ID), any(String.class)))
-            .thenThrow(new WebServiceException("Could not send message"));
+        when(hospPersonService.addToCertifier(eq(PERSON_ID), any(String.class))).thenThrow(new WebServiceException("Could not send message"));
 
         try {
             hospUpdateService.updateHospInformation(privatlakare, true);
@@ -444,8 +436,7 @@ public class HospUpdateServiceImplTest {
         assertEquals(LocalDate.parse("2015-09-01").atStartOfDay(), privatlakare.getSenasteHospUppdatering());
     }
 
-    @Test
-    public void testAwaitingHospNotificationMailSentCorrectly() {
+    @Test public void testAwaitingHospNotificationMailSentCorrectly() {
         ReflectionTestUtils.setField(hospUpdateService, "lastUpdate", LocalDateTime.now().minusMinutes(15000));
         HospUppdatering hospUppdatering = new HospUppdatering();
         hospUppdatering.setSenasteHospUppdatering(LocalDate.now().minusDays(15).atStartOfDay());
@@ -477,8 +468,7 @@ public class HospUpdateServiceImplTest {
         verify(mailService).sendRegistrationStatusEmail(RegistrationStatus.WAITING_FOR_HOSP, privatlakare1);
     }
 
-    @Test
-    public void testAwaitingHospNotificationMailNotSentBeforeAllottedTime() {
+    @Test public void testAwaitingHospNotificationMailNotSentBeforeAllottedTime() {
         HospUppdatering hospUppdatering = new HospUppdatering();
         hospUppdatering.setSenasteHospUppdatering(LocalDate.parse("2015-09-01").atStartOfDay());
         when(hospUppdateringRepository.findSingle()).thenReturn(hospUppdatering);
@@ -510,8 +500,7 @@ public class HospUpdateServiceImplTest {
         verify(mailService, times(0)).sendRegistrationStatusEmail(RegistrationStatus.WAITING_FOR_HOSP, privatlakare1);
     }
 
-    @Test
-    public void testRegistrationRemovedAfterCorrectTimePeriod() {
+    @Test public void testRegistrationRemovedAfterCorrectTimePeriod() {
         LocalDateTime hospLastUpdate = LocalDate.parse("2015-09-15").atStartOfDay();
         when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);
 
@@ -535,8 +524,7 @@ public class HospUpdateServiceImplTest {
         verify(hospPersonService).removeFromCertifier(eq(PERSON_ID), anyString(), anyString());
     }
 
-    @Test
-    public void testRegistrationNotRemovedWhileInAllowedTimeFrame() {
+    @Test public void testRegistrationNotRemovedWhileInAllowedTimeFrame() {
         LocalDateTime hospLastUpdate = LocalDate.parse("2015-09-15").atStartOfDay();
         ReflectionTestUtils.setField(hospUpdateService, "lastUpdate", LocalDate.parse("2015-09-15").atStartOfDay());
         when(hospPersonService.getHospLastUpdate()).thenReturn(hospLastUpdate);

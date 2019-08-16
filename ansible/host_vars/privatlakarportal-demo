@@ -1,0 +1,12 @@
+---
+
+# Spring profiles
+profiles: test,pp-security-test,testability-api,hsa-stub,mail-stub,caching-enabled
+
+proxy_env:
+  http_proxy: http://bf-proxy.sth:8888
+  https_proxy: http://bf-proxy.sth:8888
+
+# Configuration repository
+environment_name: "demo"
+config_etc_folder: "{{ config_folder }}/{{ environment_name }}"

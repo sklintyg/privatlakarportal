@@ -1,4 +1,4 @@
 angular.module('privatlakareApp')
-.controller('AppCtrl', function() {
-  'use strict';
-});
+    .controller('AppCtrl', function() {
+        'use strict';
+    });

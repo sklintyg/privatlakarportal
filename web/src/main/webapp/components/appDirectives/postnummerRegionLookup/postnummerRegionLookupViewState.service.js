@@ -1,24 +1,24 @@
 angular.module('privatlakareApp').service('PostnummerRegionLookupViewState',
     function() {
-      'use strict';
+        'use strict';
 
-      this.reset = function() {
-        this.errorMessage = {
-          region: false
+        this.reset = function() {
+            this.errorMessage = {
+                region: false
+            };
+
+            this.loading = {
+                region: false
+            };
+
+            this.validPostnummer = false;
+            this.kommunOptions = null;
+            this.kommunSelectionMode = false;
+            this.kommunSelected = false;
+
+            return this;
         };
 
-        this.loading = {
-          region: false
-        };
-
-        this.validPostnummer = false;
-        this.kommunOptions = null;
-        this.kommunSelectionMode = false;
-        this.kommunSelected = false;
-
-        return this;
-      };
-
-      this.reset();
+        this.reset();
     }
 );

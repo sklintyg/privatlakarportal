@@ -13,7 +13,7 @@
 
   <div pp-field="befattning">
     <select required id="befattning" name="befattning" class="form-control" ng-model="registerModel.befattning"
-            ng-options="s.label for s in viewState.befattningList track by s.id" pp-focus-me="focusBefattning">
+            ng-options="s.label for s in viewState.befattningList track by s.id" pp-focus-me="focusBefattning" >
       <option value="">{{message.getProperty('label.form.befattning.valjbefattning')}}</option>
     </select>
   </div>
@@ -43,6 +43,7 @@
 
   <div pp-field="arbetsplatskod">
     <input type="text" id="arbetsplatskod" name="arbetsplatskod" ng-model="registerModel.arbetsplatskod"
-           class='form-control' value="" maxlength="200">
+           class='form-control' value=""
+           maxlength="200">
   </div>
 </div>

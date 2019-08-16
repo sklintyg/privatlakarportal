@@ -1,0 +1,65 @@
+#!groovy
+
+def baseVersion = "2.0.0.*"
+
+stage('checkout tools') {
+    node {
+        util.run {
+            dir('base_tools') {
+                git url: "https://github.com/sklintyg/tools.git", branch: "develop"
+            }
+        }
+    }
+}
+
+stage('checkout privatlakarportal') {
+    node {
+        git url: "https://github.com/sklintyg/privatlakarportal.git", branch: GIT_BRANCH
+        util.run { checkout scm }
+    }
+}
+
+stage('run cleanup scripts') {
+    node {
+        util.run {
+            dir('base_tools') {
+                ansiblePlaybook(extraVars: [ansible_ssh_host: "164.40.180.106"], installation: 'ansible-yum',
+                        inventory: 'ansible/inventory/privatlakarportal/demo', playbook: 'ansible/cleanup.yml')
+            }
+        }
+    }
+}
+
+stage('provision (tools)') {
+    node {
+        util.run {
+            dir('base_tools') {
+                ansiblePlaybook(extraVars: [ansible_ssh_host: "164.40.180.106"], installation: 'ansible-yum',
+                        inventory: 'ansible/inventory/privatlakarportal/demo', playbook: 'ansible/provision.yml')
+            }
+        }
+    }
+}
+
+stage('provision') {
+    node {
+        util.run {
+            ansiblePlaybook(extraVars: [ansible_ssh_host: "164.40.180.106", gitcrypt_key_file: "/home/jenkins/git-crypt4.key"],
+                    installation: 'ansible-yum', inventory: 'ansible/inventory/privatlakarportal/demo',
+                    playbook: 'ansible/provision.yml')
+        }
+    }
+}
+
+stage('deploy') {
+    node {
+        util.run({
+                def itVersion = util.latestVersion("se/inera/privatlakarportal/privatlakarportal-web", baseVersion)
+
+                ansiblePlaybook(extraVars: [version: "${itVersion}", ansible_ssh_host: "164.40.180.106", deploy_from_repo: "true"],
+                                installation: 'ansible-yum', inventory: 'ansible/inventory/privatlakarportal/demo', playbook: 'ansible/deploy.yml')
+
+                util.waitForServer('https://demo.registrering.intygstjanster.se/version.jsp')
+            })
+    }
+}

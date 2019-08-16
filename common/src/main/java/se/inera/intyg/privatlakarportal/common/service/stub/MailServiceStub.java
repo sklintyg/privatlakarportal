@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.privatlakarportal.common.service.stub;
 
-import javax.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import javax.mail.MessagingException;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;

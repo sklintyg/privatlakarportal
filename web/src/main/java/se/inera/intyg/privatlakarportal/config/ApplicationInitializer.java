@@ -18,11 +18,11 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
-import io.prometheus.client.exporter.MetricsServlet;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.WebApplicationInitializer;
@@ -33,6 +33,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import io.prometheus.client.exporter.MetricsServlet;
 import se.inera.intyg.infra.monitoring.MonitoringConfiguration;
 import se.inera.intyg.infra.security.filter.RequestContextHolderUpdateFilter;
 import se.inera.intyg.infra.security.filter.SecurityHeadersFilter;
@@ -50,9 +52,9 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(ApplicationConfig.class, PersistenceConfigDev.class, MailServiceConfig.class,
-            HsaConfiguration.class, JobConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
-            WcIntegrationConfiguration.class, ServiceConfig.class, DynamicLinkConfig.class, PostnummerserviceConfig.class,
-            PersistenceConfig.class, PersistenceConfigDev.class, MonitoringConfiguration.class);
+                HsaConfiguration.class, JobConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
+                WcIntegrationConfiguration.class, ServiceConfig.class, DynamicLinkConfig.class, PostnummerserviceConfig.class,
+                PersistenceConfig.class, PersistenceConfigDev.class, MonitoringConfiguration.class);
 
         servletContext.addListener(new ContextLoaderListener(appContext));
 
@@ -65,33 +67,33 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
         // Spring session filter
         FilterRegistration.Dynamic springSessionRepositoryFilter = servletContext.addFilter("springSessionRepositoryFilter",
-            DelegatingFilterProxy.class);
+                DelegatingFilterProxy.class);
         springSessionRepositoryFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // Update RequestContext with spring session
         FilterRegistration.Dynamic requestContextHolderUpdateFilter = servletContext.addFilter("requestContextHolderUpdateFilter",
-            RequestContextHolderUpdateFilter.class);
+                RequestContextHolderUpdateFilter.class);
         requestContextHolderUpdateFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // LogMDCServletFilter
         FilterRegistration.Dynamic logMdcFilter = servletContext.addFilter("logMDCServletFilter",
-            DelegatingFilterProxy.class);
+                DelegatingFilterProxy.class);
         logMdcFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // Spring security filter
         FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain",
-            DelegatingFilterProxy.class);
+                DelegatingFilterProxy.class);
         springSecurityFilterChain.addMappingForUrlPatterns(null, false, "/*");
 
         // principalUpdatedFilter filter
         FilterRegistration.Dynamic principalUpdatedFilter = servletContext.addFilter("principalUpdatedFilter",
-            DelegatingFilterProxy.class);
+                DelegatingFilterProxy.class);
         principalUpdatedFilter.setInitParameter("targetFilterLifecycle", "true");
         principalUpdatedFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // Hidden method filter.
         FilterRegistration.Dynamic hiddenHttpMethodFilter = servletContext.addFilter("hiddenHttpMethodFilter",
-            HiddenHttpMethodFilter.class);
+                HiddenHttpMethodFilter.class);
         hiddenHttpMethodFilter.addMappingForUrlPatterns(null, false, "/*");
 
         registerCharachterEncodingFilter(servletContext);

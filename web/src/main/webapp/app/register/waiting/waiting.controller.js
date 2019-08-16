@@ -1,8 +1,8 @@
 angular.module('privatlakareApp')
-.controller('WaitingCtrl', function($scope, UserModel) {
-  'use strict';
+    .controller('WaitingCtrl', function($scope, UserModel) {
+        'use strict';
 
-  $scope.logout = function() {
-    UserModel.logout();
-  };
-});
+        $scope.logout = function() {
+            UserModel.logout();
+        };
+    });

@@ -18,16 +18,16 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
+import javax.ws.rs.core.MediaType;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javax.ws.rs.core.MediaType;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.privatlakarportal.integration.terms.services.WebcertTermsService;
 import se.inera.intyg.privatlakarportal.service.TermsService;
-import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetTermsResponse;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.*;
 
 /**
  * Created by pebe on 2015-08-21.

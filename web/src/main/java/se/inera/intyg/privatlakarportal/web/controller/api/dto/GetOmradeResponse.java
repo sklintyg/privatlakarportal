@@ -18,8 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import java.util.List;
 import se.inera.intyg.infra.integration.postnummer.model.Omrade;
+
+import java.util.List;
 
 /**
  * Created by pebe on 2015-08-12.

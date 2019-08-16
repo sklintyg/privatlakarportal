@@ -18,9 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.annotation.PostConstruct;
 import org.apache.cxf.Bus;
 import org.apache.cxf.feature.LoggingFeature;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +30,17 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import se.inera.intyg.infra.security.filter.PrincipalUpdatedFilter;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @Configuration
 @EnableTransactionManagement
-@PropertySource({"classpath:default.properties",
-    "file:${config.file}",
-    "file:${credentials.file}",
-    "classpath:version.properties"})
-@ImportResource({"classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml"})
+@PropertySource({ "classpath:default.properties",
+                  "file:${config.file}",
+                  "file:${credentials.file}",
+                  "classpath:version.properties"})
+@ImportResource({ "classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml"})
 public class ApplicationConfig {
 
     @Autowired
@@ -61,7 +62,7 @@ public class ApplicationConfig {
     @PostConstruct
     public Bus cxfBus() {
         cxfBus.setFeatures(
-            new ArrayList<>(Arrays.asList(loggingFeature())));
+                new ArrayList<>(Arrays.asList(loggingFeature())));
 
         return cxfBus;
     }

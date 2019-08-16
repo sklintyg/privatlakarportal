@@ -18,7 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.service;
 
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,14 @@ import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.schemas.contract.util.HashUtility;
 import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.intyg.privatlakarportal.service.model.User;
 import se.inera.intyg.schemas.contract.Personnummer;
-import se.inera.intyg.schemas.contract.util.HashUtility;
+
+import java.util.Optional;
 
 /**
  * Created by pebe on 2015-08-11.
@@ -85,7 +86,7 @@ public class UserServiceImpl implements UserService {
         PersonSvar.Status personSvarStatus;
         try {
             Optional<Personnummer> personnummerOptional = Personnummer
-                .createPersonnummer(privatlakarUser.getPersonalIdentityNumber());
+                    .createPersonnummer(privatlakarUser.getPersonalIdentityNumber());
 
             if (personnummerOptional.isPresent()) {
                 PersonSvar personSvar = puService.getPerson(personnummerOptional.get());
@@ -107,11 +108,11 @@ public class UserServiceImpl implements UserService {
                     LOG.warn("Person '{}' not found in puService", HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
                 } else {
                     LOG.error("puService returned error status for personId '{}'",
-                        HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
+                            HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
                 }
             } else {
                 LOG.error("puService could not parse personnummer, returning error status for personId '{}'",
-                    HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
+                        HashUtility.hash(privatlakarUser.getPersonalIdentityNumber()));
                 personSvarStatus = PersonSvar.Status.ERROR;
             }
         } catch (RuntimeException e) {

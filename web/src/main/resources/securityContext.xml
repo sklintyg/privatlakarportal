@@ -20,10 +20,10 @@
 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:security="http://www.springframework.org/schema/security"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
               http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd 
               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -46,7 +46,7 @@
 
   <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
     <property name="redisNamespace" value="${app.name}"/>
-    <property name="redisFlushMode" value="IMMEDIATE"/>
+    <property name="redisFlushMode" value="IMMEDIATE" />
   </bean>
 
   <!-- Logger for SAML messages and events -->
@@ -65,11 +65,11 @@
 
   <!-- XML parser pool needed for OpenSAML parsing -->
   <bean id="parserPool" class="org.opensaml.xml.parse.StaticBasicParserPool" scope="singleton"
-      init-method="initialize"/>
+        init-method="initialize"/>
   <bean id="parserPoolHolder" class="org.springframework.security.saml.parser.ParserPoolHolder" scope="singleton"/>
 
   <bean id="failureHandler"
-      class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+        class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
     <property name="exceptionMappings">
       <props>
         <prop key="org.springframework.security.authentication.BadCredentialsException">
@@ -81,15 +81,16 @@
   </bean>
 
   <bean id="http403ForbiddenEntryPoint"
-      class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+        class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
 
   <!-- SessionRegistry is needed for keeping track of authenticated sessions (i.e users), this impl performs audit logging of login and logouts. -->
-  <bean id="loggingSessionRegistry" class="se.inera.intyg.privatlakarportal.auth.LoggingSessionRegistryImpl"/>
+  <bean id="loggingSessionRegistry" class="se.inera.intyg.privatlakarportal.auth.LoggingSessionRegistryImpl" />
 
   <!-- Session authentication strategy that registers authenticated sessions with the session registry -->
   <bean id="registerSessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
-    <constructor-arg ref="loggingSessionRegistry"/>
+    <constructor-arg ref="loggingSessionRegistry" />
   </bean>
+
 
   <!-- =============================================================== -->
   <!-- These URLs are unsecured in all profiles except pp-security-prod -->
@@ -115,7 +116,7 @@
         <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
         <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
         <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
-        <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy"/>
+        <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
       </security:http>
       <security:authentication-manager alias="authenticationManager">
         <security:authentication-provider ref="fakeElegAuthenticationProvider"/>
@@ -129,13 +130,13 @@
       <constructor-arg>
         <list>
           <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
-            <constructor-arg index="0" value="/"/>
+            <constructor-arg index="0" value="/" />
           </bean>
           <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
-            <constructor-arg index="0" value="/index.html"/>
+            <constructor-arg index="0" value="/index.html" />
           </bean>
           <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
-            <constructor-arg index="0" value="/saml/**"/>
+            <constructor-arg index="0" value="/saml/**" />
           </bean>
         </list>
       </constructor-arg>
@@ -154,8 +155,8 @@
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
-      <security:request-cache ref="httpSessionRequestCache"/>
-      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy"/>
+      <security:request-cache ref="httpSessionRequestCache" />
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
     </security:http>
     <!-- Other unauthenticated requests will be returned as http status 403. -->
     <!-- This will allow frontend to act correctly on ajax requests          -->
@@ -164,7 +165,7 @@
       <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
-      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy"/>
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
     </security:http>
 
     <security:authentication-manager alias="authenticationManager">
@@ -182,10 +183,10 @@
       <security:headers/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
-      <security:request-cache ref="httpSessionRequestCache"/>
-      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy"/>
+      <security:request-cache ref="httpSessionRequestCache" />
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
     </security:http>
-    <security:http use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
+    <security:http  use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
       <security:csrf disabled="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
     </security:http>
@@ -193,6 +194,8 @@
       <security:authentication-provider ref="samlAuthenticationProvider"/>
     </security:authentication-manager>
   </beans>
+
+
 
   <beans profile="dev,pp-security-dev,pp-security-test">
     <bean id="fakeAuthFilter" class="se.inera.intyg.privatlakarportal.auth.FakeAuthenticationFilter">
@@ -210,6 +213,7 @@
       <property name="elegUserDetailsService" ref="elegUserDetailsService"/>
     </bean>
   </beans>
+
 
   <beans profile="prod,pp-security-test,pp-security-prod">
 
@@ -229,25 +233,25 @@
       <constructor-arg>
         <list>
           <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
-            <constructor-arg index="0" value="/"/>
+            <constructor-arg index="0" value="/" />
             <constructor-arg index="1" value="GET"/>
           </bean>
           <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
-            <constructor-arg index="0" value="/index.html"/>
+            <constructor-arg index="0" value="/index.html" />
             <constructor-arg index="1" value="GET"/>
           </bean>
         </list>
       </constructor-arg>
     </bean>
     <bean id="httpSessionRequestCache" class="org.springframework.security.web.savedrequest.HttpSessionRequestCache">
-      <property name="requestMatcher" ref="saveRequestMatcher"/>
+      <property name="requestMatcher" ref="saveRequestMatcher" />
     </bean>
 
     <!-- Handler deciding where to redirect user after successful login -->
     <bean id="successRedirectHandler"
-        class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+          class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
       <property name="defaultTargetUrl" value="/"/>
-      <property name="requestCache" ref="httpSessionRequestCache"/>
+      <property name="requestCache" ref="httpSessionRequestCache" />
     </bean>
 
     <!-- Central storage of cryptographic keys -->
@@ -416,7 +420,7 @@
 
     <!-- Provider of default SAML Context -->
     <bean id="contextProvider" class="org.springframework.security.saml.context.SAMLContextProviderImpl">
-      <property name="keyManager" ref="keyManager"/>
+        <property name="keyManager" ref="keyManager" />
     </bean>
 
     <!-- Logout handler terminating local session -->
@@ -438,7 +442,7 @@
 
     <!-- Handler for successful logout -->
     <bean id="successLogoutHandler"
-        class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
+          class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
       <property name="defaultTargetUrl" value="/error.jsp?reason=logout"/>
     </bean>
   </beans>

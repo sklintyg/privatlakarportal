@@ -1,22 +1,22 @@
 angular.module('privatlakareApp').service('HospViewState',
     function() {
-      'use strict';
+        'use strict';
 
-      this.reset = function() {
+        this.reset = function() {
 
-        this.socialstyrelsenUppgifter = [];
+            this.socialstyrelsenUppgifter = [];
 
-        this.errorMessage = {
-          hosp: null
+            this.errorMessage = {
+                hosp: null
+            };
+
+            this.loading = {
+                hosp: false
+            };
+
+            return this;
         };
 
-        this.loading = {
-          hosp: false
-        };
-
-        return this;
-      };
-
-      this.reset();
+        this.reset();
     }
 );

@@ -33,7 +33,6 @@ import org.springframework.context.annotation.Profile;
 @ImportResource("classpath:pu-stub-context.xml")
 @Profile({"dev", "pu-stub", "wc-pu-stub"})
 public class PuStubConfiguration {
-
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();

@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.privatlakarportal.common.service.stub;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author andreaskaltenbach

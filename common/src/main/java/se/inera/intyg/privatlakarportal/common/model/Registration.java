@@ -19,13 +19,13 @@
 package se.inera.intyg.privatlakarportal.common.model;
 
 import java.util.stream.Stream;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by pebe on 2015-08-06.
  */
 public class Registration {
-
     // Step 1
     private String befattning;
     private String verksamhetensNamn;
@@ -45,7 +45,7 @@ public class Registration {
 
     public boolean checkIsValid() {
         return checkValues(befattning, verksamhetensNamn, agarForm, vardform, verksamhetstyp, telefonnummer, epost, adress,
-            postnummer, postort, kommun, lan);
+                postnummer, postort, kommun, lan);
     }
 
     private boolean checkValues(String... strings) {

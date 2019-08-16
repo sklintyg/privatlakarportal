@@ -21,6 +21,7 @@ package se.inera.intyg.privatlakarportal.persistence.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
+
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 
 /**

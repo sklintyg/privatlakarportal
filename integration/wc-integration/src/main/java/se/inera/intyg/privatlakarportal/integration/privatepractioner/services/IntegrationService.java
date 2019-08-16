@@ -25,7 +25,6 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
  * Created by pebe on 2015-08-17.
  */
 public interface IntegrationService {
-
     GetPrivatePractitionerResponseType getPrivatePractitionerByHsaId(String personHsaId);
 
     GetPrivatePractitionerResponseType getPrivatePractitionerByPersonId(String personalIdentityNumber);

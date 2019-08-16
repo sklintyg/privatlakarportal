@@ -40,8 +40,8 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 
 @Configuration
 @ComponentScan({
-    "se.inera.intyg.privatlakarportal.integration.privatepractioner",
-    "se.inera.intyg.privatlakarportal.integration.terms"})
+        "se.inera.intyg.privatlakarportal.integration.privatepractioner",
+        "se.inera.intyg.privatlakarportal.integration.terms" })
 @ImportResource("classpath:wc-services.xml")
 public class WcIntegrationConfiguration {
 

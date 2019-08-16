@@ -1,15 +1,15 @@
 angular.module('privatlakareApp').directive('wcModal',
     function(wcModalService) {
-      'use strict';
+        'use strict';
 
-      return {
-        restrict: 'A',
-        replace: true,
-        scope: {
-          options: '='
-        },
-        controller: function($scope) {
-          wcModalService.open($scope.options, $scope);
-        }
-      };
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                options:'='
+            },
+            controller: function($scope){
+                wcModalService.open($scope.options, $scope);
+            }
+        };
     });

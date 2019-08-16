@@ -18,20 +18,20 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.config.RestAssuredConfig.newConfig;
-import static com.jayway.restassured.config.SSLConfig.sslConfig;
+import org.junit.After;
+import org.junit.Before;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.specification.RequestSpecification;
-import org.junit.After;
-import org.junit.Before;
 import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.util.RestUtil;
 
-public abstract class BaseRestIntegrationTest {
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.config.RestAssuredConfig.newConfig;
+import static com.jayway.restassured.config.SSLConfig.sslConfig;
 
+public abstract class BaseRestIntegrationTest {
     @Before
     public void setupBase() {
         RestAssured.reset();
@@ -39,7 +39,7 @@ public abstract class BaseRestIntegrationTest {
         RestAssured.baseURI = System.getProperty("integration.tests.baseUrl", "http://localhost:8090");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
         RestAssured.config = newConfig().sslConfig(sslConfig().allowAllHostnames())
-            .sessionConfig(RestAssured.config().getSessionConfig().sessionIdName("SESSION"));
+                .sessionConfig(RestAssured.config().getSessionConfig().sessionIdName("SESSION"));
     }
 
     @After
@@ -64,8 +64,8 @@ public abstract class BaseRestIntegrationTest {
 
     RequestSpecification spec() {
         return given()
-            .contentType(ContentType.JSON)
-            .cookie("ROUTEID", RestUtil.routeId);
+                .contentType(ContentType.JSON)
+                .cookie("ROUTEID", RestUtil.routeId);
     }
 
     RequestSpecification spec(long delayInMillis) {

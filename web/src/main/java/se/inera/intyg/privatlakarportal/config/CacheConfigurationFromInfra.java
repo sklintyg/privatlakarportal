@@ -24,5 +24,4 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 @ImportResource("classpath:basic-cache-config.xml")
 public class CacheConfigurationFromInfra {
-
 }

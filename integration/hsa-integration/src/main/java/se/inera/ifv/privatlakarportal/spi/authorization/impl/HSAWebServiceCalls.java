@@ -61,6 +61,8 @@ public class HSAWebServiceCalls {
 
     /**
      * Help method to test access to HSA.
+     *
+     * @throws Exception
      */
     public void callPing() {
 

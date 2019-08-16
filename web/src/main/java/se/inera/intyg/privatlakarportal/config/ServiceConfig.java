@@ -20,7 +20,6 @@ package se.inera.intyg.privatlakarportal.config;
 
 // CHECKSTYLE:OFF LineLength
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.apache.cxf.feature.LoggingFeature;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +27,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
 
 // CHECKSTYLE:ON LineLength
@@ -39,7 +41,6 @@ import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitione
 @ComponentScan("se.inera.intyg.privatlakarportal.service, se.inera.intyg.privatlakarportal.common.service")
 @EnableScheduling
 public class ServiceConfig {
-
     @Value("${terms.ws.services.url}")
     private String termsUrl;
 

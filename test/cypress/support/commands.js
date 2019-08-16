@@ -27,99 +27,99 @@
 var WAIT_BEFORE_HOSP_UPDATE_MS = 1000;
 
 Cypress.Commands.add("login", (loginId) => {
-  cy.visit('/welcome.html');
-  cy.wait(200);
-  cy.get('#jsonSelect').select(loginId);
-  cy.get('#loginBtn').click();
-  cy.window().should('have.property', 'disableAnimations').then((disableAnimations) => {
-    disableAnimations();
-  });
+    cy.visit('/welcome.html');
+    cy.wait(200);
+    cy.get('#jsonSelect').select(loginId);
+    cy.get('#loginBtn').click();
+    cy.window().should('have.property', 'disableAnimations').then((disableAnimations) => {
+        disableAnimations();
+    });
 });
 
 function fakeLogin(firstName, lastName, personId) {
-  if (!firstName) {
-    firstName = "Oskar";
-    lastName = "Johansson";
-    personId = "199008252398";
-  }
-  var loginData = {
-    "firstName": firstName, "lastName": lastName, "personId": personId
-  };
-  cy.request({method: 'POST', url: '/fake?userJsonDisplay=' + JSON.stringify(loginData)});
+    if (!firstName) {
+        firstName = "Oskar";
+        lastName = "Johansson";
+        personId = "199008252398";
+    }
+    var loginData = {
+        "firstName": firstName, "lastName": lastName, "personId": personId
+    };
+    cy.request({method: 'POST', url: '/fake?userJsonDisplay=' + JSON.stringify(loginData)});
 }
 
 Cypress.Commands.add("skapaPrivatlakare", (firstName, lastName, personId) => {
-  fakeLogin(firstName, lastName, personId);
-  return cy.request('GET', '/api/user/').then((resp) => {
-    if (resp.body) {
-      return cy.fixture('specialistlakare.json').then((userJson) => {
-        userJson.godkantMedgivandeVersion = 1;
-        return cy.request({method: 'POST', url: '/api/registration/create', body: userJson});
-      });
-    } else {
-      return resp;
-    }
-  });
+    fakeLogin(firstName, lastName, personId);
+    return cy.request('GET', '/api/user/').then((resp) => {
+        if (resp.body) {
+            return cy.fixture('specialistlakare.json').then((userJson) => {
+                userJson.godkantMedgivandeVersion = 1;
+                return cy.request({method: 'POST', url: '/api/registration/create', body:userJson});
+            });
+        } else {
+            return resp;
+        }
+    });
 });
 
 Cypress.Commands.add("taBortPrivatlakare", (id) => {
-  return cy.request('GET', '/api/test/registration/' + id).then((resp) => {
-    if (resp.body) {
-      return cy.request('DELETE', '/api/test/registration/remove/' + id);
-    } else {
-      return resp;
-    }
-  });
+    return cy.request('GET', '/api/test/registration/' + id).then((resp) => {
+        if (resp.body) {
+            return cy.request('DELETE', '/api/test/registration/remove/'+id);
+        } else {
+            return resp;
+        }
+    });
 });
 
 Cypress.Commands.add("rensaMailStubbe", () => {
-  cy.request('DELETE', '/api/stub/mails/clear');
+    cy.request('DELETE', '/api/stub/mails/clear');
 });
 
 Cypress.Commands.add("hamtaMailFranStubbe", (mailId) => {
-  cy.request('GET', '/api/stub/mails').then((resp) => {
-    if (resp.body[mailId]) {
-      return resp.body[mailId];
-    }
-  });
+    cy.request('GET', '/api/stub/mails').then((resp) => {
+        if (resp.body[mailId]) {
+            return resp.body[mailId];
+        }
+    });
 });
 
 Cypress.Commands.add("bytNamnPrivatLakare", (id, namn) => {
-  cy.request({method: 'POST', url: '/api/test/registration/setname/' + id, body: {namn}});
+    cy.request({method: 'POST', url: '/api/test/registration/setname/' + id, body:{namn}});
 });
 
 Cypress.Commands.add("sattRegistreringsdatumForPrivatlakare", (id, date) => {
-  return cy.request({method: 'POST', url: '/api/test/registration/setregistrationdate/' + id, body: date});
+    return cy.request({method: 'POST', url: '/api/test/registration/setregistrationdate/' + id, body:date});
 });
 
 Cypress.Commands.add("korHospUppdatering", () => {
-  cy.wait(WAIT_BEFORE_HOSP_UPDATE_MS);
-  return cy.request({method: 'POST', url: '/api/test/hosp/update'});
+    cy.wait(WAIT_BEFORE_HOSP_UPDATE_MS);
+    return cy.request({method: 'POST', url: '/api/test/hosp/update'});
 });
 
 Cypress.Commands.add("finnsPrivatlakare", (personId) => {
-  return cy.request({method: 'GET', url: '/api/test/registration/' + personId});
+    return cy.request({method: 'GET', url: '/api/test/registration/' + personId});
 });
 
 Cypress.Commands.add("loggaInGenomWebcert", (personId) => {
-  return cy.request({method: 'POST', url: '/api/test/webcert/validatePrivatePractitioner/' + personId});
+    return cy.request({method: 'POST', url: '/api/test/webcert/validatePrivatePractitioner/' + personId});
 });
 
 Cypress.Commands.add("taBortHospInformation", (personId) => {
-  return cy.request({method: 'DELETE', url: '/api/test/hosp/remove/' + personId});
+    return cy.request({method: 'DELETE', url: '/api/test/hosp/remove/' + personId});
 });
 
 Cypress.Commands.add("laggTillHospInformation", (personId, lakarbehorighet) => {
-  var hospInfo = {
-    'personalIdentityNumber': personId,
-    'personalPrescriptionCode': '1234567',
-    'educationCodes': [],
-    'restrictions': [],
-    'restrictionCodes': [],
-    'specialityCodes': lakarbehorighet ? ['32', '74'] : [],
-    'specialityNames': lakarbehorighet ? ['Klinisk fysiologi', 'Nukleärmedicin'] : [],
-    'titleCodes': lakarbehorighet ? ['LK'] : [],
-    'hsaTitles': lakarbehorighet ? ['Läkare'] : []
-  };
-  cy.request({method: 'POST', url: '/api/test/hosp/add', body: hospInfo});
+    var hospInfo = {
+        'personalIdentityNumber': personId,
+        'personalPrescriptionCode': '1234567',
+        'educationCodes': [],
+        'restrictions': [],
+        'restrictionCodes': [],
+        'specialityCodes': lakarbehorighet ? ['32', '74'] : [],
+        'specialityNames': lakarbehorighet ? ['Klinisk fysiologi','Nukleärmedicin'] : [],
+        'titleCodes': lakarbehorighet ? ['LK'] : [],
+        'hsaTitles': lakarbehorighet ? ['Läkare'] : []
+    };
+    cy.request({method: 'POST', url: '/api/test/hosp/add', body:hospInfo});
 });

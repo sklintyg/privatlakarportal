@@ -22,13 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistryImpl;
+
 import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
 
 /**
  * Implementation of SessionRegistry that performs audit logging of login and logout.
  */
 public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
-
     @Autowired
     @Qualifier("webMonitoringLogService")
     private MonitoringLogService monitoringService;

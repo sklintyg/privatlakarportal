@@ -1,0 +1,19 @@
+---
+
+# Spring profiles
+profiles: test,pp-security-test,testability-api,hsa-stub,mail-stub,caching-enabled
+
+#tomcat
+tomcat7_user: ine-app
+tomcat7_group: ine-app
+
+proxy_env:
+  http_proxy: http://bf-proxy.sth:8888
+  https_proxy: http://bf-proxy.sth:8888
+
+# Configuration repository
+environment_name: "demo"
+config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
+
+#Most correspond to the same port as in the tools project
+tomcat_https_port: 8103

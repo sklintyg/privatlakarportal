@@ -18,9 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.adapter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
@@ -39,9 +37,9 @@ public final class LocalDateAdapter {
 
     // CHECKSTYLE:OFF MagicNumber
     private static final DateTimeFormatter ISO_DATETIME_FORMATTER = new DateTimeFormatterBuilder()
-        .appendPattern(ISO_DATE_TIME_PATTERN)
-        .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true)
-        .toFormatter();
+            .appendPattern(ISO_DATE_TIME_PATTERN)
+            .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true)
+            .toFormatter();
     // CHECKSTYLE:ON MagicNumber
 
     private static final String XSD_DATE_TIMEZONE_REGEXP = "[0-9]{4}-[0-9]{2}-[0-9]{2}([+-].*|Z)";

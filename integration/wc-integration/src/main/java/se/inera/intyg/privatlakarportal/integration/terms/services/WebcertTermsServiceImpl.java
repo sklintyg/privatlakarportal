@@ -18,7 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.integration.terms.services;
 
-import javax.xml.ws.WebServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,8 @@ import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorC
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 import se.riv.infrastructure.directory.privatepractitioner.terms.v1.AvtalType;
+
+import javax.xml.ws.WebServiceException;
 
 /**
  * Created by pebe on 2015-08-25.

@@ -18,10 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.service.util;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +35,15 @@ import se.inera.intyg.privatlakarportal.persistence.model.Vardform;
 import se.inera.intyg.privatlakarportal.persistence.model.Verksamhetstyp;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 @Profile({"dev", "pp-init-data"})
 @DependsOn("dbUpdate")
 public class PrivatlakarBootstrapBean {
-
     private static final Logger LOG = LoggerFactory.getLogger(PrivatlakarBootstrapBean.class);
 
     @Autowired

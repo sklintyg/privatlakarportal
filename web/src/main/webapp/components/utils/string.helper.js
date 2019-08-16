@@ -1,11 +1,11 @@
 angular.module('privatlakareApp').factory('StringHelper',
     function() {
-      'use strict';
+        'use strict';
 
-      return {
-        replaceAll: function(str, search, replacement) {
-          return str.split(search).join(replacement);
-        }
-      };
+        return {
+            replaceAll: function(str, search, replacement) {
+                return str.split(search).join(replacement);
+            }
+        };
     }
 );

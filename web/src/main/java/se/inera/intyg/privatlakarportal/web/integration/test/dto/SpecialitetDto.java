@@ -21,7 +21,6 @@ package se.inera.intyg.privatlakarportal.web.integration.test.dto;
 import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
 
 public class SpecialitetDto {
-
     private String kod;
     private String namn;
 

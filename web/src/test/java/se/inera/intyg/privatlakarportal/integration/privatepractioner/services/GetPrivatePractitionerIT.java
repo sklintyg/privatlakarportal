@@ -18,16 +18,17 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.core.Is.is;
-
-import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 import se.riv.infrastructure.directory.privatepractitioner.terms.v1.ResultCodeEnum;
+
+import java.io.IOException;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.core.Is.is;
 
 /**
  * Created by eriklupander on 2016-09-02.
@@ -56,35 +57,35 @@ public class GetPrivatePractitionerIT extends BaseIntegrationTest {
     public void testGetPrivatePractitioner() throws Exception {
         requestTemplate.add("data", new GetData(PNR));
         given().body(requestTemplate.render())
-            .when()
-            .post(GET_PRIVATE_PRACTITIONER_V1_0)
-            .then().statusCode(200)
-            .rootPath(BASE)
-            .body("resultCode", is(ResultCodeEnum.OK.value()))
-            .body("hoSPerson.hsaId.@extension", is("SE165565594230-WEBCERTBOOT1"))
-            .body("hoSPerson.personId.@extension", is("191212121212"))
-            .body("hoSPerson.enhet.enhetsnamn", is("TestEnhet"));
+                .when()
+                .post(GET_PRIVATE_PRACTITIONER_V1_0)
+                .then().statusCode(200)
+                .rootPath(BASE)
+                .body("resultCode", is(ResultCodeEnum.OK.value()))
+                .body("hoSPerson.hsaId.@extension", is("SE165565594230-WEBCERTBOOT1"))
+                .body("hoSPerson.personId.@extension", is("191212121212"))
+                .body("hoSPerson.enhet.enhetsnamn", is("TestEnhet"));
     }
 
     @Test
     public void testGetPrivatePractitionerThatDoesNotExist() throws Exception {
         requestTemplate.add("data", new GetData(PNR_OKANT));
         given().body(requestTemplate.render())
-            .when()
-            .post(GET_PRIVATE_PRACTITIONER_V1_0)
-            .then().statusCode(200)
-            .rootPath(BASE)
-            .body("resultCode", is(ResultCodeEnum.ERROR.value()))
-            .body("resultText", is("No private practitioner with personal identity number: " + PNR_OKANT + " exists."));
+                .when()
+                .post(GET_PRIVATE_PRACTITIONER_V1_0)
+                .then().statusCode(200)
+                .rootPath(BASE)
+                .body("resultCode", is(ResultCodeEnum.ERROR.value()))
+                .body("resultText", is("No private practitioner with personal identity number: " + PNR_OKANT + " exists."));
     }
 
     @Test
     public void testGetPrivatePractitionerWithInvalidRequest() throws Exception {
         given().body(brokenRequest.render())
-            .when()
-            .post(GET_PRIVATE_PRACTITIONER_V1_0)
-            .then().statusCode(500)
-            .rootPath(BASE);
+                .when()
+                .post(GET_PRIVATE_PRACTITIONER_V1_0)
+                .then().statusCode(500)
+                .rootPath(BASE);
     }
 
     private class GetData {

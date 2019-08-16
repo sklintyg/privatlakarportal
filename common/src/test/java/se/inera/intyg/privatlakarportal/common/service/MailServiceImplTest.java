@@ -23,6 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import javax.mail.MessagingException;
+
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.common.service.stub.MailStore;
 import se.inera.intyg.privatlakarportal.common.service.stub.OutgoingMail;

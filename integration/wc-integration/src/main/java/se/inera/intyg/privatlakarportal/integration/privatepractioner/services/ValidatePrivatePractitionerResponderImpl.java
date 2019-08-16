@@ -38,7 +38,7 @@ public class ValidatePrivatePractitionerResponderImpl implements ValidatePrivate
 
     @Override
     public ValidatePrivatePractitionerResponseType validatePrivatePractitioner(String s,
-        ValidatePrivatePractitionerType validatePrivatePractitionerType) {
+            ValidatePrivatePractitionerType validatePrivatePractitionerType) {
 
         final boolean hasHsaArgument = !StringUtils.isEmpty(validatePrivatePractitionerType.getPersonHsaId());
         final boolean hasPersonArgument = !StringUtils.isEmpty(validatePrivatePractitionerType.getPersonalIdentityNumber());
@@ -51,7 +51,7 @@ public class ValidatePrivatePractitionerResponderImpl implements ValidatePrivate
             return integrationService.validatePrivatePractitionerByPersonId(validatePrivatePractitionerType.getPersonalIdentityNumber());
         } else {
             throw new IllegalArgumentException(
-                "Inget av argumenten hsaIdentityNumber och personalIdentityNumber är satt. Ett av dem måste ha ett värde.");
+                    "Inget av argumenten hsaIdentityNumber och personalIdentityNumber är satt. Ett av dem måste ha ett värde.");
         }
     }
 }

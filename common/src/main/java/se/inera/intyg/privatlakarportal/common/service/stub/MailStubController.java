@@ -20,6 +20,7 @@ package se.inera.intyg.privatlakarportal.common.service.stub;
 
 import java.util.Map;
 import javax.ws.rs.core.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/stub/mails")
-@Profile({"dev", "mail-stub"})
+@Profile({ "dev", "mail-stub" })
 public class MailStubController {
 
     @Autowired

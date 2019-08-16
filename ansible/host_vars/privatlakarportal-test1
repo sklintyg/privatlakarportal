@@ -1,0 +1,13 @@
+---
+
+# Spring profiles
+profiles: test,pp-security-test,hsa-stub,wc-stub,wc-pu-stub,mail-stub,testability-api,pp-init-data,caching-enabled
+
+# Configuration repository
+environment_name: "test"
+
+#Most correspond to the same port as in the tools project
+tomcat_https_port: 8188
+
+#Skip hosp updates for this node
+skip_hosp_update: true

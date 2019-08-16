@@ -46,7 +46,7 @@
     </rollingPolicy>
     <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
       <layout class="se.inera.intyg.privatlakarportal.logging.PatternLayoutWithUserContext">
-        <param name="Pattern" value="%date{ISO8601} %session %user - %msg%n"/>
+        <param name="Pattern" value="%date{ISO8601} %session %user - %msg%n" />
       </layout>
     </encoder>
   </appender>
@@ -56,8 +56,8 @@
   <logger name="org.apache.cxf.service" level="info"/>
 
   <root>
-    <level value="info"/>
-    <appender-ref ref="STDOUT"/>
-    <appender-ref ref="MONITORING"/>
+    <level value="info" />
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="MONITORING" />
   </root>
 </configuration>

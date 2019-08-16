@@ -1,0 +1,12 @@
+---
+
+# Spring profiles
+profiles: test,pp-security-test,hsa-stub,wc-stub,wc-pu-stub,mail-stub,testability-api,pp-init-data
+
+# Configuration repository
+environment_name: "dev"
+
+deploy_from_repo: false
+
+#Most correspond to the same port as in the tools project
+tomcat_https_port: 8185

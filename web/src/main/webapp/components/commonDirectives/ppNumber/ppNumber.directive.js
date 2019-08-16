@@ -21,50 +21,50 @@
  */
 angular.module('privatlakareApp').directive('ppNumber',
     function(ObjectHelper) {
-      'use strict';
+        'use strict';
 
-      return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, element, attrs, ngModel) {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModel) {
 
-          var active = attrs.ppNumber;
-          if (!ObjectHelper.stringBoolToBool(active)) {
-            return;
-          }
-
-          function handleViewValueUpdate(newValue, oldValue) {
-
-            if (!newValue) {
-              return;
-            }
-
-            function preventUnwantedCharacters(newValue, oldValue) {
-
-              function updateViewValue(value) {
-                ngModel.$setViewValue(value);
-                ngModel.$render();
-              }
-
-              var lookingLikeNr = /^[0-9\s]*$/i;
-
-              // if new value is longer than older we care, otherwise something that we already approved was removed
-              if (!oldValue || (newValue.length > oldValue.length)) {
-                if (!newValue.match(lookingLikeNr)) {
-                  // remove last addition if it doesn't match the pnr pattern or if dash was added prematurely/late
-                  newValue = oldValue;
-                  updateViewValue(newValue);
+                var active = attrs.ppNumber;
+                if(!ObjectHelper.stringBoolToBool(active)){
+                    return;
                 }
-              }
+
+                function handleViewValueUpdate(newValue, oldValue) {
+
+                    if(!newValue) {
+                        return;
+                    }
+
+                    function preventUnwantedCharacters(newValue, oldValue) {
+
+                        function updateViewValue(value) {
+                            ngModel.$setViewValue(value);
+                            ngModel.$render();
+                        }
+
+                        var lookingLikeNr = /^[0-9\s]*$/i;
+
+                        // if new value is longer than older we care, otherwise something that we already approved was removed
+                        if (!oldValue || (newValue.length > oldValue.length)) {
+                            if (!newValue.match(lookingLikeNr)) {
+                                // remove last addition if it doesn't match the pnr pattern or if dash was added prematurely/late
+                                newValue = oldValue;
+                                updateViewValue(newValue);
+                            }
+                        }
+                    }
+
+                    preventUnwantedCharacters(newValue, oldValue);
+                }
+
+                scope.$watch(function() {
+                    return ngModel.$viewValue;
+                }, handleViewValueUpdate);
+
             }
-
-            preventUnwantedCharacters(newValue, oldValue);
-          }
-
-          scope.$watch(function() {
-            return ngModel.$viewValue;
-          }, handleViewValueUpdate);
-
-        }
-      };
+        };
     });

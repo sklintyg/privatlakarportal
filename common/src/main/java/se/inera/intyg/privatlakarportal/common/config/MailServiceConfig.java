@@ -18,8 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.common.config;
 
-import java.util.Properties;
-import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -37,8 +35,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import se.inera.intyg.privatlakarportal.common.service.MailService;
 import se.inera.intyg.privatlakarportal.common.service.MailServiceImpl;
 
+import java.util.Properties;
+import java.util.concurrent.Executor;
+
 @Configuration
-@PropertySource({"file:${config.file}", "file:${mailresource.file}"})
+@PropertySource({ "file:${config.file}", "file:${mailresource.file}" })
 @EnableAsync
 public class MailServiceConfig implements AsyncConfigurer {
 

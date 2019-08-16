@@ -25,14 +25,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
+
 import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
 
 @Configuration
 @ComponentScan({
-    "se.inera.ifv.privatlakarportal.spi.authorization.impl",
-    "se.inera.intyg.privatlakarportal.hsa.services",
-    "se.inera.intyg.privatlakarportal.hsa.monitoring",
-    "se.inera.intyg.privatlakarportal.common.config"
+        "se.inera.ifv.privatlakarportal.spi.authorization.impl",
+        "se.inera.intyg.privatlakarportal.hsa.services",
+        "se.inera.intyg.privatlakarportal.hsa.monitoring",
+        "se.inera.intyg.privatlakarportal.common.config"
 })
 @Import(HsaStubConfiguration.class)
 @ImportResource("classpath:hsa-services-config.xml")

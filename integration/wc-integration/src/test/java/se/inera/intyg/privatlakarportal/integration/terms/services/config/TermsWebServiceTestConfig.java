@@ -20,6 +20,7 @@ package se.inera.intyg.privatlakarportal.integration.terms.services.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import se.inera.intyg.privatlakarportal.integration.terms.services.TermsWebServiceCalls;
 import se.inera.intyg.privatlakarportal.integration.terms.stub.TermsWebServiceStub;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;

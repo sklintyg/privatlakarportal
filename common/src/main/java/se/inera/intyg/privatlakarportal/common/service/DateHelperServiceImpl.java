@@ -18,8 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.common.service;
 
-import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by pebe on 2015-09-10.
