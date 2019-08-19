@@ -19,10 +19,13 @@
 package se.inera.intyg.privatlakarportal.common.integration.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class CustomObjectMapper extends ObjectMapper {
+
     private static final long serialVersionUID = 1L;
 
     public CustomObjectMapper() {

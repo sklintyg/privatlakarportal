@@ -19,7 +19,6 @@
 package se.inera.intyg.privatlakarportal.common.service.stub;
 
 import javax.mail.internet.MimeMessage;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

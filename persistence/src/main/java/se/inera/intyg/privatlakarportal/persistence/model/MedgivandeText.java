@@ -18,14 +18,17 @@
  */
 package se.inera.intyg.privatlakarportal.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDateTime;
 import java.util.Set;
-
-import javax.persistence.*;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import org.hibernate.annotations.Type;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * Created by pebe on 2015-09-09.

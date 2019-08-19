@@ -18,7 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.persistence.repository;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,14 +28,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigDev;
-import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigTest;
 import se.inera.intyg.privatlakarportal.persistence.model.PrivatlakareId;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { PersistenceConfigDev.class })
-@ActiveProfiles({ "dev" })
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PersistenceConfigDev.class})
+@ActiveProfiles({"dev"})
 public class PrivatlakareIdRepositoryTest {
 
     @Autowired

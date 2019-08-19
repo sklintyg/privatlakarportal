@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
  * Created by pebe on 2015-08-25.
  */
 public class Terms {
+
     private String text;
     private long version;
     private LocalDateTime date;

@@ -19,7 +19,6 @@
 package se.inera.intyg.privatlakarportal.auth;
 
 import java.util.ArrayList;
-
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.AttributeStatement;
 import org.opensaml.saml2.core.NameID;
@@ -53,7 +52,7 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
         Object details = elegUserDetailsService.loadUserBySAML(credential);
 
         ExpiringUsernameAuthenticationToken result = new ExpiringUsernameAuthenticationToken(null, details, credential,
-                new ArrayList<GrantedAuthority>());
+            new ArrayList<GrantedAuthority>());
         result.setDetails(details);
 
         return result;
@@ -77,7 +76,7 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
         attributeStatement.getAttributes().add(createAttribute(CgiElegAssertion.PERSON_ID_ATTRIBUTE, fakeCredentials.getPersonId()));
         attributeStatement.getAttributes().add(createAttribute(CgiElegAssertion.FORNAMN_ATTRIBUTE, fakeCredentials.getFirstName()));
         attributeStatement.getAttributes().add(
-                createAttribute(CgiElegAssertion.MELLAN_OCH_EFTERNAMN_ATTRIBUTE, fakeCredentials.getLastName()));
+            createAttribute(CgiElegAssertion.MELLAN_OCH_EFTERNAMN_ATTRIBUTE, fakeCredentials.getLastName()));
 
         NameID nameId = new NameIDBuilder().buildObject();
         nameId.setValue(token.getCredentials().toString());

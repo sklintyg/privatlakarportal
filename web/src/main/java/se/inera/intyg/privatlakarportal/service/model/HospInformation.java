@@ -21,6 +21,7 @@ package se.inera.intyg.privatlakarportal.service.model;
 import java.util.List;
 
 public class HospInformation {
+
     String personalPrescriptionCode;
     List<String> specialityNames;
     List<String> hsaTitles;

@@ -67,14 +67,24 @@ public class PrivatlakarUser implements Serializable {
     // CHECKSTYLE:OFF NeedBraces
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PrivatlakarUser)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PrivatlakarUser)) {
+            return false;
+        }
 
         PrivatlakarUser that = (PrivatlakarUser) o;
 
-        if (nameFromPuService != that.nameFromPuService) return false;
-        if (!personalIdentityNumber.equals(that.personalIdentityNumber)) return false;
-        if (!name.equals(that.name)) return false;
+        if (nameFromPuService != that.nameFromPuService) {
+            return false;
+        }
+        if (!personalIdentityNumber.equals(that.personalIdentityNumber)) {
+            return false;
+        }
+        if (!name.equals(that.name)) {
+            return false;
+        }
         return authenticationScheme.equals(that.authenticationScheme);
     }
     // CHECKSTYLE:ON NeedBraces

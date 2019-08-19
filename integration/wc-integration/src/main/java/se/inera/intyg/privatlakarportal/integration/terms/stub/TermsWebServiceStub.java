@@ -22,14 +22,12 @@ package se.inera.intyg.privatlakarportal.integration.terms.stub;
 
 import java.io.IOException;
 import java.time.LocalDate;
-
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionertermsresponder.v1.GetPrivatePractitionerTermsResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionertermsresponder.v1.GetPrivatePractitionerTermsType;
@@ -49,7 +47,7 @@ public class TermsWebServiceStub implements GetPrivatePractitionerTermsResponder
 
     @Override
     public GetPrivatePractitionerTermsResponseType getPrivatePractitionerTerms(String s,
-            GetPrivatePractitionerTermsType getPrivatePractitionerTermsType) {
+        GetPrivatePractitionerTermsType getPrivatePractitionerTermsType) {
 
         AvtalType avtalType = new AvtalType();
         avtalType.setAvtalVersion(1);

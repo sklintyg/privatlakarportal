@@ -18,11 +18,10 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
-import org.junit.After;
-import org.junit.Before;
-
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Base class for "REST-ish" integrationTests using RestAssured.

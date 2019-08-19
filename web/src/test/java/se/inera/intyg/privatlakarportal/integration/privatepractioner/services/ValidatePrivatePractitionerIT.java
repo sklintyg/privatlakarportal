@@ -18,17 +18,16 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.core.Is.is;
+
+import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 import se.riv.infrastructure.directory.privatepractitioner.terms.v1.ResultCodeEnum;
-
-import java.io.IOException;
-
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.core.Is.is;
 
 /**
  * Created by eriklupander on 2016-09-02.
@@ -56,11 +55,11 @@ public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
     public void testValidatePrivatePractitioner() throws Exception {
         requestTemplate.add("data", new ValidationData(PNR));
         given().body(requestTemplate.render())
-                .when()
-                .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
-                .then().statusCode(200)
-                .rootPath(BASE)
-                .body("resultCode", is(ResultCodeEnum.OK.value()));
+            .when()
+            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
+            .then().statusCode(200)
+            .rootPath(BASE)
+            .body("resultCode", is(ResultCodeEnum.OK.value()));
 
     }
 
@@ -68,22 +67,22 @@ public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
     public void testValidatePrivatePractitionerThatIsNotValid() throws Exception {
         requestTemplate.add("data", new ValidationData(PNR_OKANT));
         given().body(requestTemplate.render())
-                .when()
-                .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
-                .then().statusCode(200)
-                .rootPath(BASE)
-                .body("resultCode", is(ResultCodeEnum.ERROR.value()))
-                .body("resultText", is("No private practitioner with personal identity number: " + PNR_OKANT + " exists."));
+            .when()
+            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
+            .then().statusCode(200)
+            .rootPath(BASE)
+            .body("resultCode", is(ResultCodeEnum.ERROR.value()))
+            .body("resultText", is("No private practitioner with personal identity number: " + PNR_OKANT + " exists."));
 
     }
 
     @Test
     public void testValidatePrivatePractitionerWithInvalidRequest() throws Exception {
         given().body(brokenTemplate.render())
-                .when()
-                .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
-                .then().statusCode(500)
-                .rootPath(BASE);
+            .when()
+            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
+            .then().statusCode(500)
+            .rootPath(BASE);
     }
 
     private class ValidationData {

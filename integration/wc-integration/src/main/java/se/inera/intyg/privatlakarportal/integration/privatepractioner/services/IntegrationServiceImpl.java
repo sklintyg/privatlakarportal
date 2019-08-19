@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,8 +50,6 @@ import se.riv.infrastructure.directory.privatepractitioner.v1.SpecialitetType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.VardgivareType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.VerksamhetType;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
-
-import java.time.LocalDateTime;
 
 /**
  * Created by pebe on 2015-08-17.
@@ -155,8 +154,8 @@ public class IntegrationServiceImpl implements IntegrationService {
             } else {
                 response.setResultCode(ResultCodeEnum.ERROR);
                 response.setResultText(
-                        "Private practitioner with personal identity number: " + personalIdentityNumber
-                                + " is not authorized to use webcert.");
+                    "Private practitioner with personal identity number: " + personalIdentityNumber
+                        + " is not authorized to use webcert.");
             }
         }
 

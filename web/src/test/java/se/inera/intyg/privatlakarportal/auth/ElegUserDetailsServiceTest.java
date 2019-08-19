@@ -29,7 +29,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.opensaml.saml2.core.NameID;
 import org.springframework.security.saml.SAMLCredential;
-
 import se.inera.intyg.infra.integration.pu.services.PUService;
 
 /**
@@ -56,7 +55,8 @@ public class ElegUserDetailsServiceTest extends BaseSAMLCredentialTest {
     public void testLoadUserBySAML() {
 
         NameID nameId = mock(NameID.class);
-        PrivatlakarUser priv = (PrivatlakarUser) elegService.loadUserBySAML(new SAMLCredential(nameId, assertionPrivatlakare, REMOTE_ENTITY_ID, LOCAL_ENTITY_ID));
+        PrivatlakarUser priv = (PrivatlakarUser) elegService
+            .loadUserBySAML(new SAMLCredential(nameId, assertionPrivatlakare, REMOTE_ENTITY_ID, LOCAL_ENTITY_ID));
 
         assertEquals("197705232382", priv.getPersonalIdentityNumber());
         assertEquals("Frida Kranstege", priv.getName());

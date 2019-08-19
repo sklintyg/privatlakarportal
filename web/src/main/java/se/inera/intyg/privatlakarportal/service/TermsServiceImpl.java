@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
@@ -46,8 +45,8 @@ public class TermsServiceImpl implements TermsService {
         if (medgivandeText == null) {
             LOG.error("getTerms: Could not find medgivandetext");
             throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
-                    "Could not find medgivandetext");
+                PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                "Could not find medgivandetext");
         }
         return new Terms(medgivandeText.getMedgivandeText(), medgivandeText.getVersion(), medgivandeText.getDatum());
     }

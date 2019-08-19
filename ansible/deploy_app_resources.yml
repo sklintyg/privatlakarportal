@@ -1,8 +1,0 @@
----
-# This playbook provisions application resources for Privatlakarportalen 
-
-- hosts: privatlakarportal-tomcat
-  become: yes
-
-  roles:
-    - app-resources

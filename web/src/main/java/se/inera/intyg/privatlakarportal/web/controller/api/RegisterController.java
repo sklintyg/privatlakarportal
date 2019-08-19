@@ -18,19 +18,27 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
-import javax.ws.rs.core.MediaType;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.ws.rs.core.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.infra.integration.postnummer.service.PostnummerService;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
 import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
-import se.inera.intyg.privatlakarportal.web.controller.api.dto.*;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationResponse;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetHospInformationResponse;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetOmradeResponse;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetRegistrationResponse;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.SaveRegistrationRequest;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.SaveRegistrationResponse;
 
 /**
  * Created by pebe on 2015-06-25.
@@ -51,7 +59,7 @@ public class RegisterController {
     public GetRegistrationResponse getRegistration() {
         RegistrationWithHospInformation registrationWithHospInformation = registerService.getRegistration();
         return new GetRegistrationResponse(registrationWithHospInformation.getRegistration(),
-                registrationWithHospInformation.getHospInformation());
+            registrationWithHospInformation.getHospInformation());
     }
 
     @ApiOperation(value = "createRegistration", nickname = "create")

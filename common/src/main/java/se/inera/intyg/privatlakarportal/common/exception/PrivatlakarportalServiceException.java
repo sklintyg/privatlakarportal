@@ -19,6 +19,7 @@
 package se.inera.intyg.privatlakarportal.common.exception;
 
 public class PrivatlakarportalServiceException extends RuntimeException {
+
     private final PrivatlakarportalErrorCodeEnum errorCode;
 
     public PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum errorCode, String message) {

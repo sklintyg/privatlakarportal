@@ -18,6 +18,19 @@
  */
 package se.inera.intyg.privatlakarportal.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import javax.mail.MessagingException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,20 +79,6 @@ import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInform
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
-import java.time.LocalDate;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
 
@@ -125,7 +124,7 @@ public class RegisterServiceImplTest {
 
     private Privatlakare readPrivatlakare(String path) throws IOException {
         Privatlakare verifyPrivatlakare = new CustomObjectMapper().readValue(new ClassPathResource(
-                path).getFile(), Privatlakare.class);
+            path).getFile(), Privatlakare.class);
         for (Befattning befattning : verifyPrivatlakare.getBefattningar()) {
             befattning.setPrivatlakare(verifyPrivatlakare);
         }
@@ -212,7 +211,7 @@ public class RegisterServiceImplTest {
             mailStore.addMail("ADMIN-EMAIL", "TEST");
             return null;
         })
-                .when(mailService).sendHsaGenerationStatusEmail();
+            .when(mailService).sendHsaGenerationStatusEmail();
 
         // Create one less registration than the threshold
         for (int i = 1; i <= sendHsaMailInterval; i++) {

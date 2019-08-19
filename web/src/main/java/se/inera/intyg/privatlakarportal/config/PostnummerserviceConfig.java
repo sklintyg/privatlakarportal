@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("se.inera.intyg.infra.integration.postnummer")
 public class PostnummerserviceConfig {
+
     public PostnummerserviceConfig() {
     }
 }
