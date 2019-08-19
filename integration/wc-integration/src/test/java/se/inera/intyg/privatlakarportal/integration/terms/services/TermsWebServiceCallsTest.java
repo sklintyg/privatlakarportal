@@ -21,7 +21,6 @@ package se.inera.intyg.privatlakarportal.integration.terms.services;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDateTime;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
 import se.inera.intyg.privatlakarportal.integration.terms.services.config.TermsWebServiceTestConfig;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionertermsresponder.v1.GetPrivatePractitionerTermsResponseType;
 
@@ -37,6 +35,7 @@ import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitione
 @ActiveProfiles(profiles = "dev")
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TermsWebServiceTestConfig.class)
 public class TermsWebServiceCallsTest {
+
     private static final int AVTAL_VERSION = 1;
     private static final String AVTAL_VERSION_DATUM = "2015-09-30T00:00:00.000";
 

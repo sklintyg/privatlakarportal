@@ -1,17 +1,17 @@
 angular.module('privatlakareApp').service('FormKontaktUppgifterViewState',
     function() {
-        'use strict';
+      'use strict';
 
-        this.reset = function() {
+      this.reset = function() {
 
-            this.errorMessage = {
-                pasteEpost: false,
-                pasteEpost2: false
-            };
-
-            return this;
+        this.errorMessage = {
+          pasteEpost: false,
+          pasteEpost2: false
         };
 
-        this.reset();
+        return this;
+      };
+
+      this.reset();
     }
 );

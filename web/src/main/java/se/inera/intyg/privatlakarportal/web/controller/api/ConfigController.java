@@ -20,6 +20,8 @@ package se.inera.intyg.privatlakarportal.web.controller.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Map;
+import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +33,6 @@ import se.inera.intyg.privatlakarportal.common.integration.kodverk.Befattningar;
 import se.inera.intyg.privatlakarportal.common.integration.kodverk.Vardformer;
 import se.inera.intyg.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetConfigResponse;
-
-import javax.ws.rs.core.MediaType;
-import java.util.Map;
 
 /**
  * Created by pebe on 2015-08-28.
@@ -53,11 +52,11 @@ public class ConfigController {
     @ApiOperation(value = "getConfig")
     public GetConfigResponse getConfig() {
         return new GetConfigResponse(
-                env.getProperty("webcert.host.url"),
-                env.getProperty("webcert.start.url"),
-                Befattningar.getBefattningar(),
-                Vardformer.getVardformer(),
-                Verksamhetstyper.getVerksamhetstyper());
+            env.getProperty("webcert.host.url"),
+            env.getProperty("webcert.start.url"),
+            Befattningar.getBefattningar(),
+            Vardformer.getVardformer(),
+            Verksamhetstyper.getVerksamhetstyper());
     }
 
     @RequestMapping(value = "/links", method = RequestMethod.GET, produces = "application/json")

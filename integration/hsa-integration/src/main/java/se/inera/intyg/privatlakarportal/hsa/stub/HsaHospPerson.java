@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HsaHospPerson implements Serializable {
+
     String personalIdentityNumber;
     String personalPrescriptionCode;
     List<String> educationCodes = new ArrayList<>();

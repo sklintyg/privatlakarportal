@@ -18,15 +18,21 @@
  */
 package se.inera.intyg.privatlakarportal.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDateTime;
-import java.util.*;
-
-import javax.persistence.*;
-
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * Created by pebe on 2015-06-24.
@@ -361,8 +367,6 @@ public class Privatlakare {
     /**
      * Update Befattningar with a new Befattningskod if the Set exists.
      * Effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
-     *
-     * @param kod
      */
     public void updateBefattningar(String kod) {
         if (this.getBefattningar() != null && !this.getBefattningar().isEmpty()) {
@@ -400,8 +404,6 @@ public class Privatlakare {
     /**
      * Update Verksamhetstyper with a new Verksamhetstyp-kod if the Set exists.
      * Effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
-     *
-     * @param kod
      */
     public void updateVerksamhetstyper(String kod) {
         if (this.getVerksamhetstyper() != null && !this.getVerksamhetstyper().isEmpty()) {
@@ -423,8 +425,6 @@ public class Privatlakare {
     /**
      * Update Vardformer with a new Vardform-kod if the Set exists.
      * Effectively overriding the one-to-many cardinality of this field and enforcing a one-to-one behavior
-     *
-     * @param kod
      */
     public void updateVardformer(String kod) {
         if (this.getVardformer() != null && !this.getVardformer().isEmpty()) {

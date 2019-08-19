@@ -18,16 +18,16 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import java.util.Map;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Map;
 
 /**
  * Created by pebe on 2015-08-28.
  */
 @ApiModel(description = "Response-object för config-tjänst")
 public class GetConfigResponse {
+
     @ApiModelProperty(name = "webcertUrl", dataType = "String")
     private String webcertUrl;
 
@@ -44,7 +44,7 @@ public class GetConfigResponse {
     private Map<String, String> verksamhetstyper;
 
     public GetConfigResponse(String webcertUrl, String webcertStartUrl, Map<String, String> befattningar,
-                             Map<String, String> vardformer, Map<String, String> verksamhetstyper) {
+        Map<String, String> vardformer, Map<String, String> verksamhetstyper) {
         this.webcertUrl = webcertUrl;
         this.webcertStartUrl = webcertStartUrl;
         this.befattningar = befattningar;

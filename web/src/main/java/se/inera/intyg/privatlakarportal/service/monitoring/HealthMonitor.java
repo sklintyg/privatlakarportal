@@ -20,16 +20,15 @@ package se.inera.intyg.privatlakarportal.service.monitoring;
 
 import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
 
 /**
  * Exposes health metrics as Prometheus values. To simplify any 3rd party scraping applications, all metrics produced
@@ -58,19 +57,19 @@ public class HealthMonitor extends Collector {
     private static final long START_TIME = System.currentTimeMillis();
 
     private static final Gauge UPTIME = Gauge.build()
-            .name(PREFIX + "uptime" + VALUE)
-            .help("Current uptime in seconds")
-            .register();
+        .name(PREFIX + "uptime" + VALUE)
+        .help("Current uptime in seconds")
+        .register();
 
     private static final Gauge DB_ACCESSIBLE = Gauge.build()
-            .name(PREFIX + "db_accessible" + NORMAL)
-            .help("0 == OK 1 == NOT OK")
-            .register();
+        .name(PREFIX + "db_accessible" + NORMAL)
+        .help("0 == OK 1 == NOT OK")
+        .register();
 
     private static final Gauge HSA_WS_ACCESSIBLE = Gauge.build()
-            .name(PREFIX + "hsa_ws_accessible" + NORMAL)
-            .help("0 == OK 1 == NOT OK")
-            .register();
+        .name(PREFIX + "hsa_ws_accessible" + NORMAL)
+        .help("0 == OK 1 == NOT OK")
+        .register();
 
     private static final long MILLIS_PER_SECOND = 1000L;
 
@@ -86,6 +85,7 @@ public class HealthMonitor extends Collector {
 
     @FunctionalInterface
     interface Tester {
+
         void run() throws Exception;
     }
 
@@ -102,8 +102,7 @@ public class HealthMonitor extends Collector {
      * Somewhat hacky way of updating our gauges "on-demand" (each being registered itself as a collector),
      * with this method always returning an empty list of MetricFamilySamples.
      *
-     * @return
-     *      Always returns an empty list.
+     * @return Always returns an empty list.
      */
     @Override
     public List<MetricFamilySamples> collect() {

@@ -27,12 +27,9 @@ public interface MailService {
      * sendRegistrationStatusEmail is used for notifying users about the pending status of their registration via the
      * specified email address.
      *
-     * @param status
-     *            {@link RegistrationStatus} Used to determine what email to send.
-     * @param registration
-     *            @{link Privatlakare} object with details such as email address.
-     * @throws PrivatlakarportalServiceException
-     *             @{link PrivatlakarportalServiceException}
+     * @param status {@link RegistrationStatus} Used to determine what email to send.
+     * @{link Privatlakare} object with details such as email address.
+     * @{link PrivatlakarportalServiceException}
      */
     void sendRegistrationStatusEmail(RegistrationStatus status, Privatlakare privatlakare);
 

@@ -19,9 +19,16 @@
 package se.inera.intyg.privatlakarportal.persistence.repository.util;
 
 import java.time.LocalDate;
-import java.util.*;
-
-import se.inera.intyg.privatlakarportal.persistence.model.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import se.inera.intyg.privatlakarportal.persistence.model.Befattning;
+import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
+import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
+import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
+import se.inera.intyg.privatlakarportal.persistence.model.Vardform;
+import se.inera.intyg.privatlakarportal.persistence.model.Verksamhetstyp;
 
 public final class PrivatelakareTestUtil {
 
@@ -31,23 +38,23 @@ public final class PrivatelakareTestUtil {
     // CHECKSTYLE:OFF ParameterNumber
     public static Privatlakare buildPrivatlakare(String personId, int hsaCounter, boolean isLakare) {
         return buildPrivatlakare(
-                personId,
-                "SE000000000000-WEBCERT0000" + hsaCounter,
-                "Tolvan Tolvansson",
-                "test@example.com",
-                "4444444444",
-                "postadress",
-                "postnummer",
-                "postort",
-                "2015-08-01",
-                isLakare);
+            personId,
+            "SE000000000000-WEBCERT0000" + hsaCounter,
+            "Tolvan Tolvansson",
+            "test@example.com",
+            "4444444444",
+            "postadress",
+            "postnummer",
+            "postort",
+            "2015-08-01",
+            isLakare);
     }
     // CHECKSTYLE:ON ParameterNumber
 
     // CHECKSTYLE:OFF ParameterNumber
     public static Privatlakare buildPrivatlakare(
-            String personId, String hsaId, String fullstandigtNamn, String epost, String telefonnummer,
-            String postadress, String postnummer, String postort, String registreringsdatum, boolean isLakare) {
+        String personId, String hsaId, String fullstandigtNamn, String epost, String telefonnummer,
+        String postadress, String postnummer, String postort, String registreringsdatum, boolean isLakare) {
         Privatlakare privatlakare = new Privatlakare();
 
         privatlakare.setPersonId(personId);

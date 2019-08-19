@@ -18,8 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.persistence.repository;
 
-import java.time.LocalDateTime;
+import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigDev;
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 
-import static org.junit.Assert.assertEquals;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { PersistenceConfigDev.class })
-@ActiveProfiles({ "dev" })
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PersistenceConfigDev.class})
+@ActiveProfiles({"dev"})
 public class HospUppdateringRepositoryTest {
 
     @Autowired

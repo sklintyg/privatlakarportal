@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.web.handlers;
 
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
-
-import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class PrivatlakarportalRestExceptionHandler {
@@ -40,9 +39,9 @@ public class PrivatlakarportalRestExceptionHandler {
     @ResponseBody
     public PrivatlakarportalRestExceptionResponse serviceExceptionHandler(HttpServletRequest request, PrivatlakarportalServiceException e) {
         LOG.warn("Internal exception occured! Internal error code: {} Error message: {}", e.getErrorCode(),
-                e.getMessage());
+            e.getMessage());
         PrivatlakarportalRestExceptionResponse response =
-                new PrivatlakarportalRestExceptionResponse(e.getErrorCode(), e.getMessage());
+            new PrivatlakarportalRestExceptionResponse(e.getErrorCode(), e.getMessage());
         return response;
     }
 
@@ -52,7 +51,7 @@ public class PrivatlakarportalRestExceptionHandler {
     public PrivatlakarportalRestExceptionResponse serviceExceptionHandler(HttpServletRequest request, RuntimeException re) {
         LOG.error("Unhandled RuntimeException occured!", re);
         PrivatlakarportalRestExceptionResponse response = new PrivatlakarportalRestExceptionResponse(
-                PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, "Unhandled runtime exception");
+            PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, "Unhandled runtime exception");
         return response;
     }
 

@@ -18,8 +18,8 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.annotation.PostConstruct;
-
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +28,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.intyg.infra.rediscache.core.RedisCacheOptionsSetter;
 import se.inera.intyg.privatlakarportal.hsa.stub.BootstrapBean;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;

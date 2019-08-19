@@ -20,7 +20,6 @@ package se.inera.intyg.privatlakarportal.common.service.stub;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import org.springframework.stereotype.Component;
 
 /**

@@ -18,13 +18,12 @@
  */
 package se.inera.intyg.privatlakarportal.persistence.repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * Created by pebe on 2015-06-24.
@@ -38,18 +37,18 @@ public interface PrivatlakareRepository extends JpaRepository<Privatlakare, Stri
     Privatlakare findByPersonId(@Param("personId") String personId);
 
     @Query("SELECT p FROM Privatlakare p WHERE "
-            + "p NOT IN (SELECT ly.privatlakare FROM LegitimeradYrkesgrupp ly WHERE ly.namn = 'Läkare')")
+        + "p NOT IN (SELECT ly.privatlakare FROM LegitimeradYrkesgrupp ly WHERE ly.namn = 'Läkare')")
     List<Privatlakare> findWithoutLakarBehorighet();
 
     @Query("SELECT p FROM Privatlakare p WHERE "
-            + "p NOT IN (SELECT ly.privatlakare FROM LegitimeradYrkesgrupp ly WHERE ly.namn = 'Läkare') "
-            + "AND p.enhetStartdatum IS NULL")
+        + "p NOT IN (SELECT ly.privatlakare FROM LegitimeradYrkesgrupp ly WHERE ly.namn = 'Läkare') "
+        + "AND p.enhetStartdatum IS NULL")
     List<Privatlakare> findNeverHadLakarBehorighet();
 
     @Query("SELECT p FROM Privatlakare p WHERE "
-            + "p NOT IN (SELECT ly.privatlakare FROM LegitimeradYrkesgrupp ly WHERE ly.namn = 'Läkare') "
-            + "AND p.enhetStartdatum IS NULL "
-            + "AND p.registreringsdatum <= :beforeDate")
+        + "p NOT IN (SELECT ly.privatlakare FROM LegitimeradYrkesgrupp ly WHERE ly.namn = 'Läkare') "
+        + "AND p.enhetStartdatum IS NULL "
+        + "AND p.registreringsdatum <= :beforeDate")
     List<Privatlakare> findNeverHadLakarBehorighetAndRegisteredBefore(@Param("beforeDate") LocalDateTime beforeDate);
 
 }

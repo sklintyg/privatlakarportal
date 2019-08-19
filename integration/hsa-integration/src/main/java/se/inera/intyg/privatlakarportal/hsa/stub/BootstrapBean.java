@@ -19,18 +19,18 @@
 package se.inera.intyg.privatlakarportal.hsa.stub;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
 public class BootstrapBean {
+
     private static final Logger LOG = LoggerFactory.getLogger(BootstrapBean.class);
 
     @Autowired

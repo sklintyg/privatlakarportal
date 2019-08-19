@@ -1,7 +1,0 @@
-ENV_CFG="-Dspring.profiles.active={{ profiles }}  {% if tomcat_https_port is defined %}-Dhost.url=http://127.0.0.1:{{ tomcat_https_port}}{% endif %} {% if skip_hosp_update is defined %}-Dscheduled.update.skip=true -Dprivatlakarportal.hospupdate.interval=0{% endif %}"
-JVM_CFG="-Xms1024m -Xmx1024m -Dfile.encoding=UTF-8 -Djsse.enableSNIExtension=false"
-PRIVATLAKARPORTAL_CFG="-Dconfig.folder={{ config_etc_folder }} -Dconfig.file={{ config_etc_folder }}/privatlakarportal.properties -Dlogback.file={{ config_etc_folder }}/privatlakarportal-logback.xml -Dmailresource.file={{ config_etc_folder }}/mailresource.properties"
-PRIVATLAKARPORTAL_RESOURCES="-Dresources.folder={{ app_resources_folder }}"
-CREDENTIALS_CFG="-Dcredentials.file={{ config_etc_folder }}/credentials.properties"
-LOGSENDER_CFG="-Dlogsender.config.folder={{ config_etc_folder }} -Dlogsender.config.file={{ config_etc_folder }}/logsender.properties -Dlogsender.logback.file={{ config_etc_folder }}/logsender-logback.xml"
-export JAVA_OPTS="$JAVA_OPTS $ENV_CFG $JVM_CFG $PRIVATLAKARPORTAL_CFG $PRIVATLAKARPORTAL_RESOURCES $CREDENTIALS_CFG $LOGSENDER_CFG"

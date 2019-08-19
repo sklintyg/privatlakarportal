@@ -27,7 +27,6 @@ import static org.junit.Assert.assertEquals;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,14 +36,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
-
 import se.inera.intyg.privatlakarportal.persistence.config.PersistenceConfigDev;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.util.PrivatelakareTestUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { PersistenceConfigDev.class })
-@ActiveProfiles({ "dev" })
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PersistenceConfigDev.class})
+@ActiveProfiles({"dev"})
 @Transactional
 public class PrivatlakareRepositoryTest {
 

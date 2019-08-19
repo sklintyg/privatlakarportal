@@ -19,6 +19,10 @@
 package se.inera.intyg.privatlakarportal.service;
 
 import com.google.common.annotations.VisibleForTesting;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,11 +55,6 @@ import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInform
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
 import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by pebe on 2015-06-26.
@@ -178,29 +177,29 @@ public class RegisterServiceImpl implements RegisterService {
         if (registration == null || !registration.checkIsValid()) {
             LOG.error("createRegistration: CreateRegistrationRequest is not valid");
             throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
-                    "CreateRegistrationRequest is not valid");
+                PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                "CreateRegistrationRequest is not valid");
         }
 
         if (godkantMedgivandeVersion == null || godkantMedgivandeVersion <= 0) {
             LOG.error("createRegistration: Not allowed to create registration without medgivande");
             throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
-                    "Not allowed to create registration without medgivande");
+                PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                "Not allowed to create registration without medgivande");
         }
 
         if (privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber()) != null) {
             LOG.error("createRegistration: Registration already exists");
             throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS,
-                    "Registration already exists");
+                PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS,
+                "Registration already exists");
         }
 
         if (!userService.getUser().isNameFromPuService()) {
             LOG.error("createRegistration: Not allowed to create registration without updated name from PU-service");
             throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
-                    "Not allowed to create registration without updated name from PU-service");
+                PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
+                "Not allowed to create registration without updated name from PU-service");
         }
 
         Privatlakare privatlakare = new Privatlakare();
@@ -235,7 +234,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         // Determine if an administrator needs to be notified about HSA ID's running out
         if (privatlakareidRepository.findLatestGeneratedHsaId() != 0
-                && privatlakareidRepository.findLatestGeneratedHsaId() % hsaIdNotificationInterval == 0) {
+            && privatlakareidRepository.findLatestGeneratedHsaId() % hsaIdNotificationInterval == 0) {
             mailService.sendHsaGenerationStatusEmail();
         }
 
@@ -255,16 +254,16 @@ public class RegisterServiceImpl implements RegisterService {
     public SaveRegistrationResponseStatus saveRegistration(Registration registration) {
         if (registration == null || !registration.checkIsValid()) {
             throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
-                    "SaveRegistrationRequest is not valid");
+                PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                "SaveRegistrationRequest is not valid");
         }
 
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber());
 
         if (privatlakare == null) {
             throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.NOT_FOUND,
-                    "Registration not found");
+                PrivatlakarportalErrorCodeEnum.NOT_FOUND,
+                "Registration not found");
         }
 
         convertRegistrationToPrivatlakare(registration, privatlakare);
@@ -313,9 +312,6 @@ public class RegisterServiceImpl implements RegisterService {
     /**
      * Generate next hsaId,
      * Format: "SE" + ineras orgnr (inkl "sekelsiffror", alltså 165565594230) + "-" + "WEBCERT" + femsiffrigt löpnr.
-     *
-     * @param privatlakareId
-     * @return
      */
     private String generateHsaId(PrivatlakareId privatlakareId) {
         // CHECKSTYLE:OFF MagicNumber
@@ -328,8 +324,8 @@ public class RegisterServiceImpl implements RegisterService {
         if (medgivandeText == null) {
             LOG.error("createRegistration: Could not find medgivandetext with version '{}'", godkantMedgivandeVersion);
             throw new PrivatlakarportalServiceException(
-                    PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
-                    "Could not find medgivandetext matching godkantMedgivandeVersion");
+                PrivatlakarportalErrorCodeEnum.BAD_REQUEST,
+                "Could not find medgivandetext matching godkantMedgivandeVersion");
         }
         Medgivande medgivande = new Medgivande();
         medgivande.setGodkandDatum(dateHelperService.now());
