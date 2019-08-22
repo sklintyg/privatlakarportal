@@ -19,6 +19,7 @@
 package se.inera.intyg.privatlakarportal.hsa.services;
 
 import java.time.LocalDateTime;
+import javax.xml.ws.soap.SOAPFaultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,12 @@ public class HospPersonServiceImpl implements HospPersonService {
         GetHospPersonType parameters = new GetHospPersonType();
         parameters.setPersonalIdentityNumber(personId);
 
-        GetHospPersonResponseType response = client.callGetHospPerson(parameters);
+        GetHospPersonResponseType response = null;
+        try {
+            response = client.callGetHospPerson(parameters);
+        } catch (SOAPFaultException e) {
+            LOG.debug("Soap exception", e);
+        }
 
         if (response == null) {
             LOG.debug("Response did not contain any hospPerson for '{}'", personId);
