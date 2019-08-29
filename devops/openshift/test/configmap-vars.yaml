@@ -28,6 +28,7 @@ data:
   HSA_WS_CERTIFICATE_TYPE: "JKS"
   HSA_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore.jks"
   HSA_WS_TRUSTSTORE_TYPE: "JKS"
+  CONFIG_DIR: "${config.folder}"
 kind: ConfigMap
 metadata:
   name: privatlakarportal-test-configmap-envvar
