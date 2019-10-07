@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="30 seconds">
+  <jmxConfigurator />
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"/>
+  </appender>
+
+  <!--Daily rolling file appender -->
+  <appender name="FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+    <file>${catalina.base}/logs/privatlakarportal.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${catalina.base}/logs/privatlakarportal.%d{yyyy-MM-dd}.log
+      </fileNamePattern>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder" />
+  </appender>
+
+  <logger name="org.springframework" level="error" />
+
+  <logger name="org.hibernate" level="error" />
+
+  <logger name="org.hibernate.engine.jdbc.spi.SqlExceptionHelper" level="off" />
+
+  <root>
+    <level value="error" />
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </root>
+</configuration>
