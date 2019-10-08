@@ -21,4 +21,4 @@ out
 
 *.jks
 *.p12
-secret-*
+#secret-*
