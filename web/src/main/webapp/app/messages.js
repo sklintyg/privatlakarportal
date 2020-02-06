@@ -83,8 +83,8 @@ var ppMessages = {
 
     // Start
     'label.start.header': 'Skapa konto i Webcert för privatläkare',
-    'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett konto i Webcert.',
-    'label.start.1': 'Du lämnar uppgifter om dig själv och din verksamhet. Uppgifterna behövs för att du ska kunna använda alla funktioner i Webcert.',
+    'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett konto i Webcert. För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring för din enskilda verksamhet.',
+    'label.start.1': 'Du lämnar uppgifter om dig själv och din enskilda verksamhet. Uppgifterna behövs för att du ska kunna använda alla funktioner i Webcert.',
     'label.start.2': 'Din yrkeslegitimation verifieras automatiskt mot Socialstyrelsens register över legitimerad hälso- och sjukvårdspersonal (HOSP).',
     'label.start.3': 'Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms">Webcerts användarvillkor</a> (endast första gången).',
 
@@ -101,7 +101,7 @@ var ppMessages = {
 
     // Register form step 1
     'label.form.grunduppgifter': 'Dina och verksamhetens uppgifter',
-    'label.step1intro': 'Ange information om dig själv och din verksamhet.',
+    'label.step1intro': 'För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring för din enskilda verksamhet. Ange information om dig själv och din enskilda verksamhet.',
     'label.alert.pu': 'Ditt namn har uppdaterats från folkbokföringens register. För att ditt nya namn ska användas i Webcert behöver du logga ut ur Webcert och sedan logga in igen.',
 
     'label.form.personnummer': 'Personnummer',
@@ -115,7 +115,7 @@ var ppMessages = {
     'label.form.befattning.help': 'Välj din huvudsakliga befattning enligt AID-etikett (Arbetsidentifikation kommuner och landsting).',
     'label.form.befattning.error.required': 'Befattning måste anges innan du kan fortsätta.',
 
-    'label.form.verksamhetensnamn': 'Verksamhetens namn*',
+    'label.form.verksamhetensnamn': 'Namn på din enskilda verksamhet*',
     'label.form.verksamhetensnamn.help': 'Ange verksamhetens fullständiga namn.',
     'label.form.verksamhetensnamn.error.required': 'Verksamhetens namn måste anges innan du kan fortsätta.',
 
