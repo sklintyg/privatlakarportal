@@ -131,7 +131,7 @@ var ppMessages = {
 
     'label.form.befattning.valjbefattning': 'Välj befattning',
     'label.form.befattning': 'Befattning*',
-    'label.form.befattning.help': 'Välj din huvudsakliga befattning enligt AID-etikett (Arbetsidentifikation kommuner och landsting).',
+    'label.form.befattning.help': 'Välj din huvudsakliga befattning enligt AID-etikett (Arbetsidentifikation kommuner och regioner).',
     'label.form.befattning.error.required': 'Befattning måste anges innan du kan fortsätta.',
 
     'label.form.verksamhetensnamn': 'Namn på din enskilda verksamhet*',
