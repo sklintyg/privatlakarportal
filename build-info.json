@@ -1,7 +1,6 @@
 {
-  "appVersion": "1.13.0",
-  "infraVersion": "3.12.0.+",
+  "appVersion": "1.14.0",
+  "infraVersion": "3.13.0.+",
   "buildArgs": "--refresh-dependencies clean build testReport -PcodeQuality -DgruntColors=false -PuseMinifiedJavaScript",
-  "tests": [ "restAssuredTest", "cypressTest" ],
-  "uploadArchives": true
+  "tests": [ "restAssuredTest", "cypressTest" ]
 }
