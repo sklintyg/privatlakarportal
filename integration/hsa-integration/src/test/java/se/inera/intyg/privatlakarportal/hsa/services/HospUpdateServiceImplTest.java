@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -128,7 +129,6 @@ public class HospUpdateServiceImplTest {
         list.add(privatlakare3);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
-        when(hospPersonService.addToCertifier(any(String.class), any(String.class))).thenReturn(true);
 
         // Om det går fel vid kontakt med hsa ska uppdateringsrutinen ändå fortsätta med nästa i listan.
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
@@ -173,7 +173,6 @@ public class HospUpdateServiceImplTest {
         list.add(privatlakare1);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
-        when(hospPersonService.addToCertifier(any(String.class), any(String.class))).thenReturn(true);
 
         // privatlakare1 får nu läkarbehörighet men har fått GODKAND_ANVANDARE false innan
         GetHospPersonResponseType hospPersonResponse1 = createGetHospPersonResponse();
@@ -208,7 +207,7 @@ public class HospUpdateServiceImplTest {
         try {
             hospUpdateService.updateHospInformation(privatlakare, true);
         } finally {
-            verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
+            verify(hospPersonService).addToCertifier(eq(PERSON_ID), nullable(String.class));
             verify(hospPersonService).getHospPerson(PERSON_ID);
             verifyNoMoreInteractions(hospPersonService);
         }
@@ -221,13 +220,13 @@ public class HospUpdateServiceImplTest {
         privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
 
-        when(hospPersonService.addToCertifier(eq(PERSON_ID), any(String.class)))
+        when(hospPersonService.addToCertifier(eq(PERSON_ID), nullable(String.class)))
             .thenThrow(new WebServiceException("Could not send message"));
 
         try {
             hospUpdateService.updateHospInformation(privatlakare, true);
         } finally {
-            verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
+            verify(hospPersonService).addToCertifier(eq(PERSON_ID), nullable(String.class));
             verifyNoMoreInteractions(hospPersonService);
         }
     }
@@ -243,7 +242,7 @@ public class HospUpdateServiceImplTest {
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
-        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
+        verify(hospPersonService).addToCertifier(eq(PERSON_ID), nullable(String.class));
         assertEquals(response, RegistrationStatus.NOT_AUTHORIZED);
     }
 
@@ -256,11 +255,11 @@ public class HospUpdateServiceImplTest {
 
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
 
-        when(hospPersonService.addToCertifier(eq(PERSON_ID), any(String.class))).thenReturn(true);
+        when(hospPersonService.addToCertifier(eq(PERSON_ID), nullable(String.class))).thenReturn(true);
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
-        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
+        verify(hospPersonService).addToCertifier(eq(PERSON_ID), nullable(String.class));
         assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
     }
 
@@ -278,7 +277,7 @@ public class HospUpdateServiceImplTest {
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
-        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
+        verify(hospPersonService).addToCertifier(eq(PERSON_ID), nullable(String.class));
         assertEquals(response, RegistrationStatus.AUTHORIZED);
     }
 
@@ -296,7 +295,7 @@ public class HospUpdateServiceImplTest {
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
 
-        verify(hospPersonService).addToCertifier(eq(PERSON_ID), any(String.class));
+        verify(hospPersonService).addToCertifier(eq(PERSON_ID), nullable(String.class));
         assertEquals(response, RegistrationStatus.NOT_AUTHORIZED);
     }
 
@@ -462,7 +461,6 @@ public class HospUpdateServiceImplTest {
         list.add(privatlakare1);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
-        when(hospPersonService.addToCertifier(any(String.class), any(String.class))).thenReturn(true);
 
         // No hosp-data available for user
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
@@ -495,7 +493,6 @@ public class HospUpdateServiceImplTest {
         list.add(privatlakare1);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
-        when(hospPersonService.addToCertifier(any(String.class), any(String.class))).thenReturn(true);
 
         // No hosp-data available for user
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
@@ -525,14 +522,14 @@ public class HospUpdateServiceImplTest {
 
         // No hosp-data available for user
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
-        when(hospPersonService.removeFromCertifier(eq(PERSON_ID), anyString(), anyString())).thenReturn(true);
+        when(hospPersonService.removeFromCertifier(eq(PERSON_ID), nullable(String.class), anyString())).thenReturn(true);
 
         hospUpdateService.scheduledUpdateHospInformation();
 
         verify(mailService).sendRegistrationRemovedEmail(privatlakare1);
         verify(monitoringLogService).logRegistrationRemoved(privatlakare1.getPersonId());
         verify(privatlakareRepository).delete(privatlakare1);
-        verify(hospPersonService).removeFromCertifier(eq(PERSON_ID), anyString(), anyString());
+        verify(hospPersonService).removeFromCertifier(eq(PERSON_ID), nullable(String.class), anyString());
     }
 
     @Test
