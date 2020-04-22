@@ -19,6 +19,8 @@
 package se.inera.intyg.privatlakarportal.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -29,7 +31,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -102,8 +104,8 @@ public class UserServiceImplTest {
         assertEquals("Test User", user.getName());
         assertEquals(PersonSvar.Status.FOUND, user.getPersonSvarStatus());
         assertEquals(RegistrationStatus.NOT_STARTED, user.getStatus());
-        assertEquals(true, user.isNameFromPuService());
-        assertEquals(false, user.isNameUpdated());
+        assertTrue(user.isNameFromPuService());
+        assertFalse(user.isNameUpdated());
     }
 
     @Test
@@ -117,8 +119,8 @@ public class UserServiceImplTest {
         assertEquals("Test User", user.getName());
         assertEquals(PersonSvar.Status.FOUND, user.getPersonSvarStatus());
         assertEquals(RegistrationStatus.NOT_AUTHORIZED, user.getStatus());
-        assertEquals(true, user.isNameFromPuService());
-        assertEquals(false, user.isNameUpdated());
+        assertTrue(user.isNameFromPuService());
+        assertFalse(user.isNameUpdated());
     }
 
     @Test
@@ -132,8 +134,8 @@ public class UserServiceImplTest {
         assertEquals("Test User", user.getName());
         assertEquals(PersonSvar.Status.FOUND, user.getPersonSvarStatus());
         assertEquals(RegistrationStatus.WAITING_FOR_HOSP, user.getStatus());
-        assertEquals(true, user.isNameFromPuService());
-        assertEquals(false, user.isNameUpdated());
+        assertTrue(user.isNameFromPuService());
+        assertFalse(user.isNameUpdated());
     }
 
     @Test
@@ -147,8 +149,8 @@ public class UserServiceImplTest {
         assertEquals("Test User", user.getName());
         assertEquals(PersonSvar.Status.FOUND, user.getPersonSvarStatus());
         assertEquals(RegistrationStatus.AUTHORIZED, user.getStatus());
-        assertEquals(true, user.isNameFromPuService());
-        assertEquals(false, user.isNameUpdated());
+        assertTrue(user.isNameFromPuService());
+        assertFalse(user.isNameUpdated());
     }
 
     @Test
@@ -162,8 +164,8 @@ public class UserServiceImplTest {
         assertEquals("Ny User", user.getName());
         assertEquals(PersonSvar.Status.FOUND, user.getPersonSvarStatus());
         assertEquals(RegistrationStatus.AUTHORIZED, user.getStatus());
-        assertEquals(true, user.isNameFromPuService());
-        assertEquals(true, user.isNameUpdated());
+        assertTrue(user.isNameFromPuService());
+        assertTrue(user.isNameUpdated());
     }
 
     @Test
@@ -176,8 +178,8 @@ public class UserServiceImplTest {
         assertEquals("Test User", user.getName());
         assertEquals(PersonSvar.Status.NOT_FOUND, user.getPersonSvarStatus());
         assertEquals(RegistrationStatus.NOT_STARTED, user.getStatus());
-        assertEquals(false, user.isNameFromPuService());
-        assertEquals(false, user.isNameUpdated());
+        assertFalse(user.isNameFromPuService());
+        assertFalse(user.isNameUpdated());
     }
 
     @Test
@@ -190,8 +192,8 @@ public class UserServiceImplTest {
         assertEquals("Test User", user.getName());
         assertEquals(PersonSvar.Status.ERROR, user.getPersonSvarStatus());
         assertEquals(RegistrationStatus.NOT_STARTED, user.getStatus());
-        assertEquals(false, user.isNameFromPuService());
-        assertEquals(false, user.isNameUpdated());
+        assertFalse(user.isNameFromPuService());
+        assertFalse(user.isNameUpdated());
     }
 
     @Test
@@ -204,8 +206,8 @@ public class UserServiceImplTest {
         assertEquals("Test User", user.getName());
         assertEquals(PersonSvar.Status.ERROR, user.getPersonSvarStatus());
         assertEquals(RegistrationStatus.NOT_STARTED, user.getStatus());
-        assertEquals(false, user.isNameFromPuService());
-        assertEquals(false, user.isNameUpdated());
+        assertFalse(user.isNameFromPuService());
+        assertFalse(user.isNameUpdated());
     }
 
     @Test(expected = PrivatlakarportalServiceException.class)
@@ -218,12 +220,9 @@ public class UserServiceImplTest {
     public void testGetUserWithStatusInvalidPnr() {
         SecurityContextHolder.setContext(getSecurityContext(PERSON_ID_INVALID, "Invalid pnr User"));
         when(privatlakareRepository.findByPersonId(PERSON_ID_INVALID)).thenReturn(privatlakareInvalidPnr);
-        when(puService.getPerson(personnummer)).thenReturn(PersonSvar.found(
-            new Person(createPnr(PERSON_ID_INVALID), false, false, "Ny", "", "User", "", "", "")));
 
         User user = userService.getUserWithStatus();
         assertEquals(PersonSvar.Status.ERROR, user.getPersonSvarStatus());
-
     }
 
     // Create a fake SecurityContext for a user

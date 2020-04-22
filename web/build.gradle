@@ -48,7 +48,7 @@ grunt_build.dependsOn npmInstall
 grunt_build_no_minify.dependsOn npmInstall
 
 gretty {
-    servletContainer = 'jetty9'
+    servletContainer = 'tomcat9'
     contextPath = '/'
     
     logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
@@ -81,30 +81,35 @@ dependencies {
 
     compile "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
 
-    compile "org.springframework:spring-webmvc:${springContextVersion}"
-    compile "org.springframework.ws:spring-ws-core:${springWsCoreVersion}"
-    compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
+    compile "org.apache.cxf:cxf-rt-features-logging:${cxfVersion}"
+    compile "org.springframework:spring-webmvc"
+    compile "org.springframework.ws:spring-ws-core"
+    compile "org.springframework.security:spring-security-config"
     compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecurityExtensionsVersion}"
-    compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
-    compile "org.springframework.session:spring-session:${springSessionVersion}"
+    compile "org.springframework.security:spring-security-web"
+    compile "org.springframework.session:spring-session-data-redis"
     compile "com.googlecode.json-simple:json-simple:${jsonSimpleVersion}"
-    compile "wsdl4j:wsdl4j:${wsdl4jVersion}"
+    compile "wsdl4j:wsdl4j"
     compile "io.springfox:springfox-swagger2:${swaggerVersion}"
     compile "io.springfox:springfox-swagger-ui:${swaggerVersion}"
-    compile("io.swagger:swagger-jaxrs:${swaggerJaxRsVersion}") {
-        transitive = false;
+    compile("io.swagger:swagger-jaxrs:${swaggerJaxrsVersion}") {
+        exclude(module: "jsr311-api")
+        transitive = false
     }
 
-    compile "mysql:mysql-connector-java:${mysqlVersion}"
+    compile "mysql:mysql-connector-java"
 
-    compileOnly "javax.servlet:javax.servlet-api:${servletApiVersion}"
-    compileOnly "jstl:jstl:${jstlVersion}"
+    compileOnly "javax.servlet:javax.servlet-api"
+    compileOnly "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api"
 
-    testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
+    testCompile "org.hamcrest:hamcrest"
+    testCompile "org.hamcrest:hamcrest-library"
     testCompile "org.unitils:unitils-core:${unitilsVersion}"
     testCompile "org.antlr:ST4:${stringTemplateVersion}"
-    testCompile "com.jayway.restassured:rest-assured:${restAssuredVersion}"
-    testCompile "com.jayway.restassured:json-schema-validator:${restAssuredVersion}"
+
+    testCompile "io.rest-assured:rest-assured"
+    testCompile "io.rest-assured:json-schema-validator"
+    testCompile "com.sun.xml.bind:jaxb-osgi:2.3.2" // Can remove when rest-assured in BOM > version 4.0
 
     gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }

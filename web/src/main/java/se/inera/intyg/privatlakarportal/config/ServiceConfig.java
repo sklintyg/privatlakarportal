@@ -21,7 +21,7 @@ package se.inera.intyg.privatlakarportal.config;
 // CHECKSTYLE:OFF LineLength
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import org.apache.cxf.feature.LoggingFeature;
+import org.apache.cxf.ext.logging.LoggingFeature;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

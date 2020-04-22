@@ -21,6 +21,7 @@ package se.inera.intyg.privatlakarportal.persistence.repository;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class HospUppdateringRepositoryTest {
     @Test
     public void testFind() {
         HospUppdatering hospUppdatering = new HospUppdatering();
-        hospUppdatering.setSenasteHospUppdatering(LocalDateTime.now());
+        hospUppdatering.setSenasteHospUppdatering(LocalDateTime.now().truncatedTo(ChronoUnit.MICROS));
 
         HospUppdatering saved = hospUppdateringRepository.save(hospUppdatering);
         HospUppdatering read = hospUppdateringRepository.findSingle();

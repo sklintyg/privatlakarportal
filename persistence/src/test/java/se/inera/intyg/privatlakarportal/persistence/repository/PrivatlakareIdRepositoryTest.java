@@ -49,6 +49,6 @@ public class PrivatlakareIdRepositoryTest {
         privatlakareIdRepository.save(new PrivatlakareId());
         privatlakareIdRepository.save(new PrivatlakareId());
         privatlakareIdRepository.save(new PrivatlakareId());
-        assertEquals(new Integer(3), privatlakareIdRepository.findLatestGeneratedHsaId());
+        assertEquals(Integer.valueOf(3), privatlakareIdRepository.findLatestGeneratedHsaId());
     }
 }

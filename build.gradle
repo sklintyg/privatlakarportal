@@ -23,12 +23,15 @@ ext {
     commonsLangVersion = "3.1"
     cxfVersion = "3.2.4"
     geronimoJmsVersion = "1.1.1"
-    groovyVersion = "2.3.6"
+    //groovyVersion = "2.3.6"
+    groovyAllVersion = "2.4.19"
     //guavaVersion = "27.0.1-jre"
     guavaVersion = "28.2-jre"
+    hibernateVersion = "5.3.15.Final"
     hibernateEntityManagerVersion = "4.3.11.Final"
     hibernateJpaVersion = "1.0.0.Final"
     hikariCPVersion = "2.3.5"
+    jadiraUserTypeVersion = "6.0.1.GA"
     jacksonVersion = "2.8.1"
     javaxMailVersion = "1.5.2"
     jaxb2Version = "1.11.1"
@@ -49,12 +52,16 @@ ext {
     springSecurityVersion = "4.2.5.RELEASE"
     springSessionVersion = "1.3.3.RELEASE"
     springWsCoreVersion = "2.2.2.RELEASE"
-    stringTemplateVersion = "4.0.8"
+    //stringTemplateVersion = "4.0.8"
+    stringTemplateVersion = "4.3"
     springDataRedisVersion = "1.8.12.RELEASE"
-    swaggerVersion = "2.4.0"
-    swaggerJaxRsVersion = "1.5.4"
-    unitilsVersion = "3.3"
-    usertypeVersion = "5.0.0.GA"
+    //swaggerVersion = "2.4.0"
+    swaggerVersion = "2.9.2"
+    //swaggerJaxRsVersion = "1.5.4"
+    swaggerJaxrsVersion = "1.6.0"
+    //unitilsVersion = "3.3"
+    unitilsVersion = "3.4.6"
+    //usertypeVersion = "5.0.0.GA"
     wsdl4jVersion = "1.6.3"
     //shedlockSpringVersion = "0.18.2"
     shedlockSpringVersion = "4.5.0"
@@ -96,9 +103,25 @@ allprojects {
     }
 
     dependencies {
+        // Exclude and import of non-BOM version of Hibernate due to
+        // bug in BOM-version 5.4.12.
+        compile("org.hibernate:hibernate-core") {
+            version {
+                strictly "${hibernateVersion}"
+            }
+        }
+        compile("org.hibernate:hibernate-hikaricp") {
+            version {
+                strictly "${hibernateVersion}"
+            }
+        }
+        compile("org.hibernate:hibernate-entitymanager") {
+            version {
+                strictly "${hibernateVersion}"
+            }
+        }
         compile "javax.annotation:javax.annotation-api"
-        //compile "jakarta.xml.bind:jakarta.xml.bind-api"
-        //compile "jakarta.xml.ws:jakarta.xml.ws-api"
+        compile "jakarta.xml.bind:jakarta.xml.bind-api"
         compile "ch.qos.logback:logback-classic"
         compile "org.slf4j:slf4j-api"
 

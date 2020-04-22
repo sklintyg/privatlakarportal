@@ -18,14 +18,14 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.config.RestAssuredConfig.newConfig;
-import static com.jayway.restassured.config.SSLConfig.sslConfig;
+import static io.restassured.RestAssured.given;
+import static io.restassured.config.RestAssuredConfig.newConfig;
+import static io.restassured.config.SSLConfig.sslConfig;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.builder.RequestSpecBuilder;
-import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
 import org.junit.After;
 import org.junit.Before;
 import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.util.RestUtil;

@@ -21,6 +21,7 @@ package se.inera.intyg.privatlakarportal.integration.terms.stub;
 // CHECKSTYLE:OFF LineLength
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -65,7 +66,7 @@ public class TermsWebServiceStub implements GetPrivatePractitionerTermsResponder
             if (!resource.exists()) {
                 LOG.error("Could not load avtal file since the resource '{}' does not exist", fileUrl);
             } else {
-                avtalText = FileUtils.readFileToString(resource.getFile());
+                avtalText = FileUtils.readFileToString(resource.getFile(), StandardCharsets.UTF_8);
                 avtalType.setAvtalText(avtalText);
             }
 

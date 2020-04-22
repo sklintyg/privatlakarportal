@@ -52,4 +52,6 @@ dependencies {
     wsdlgen "com.sun.xml.bind:jaxb-xjc:${jaxbXjcVersion}"
     wsdlgen "com.sun.xml.bind:jaxb-core:${jaxbCoreVersion}"
     wsdlgen "com.sun.xml.bind:jaxb-impl:${jaxbImplVersion}"
+
+    wsdlgen "ch.qos.logback:logback-classic"
 }

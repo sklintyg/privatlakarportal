@@ -56,7 +56,7 @@ public class MedgivandeBootstrapBean {
 
         try {
             MedgivandeText medgivandeText = new CustomObjectMapper().readValue(res.getInputStream(), MedgivandeText.class);
-            if (!medgivandeTextRepository.exists(medgivandeText.getVersion())) {
+            if (!medgivandeTextRepository.existsById(medgivandeText.getVersion())) {
                 medgivandeTextRepository.save(medgivandeText);
             }
         } catch (IOException e) {

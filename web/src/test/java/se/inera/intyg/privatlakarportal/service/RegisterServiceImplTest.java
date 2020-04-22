@@ -21,28 +21,28 @@ package se.inera.intyg.privatlakarportal.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import javax.mail.MessagingException;
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
@@ -73,7 +73,6 @@ import se.inera.intyg.privatlakarportal.persistence.model.Verksamhetstyp;
 import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareIdRepository;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
-import se.inera.intyg.privatlakarportal.service.exception.PrivatlakarportalServiceExceptionMatcher;
 import se.inera.intyg.privatlakarportal.service.model.HospInformation;
 import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
@@ -111,8 +110,8 @@ public class RegisterServiceImplTest {
     @Mock
     private MonitoringLogService monitoringLogService;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    //@Rule
+    //public ExpectedException thrown = ExpectedException.none();
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -170,7 +169,7 @@ public class RegisterServiceImplTest {
         medgivandeText.setDatum(LocalDate.parse("2015-08-01").atStartOfDay());
         medgivandeText.setMedgivandeText("Medgivandetext");
         medgivandeText.setVersion(1L);
-        when(medgivandeTextRepository.findOne(1L)).thenReturn(medgivandeText);
+        when(medgivandeTextRepository.findById(1L)).thenReturn(Optional.of(medgivandeText));
 
         when(dateHelperService.now()).thenReturn(LocalDate.parse("2015-09-09").atStartOfDay());
 
@@ -178,7 +177,7 @@ public class RegisterServiceImplTest {
     }
 
     @Test
-    public void testHsaMailSent() throws HospUpdateFailedToContactHsaException, IOException, MessagingException {
+    public void testHsaMailSent() throws HospUpdateFailedToContactHsaException {
 
         // Notify admin every 50 registrations
         final int sendHsaMailInterval = 50;
@@ -193,7 +192,7 @@ public class RegisterServiceImplTest {
             PrivatlakareId privatlakareId = new PrivatlakareId();
             privatlakareId.setId(i);
             when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
-            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(new Integer(i));
+            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(Integer.valueOf(i));
 
             when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.AUTHORIZED);
             Registration registration = createValidRegistration();
@@ -203,22 +202,23 @@ public class RegisterServiceImplTest {
     }
 
     @Test
-    public void testHsaMailThreshold() throws HospUpdateFailedToContactHsaException, IOException, MessagingException {
+    public void testHsaMailThreshold() throws HospUpdateFailedToContactHsaException {
         // Notify admin every 50 registrations
         final int sendHsaMailInterval = 49;
 
-        Mockito.doAnswer(invocation -> {
-            mailStore.addMail("ADMIN-EMAIL", "TEST");
-            return null;
-        })
-            .when(mailService).sendHsaGenerationStatusEmail();
+        //Mockito.doAnswer(invocation -> {
+        //    mailStore.addMail("ADMIN-EMAIL", "TEST");
+        //    return null;
+        //})
+        //    .when(mailService).sendHsaGenerationStatusEmail();
+
 
         // Create one less registration than the threshold
         for (int i = 1; i <= sendHsaMailInterval; i++) {
             PrivatlakareId privatlakareId = new PrivatlakareId();
             privatlakareId.setId(i);
             when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
-            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(new Integer(i));
+            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(Integer.valueOf(i));
 
             when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.AUTHORIZED);
             Registration registration = createValidRegistration();
@@ -230,23 +230,29 @@ public class RegisterServiceImplTest {
     @Test
     public void testInvalidCreateRegistration() {
 
-        thrown.expect(PrivatlakarportalServiceException.class);
-        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
+        //thrown.expect(PrivatlakarportalServiceException.class);
+        //thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
 
         Registration registration = new Registration();
-        registerService.createRegistration(registration, 1L);
+        PrivatlakarportalServiceException exception = assertThrows(PrivatlakarportalServiceException.class, () -> registerService
+            .createRegistration(registration, 1L));
+        //registerService.createRegistration(registration, 1L);
+        assertEquals(PrivatlakarportalErrorCodeEnum.BAD_REQUEST, exception.getErrorCode());
     }
 
     @Test
     public void testcreatePrivatlakareAlreadyExists() {
 
-        thrown.expect(PrivatlakarportalServiceException.class);
-        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS));
+        //thrown.expect(PrivatlakarportalServiceException.class);
+        //thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS));
 
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(new Privatlakare());
 
         Registration registration = createValidRegistration();
-        registerService.createRegistration(registration, 1L);
+        PrivatlakarportalServiceException exception = assertThrows(PrivatlakarportalServiceException.class, () -> registerService
+            .createRegistration(registration, 1L));
+        //registerService.createRegistration(registration, 1L);
+        assertEquals(PrivatlakarportalErrorCodeEnum.ALREADY_EXISTS, exception.getErrorCode());
     }
 
     @Test
@@ -273,30 +279,36 @@ public class RegisterServiceImplTest {
     @Test
     public void testCreateRegistrationLakareUtanMedgivande() {
 
-        thrown.expect(PrivatlakarportalServiceException.class);
-        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
+        //thrown.expect(PrivatlakarportalServiceException.class);
+        //thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
 
         PrivatlakareId privatlakareId = new PrivatlakareId();
         privatlakareId.setId(1);
-        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
-
+        //when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
         Registration registration = createValidRegistration();
-        registerService.createRegistration(registration, null);
+
+        PrivatlakarportalServiceException exception = assertThrows(PrivatlakarportalServiceException.class, () -> registerService
+            .createRegistration(registration, null));
+        assertEquals(PrivatlakarportalErrorCodeEnum.BAD_REQUEST, exception.getErrorCode());
+        //registerService.createRegistration(registration, null);
     }
 
     @Test
     public void testCreateRegistrationLakareFelMedgivandeVersion() {
-        when(medgivandeTextRepository.findOne(2L)).thenReturn(null);
+        when(medgivandeTextRepository.findById(2L)).thenReturn(Optional.empty());
 
-        thrown.expect(PrivatlakarportalServiceException.class);
-        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
+        //thrown.expect(PrivatlakarportalServiceException.class);
+        //thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
 
         PrivatlakareId privatlakareId = new PrivatlakareId();
         privatlakareId.setId(1);
-        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+        //when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
         Registration registration = createValidRegistration();
-        registerService.createRegistration(registration, 2L);
+        PrivatlakarportalServiceException exception = assertThrows(PrivatlakarportalServiceException.class, () -> registerService
+            .createRegistration(registration, 2L));
+        assertEquals(PrivatlakarportalErrorCodeEnum.BAD_REQUEST, exception.getErrorCode());
+        //registerService.createRegistration(registration, 2L);
     }
 
     @Test
@@ -335,14 +347,18 @@ public class RegisterServiceImplTest {
     @Test
     public void testCreateRegistrationEjIPUService() {
 
-        thrown.expect(PrivatlakarportalServiceException.class);
-        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM));
+        //thrown.expect(PrivatlakarportalServiceException.class);
+        //thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM));
 
         when(userService.getUser()).thenReturn(new PrivatlakarUser(PERSON_ID, "Test User"));
 
         Registration registration = createValidRegistration();
-        registerService.createRegistration(registration, 1L);
+        PrivatlakarportalServiceException exception = assertThrows(PrivatlakarportalServiceException.class, () -> registerService
+            .createRegistration(registration, 1L));
+        assertEquals(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, exception.getErrorCode());
+        //registerService.createRegistration(registration, 1L);
 
+        verify(privatlakareRepository).findByPersonId(new PrivatlakarUser(PERSON_ID, "Test User").getPersonalIdentityNumber());
         verifyNoMoreInteractions(privatlakareRepository);
         verifyNoMoreInteractions(hospUpdateService);
     }
@@ -362,25 +378,32 @@ public class RegisterServiceImplTest {
     @Test
     public void testSavePrivatlakareNotFound() {
 
-        thrown.expect(PrivatlakarportalServiceException.class);
-        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.NOT_FOUND));
+        //thrown.expect(PrivatlakarportalServiceException.class);
+        //thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.NOT_FOUND));
 
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
 
         Registration registration = createValidRegistration();
-        registerService.saveRegistration(registration);
+        PrivatlakarportalServiceException exception =
+            assertThrows(PrivatlakarportalServiceException.class, () -> registerService.saveRegistration(registration));
+        //registerService.saveRegistration(registration);
+
+        assertEquals(PrivatlakarportalErrorCodeEnum.NOT_FOUND, exception.getErrorCode());
     }
 
     @Test
     public void testSavePrivatlakareInvalid() {
 
-        thrown.expect(PrivatlakarportalServiceException.class);
-        thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
+        //thrown.expect(PrivatlakarportalServiceException.class);
+        //thrown.expect(PrivatlakarportalServiceExceptionMatcher.hasErrorCode(PrivatlakarportalErrorCodeEnum.BAD_REQUEST));
 
-        when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(new Privatlakare());
+        //when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(new Privatlakare());
 
         Registration registration = new Registration();
-        registerService.saveRegistration(registration);
+        PrivatlakarportalServiceException exception =
+            assertThrows(PrivatlakarportalServiceException.class, () -> registerService.saveRegistration(registration));
+        //registerService.saveRegistration(registration);
+        assertEquals(PrivatlakarportalErrorCodeEnum.BAD_REQUEST, exception.getErrorCode());
     }
 
     @Test
