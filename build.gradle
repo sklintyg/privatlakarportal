@@ -120,10 +120,13 @@ allprojects {
                 strictly "${hibernateVersion}"
             }
         }
+
         compile "javax.annotation:javax.annotation-api"
         compile "jakarta.xml.bind:jakarta.xml.bind-api"
+        compile "jakarta.xml.ws:jakarta.xml.ws-api"
         compile "ch.qos.logback:logback-classic"
         compile "org.slf4j:slf4j-api"
+        compile "com.sun.xml.messaging.saaj:saaj-impl"
 
         testCompile "se.inera.intyg.refdata:refdata:${refDataVersion}"
         testCompile "junit:junit:4.+"

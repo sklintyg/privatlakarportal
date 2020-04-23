@@ -1,20 +1,20 @@
 dependencies {
     compile project(":privatlakarportal-persistence")
 
+    compile "org.apache.commons:commons-lang3"
     compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
     compile "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
     compile "org.springframework:spring-context-support"
     compile "org.springframework:spring-webmvc"
+    compile "org.springframework.data:spring-data-redis"
+
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     compile "com.google.guava:guava:${guavaVersion}"
-    //compile "com.sun.mail:javax.mail:${javaxMailVersion}"
-    //compile "javax.mail:javax.mail-api:${javaxMailVersion}"
     compile "com.sun.mail:jakarta.mail"
     compile "jakarta.mail:jakarta.mail-api"
+
     compile "commons-codec:commons-codec"
     compile "commons-io:commons-io:${commonsIOVersion}"
-    compile "org.apache.commons:commons-lang3"
-    compile "org.springframework.data:spring-data-redis"
 
     compileOnly "javax.servlet:javax.servlet-api"
 

@@ -48,6 +48,7 @@ dependencies {
     wsdlgen "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
 
     wsdlgen "jakarta.xml.ws:jakarta.xml.ws-api"
+    wsdlgen "jakarta.annotation:jakarta.annotation-api"
 
     wsdlgen "com.sun.xml.bind:jaxb-xjc:${jaxbXjcVersion}"
     wsdlgen "com.sun.xml.bind:jaxb-core:${jaxbCoreVersion}"
