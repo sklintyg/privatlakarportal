@@ -109,7 +109,7 @@ dependencies {
 
     testCompile "io.rest-assured:rest-assured"
     testCompile "io.rest-assured:json-schema-validator"
-    testCompile "com.sun.xml.bind:jaxb-osgi:2.3.2" // Can remove when rest-assured in BOM > version 4.0
+    testCompile "com.sun.xml.bind:jaxb-osgi:${jaxbOsgiVersion}" // Can remove when rest-assured in BOM > version 4.0
 
     gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }
