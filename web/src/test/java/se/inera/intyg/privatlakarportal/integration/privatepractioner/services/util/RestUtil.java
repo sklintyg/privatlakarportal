@@ -18,9 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services.util;
 
-import static com.jayway.restassured.RestAssured.given;
+import static io.restassured.RestAssured.given;
 
-import com.jayway.restassured.http.ContentType;
+import io.restassured.http.ContentType;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;

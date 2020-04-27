@@ -18,8 +18,10 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import com.google.common.collect.Lists;
-import com.jayway.restassured.RestAssured;
+import io.restassured.RestAssured;
 import java.util.Arrays;
 import org.hamcrest.Matchers;
 import org.json.simple.JSONObject;
@@ -122,7 +124,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .get("api/registration")
             .then()
             .assertThat()
-            .body("hospInformation.hsaTitles", Matchers.isEmptyOrNullString());
+            .body("hospInformation.hsaTitles", is(Matchers.emptyOrNullString()));
 
         // Lägg till i hosp
         spec().body(createHospInformation(PERSONNUMMER))
@@ -191,7 +193,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .get("api/test/registration/" + PERSONNUMMER)
             .then()
             .assertThat()
-            .body(Matchers.isEmptyOrNullString());
+            .body(is(Matchers.emptyOrNullString()));
     }
 
     private CreateRegistrationRequest createValidRegistration() {

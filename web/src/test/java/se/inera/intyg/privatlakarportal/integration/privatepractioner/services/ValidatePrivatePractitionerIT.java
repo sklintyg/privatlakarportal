@@ -18,7 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
 
-import static com.jayway.restassured.RestAssured.given;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
 import java.io.IOException;

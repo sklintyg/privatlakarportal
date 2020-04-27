@@ -1,11 +1,12 @@
 plugins {
-    id "se.inera.intyg.plugin.common" version "2.0.11" apply false
-    id "org.gretty" version "2.3.1" apply false
+    id "se.inera.intyg.plugin.common" version "3.1.1" apply false
+    id "org.gretty" version "3.0.1" apply false
     id "com.moowork.node" version "1.3.1" apply false
+    id "io.spring.dependency-management" version "1.0.9.RELEASE" apply false
 }
 
 ext {
-    infraVersion = System.properties['infraVersion'] ?: '0-SNAPSHOT'
+    infraVersion = System.properties['infraVersion'] ?: '3.13.1-SNAPSHOT'
     refDataVersion = System.properties['refDataVersion'] ?: '1.0-SNAPSHOT'
 
     ppSchemasVersion = "1.0.5"
@@ -15,50 +16,30 @@ ext {
 
     schemasContractVersion = "2.1.8"
 
-    aspectJVersion = "1.6.11"
-    commonsCodecVersion = "1.10"
-    commonsIOVersion = "2.4"
-    commonsLangVersion = "3.1"
+    commonsIOVersion = "2.6"
     cxfVersion = "3.2.4"
     geronimoJmsVersion = "1.1.1"
-    groovyVersion = "2.3.6"
-    guavaVersion = "27.0.1-jre"
-    hibernateEntityManagerVersion = "4.3.11.Final"
-    hibernateJpaVersion = "1.0.0.Final"
-    hikariCPVersion = "2.3.5"
-    jacksonVersion = "2.8.1"
-    javaxMailVersion = "1.5.2"
+    guavaVersion = "28.2-jre"
+    hibernateVersion = "5.3.15.Final"
+    jadiraUserTypeVersion = "6.0.1.GA"
     jaxb2Version = "1.11.1"
+    jaxbXjcVersion = "2.3.2"
+    jaxbCoreVersion = "2.3.0.1"
+    jaxbImplVersion = "2.3.2"
+    jaxbOsgiVersion ="2.3.2"
     jsonSimpleVersion = "1.1.1"
-    jstlVersion = "1.2"
-    liquibaseVersion = "3.3.1"
-    logbackVersion = "1.2.3"
-    mysqlVersion = "5.1.40"
-    restAssuredVersion = "2.9.0"
-    servletApiVersion = "3.1.0"
-    slf4jVersion = "1.7.10"
-    springContextVersion = "4.3.16.RELEASE"
-    springDataJpaVersion = "1.11.12.RELEASE"
     springSecurityExtensionsVersion = "1.0.3.RELEASE"
-    springSecurityVersion = "4.2.5.RELEASE"
-    springSessionVersion = "1.3.3.RELEASE"
-    springWsCoreVersion = "2.2.2.RELEASE"
-    stringTemplateVersion = "4.0.8"
-    springDataRedisVersion = "1.8.12.RELEASE"
-    swaggerVersion = "2.4.0"
-    swaggerJaxRsVersion = "1.5.4"
-    unitilsVersion = "3.3"
-    usertypeVersion = "5.0.0.GA"
+    stringTemplateVersion = "4.3"
+    swaggerVersion = "2.9.2"
+    swaggerJaxrsVersion = "1.6.0"
+    unitilsVersion = "3.4.6"
     wsdl4jVersion = "1.6.3"
-    shedlockSpringVersion = "0.18.2"
-
-    h2Version = "1.3.171"
-    junitVersion = "4.12"
-    hamcrestVersion = "1.3"
-    mockitoAllVersion = "1.10.19"
+    shedlockSpringVersion = "4.5.0"
 
     nodeJsVersion = "10.16.2"
     npmVersion = "6.10.3"
+
+    springbootMavenBomVersion = "2.2.5.RELEASE"
 }
 
 allprojects {
@@ -80,22 +61,49 @@ allprojects {
 
     apply plugin: 'se.inera.intyg.plugin.common'
     apply plugin: 'maven'
+    apply plugin: "io.spring.dependency-management"
+
+    dependencyManagement {
+        imports { mavenBom "org.springframework.boot:spring-boot-dependencies:${springbootMavenBomVersion}" }
+    }
 
     dependencies {
-        compile "ch.qos.logback:logback-classic:${logbackVersion}"
-        compile "org.slf4j:slf4j-api:${slf4jVersion}"
+        // Exclude and import of non-BOM version of Hibernate due to
+        // bug in BOM-version 5.4.12.
+        compile("org.hibernate:hibernate-core") {
+            version {
+                strictly "${hibernateVersion}"
+            }
+        }
+        compile("org.hibernate:hibernate-hikaricp") {
+            version {
+                strictly "${hibernateVersion}"
+            }
+        }
+        compile("org.hibernate:hibernate-entitymanager") {
+            version {
+                strictly "${hibernateVersion}"
+            }
+        }
+
+        compile "javax.annotation:javax.annotation-api"
+        compile "jakarta.xml.bind:jakarta.xml.bind-api"
+        compile "jakarta.xml.ws:jakarta.xml.ws-api"
+        compile "ch.qos.logback:logback-classic"
+        compile "org.slf4j:slf4j-api"
+        compile "com.sun.xml.messaging.saaj:saaj-impl"
 
         testCompile "se.inera.intyg.refdata:refdata:${refDataVersion}"
-        testCompile "junit:junit:${junitVersion}"
-        testCompile "org.mockito:mockito-core:${mockitoAllVersion}"
-        testCompile "org.springframework:spring-test:${springContextVersion}"
+        testCompile "junit:junit:4.+"
+        testCompile "org.mockito:mockito-core"
+        testCompile "org.springframework:spring-test"
     }
 
     group = 'se.inera.privatlakarportal'
     version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 11
+    targetCompatibility = 11
 
     task createVersionPropertyFile(type: VersionPropertyFileTask)
 

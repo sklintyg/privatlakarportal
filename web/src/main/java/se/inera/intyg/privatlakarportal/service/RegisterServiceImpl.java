@@ -320,7 +320,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     private Set<Medgivande> createMedgivandeSet(Long godkantMedgivandeVersion, Privatlakare privatlakare) {
-        MedgivandeText medgivandeText = medgivandeTextRepository.findOne(godkantMedgivandeVersion);
+        MedgivandeText medgivandeText = medgivandeTextRepository.findById(godkantMedgivandeVersion).orElse(null);
         if (medgivandeText == null) {
             LOG.error("createRegistration: Could not find medgivandetext with version '{}'", godkantMedgivandeVersion);
             throw new PrivatlakarportalServiceException(
