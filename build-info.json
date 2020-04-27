@@ -1,5 +1,5 @@
 {
-  "appVersion": "1.14.1",
+  "appVersion": "1.14.0",
   "infraVersion": "3.13.1.+",
   "buildArgs": "--refresh-dependencies clean build testReport -PcodeQuality -DgruntColors=false -PuseMinifiedJavaScript",
   "tests": [ "restAssuredTest", "cypressTest" ]
