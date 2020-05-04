@@ -35,7 +35,7 @@ import se.inera.ifv.hsaws.v3.HsaWsResponderInterface;
     "se.inera.intyg.privatlakarportal.common.config"
 })
 @Import(HsaStubConfiguration.class)
-@ImportResource("classpath:hsa-services-config.xml")
+@ImportResource("classpath:pp-hsa-services-config.xml")
 public class HsaConfiguration {
 
     @Value("${hsa.ws.services.url}")
