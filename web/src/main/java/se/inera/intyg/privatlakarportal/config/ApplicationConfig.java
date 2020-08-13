@@ -33,6 +33,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import se.inera.intyg.infra.security.common.cookie.IneraCookieSerializer;
+import se.inera.intyg.infra.security.filter.InternalApiFilter;
 import se.inera.intyg.infra.security.filter.PrincipalUpdatedFilter;
 
 @Configuration
@@ -88,5 +89,10 @@ public class ApplicationConfig {
     @Bean
     public PrincipalUpdatedFilter principalUpdatedFilter() {
         return new PrincipalUpdatedFilter();
+    }
+
+    @Bean
+    public InternalApiFilter internalApiFilter() {
+        return new InternalApiFilter();
     }
 }

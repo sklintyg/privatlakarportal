@@ -24,7 +24,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd 
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
   <!-- Enable auto-wiring -->
@@ -40,6 +40,7 @@
   <security:http security="none" pattern="/services/**"/>
   <security:http security="none" pattern="/version.jsp"/>
   <security:http security="none" pattern="/api/monitoring/**"/>
+  <security:http security="none" pattern="/internalapi/**"/>
   <security:http security="none" create-session="never" pattern="/metrics"/>
   <security:http security="none" pattern="/favicon.ico"/>
   <security:http security="none" pattern="/error.jsp"/>

@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaHospPerson;
 import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
-import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.IntegrationService;
+import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
