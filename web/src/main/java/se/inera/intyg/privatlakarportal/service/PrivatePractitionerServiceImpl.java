@@ -62,7 +62,7 @@ public class PrivatePractitionerServiceImpl implements PrivatePractitionerServic
     public List<PrivatePractitioner> getPrivatePractitioners() {
         List<Privatlakare> allPrivatlakare = privatlakareRepository.findAll();
 
-        if (allPrivatlakare == null) {
+        if (allPrivatlakare.isEmpty()) {
             return List.of();
         }
 
