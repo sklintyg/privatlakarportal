@@ -83,6 +83,11 @@ public class ApplicationInitializer implements WebApplicationInitializer {
             DelegatingFilterProxy.class);
         springSecurityFilterChain.addMappingForUrlPatterns(null, false, "/*");
 
+        // InternalApi filter
+        FilterRegistration.Dynamic internalApiFilter = servletContext.addFilter("internalApiFilter",
+            DelegatingFilterProxy.class);
+        internalApiFilter.addMappingForUrlPatterns(null, false, "/internalapi/*");
+
         // principalUpdatedFilter filter
         FilterRegistration.Dynamic principalUpdatedFilter = servletContext.addFilter("principalUpdatedFilter",
             DelegatingFilterProxy.class);

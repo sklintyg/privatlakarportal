@@ -30,8 +30,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
-import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.GetPrivatePractitionerResponderImpl;
-import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.ValidatePrivatePractitionerResponderImpl;
+import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.GetPrivatePractitionerResponderImpl;
+import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.ValidatePrivatePractitionerResponderImpl;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitioner.v1.rivtabp21.GetPrivatePractitionerResponderInterface;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitioner.v1.rivtabp21.ValidatePrivatePractitionerResponderInterface;
@@ -40,7 +40,7 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 
 @Configuration
 @ComponentScan({
-    "se.inera.intyg.privatlakarportal.integration.privatepractioner",
+    "se.inera.intyg.privatlakarportal.integration.privatepractitioner",
     "se.inera.intyg.privatlakarportal.integration.terms"})
 @ImportResource("classpath:wc-services.xml")
 public class WcIntegrationConfiguration {

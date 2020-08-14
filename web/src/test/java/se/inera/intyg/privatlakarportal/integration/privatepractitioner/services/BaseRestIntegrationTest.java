@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.integration.privatepractioner.services;
+package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.config.RestAssuredConfig.newConfig;
@@ -28,7 +28,7 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.junit.After;
 import org.junit.Before;
-import se.inera.intyg.privatlakarportal.integration.privatepractioner.services.util.RestUtil;
+import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.util.RestUtil;
 
 public abstract class BaseRestIntegrationTest {
 
