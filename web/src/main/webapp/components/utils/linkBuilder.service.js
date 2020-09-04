@@ -23,11 +23,16 @@ angular.module('privatlakareApp').factory('LinkBuilder',
       'use strict';
 
       return {
-        getExitLink: function(fromStateName, toStateName, userStatus, fromUrlPath) {
+        getExitLink: function(fromStateName, toStateName, userStatus, fromUrlPath, orgExitLink) { // jshint ignore:line
           var exitLink = {
             name: '',
             link: ''
           };
+
+          // // Make no changes to the link if the user only wants to watch/just watched the terms.
+          if(toStateName === 'app.minsida.terms' || fromStateName === 'app.minsida.terms') {
+            return orgExitLink;
+          }
 
           if (toStateName === 'app.minsida') {
             if (ObjectHelper.isEmpty(fromStateName) || fromStateName === 'app.boot') {
