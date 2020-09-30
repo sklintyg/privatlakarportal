@@ -25,7 +25,7 @@ The main update is activation of the new reference data concept (master data for
 
 Latest builds of refdata can be downloaded from the Inera Nexus server. 
 
-	https://build-inera.nordicmedtest.se/nexus/repository/releases/se/inera/intyg/refdata/refdata/1.0.0.<build-num>/refdata-1.0.0.<build-num>.jar
+	https://nexus.drift.inera.se/repository/maven-releases/se/inera/intyg/refdata/refdata/1.0.0.<build-num>/refdata-1.0.0.<build-num>.jar
 
 
 ## 2 Pre-Installation Requirements
@@ -76,7 +76,7 @@ _Note: It's of great importance to know if an update includes database schema ch
 
 Software artifacts are located at, and downloaded from:
 
-* From Installing Client - [https://build-inera.nordicmedtest.se/nexus/repository/releases/se/inera/privatlakarportal/privatlakarportal/maven-metadata.xml](https://build-inera.nordicmedtest.se/nexus/repository/releases/se/inera/privatlakarportal/privatlakarportal/maven-metadata.xml)
+* From Installing Client - [https://nexus.drift.inera.se/repository/maven-releases/se/inera/privatlakarportal/privatlakarportal/maven-metadata.xml](https://nexus.drift.inera.se/repository/maven-releases/se/inera/privatlakarportal/privatlakarportal/maven-metadata.xml)
 * From OpenShift Cluster - docker.drift.inera.se/intyg/
 
 
@@ -130,7 +130,7 @@ Replace `<version>` below with the actual application version.
 
 Fetch the actual version of the tool, the example below runs `wget` to retrieve the package (tarball).
 
-	> https://build-inera.nordicmedtest.se/nexus/repository/releases/se/inera/privatlakarportal/privatlakarportal-liquibase-runner/<version>/privatlakarportal-liquibase-runner-<version>.jar
+	> https://nexus.drift.inera.se/repository/maven-releases/se/inera/privatlakarportal/privatlakarportal-liquibase-runner/<version>/privatlakarportal-liquibase-runner-<version>.jar
 
 
 Download the tool to a computer with Java installed and access to the database in question.
