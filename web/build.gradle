@@ -51,7 +51,7 @@ gretty {
     servletContainer = 'tomcat9'
     contextPath = '/'
 
-    logbackConfigFile = "${projectDir}/src/main/resources/logback.xml"
+    //logbackConfigFile = "${projectDir}/src/main/resources/logback-dev.xml"
 
     integrationTestTask = null
     scanInterval = 0
@@ -62,6 +62,7 @@ gretty {
     inplaceMode = 'hard'
 
     jvmArgs = ['-Dspring.profiles.active=dev,caching-enabled',
+               '-Dlogback.file=classpath:logback-dev.xml',
                '-Dconfig.file=' + projectDir + '/src/main/resources/dev.properties',
                '-Dmailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
                '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',

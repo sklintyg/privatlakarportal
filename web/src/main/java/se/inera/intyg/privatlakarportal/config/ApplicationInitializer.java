@@ -48,6 +48,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
+
+        servletContext.setInitParameter("logbackConfigParameter", "logback.file");
+        servletContext.addListener(new LogbackConfiguratorContextListener());
+
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(ApplicationConfig.class, PersistenceConfigDev.class, MailServiceConfig.class,
             HsaConfiguration.class, JobConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
@@ -116,9 +120,6 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         // Listeners for session audit logging
         servletContext.addListener(new HttpSessionEventPublisher());
         servletContext.addListener(new RequestContextListener());
-
-        servletContext.setInitParameter("logbackConfigParameter", "logback.file");
-        servletContext.addListener(new LogbackConfiguratorContextListener());
     }
 
     private void registerCharachterEncodingFilter(ServletContext aContext) {
