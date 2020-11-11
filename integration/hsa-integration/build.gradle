@@ -36,6 +36,7 @@ dependencies {
     compile project(":privatlakarportal-common")
 
     compile "se.inera.intyg.infra:common-redis-cache-core:${infraVersion}"
+    compile "se.inera.intyg.infra:monitoring:${infraVersion}"
     compile "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
     compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider"
     compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"

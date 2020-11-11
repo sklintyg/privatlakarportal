@@ -33,11 +33,11 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+import se.inera.intyg.infra.monitoring.logging.LogbackConfiguratorContextListener;
 import se.inera.intyg.infra.monitoring.MonitoringConfiguration;
 import se.inera.intyg.infra.security.filter.RequestContextHolderUpdateFilter;
 import se.inera.intyg.infra.security.filter.SecurityHeadersFilter;
 import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;
-import se.inera.intyg.privatlakarportal.common.monitoring.util.LogbackConfiguratorContextListener;
 import se.inera.intyg.privatlakarportal.hsa.config.HsaConfiguration;
 import se.inera.intyg.privatlakarportal.hsa.config.JobConfiguration;
 import se.inera.intyg.privatlakarportal.integration.config.WcIntegrationConfiguration;
@@ -48,6 +48,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
+
+        servletContext.setInitParameter("logbackConfigParameter", "logback.file");
+        servletContext.addListener(new LogbackConfiguratorContextListener());
+
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(ApplicationConfig.class, PersistenceConfigDev.class, MailServiceConfig.class,
             HsaConfiguration.class, JobConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
@@ -116,9 +120,6 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         // Listeners for session audit logging
         servletContext.addListener(new HttpSessionEventPublisher());
         servletContext.addListener(new RequestContextListener());
-
-        servletContext.setInitParameter("logbackConfigParameter", "logback.file");
-        servletContext.addListener(new LogbackConfiguratorContextListener());
     }
 
     private void registerCharachterEncodingFilter(ServletContext aContext) {

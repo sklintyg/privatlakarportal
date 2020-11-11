@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
-import se.inera.intyg.privatlakarportal.common.monitoring.util.LogMarkers;
+import se.inera.intyg.infra.monitoring.logging.LogMarkers;
 import se.inera.intyg.schemas.contract.util.HashUtility;
 
 @Service("webMonitoringLogService")
