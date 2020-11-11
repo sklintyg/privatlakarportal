@@ -51,8 +51,6 @@ gretty {
     servletContainer = 'tomcat9'
     contextPath = '/'
 
-    //logbackConfigFile = "${projectDir}/src/main/resources/logback-dev.xml"
-
     integrationTestTask = null
     scanInterval = 0
     httpPort = 8090
