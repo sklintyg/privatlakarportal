@@ -21,7 +21,7 @@ task cypressTest(type: NodeTask, dependsOn: [npmInstall] ) {
 
     project.delete(files("${buildDir}/test-results"))
 
-    def baseUrl = System.properties['baseUrl'] ?: "http://localhost:8090"
+    def baseUrl = System.properties['baseUrl'] ?: "http://localhost:8060"
 
     script = file( 'scripts/run.js' )
     args = ['baseUrl=' + baseUrl]

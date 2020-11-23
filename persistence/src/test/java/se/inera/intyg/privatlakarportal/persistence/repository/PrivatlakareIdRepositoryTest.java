@@ -33,7 +33,7 @@ import se.inera.intyg.privatlakarportal.persistence.model.PrivatlakareId;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PersistenceConfigDev.class})
-@ActiveProfiles({"dev"})
+@ActiveProfiles({"h2"})
 public class PrivatlakareIdRepositoryTest {
 
     @Autowired

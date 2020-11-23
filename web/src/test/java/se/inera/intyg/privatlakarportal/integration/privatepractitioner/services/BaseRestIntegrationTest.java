@@ -36,7 +36,7 @@ public abstract class BaseRestIntegrationTest {
     public void setupBase() {
         RestAssured.reset();
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        RestAssured.baseURI = System.getProperty("integration.tests.baseUrl", "http://localhost:8090");
+        RestAssured.baseURI = System.getProperty("integration.tests.baseUrl", "http://localhost:8060");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
         RestAssured.config = newConfig().sslConfig(sslConfig().allowAllHostnames())
             .sessionConfig(RestAssured.config().getSessionConfig().sessionIdName("SESSION"));
