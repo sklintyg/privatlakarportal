@@ -33,7 +33,7 @@ module.exports = function(grunt) {
     connect: {
       dev: {
         options: {
-          port: 9091,
+          port: 8960,
           hostname: '*',
           middleware: function(connect, options, middlewares) {
             return [
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
                   serveStatic(__dirname + '/src/main/webapp/components') // jshint ignore:line
               ),
               require('http-proxy-middleware')({
-                target: 'http://localhost:8090',
+                target: 'http://localhost:8060',
                 logLevel: 'info'
               })
             ];
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
     },
     open: {
       dev: {
-        url: 'http://localhost:9091/welcome.html'
+        url: 'http://localhost:8960/welcome.html'
       }
     },
     watch: {

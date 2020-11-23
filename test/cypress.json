@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://localhost:9091",
+  "baseUrl": "http://localhost:8060",
   "screenshotsFolder": "build/test-results/screenshots/",
   "video": false,
   "reporter": "mochawesome",

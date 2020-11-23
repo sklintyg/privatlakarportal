@@ -42,7 +42,7 @@ import se.inera.intyg.privatlakarportal.persistence.repository.util.Privatelakar
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PersistenceConfigDev.class})
-@ActiveProfiles({"dev"})
+@ActiveProfiles({"h2"})
 @Transactional
 public class PrivatlakareRepositoryTest {
 

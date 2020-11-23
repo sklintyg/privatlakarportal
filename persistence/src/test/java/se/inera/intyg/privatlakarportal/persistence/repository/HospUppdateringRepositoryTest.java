@@ -34,7 +34,7 @@ import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {PersistenceConfigDev.class})
-@ActiveProfiles({"dev"})
+@ActiveProfiles({"h2"})
 public class HospUppdateringRepositoryTest {
 
     @Autowired

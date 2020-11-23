@@ -12,36 +12,7 @@ Börja med att skapa en lokal klon av källkodsrepositoryt:
 
     git clone https://github.com/sklintyg/privatlakarportal.git
 
-Efter att man har klonat repository navigera till den klonade katalogen rehabstod och kör följande kommando:
-
-    ./gradlew build
-
-Det här kommandot kommer att bygga samtliga moduler i systemet. 
-
-När applikationen har byggt klart, kan man gå till `/web` och köra kommandot
-
-    ./gradlew appRun
-
-för att starta applikationen lokalt.
-
-Nu går det att öppna en webbläsare och surfa till 
-
-    http://localhost:8090/welcome.html 
-
-Observera jetty körs i gradleprocessen, så gradle "blir inte klar" förrän du stoppar servern med ^c, och applikationen är bara igång fram till dess.
-
-För att starta applikationen i debugläge används:
-
-    ./gradlew appRunDebug
-    
-Applikationen kommer då att starta upp med debugPort = **5010**. Det är denna port du ska använda när du sätter upp din 
-debug-konfiguration i din utvecklingsmiljö.
-
-### Visa databasen
-
-Man kan även komma åt H2-databasen som startas:
-
-    $ open http://localhost:8091/
+Läs vidare i gemensam dokumentation [devops/develop README-filen](https://github.com/sklintyg/devops/tree/release/2021-1/develop/README.md)
 
 ### Testa Privatläkarportalen med lokal Webcert
 
@@ -53,10 +24,19 @@ Gör så här för att testa att WC kan anropa och hämta information från PP i
 1. Starta PP enligt tidigare instruktion
 2. Sätt följande properties i filen `webcert/webcert-dev.properties` i WC, vilket gör att WC anropar PP istället för en lokal stubbe. Notera att lokal stubbe för PP fortfarande startar, men att trafiken istället går till PP.
 	```
-    privatepractitioner.base.url=http://localhost:8090/services
-	privatepractitioner.portal.registration.url=http://localhost:8090
+    privatepractitioner.base.url=http://localhost:8060/services
+	privatepractitioner.portal.registration.url=http://localhost:8060
     ```
 3. Starta WC
-4. Starta en browser och gå till WC på http://localhost:9088/welcome.html
+4. Starta en browser och gå till WC på https://wc.localtest.me/welcome.html
 5. Välj "Frida Kranstege (Privatläkare, Godkänd)" och klicka på "Logga in"
-6. Nu valideras användaren gentemot lokal PP på localhost:8090
+6. Nu valideras användaren gentemot lokal PP på localhost:8060
+
+## Licens
+Copyright (C) 2021 Inera AB (http://www.inera.se)
+
+Privatläkarportal is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+Privatläkarportal is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
+
+Se även [LICENSE](LICENSE). 

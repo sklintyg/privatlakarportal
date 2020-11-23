@@ -9,7 +9,7 @@ test {
 
 task restAssuredTest(type: Test) {
     outputs.upToDateWhen { false }
-    systemProperty "integration.tests.baseUrl", System.properties['baseUrl'] ?: 'http://localhost:8090/'
+    systemProperty "integration.tests.baseUrl", System.properties['baseUrl'] ?: 'http://localhost:8060/'
     include '**/*IT*'
 }
 
@@ -48,23 +48,30 @@ grunt_build.dependsOn npmInstall
 grunt_build_no_minify.dependsOn npmInstall
 
 gretty {
+    def instance = System.properties['instance'] ?: '0'
+    def useHttpPort = 8060 + (instance as Integer)
+    def useInternalHttpPort = 8160 + (instance as Integer)
+
     servletContainer = 'tomcat9'
     contextPath = '/'
 
     integrationTestTask = null
     scanInterval = 0
-    httpPort = 8090
-    debugPort = 5010
+    debugPort = 8860 + (instance as Integer)
+    portPropertiesFileName = "gretty_ports_${instance}.properties"
     debugSuspend = false
     fastReload = true
     inplaceMode = 'hard'
+    serverConfigFile = "tomcat-gretty-${instance}.xml"
 
     jvmArgs = ['-Dspring.profiles.active=dev,caching-enabled',
                '-Dlogback.file=classpath:logback-dev.xml',
                '-Dconfig.file=' + projectDir + '/src/main/resources/dev.properties',
                '-Dmailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
                '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',
-               '-Dresources.folder=classpath:']
+               '-Dresources.folder=classpath:',
+               "-Ddev.http.port=${useHttpPort}",
+               "-Ddev.http.port.internal=${useInternalHttpPort}"]
 }
 
 dependencies {
