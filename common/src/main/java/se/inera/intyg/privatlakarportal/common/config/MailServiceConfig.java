@@ -38,7 +38,7 @@ import se.inera.intyg.privatlakarportal.common.service.MailService;
 import se.inera.intyg.privatlakarportal.common.service.MailServiceImpl;
 
 @Configuration
-@PropertySource({"file:${config.file}", "file:${mailresource.file}"})
+@PropertySource(ignoreResourceNotFound = true, value = {"file:${dev.config.file}"})
 @EnableAsync
 public class MailServiceConfig implements AsyncConfigurer {
 
