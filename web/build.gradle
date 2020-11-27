@@ -51,6 +51,7 @@ gretty {
     def instance = System.properties['instance'] ?: '0'
     def useHttpPort = 8060 + (instance as Integer)
     def useInternalHttpPort = 8160 + (instance as Integer)
+    def applicationDir = "${rootProject.projectDir}/devops/dev"
 
     servletContainer = 'tomcat9'
     contextPath = '/'
@@ -62,16 +63,18 @@ gretty {
     debugSuspend = false
     fastReload = true
     inplaceMode = 'hard'
-    serverConfigFile = "tomcat-gretty-${instance}.xml"
+    serverConfigFile = "tomcat-gretty.xml"
 
-    jvmArgs = ['-Dspring.profiles.active=dev,caching-enabled',
-               '-Dlogback.file=classpath:logback-dev.xml',
-               '-Dconfig.file=' + projectDir + '/src/main/resources/dev.properties',
-               '-Dmailresource.file=' + projectDir + '/src/main/resources/dev.mailresource.properties',
-               '-Dcredentials.file=' + projectDir + '/src/main/resources/dev-credentials.properties',
-               '-Dresources.folder=classpath:',
-               "-Ddev.http.port=${useHttpPort}",
-               "-Ddev.http.port.internal=${useInternalHttpPort}"]
+    jvmArgs = [
+            "-Dcatalina.base=${buildDir}/catalina.base",
+            "-Dspring.profiles.active=dev,caching-enabled",
+            "-Dlogback.file=${applicationDir}/config/logback-dev.xml",
+            "-Djava.awt.headless=true",
+            "-Dfile.encoding=UTF-8",
+            "-Dapplication.dir=${applicationDir}",
+            "-Ddev.config.file=${applicationDir}/config/application-dev.properties",
+            "-Ddev.http.port=${useHttpPort}",
+            "-Ddev.http.port.internal=${useInternalHttpPort}"]
 }
 
 dependencies {
