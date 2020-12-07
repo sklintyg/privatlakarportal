@@ -19,18 +19,19 @@
 package se.inera.intyg.privatlakarportal.hsa.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.ws.soap.SOAPFaultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import se.inera.ifv.hsawsresponder.v3.GetHospLastUpdateResponseType;
-import se.inera.ifv.hsawsresponder.v3.GetHospLastUpdateType;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonType;
-import se.inera.ifv.hsawsresponder.v3.HandleCertifierResponseType;
-import se.inera.ifv.hsawsresponder.v3.HandleCertifierType;
-import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
+import se.inera.intyg.infra.integration.hsatk.model.HCPSpecialityCodes;
+import se.inera.intyg.infra.integration.hsatk.model.HealthCareProfessionalLicence;
+import se.inera.intyg.infra.integration.hsatk.model.HospCredentialsForPerson;
+import se.inera.intyg.infra.integration.hsatk.model.Result;
+import se.inera.intyg.infra.integration.hsatk.services.HsatkAuthorizationManagementService;
+import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
 
 @Service
 public class HospPersonServiceImpl implements HospPersonService {
@@ -38,29 +39,52 @@ public class HospPersonServiceImpl implements HospPersonService {
     private static final Logger LOG = LoggerFactory.getLogger(HospPersonServiceImpl.class);
 
     @Autowired
-    private HSAWebServiceCalls client;
+    private HsatkAuthorizationManagementService authorizationManagementService;
 
     @Override
-    public GetHospPersonResponseType getHospPerson(String personId) {
+    public HospPerson getHospPerson(String personId) {
 
         LOG.debug("Getting hospPerson from HSA for '{}'", personId);
 
-        GetHospPersonType parameters = new GetHospPersonType();
-        parameters.setPersonalIdentityNumber(personId);
-
-        GetHospPersonResponseType response = null;
+        HospCredentialsForPerson response = null;
         try {
-            response = client.callGetHospPerson(parameters);
+            response = authorizationManagementService.getGetHospCredentialsForPersonResponseType(personId);
         } catch (SOAPFaultException e) {
             LOG.debug("Soap exception", e);
         }
 
-        if (response == null) {
+        if (response == null || response.getPersonalIdentityNumber() == null) {
             LOG.debug("Response did not contain any hospPerson for '{}'", personId);
             return null;
         }
+        HospPerson hospPerson = new HospPerson();
 
-        return response;
+        hospPerson.setPersonalIdentityNumber(response.getPersonalIdentityNumber());
+        hospPerson.setPersonalPrescriptionCode(response.getPersonalPrescriptionCode());
+
+        List<String> hsaTitles = new ArrayList<>();
+        List<String> titleCodes = new ArrayList<>();
+        if (response.getHealthCareProfessionalLicence() != null && response.getHealthCareProfessionalLicence().size() > 0) {
+            for (HealthCareProfessionalLicence licence : response.getHealthCareProfessionalLicence()) {
+                hsaTitles.add(licence.getHealthCareProfessionalLicenceName());
+                titleCodes.add(licence.getHealthCareProfessionalLicenceCode());
+            }
+        }
+        hospPerson.setHsaTitles(hsaTitles);
+        hospPerson.setTitleCodes(titleCodes);
+
+        List<String> specialityNames = new ArrayList<>();
+        List<String> specialityCodes = new ArrayList<>();
+        if (response.getHealthCareProfessionalLicenceSpeciality() != null && response.getHealthCareProfessionalLicenceSpeciality().size() > 0) {
+            for (HCPSpecialityCodes codes : response.getHealthCareProfessionalLicenceSpeciality()) {
+                specialityNames.add(codes.getSpecialityName());
+                specialityCodes.add(codes.getSpecialityCode());
+            }
+        }
+        hospPerson.setSpecialityNames(specialityNames);
+        hospPerson.setSpecialityCodes(specialityCodes);
+
+        return hospPerson;
     }
 
     @Override
@@ -68,11 +92,7 @@ public class HospPersonServiceImpl implements HospPersonService {
 
         LOG.debug("Calling getHospLastUpdate");
 
-        GetHospLastUpdateType parameters = new GetHospLastUpdateType();
-
-        GetHospLastUpdateResponseType response = client.callGetHospLastUpdate(parameters);
-
-        return response.getLastUpdate();
+        return authorizationManagementService.getHospLastUpdate();
     }
 
     @Override
@@ -89,16 +109,11 @@ public class HospPersonServiceImpl implements HospPersonService {
 
         LOG.debug("Calling handleCertifier for certifierId '{}'", certifierId);
 
-        HandleCertifierType parameters = new HandleCertifierType();
-        parameters.setPersonalIdentityNumber(personId);
-        parameters.setAddToCertifiers(add);
-        parameters.setCertifierId(certifierId);
-        parameters.setReason(reason);
+        Result result = authorizationManagementService.
+                handleHospCertificationPersonResponseType(certifierId, add ? "add" : "remove", personId, reason);
 
-        HandleCertifierResponseType response = client.callHandleCertifier(parameters);
-
-        if (!"OK".equals(response.getResult())) {
-            LOG.error("handleCertifier returned result '{}' for certifierId '{}'", response.getResult(), certifierId);
+        if (!"OK".equals(result.getResultText())) {
+            LOG.error("handleCertifier returned result '{}' for certifierId '{}'", result.getResultText(), certifierId);
             return false;
         }
 

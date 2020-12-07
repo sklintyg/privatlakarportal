@@ -1,4 +1,3 @@
-ext.wsdlFile = file("src/main/resources/schemas/wsdl/HsaWsInteraction_3.18.wsdl")
 ext.generatedJavaDir = file("generatedSource/java")
 
 sourceSets.main.java {
@@ -7,36 +6,18 @@ sourceSets.main.java {
 
 clean.doLast { ant.delete(dir: generatedJavaDir.parent) }
 
-configurations {
-    wsdlgen
-}
-
 if (project.hasProperty("codeQuality")) {
     license {
         exclude "**/*.java" // This excludes too many files, but "generatedSource/**/*.java" does not work for some reason.
     }
 }
 
-task wsdl2Java(type: JavaExec) {
-    inputs.files wsdlFile
-    outputs.dir generatedJavaDir
-    classpath configurations.wsdlgen
-    jvmArgs "-Djavax.xml.accessExternalSchema=all"
-    main "org.apache.cxf.tools.wsdlto.WSDLToJava"
-    args "-xjc-XhashCode", "-xjc-Xequals", "-xjc-XtoString", "-xjc-Xinheritance",
-        "-xjc-b,${projectDir}/src/main/resources/jaxb-bindings.xjb", "-validate", "-verbose",
-        "-p", "urn:riv:hsa:HsaWs:3=se.inera.ifv.hsaws.v3",
-        "-p", "urn:riv:hsa:HsaWsResponder:3=se.inera.ifv.hsawsresponder.v3",
-        "-p", "http://www.w3.org/2005/08/addressing=org.w3.wsaddressing10", '-d', generatedJavaDir.path, wsdlFile
-}
-
-compileJava.dependsOn(wsdl2Java)
-
 dependencies {
     compile project(":privatlakarportal-common")
 
     compile "se.inera.intyg.infra:common-redis-cache-core:${infraVersion}"
     compile "se.inera.intyg.infra:monitoring:${infraVersion}"
+    compile "se.inera.intyg.infra:hsatk-integration:${infraVersion}"
     compile "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
     compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider"
     compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
@@ -44,16 +25,4 @@ dependencies {
     compile "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
     compile "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
 
-    wsdlgen "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion}"
-    wsdlgen "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion}"
-    wsdlgen "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
-
-    wsdlgen "jakarta.xml.ws:jakarta.xml.ws-api"
-    wsdlgen "jakarta.annotation:jakarta.annotation-api"
-
-    wsdlgen "com.sun.xml.bind:jaxb-xjc:${jaxbXjcVersion}"
-    wsdlgen "com.sun.xml.bind:jaxb-core:${jaxbCoreVersion}"
-    wsdlgen "com.sun.xml.bind:jaxb-impl:${jaxbImplVersion}"
-
-    wsdlgen "ch.qos.logback:logback-classic"
 }

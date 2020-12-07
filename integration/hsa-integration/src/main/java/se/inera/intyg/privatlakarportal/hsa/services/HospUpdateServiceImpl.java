@@ -37,12 +37,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.common.service.MailService;
 import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
+import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
 import se.inera.intyg.privatlakarportal.hsa.monitoring.MonitoringLogService;
 import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
@@ -177,7 +177,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             }
         }
 
-        GetHospPersonResponseType hospPersonResponse;
+        HospPerson hospPersonResponse;
         try {
             hospPersonResponse = hospPersonService.getHospPerson(privatlakare.getPersonId());
         } catch (WebServiceException e) {
@@ -294,44 +294,43 @@ public class HospUpdateServiceImpl implements HospUpdateService {
         return MINUTES.between(registrationDate, now) >= (mailInterval * numberOfEmails);
     }
 
-    private List<Specialitet> getSpecialiteter(Privatlakare privatlakare, GetHospPersonResponseType hospPersonResponse) {
+    private List<Specialitet> getSpecialiteter(Privatlakare privatlakare, HospPerson hospPersonResponse) {
         List<Specialitet> specialiteter = new ArrayList<>();
-        if (hospPersonResponse.getSpecialityCodes().getSpecialityCode().size() != hospPersonResponse.getSpecialityNames()
-            .getSpecialityName()
+        if (hospPersonResponse.getSpecialityCodes().size() != hospPersonResponse.getSpecialityNames()
             .size()) {
             LOG.error("getHospPerson getSpecialityCodes count "
-                + hospPersonResponse.getSpecialityCodes().getSpecialityCode().size()
+                + hospPersonResponse.getSpecialityCodes().size()
                 + "doesn't match getSpecialityNames count '{}' != '{}'"
-                + hospPersonResponse.getSpecialityNames().getSpecialityName().size());
+                + hospPersonResponse.getSpecialityNames().size());
             throw new PrivatlakarportalServiceException(
                 PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
                 "Inconsistent data from HSA");
         } else {
-            for (int i = 0; i < hospPersonResponse.getSpecialityCodes().getSpecialityCode().size(); i++) {
+            for (int i = 0; i < hospPersonResponse.getSpecialityCodes().size(); i++) {
                 specialiteter.add(new Specialitet(privatlakare,
-                    hospPersonResponse.getSpecialityNames().getSpecialityName().get(i),
-                    hospPersonResponse.getSpecialityCodes().getSpecialityCode().get(i)));
+                    hospPersonResponse.getSpecialityNames().get(i),
+                    hospPersonResponse.getSpecialityCodes().get(i)));
             }
         }
         return specialiteter;
     }
 
     private Set<LegitimeradYrkesgrupp> getLegitimeradeYrkesgrupper(Privatlakare privatlakare,
-        GetHospPersonResponseType hospPersonResponse) {
+        HospPerson hospPersonResponse) {
         Set<LegitimeradYrkesgrupp> legitimeradYrkesgrupper = new HashSet<>();
-        if (hospPersonResponse.getHsaTitles().getHsaTitle().size() != hospPersonResponse.getTitleCodes().getTitleCode().size()) {
+        if (hospPersonResponse.getHsaTitles().size() != hospPersonResponse.getTitleCodes().size()) {
             LOG.error("getHospPerson getHsaTitles count "
-                + hospPersonResponse.getHsaTitles().getHsaTitle().size()
+                + hospPersonResponse.getHsaTitles().size()
                 + "doesn't match getTitleCodes count '{}' != '{}'"
-                + hospPersonResponse.getTitleCodes().getTitleCode().size());
+                + hospPersonResponse.getTitleCodes().size());
             throw new PrivatlakarportalServiceException(
                 PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM,
                 "Inconsistent data from HSA");
         } else {
-            for (int i = 0; i < hospPersonResponse.getHsaTitles().getHsaTitle().size(); i++) {
+            for (int i = 0; i < hospPersonResponse.getHsaTitles().size(); i++) {
                 legitimeradYrkesgrupper.add(new LegitimeradYrkesgrupp(privatlakare,
-                    hospPersonResponse.getHsaTitles().getHsaTitle().get(i),
-                    hospPersonResponse.getTitleCodes().getTitleCode().get(i)));
+                    hospPersonResponse.getHsaTitles().get(i),
+                    hospPersonResponse.getTitleCodes().get(i)));
             }
         }
         return legitimeradYrkesgrupper;

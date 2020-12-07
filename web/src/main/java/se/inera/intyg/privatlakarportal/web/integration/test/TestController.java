@@ -33,9 +33,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import se.inera.intyg.infra.integration.hsatk.stub.HsaServiceStub;
+import se.inera.intyg.infra.integration.hsatk.stub.model.HsaPerson;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
-import se.inera.intyg.privatlakarportal.hsa.stub.HsaHospPerson;
-import se.inera.intyg.privatlakarportal.hsa.stub.HsaServiceStub;
 import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
@@ -119,14 +119,14 @@ public class TestController {
 
     @Profile("hsa-stub")
     @RequestMapping(value = "/hosp/add", method = RequestMethod.POST)
-    public void addHospPerson(@RequestBody HsaHospPerson hsaHospPerson) {
-        hsaServiceStub.addHospPerson(hsaHospPerson);
+    public void addHospPerson(@RequestBody HsaPerson hsaPerson) {
+        hsaServiceStub.addHsaPerson(hsaPerson);
     }
 
     @Profile("hsa-stub")
     @RequestMapping(value = "/hosp/remove/{id}", method = RequestMethod.DELETE)
     public void removeHospPerson(@PathVariable("id") String id) {
-        hsaServiceStub.removeHospPerson(id);
+        hsaServiceStub.deleteHsaPerson(id);
     }
 
     @RequestMapping(value = "/hosp/update", method = RequestMethod.POST)

@@ -19,7 +19,7 @@
 package se.inera.intyg.privatlakarportal.hsa.services;
 
 import java.time.LocalDateTime;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
+import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
 
 public interface HospPersonService {
 
@@ -27,7 +27,7 @@ public interface HospPersonService {
 
     boolean removeFromCertifier(String personId, String certifierId, String reason);
 
-    GetHospPersonResponseType getHospPerson(String personId);
+    HospPerson getHospPerson(String personId);
 
     LocalDateTime getHospLastUpdate();
 }
