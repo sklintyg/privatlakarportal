@@ -49,7 +49,7 @@ public class HospPersonServiceImpl implements HospPersonService {
 
         HospCredentialsForPerson response = null;
         try {
-            response = authorizationManagementService.getGetHospCredentialsForPersonResponseType(personId);
+            response = authorizationManagementService.getHospCredentialsForPersonResponseType(personId);
         } catch (SOAPFaultException e) {
             LOG.debug("Soap exception", e);
         }

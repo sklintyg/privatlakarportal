@@ -18,13 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +28,13 @@ import se.inera.intyg.infra.integration.hsatk.model.HospCredentialsForPerson;
 import se.inera.intyg.infra.integration.hsatk.model.Result;
 import se.inera.intyg.infra.integration.hsatk.services.HsatkAuthorizationManagementService;
 import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HospPersonServiceTest {
@@ -60,9 +60,9 @@ public class HospPersonServiceTest {
         response.setPersonalIdentityNumber(VALID_PERSON_ID);
         response.setPersonalPrescriptionCode(CERTIFIER_ID);
 
-        when(authorizationManagementService.getGetHospCredentialsForPersonResponseType(VALID_PERSON_ID)).thenReturn(response);
+        when(authorizationManagementService.getHospCredentialsForPersonResponseType(VALID_PERSON_ID)).thenReturn(response);
 
-        when(authorizationManagementService.getGetHospCredentialsForPersonResponseType(INVALID_PERSON_ID)).thenReturn(null);
+        when(authorizationManagementService.getHospCredentialsForPersonResponseType(INVALID_PERSON_ID)).thenReturn(null);
     }
 
     @Test
