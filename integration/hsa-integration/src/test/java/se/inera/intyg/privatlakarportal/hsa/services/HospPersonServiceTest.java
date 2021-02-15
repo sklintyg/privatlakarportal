@@ -18,23 +18,23 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonType;
-import se.inera.ifv.hsawsresponder.v3.HandleCertifierResponseType;
-import se.inera.ifv.hsawsresponder.v3.HandleCertifierType;
-import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
+import se.inera.intyg.infra.integration.hsatk.model.HospCredentialsForPerson;
+import se.inera.intyg.infra.integration.hsatk.model.Result;
+import se.inera.intyg.infra.integration.hsatk.services.HsatkAuthorizationManagementService;
+import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HospPersonServiceTest {
@@ -42,9 +42,12 @@ public class HospPersonServiceTest {
     private static final String VALID_PERSON_ID = "1912121212";
     private static final String INVALID_PERSON_ID = "0000000000";
     private static final String CERTIFIER_ID = "CERTIFIER_0001";
+    private static final String REASON = "Test";
+    private static final String ADD = "add";
+    private static final String REMOVE = "remove";
 
     @Mock
-    HSAWebServiceCalls hsaWebServiceCalls;
+    HsatkAuthorizationManagementService authorizationManagementService;
 
     @InjectMocks
     HospPersonServiceImpl hospPersonService;
@@ -52,22 +55,20 @@ public class HospPersonServiceTest {
     @Before
     public void setupExpectations() {
 
-        GetHospPersonType validParams = new GetHospPersonType();
-        validParams.setPersonalIdentityNumber(VALID_PERSON_ID);
+        HospCredentialsForPerson response = new HospCredentialsForPerson();
 
-        GetHospPersonType invalidParams = new GetHospPersonType();
-        invalidParams.setPersonalIdentityNumber(INVALID_PERSON_ID);
+        response.setPersonalIdentityNumber(VALID_PERSON_ID);
+        response.setPersonalPrescriptionCode(CERTIFIER_ID);
 
-        GetHospPersonResponseType response = new GetHospPersonResponseType();
-        when(hsaWebServiceCalls.callGetHospPerson(validParams)).thenReturn(response);
+        when(authorizationManagementService.getHospCredentialsForPersonResponseType(VALID_PERSON_ID)).thenReturn(response);
 
-        when(hsaWebServiceCalls.callGetHospPerson(invalidParams)).thenReturn(null);
+        when(authorizationManagementService.getHospCredentialsForPersonResponseType(INVALID_PERSON_ID)).thenReturn(null);
     }
 
     @Test
     public void testGetHsaPersonInfoWithValidPerson() {
 
-        GetHospPersonResponseType res = hospPersonService.getHospPerson(VALID_PERSON_ID);
+        HospPerson res = hospPersonService.getHospPerson(VALID_PERSON_ID);
 
         assertNotNull(res);
     }
@@ -75,7 +76,7 @@ public class HospPersonServiceTest {
     @Test
     public void testGetHsaPersonInfoWithInvalidPerson() {
 
-        GetHospPersonResponseType res = hospPersonService.getHospPerson(INVALID_PERSON_ID);
+        HospPerson res = hospPersonService.getHospPerson(INVALID_PERSON_ID);
 
         assertNull(res);
     }
@@ -83,34 +84,25 @@ public class HospPersonServiceTest {
 
     @Test
     public void testAddToCertifier() {
-        HandleCertifierResponseType response = new HandleCertifierResponseType();
-        response.setResult("OK");
-        when(hsaWebServiceCalls.callHandleCertifier(any(HandleCertifierType.class))).thenReturn(response);
+        Result response = new Result();
+        response.setResultText("OK");
+        when(authorizationManagementService.handleHospCertificationPersonResponseType(anyString(), anyString(), anyString(), isNull())).thenReturn(response);
 
         hospPersonService.addToCertifier(VALID_PERSON_ID, CERTIFIER_ID);
 
-        HandleCertifierType parameters = new HandleCertifierType();
-        parameters.setAddToCertifiers(true);
-        parameters.setCertifierId(CERTIFIER_ID);
-        parameters.setPersonalIdentityNumber(VALID_PERSON_ID);
-        verify(hsaWebServiceCalls).callHandleCertifier(parameters);
+        verify(authorizationManagementService).handleHospCertificationPersonResponseType(CERTIFIER_ID, ADD, VALID_PERSON_ID, null);
     }
 
     @Test
     public void testRemoveFromCertifier() {
 
-        HandleCertifierResponseType response = new HandleCertifierResponseType();
-        response.setResult("OK");
-        when(hsaWebServiceCalls.callHandleCertifier(any(HandleCertifierType.class))).thenReturn(response);
+        Result response = new Result();
+        response.setResultText("OK");
+        when(authorizationManagementService.handleHospCertificationPersonResponseType(anyString(), anyString(), anyString(), anyString())).thenReturn(response);
 
-        hospPersonService.removeFromCertifier(VALID_PERSON_ID, CERTIFIER_ID, "Test");
+        hospPersonService.removeFromCertifier(VALID_PERSON_ID, CERTIFIER_ID, REASON);
 
-        HandleCertifierType parameters = new HandleCertifierType();
-        parameters.setAddToCertifiers(false);
-        parameters.setCertifierId(CERTIFIER_ID);
-        parameters.setPersonalIdentityNumber(VALID_PERSON_ID);
-        parameters.setReason("Test");
-        verify(hsaWebServiceCalls).callHandleCertifier(parameters);
+        verify(authorizationManagementService).handleHospCertificationPersonResponseType(CERTIFIER_ID, REMOVE, VALID_PERSON_ID, REASON);
     }
 
 }

@@ -31,13 +31,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.model.Registration;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
 import se.inera.intyg.privatlakarportal.common.service.MailService;
+import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
 import se.inera.intyg.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
@@ -97,7 +97,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public HospInformation getHospInformation() {
-        GetHospPersonResponseType response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
+        HospPerson response = hospPersonService.getHospPerson(userService.getUser().getPersonalIdentityNumber());
 
         if (response == null) {
             return null;
@@ -105,8 +105,8 @@ public class RegisterServiceImpl implements RegisterService {
 
         HospInformation hospInformation = new HospInformation();
         hospInformation.setPersonalPrescriptionCode(response.getPersonalPrescriptionCode());
-        hospInformation.setSpecialityNames(response.getSpecialityNames().getSpecialityName());
-        hospInformation.setHsaTitles(response.getHsaTitles().getHsaTitle());
+        hospInformation.setSpecialityNames(response.getSpecialityNames());
+        hospInformation.setHsaTitles(response.getHsaTitles());
 
         return hospInformation;
     }

@@ -46,9 +46,6 @@ import org.mockito.junit.MockitoRule;
 import org.springframework.core.io.ClassPathResource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
-import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
 import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -58,6 +55,7 @@ import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
 import se.inera.intyg.privatlakarportal.common.service.MailService;
 import se.inera.intyg.privatlakarportal.common.service.stub.MailStubStore;
+import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
 import se.inera.intyg.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
@@ -383,15 +381,11 @@ public class RegisterServiceImplTest {
     @Test
     public void getHospInformation() {
 
-        GetHospPersonResponseType hospPersonResponse = new GetHospPersonResponseType();
+        HospPerson hospPersonResponse = new HospPerson();
         hospPersonResponse.setPersonalIdentityNumber(PERSON_ID);
         hospPersonResponse.setPersonalPrescriptionCode("0000000");
-        HsaTitlesType hasTitles = new HsaTitlesType();
-        hasTitles.getHsaTitle().add("Test title");
-        hospPersonResponse.setHsaTitles(hasTitles);
-        SpecialityNamesType specialityNamesType = new SpecialityNamesType();
-        specialityNamesType.getSpecialityName().add("Test speciality");
-        hospPersonResponse.setSpecialityNames(specialityNamesType);
+        hospPersonResponse.getHsaTitles().add("Test title");
+        hospPersonResponse.getSpecialityNames().add("Test speciality");
 
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse);
 

@@ -42,13 +42,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
-import se.inera.ifv.hsawsresponder.v3.GetHospPersonResponseType;
-import se.inera.ifv.hsawsresponder.v3.HsaTitlesType;
-import se.inera.ifv.hsawsresponder.v3.SpecialityCodesType;
-import se.inera.ifv.hsawsresponder.v3.SpecialityNamesType;
-import se.inera.ifv.hsawsresponder.v3.TitleCodesType;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.common.service.MailService;
+import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
 import se.inera.intyg.privatlakarportal.hsa.monitoring.MonitoringLogService;
 import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
@@ -131,17 +127,17 @@ public class HospUpdateServiceImplTest {
 
         // Om det går fel vid kontakt med hsa ska uppdateringsrutinen ändå fortsätta med nästa i listan.
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
-        GetHospPersonResponseType hospPersonResponse2 = createGetHospPersonResponse();
-        hospPersonResponse2.getTitleCodes().getTitleCode().add("DT");
-        hospPersonResponse2.getHsaTitles().getHsaTitle().add("Dietist");
-        hospPersonResponse2.getSpecialityCodes().getSpecialityCode().add("12");
-        hospPersonResponse2.getSpecialityNames().getSpecialityName().add("Specialitet");
+        HospPerson hospPersonResponse2 = createGetHospPersonResponse();
+        hospPersonResponse2.getTitleCodes().add("DT");
+        hospPersonResponse2.getHsaTitles().add("Dietist");
+        hospPersonResponse2.getSpecialityCodes().add("12");
+        hospPersonResponse2.getSpecialityNames().add("Specialitet");
         when(hospPersonService.getHospPerson(PERSON_ID2)).thenReturn(hospPersonResponse2);
-        GetHospPersonResponseType hospPersonResponse3 = createGetHospPersonResponse();
-        hospPersonResponse3.getTitleCodes().getTitleCode().add("LK");
-        hospPersonResponse3.getHsaTitles().getHsaTitle().add("Läkare");
-        hospPersonResponse3.getSpecialityCodes().getSpecialityCode().add("12");
-        hospPersonResponse3.getSpecialityNames().getSpecialityName().add("Specialitet");
+        HospPerson hospPersonResponse3 = createGetHospPersonResponse();
+        hospPersonResponse3.getTitleCodes().add("LK");
+        hospPersonResponse3.getHsaTitles().add("Läkare");
+        hospPersonResponse3.getSpecialityCodes().add("12");
+        hospPersonResponse3.getSpecialityNames().add("Specialitet");
         when(hospPersonService.getHospPerson(PERSON_ID3)).thenReturn(hospPersonResponse3);
 
         hospUpdateService.scheduledUpdateHospInformation();
@@ -174,11 +170,11 @@ public class HospUpdateServiceImplTest {
 
 
         // privatlakare1 får nu läkarbehörighet men har fått GODKAND_ANVANDARE false innan
-        GetHospPersonResponseType hospPersonResponse1 = createGetHospPersonResponse();
-        hospPersonResponse1.getTitleCodes().getTitleCode().add("LK");
-        hospPersonResponse1.getHsaTitles().getHsaTitle().add("Läkare");
-        hospPersonResponse1.getSpecialityCodes().getSpecialityCode().add("12");
-        hospPersonResponse1.getSpecialityNames().getSpecialityName().add("Specialitet");
+        HospPerson hospPersonResponse1 = createGetHospPersonResponse();
+        hospPersonResponse1.getTitleCodes().add("LK");
+        hospPersonResponse1.getHsaTitles().add("Läkare");
+        hospPersonResponse1.getSpecialityCodes().add("12");
+        hospPersonResponse1.getSpecialityNames().add("Specialitet");
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse1);
 
         hospUpdateService.scheduledUpdateHospInformation();
@@ -269,9 +265,9 @@ public class HospUpdateServiceImplTest {
         privatlakare.setGodkandAnvandare(true);
         privatlakare.setPersonId(PERSON_ID);
 
-        GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
-        hospPersonResponse.getTitleCodes().getTitleCode().add("LK");
-        hospPersonResponse.getHsaTitles().getHsaTitle().add("Läkare");
+        HospPerson hospPersonResponse = createGetHospPersonResponse();
+        hospPersonResponse.getTitleCodes().add("LK");
+        hospPersonResponse.getHsaTitles().add("Läkare");
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse);
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
@@ -287,9 +283,9 @@ public class HospUpdateServiceImplTest {
         privatlakare.setGodkandAnvandare(false);
         privatlakare.setPersonId(PERSON_ID);
 
-        GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
-        hospPersonResponse.getTitleCodes().getTitleCode().add("LK");
-        hospPersonResponse.getHsaTitles().getHsaTitle().add("Läkare");
+        HospPerson hospPersonResponse = createGetHospPersonResponse();
+        hospPersonResponse.getTitleCodes().add("LK");
+        hospPersonResponse.getHsaTitles().add("Läkare");
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse);
 
         RegistrationStatus response = hospUpdateService.updateHospInformation(privatlakare, true);
@@ -323,11 +319,11 @@ public class HospUpdateServiceImplTest {
 
         when(hospPersonService.getHospLastUpdate()).thenReturn(LocalDate.parse("2015-09-05").atStartOfDay());
 
-        GetHospPersonResponseType hospPersonResponse = createGetHospPersonResponse();
-        hospPersonResponse.getTitleCodes().getTitleCode().add("DT");
-        hospPersonResponse.getHsaTitles().getHsaTitle().add("Dietist");
-        hospPersonResponse.getSpecialityCodes().getSpecialityCode().add("12");
-        hospPersonResponse.getSpecialityNames().getSpecialityName().add("Specialitet");
+        HospPerson hospPersonResponse = createGetHospPersonResponse();
+        hospPersonResponse.getTitleCodes().add("DT");
+        hospPersonResponse.getHsaTitles().add("Dietist");
+        hospPersonResponse.getSpecialityCodes().add("12");
+        hospPersonResponse.getSpecialityNames().add("Specialitet");
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(hospPersonResponse);
 
         hospUpdateService.checkForUpdatedHospInformation(privatlakare);
@@ -555,15 +551,15 @@ public class HospUpdateServiceImplTest {
         verify(hospPersonService, times(0)).removeFromCertifier(anyString(), anyString(), anyString());
     }
 
-    private GetHospPersonResponseType createGetHospPersonResponse() {
-        GetHospPersonResponseType getHospPersonResponseType = new GetHospPersonResponseType();
+    private HospPerson createGetHospPersonResponse() {
+        HospPerson hospPerson = new HospPerson();
 
-        getHospPersonResponseType.setSpecialityCodes(new SpecialityCodesType());
-        getHospPersonResponseType.setSpecialityNames(new SpecialityNamesType());
-        getHospPersonResponseType.setTitleCodes(new TitleCodesType());
-        getHospPersonResponseType.setHsaTitles(new HsaTitlesType());
-        getHospPersonResponseType.setPersonalPrescriptionCode(PERSONAL_PRESCRIPTION_CODE);
+        hospPerson.setSpecialityCodes(new ArrayList());
+        hospPerson.setSpecialityNames(new ArrayList());
+        hospPerson.setTitleCodes(new ArrayList());
+        hospPerson.setHsaTitles(new ArrayList<>());
+        hospPerson.setPersonalPrescriptionCode(PERSONAL_PRESCRIPTION_CODE);
 
-        return getHospPersonResponseType;
+        return hospPerson;
     }
 }

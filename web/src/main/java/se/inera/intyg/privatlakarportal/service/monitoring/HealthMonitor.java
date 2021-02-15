@@ -26,9 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import se.inera.ifv.privatlakarportal.spi.authorization.impl.HSAWebServiceCalls;
 
 /**
  * Exposes health metrics as Prometheus values. To simplify any 3rd party scraping applications, all metrics produced
@@ -66,11 +64,6 @@ public class HealthMonitor extends Collector {
         .help("0 == OK 1 == NOT OK")
         .register();
 
-    private static final Gauge HSA_WS_ACCESSIBLE = Gauge.build()
-        .name(PREFIX + "hsa_ws_accessible" + NORMAL)
-        .help("0 == OK 1 == NOT OK")
-        .register();
-
     private static final long MILLIS_PER_SECOND = 1000L;
 
     private static final String PING_SQL = "SELECT 1";
@@ -79,9 +72,6 @@ public class HealthMonitor extends Collector {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    @Autowired
-    private HSAWebServiceCalls hsaService;
 
     @FunctionalInterface
     interface Tester {
@@ -112,7 +102,6 @@ public class HealthMonitor extends Collector {
             // Update the gauges.
             UPTIME.set(secondsSinceStart);
             DB_ACCESSIBLE.set(checkDbConnection() ? 0 : 1);
-            HSA_WS_ACCESSIBLE.set(pingHsaWs() ? 0 : 1);
         }
 
         return Collections.emptyList();
@@ -120,10 +109,6 @@ public class HealthMonitor extends Collector {
 
     private boolean checkDbConnection() {
         return invoke(() -> entityManager.createNativeQuery(PING_SQL).getSingleResult());
-    }
-
-    private boolean pingHsaWs() {
-        return invoke(() -> hsaService.callPing());
     }
 
     private boolean invoke(Tester tester) {

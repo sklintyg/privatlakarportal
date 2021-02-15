@@ -18,17 +18,17 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
 
-import static org.hamcrest.CoreMatchers.is;
-
 import com.google.common.collect.Lists;
 import io.restassured.RestAssured;
-import java.util.Arrays;
 import org.hamcrest.Matchers;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import se.inera.intyg.privatlakarportal.common.model.Registration;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
+
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Created by stillor on 2/3/17.
@@ -221,16 +221,30 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
     }
 
     private String createHospInformation(String personNummer) {
+
+        JSONArray specialities = new JSONArray();
+        JSONObject speciality = new JSONObject();
+        speciality.put("specialityCode", "32");
+        speciality.put("specialityName", "Klinisk fysiologi");
+        specialities.add(speciality);
+        speciality = new JSONObject();
+        speciality.put("specialityCode", "74");
+        speciality.put("specialityName", "Nukleärmedicin");
+        specialities.add(speciality);
+
+        JSONArray licences = new JSONArray();
+        JSONObject licence = new JSONObject();
+        licence.put("healthCareProfessionalLicenceCode", "LK");
+        licence.put("healthCareProfessionalLicenceName", "Läkare");
+        licences.add(licence);
+
         JSONObject body = new JSONObject();
         body.put("personalIdentityNumber", personNummer);
         body.put("personalPrescriptionCode", "1234567");
         body.put("educationCodes", Lists.newArrayList());
         body.put("restrictions", Lists.newArrayList());
-        body.put("restrictionCodes", Lists.newArrayList());
-        body.put("specialityCodes", Arrays.asList("32", "74"));
-        body.put("specialityNames", Arrays.asList("Klinisk fysiologi", "Nukleärmedicin"));
-        body.put("titleCodes", Arrays.asList("LK"));
-        body.put("hsaTitles", Arrays.asList("Läkare"));
+        body.put("specialities", specialities);
+        body.put("healthCareProfessionalLicenceType", licences);
         return body.toJSONString();
     }
 }

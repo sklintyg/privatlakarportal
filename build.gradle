@@ -93,6 +93,12 @@ allprojects {
         compile "org.slf4j:slf4j-api"
         compile "com.sun.xml.messaging.saaj:saaj-impl"
 
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+
         testCompile "se.inera.intyg.refdata:refdata:${refDataVersion}"
         testCompile "junit:junit:4.+"
         testCompile "org.mockito:mockito-core"
