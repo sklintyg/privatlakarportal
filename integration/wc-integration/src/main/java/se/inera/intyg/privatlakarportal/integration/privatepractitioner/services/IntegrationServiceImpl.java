@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResultCode;
 import se.inera.intyg.privatlakarportal.common.integration.kodverk.Befattningar;
 import se.inera.intyg.privatlakarportal.common.integration.kodverk.Vardformer;
 import se.inera.intyg.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
@@ -136,23 +138,23 @@ public class IntegrationServiceImpl implements IntegrationService {
 
     @Override
     @Transactional(transactionManager = "transactionManager")
-    public ValidatePrivatePractitionerResponseType validatePrivatePractitionerByPersonId(String personalIdentityNumber) {
+    public ValidatePrivatePractitionerResponse validatePrivatePractitionerByPersonId(String personalIdentityNumber) {
 
-        ValidatePrivatePractitionerResponseType response = new ValidatePrivatePractitionerResponseType();
+        ValidatePrivatePractitionerResponse response = new ValidatePrivatePractitionerResponse();
 
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(personalIdentityNumber);
 
         if (privatlakare == null) {
-            response.setResultCode(ResultCodeEnum.ERROR);
+            response.setResultCode(ValidatePrivatePractitionerResultCode.ERROR_NO_ACCOUNT);
             response.setResultText("No private practitioner with personal identity number: " + personalIdentityNumber + " exists.");
         } else {
             hospUpdateService.checkForUpdatedHospInformation(privatlakare);
             if (privatlakare.isGodkandAnvandare() && PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
-                response.setResultCode(ResultCodeEnum.OK);
+                response.setResultCode(ValidatePrivatePractitionerResultCode.OK);
                 // Check if this is the first time the user logins to Webcert after getting godkand status
                 checkFirstLogin(privatlakare);
             } else {
-                response.setResultCode(ResultCodeEnum.ERROR);
+                response.setResultCode(ValidatePrivatePractitionerResultCode.ERROR_NOT_AUTHORIZED_IN_HOSP);
                 response.setResultText(
                     "Private practitioner with personal identity number: " + personalIdentityNumber
                         + " is not authorized to use webcert.");

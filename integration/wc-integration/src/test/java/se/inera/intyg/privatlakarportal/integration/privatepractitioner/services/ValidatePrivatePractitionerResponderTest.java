@@ -18,15 +18,10 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerType;
 
 /**
  * Created by pebe on 2015-08-19.
@@ -34,45 +29,12 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 @RunWith(MockitoJUnitRunner.class)
 public class ValidatePrivatePractitionerResponderTest {
 
-    @Mock
-    private IntegrationService integrationService;
-
     @InjectMocks
     private ValidatePrivatePractitionerResponderImpl validatePrivatePractitionerResponder = new ValidatePrivatePractitionerResponderImpl();
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBothIds() {
-        ValidatePrivatePractitionerType validatePrivatePractitionerType = new ValidatePrivatePractitionerType();
-        validatePrivatePractitionerType.setPersonalIdentityNumber("id1");
-        validatePrivatePractitionerType.setPersonHsaId("id2");
-        validatePrivatePractitionerResponder.validatePrivatePractitioner("", validatePrivatePractitionerType);
+    @Test(expected = UnsupportedOperationException.class)
+    public void testDeprecated() {
+        validatePrivatePractitionerResponder.validatePrivatePractitioner(null, null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetNoIds() {
-        ValidatePrivatePractitionerType validatePrivatePractitionerType = new ValidatePrivatePractitionerType();
-        validatePrivatePractitionerType.setPersonalIdentityNumber(null);
-        validatePrivatePractitionerType.setPersonHsaId(null);
-        validatePrivatePractitionerResponder.validatePrivatePractitioner("", validatePrivatePractitionerType);
-    }
-
-    @Test
-    public void testGetPersonId() {
-        ValidatePrivatePractitionerType validatePrivatePractitionerType = new ValidatePrivatePractitionerType();
-        validatePrivatePractitionerType.setPersonalIdentityNumber("id1");
-        validatePrivatePractitionerType.setPersonHsaId(null);
-        validatePrivatePractitionerResponder.validatePrivatePractitioner("", validatePrivatePractitionerType);
-        verify(integrationService).validatePrivatePractitionerByPersonId("id1");
-        verifyNoMoreInteractions(integrationService);
-    }
-
-    @Test
-    public void testGetHsaId() {
-        ValidatePrivatePractitionerType validatePrivatePractitionerType = new ValidatePrivatePractitionerType();
-        validatePrivatePractitionerType.setPersonalIdentityNumber(null);
-        validatePrivatePractitionerType.setPersonHsaId("id2");
-        validatePrivatePractitionerResponder.validatePrivatePractitioner("", validatePrivatePractitionerType);
-        verify(integrationService).validatePrivatePractitionerByHsaId("id2");
-        verifyNoMoreInteractions(integrationService);
-    }
 }

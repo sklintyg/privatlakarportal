@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.infra.integration.hsatk.stub.HsaServiceStub;
 import se.inera.intyg.infra.integration.hsatk.stub.model.HsaPerson;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
@@ -43,7 +44,6 @@ import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRe
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
 import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto;
-import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
 /**
  * Created by pebe on 2015-09-02.
@@ -155,7 +155,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/webcert/validatePrivatePractitioner/{id}", method = RequestMethod.POST)
-    public ValidatePrivatePractitionerResponseType validatePrivatePractitioner(@PathVariable("id") String id) {
+    public ValidatePrivatePractitionerResponse validatePrivatePractitioner(@PathVariable("id") String id) {
         return integrationService.validatePrivatePractitionerByPersonId(id);
     }
 }

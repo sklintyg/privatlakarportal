@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
+import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
 import se.inera.intyg.privatlakarportal.service.PrivatePractitionerService;
 import se.inera.intyg.privatlakarportal.service.model.PrivatePractitioner;
 import se.inera.intyg.privatlakarportal.web.controller.internalapi.dto.PrivatePractitionerDto;
@@ -35,10 +37,12 @@ import se.inera.intyg.privatlakarportal.web.controller.internalapi.dto.PrivatePr
 public class PrivatePractitionerController {
 
     private PrivatePractitionerService privatePractitionerService;
+    private IntegrationService integrationService;
 
     @Autowired
-    public PrivatePractitionerController(PrivatePractitionerService privatePractitionerService) {
+    public PrivatePractitionerController(PrivatePractitionerService privatePractitionerService, IntegrationService integrationService) {
         this.privatePractitionerService = privatePractitionerService;
+        this.integrationService = integrationService;
     }
 
     @GetMapping("")
@@ -57,6 +61,12 @@ public class PrivatePractitionerController {
         List<PrivatePractitioner> privatePractitioners = privatePractitionerService.getPrivatePractitioners();
 
         return ResponseEntity.ok(convert(privatePractitioners));
+    }
+
+    @GetMapping("/validate")
+    public ResponseEntity<ValidatePrivatePractitionerResponse> validatePrivatePractitioner(@RequestParam String personalIdentityNumber) {
+        final var response = integrationService.validatePrivatePractitionerByPersonId(personalIdentityNumber);
+         return ResponseEntity.ok(response);
     }
 
     private List<PrivatePractitionerDto> convert(List<PrivatePractitioner> privatePractitioners) {

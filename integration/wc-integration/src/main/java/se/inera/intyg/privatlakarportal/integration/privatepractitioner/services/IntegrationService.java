@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
 
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
@@ -32,5 +33,5 @@ public interface IntegrationService {
 
     ValidatePrivatePractitionerResponseType validatePrivatePractitionerByHsaId(String personHsaId);
 
-    ValidatePrivatePractitionerResponseType validatePrivatePractitionerByPersonId(String personalIdentityNumber);
+    ValidatePrivatePractitionerResponse validatePrivatePractitionerByPersonId(String personalIdentityNumber);
 }
