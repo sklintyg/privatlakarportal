@@ -23,9 +23,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerRequest;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
 import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
 import se.inera.intyg.privatlakarportal.service.PrivatePractitionerService;
@@ -63,9 +66,10 @@ public class PrivatePractitionerController {
         return ResponseEntity.ok(convert(privatePractitioners));
     }
 
-    @GetMapping("/validate")
-    public ResponseEntity<ValidatePrivatePractitionerResponse> validatePrivatePractitioner(@RequestParam String personalIdentityNumber) {
-        final var response = integrationService.validatePrivatePractitionerByPersonId(personalIdentityNumber);
+    @PostMapping("/validate")
+    public ResponseEntity<ValidatePrivatePractitionerResponse> validatePrivatePractitioner(
+        @RequestBody ValidatePrivatePractitionerRequest request) {
+        final var response = integrationService.validatePrivatePractitionerByPersonId(request.getPersonalIdentityNumber());
          return ResponseEntity.ok(response);
     }
 
