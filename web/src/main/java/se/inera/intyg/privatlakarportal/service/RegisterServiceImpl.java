@@ -92,6 +92,9 @@ public class RegisterServiceImpl implements RegisterService {
     private DateHelperService dateHelperService;
 
     @Autowired
+    private TermsService termsService;
+
+    @Autowired
     @Qualifier("webMonitoringLogService")
     private MonitoringLogService monitoringService;
 
@@ -167,7 +170,9 @@ public class RegisterServiceImpl implements RegisterService {
 
         hospInformation.setPersonalPrescriptionCode(privatlakare.getForskrivarKod());
 
-        return new RegistrationWithHospInformation(registration, hospInformation);
+        final var userTermsApproved = termsService.getWebcertUserTermsApproved(privatlakare.getHsaId());
+
+        return new RegistrationWithHospInformation(registration, hospInformation, userTermsApproved);
     }
 
     @Override

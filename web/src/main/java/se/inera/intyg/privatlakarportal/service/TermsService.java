@@ -26,4 +26,6 @@ import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 public interface TermsService {
 
     Terms getTerms();
+
+    Boolean getWebcertUserTermsApproved(String hsaId);
 }

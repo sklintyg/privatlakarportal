@@ -59,7 +59,7 @@ public class RegisterController {
     public GetRegistrationResponse getRegistration() {
         RegistrationWithHospInformation registrationWithHospInformation = registerService.getRegistration();
         return new GetRegistrationResponse(registrationWithHospInformation.getRegistration(),
-            registrationWithHospInformation.getHospInformation());
+            registrationWithHospInformation.getHospInformation(), registrationWithHospInformation.isWebcertUserTermsApproved());
     }
 
     @ApiOperation(value = "createRegistration", nickname = "create")

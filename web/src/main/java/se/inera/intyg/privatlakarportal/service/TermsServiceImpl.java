@@ -18,10 +18,14 @@
  */
 package se.inera.intyg.privatlakarportal.service;
 
+import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
@@ -39,6 +43,16 @@ public class TermsServiceImpl implements TermsService {
     @Autowired
     MedgivandeTextRepository medgivandeTextRepository;
 
+    @Value("${webcert.terms.approved.url}")
+    private String termsApprovedUrl;
+
+    private RestTemplate restTemplate;
+
+    @PostConstruct
+    public void init() {
+        restTemplate = new RestTemplate();
+    }
+
     @Override
     public Terms getTerms() {
         MedgivandeText medgivandeText = medgivandeTextRepository.findLatest();
@@ -49,5 +63,14 @@ public class TermsServiceImpl implements TermsService {
                 "Could not find medgivandetext");
         }
         return new Terms(medgivandeText.getMedgivandeText(), medgivandeText.getVersion(), medgivandeText.getDatum());
+    }
+
+    @Override
+    public Boolean getWebcertUserTermsApproved(String hsaId) {
+        final var response = restTemplate.getForEntity(termsApprovedUrl + "/" + hsaId, Boolean.class);
+        if (response.hasBody() && response.getStatusCode() == HttpStatus.OK) {
+            return response.getBody();
+        }
+        return false;
     }
 }
