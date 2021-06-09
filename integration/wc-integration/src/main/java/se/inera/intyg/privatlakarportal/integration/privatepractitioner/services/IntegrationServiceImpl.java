@@ -63,14 +63,19 @@ public class IntegrationServiceImpl implements IntegrationService {
     private static final String PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_IS_NOT_AUTHORIZED =
         "Private practitioner with personal identity number: %s is not authorized to use webcert.";
 
-    @Autowired
-    PrivatlakareRepository privatlakareRepository;
+    private final PrivatlakareRepository privatlakareRepository;
+
+    private final HospUpdateService hospUpdateService;
+
+    private final DateHelperService dateHelperService;
 
     @Autowired
-    HospUpdateService hospUpdateService;
-
-    @Autowired
-    DateHelperService dateHelperService;
+    public IntegrationServiceImpl(PrivatlakareRepository privatlakareRepository,
+        HospUpdateService hospUpdateService, DateHelperService dateHelperService) {
+        this.privatlakareRepository = privatlakareRepository;
+        this.hospUpdateService = hospUpdateService;
+        this.dateHelperService = dateHelperService;
+    }
 
     @Override
     @Transactional
@@ -181,7 +186,7 @@ public class IntegrationServiceImpl implements IntegrationService {
     private static final String PERSONID_ROOT = "1.2.752.129.2.1.3.1";
 
     private HsaId convertToHsaId(String ext) {
-        if (HSAID_ROOT == null || ext == null) {
+        if (ext == null) {
             return null;
         }
         HsaId hsaId = new HsaId();
@@ -191,7 +196,7 @@ public class IntegrationServiceImpl implements IntegrationService {
     }
 
     private ArbetsplatsKod convertToArbetsplatsKod(String ext) {
-        if (ARBETSPLATSKOD_ROOT == null || ext == null) {
+        if (ext == null) {
             return null;
         }
         ArbetsplatsKod arbetsplatsKod = new ArbetsplatsKod();
@@ -201,7 +206,7 @@ public class IntegrationServiceImpl implements IntegrationService {
     }
 
     private PersonId convertToPersonId(String ext) {
-        if (PERSONID_ROOT == null || ext == null) {
+        if (ext == null) {
             return null;
         }
         PersonId personId = new PersonId();
@@ -325,9 +330,8 @@ public class IntegrationServiceImpl implements IntegrationService {
     }
 
     private String getPersonalIdentifyNumberHash(String personalIdentityNumber) {
-        final var personalIdentifyNumberHash = Personnummer.getPersonnummerHashSafe(
+        return Personnummer.getPersonnummerHashSafe(
             Personnummer.createPersonnummer(personalIdentityNumber).orElse(null)
         );
-        return personalIdentifyNumberHash;
     }
 }
