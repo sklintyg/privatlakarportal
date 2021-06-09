@@ -69,13 +69,13 @@ public class IntegrationServiceTest {
     private IntegrationServiceImpl integrationService;
 
     private static final String EJ_GODKAND_HSA_ID = "nonExistingId";
-    private static final String EJ_GODKAND_PERSON_ID = "nonExistingId";
+    private static final String EJ_GODKAND_PERSON_ID = "191212121212";
     private static final String EJ_LAKARE_HSA_ID = "ejLakareHsaId";
-    private static final String EJ_LAKARE_PERSON_ID = "ejLakarePersonId";
+    private static final String EJ_LAKARE_PERSON_ID = "201212121212";
     private static final String GODKAND_HSA_ID = "existingHsaId";
-    private static final String GODKAND_PERSON_ID = "existingPersonId";
+    private static final String GODKAND_PERSON_ID = "192011189228";
     private static final String FINNS_EJ_HSA_ID = "nonExistingHsaId";
-    private static final String FINNS_EJ_PERSON_ID = "nonExistingPersonId";
+    private static final String FINNS_EJ_PERSON_ID = "196705053723";
 
     private HoSPersonType verifyHosPerson;
 
