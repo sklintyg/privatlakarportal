@@ -318,18 +318,18 @@ public class IntegrationServiceImpl implements IntegrationService {
     }
 
     private String errorTextForNotAuthorizedPractitioner(String personalIdentityNumber) {
-        return getMessageForPrivatePractitioner(PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_IS_NOT_AUTHORIZED, personalIdentityNumber);
+        return getMessageWithHashedPersonalId(PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_IS_NOT_AUTHORIZED, personalIdentityNumber);
     }
 
     private String errorTextForMissingPractitioner(String personalIdentityNumber) {
-        return getMessageForPrivatePractitioner(NO_PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_EXISTS, personalIdentityNumber);
+        return getMessageWithHashedPersonalId(NO_PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_EXISTS, personalIdentityNumber);
     }
 
-    private String getMessageForPrivatePractitioner(String message, String personalIdentityNumber) {
-        return String.format(message, getPersonalIdentifyNumberHash(personalIdentityNumber));
+    private String getMessageWithHashedPersonalId(String message, String personalIdentityNumber) {
+        return String.format(message, getPersonalIdentityNumberHash(personalIdentityNumber));
     }
 
-    private String getPersonalIdentifyNumberHash(String personalIdentityNumber) {
+    private String getPersonalIdentityNumberHash(String personalIdentityNumber) {
         return Personnummer.getPersonnummerHashSafe(
             Personnummer.createPersonnummer(personalIdentityNumber).orElse(null)
         );
