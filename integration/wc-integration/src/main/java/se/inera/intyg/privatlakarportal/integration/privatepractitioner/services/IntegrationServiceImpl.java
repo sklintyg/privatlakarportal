@@ -35,6 +35,7 @@ import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
 import se.inera.intyg.privatlakarportal.persistence.model.Vardform;
 import se.inera.intyg.privatlakarportal.persistence.model.Verksamhetstyp;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.schemas.contract.Personnummer;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.types.v1.ArbetsplatsKod;
 import se.riv.infrastructure.directory.privatepractitioner.types.v1.CV;
@@ -98,7 +99,9 @@ public class IntegrationServiceImpl implements IntegrationService {
         if (privatlakare == null) {
             response.setHoSPerson(null);
             response.setResultCode(ResultCodeEnum.ERROR);
-            response.setResultText("No private practitioner with personal identity number: " + personalIdentityNumber + " exists.");
+            response.setResultText(
+                "No private practitioner with personal identity number: " + getPersonalIdentifyNumberHash(personalIdentityNumber)
+                    + " exists.");
         } else {
             response.setResultCode(ResultCodeEnum.OK);
             checkFirstLogin(privatlakare);
@@ -144,7 +147,9 @@ public class IntegrationServiceImpl implements IntegrationService {
 
         if (privatlakare == null) {
             response.setResultCode(ResultCodeEnum.ERROR);
-            response.setResultText("No private practitioner with personal identity number: " + personalIdentityNumber + " exists.");
+            response.setResultText(
+                "No private practitioner with personal identity number: " + getPersonalIdentifyNumberHash(personalIdentityNumber)
+                    + " exists.");
         } else {
             hospUpdateService.checkForUpdatedHospInformation(privatlakare);
             if (privatlakare.isGodkandAnvandare() && PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
@@ -308,4 +313,10 @@ public class IntegrationServiceImpl implements IntegrationService {
         response.setHoSPerson(hoSPersonType);
     }
 
+    private String getPersonalIdentifyNumberHash(String personalIdentityNumber) {
+        final var personalIdentifyNumberHash = Personnummer.getPersonnummerHashSafe(
+            Personnummer.createPersonnummer(personalIdentityNumber).orElse(null)
+        );
+        return personalIdentifyNumberHash;
+    }
 }

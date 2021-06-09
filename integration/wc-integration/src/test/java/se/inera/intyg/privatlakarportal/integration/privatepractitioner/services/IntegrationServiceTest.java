@@ -19,6 +19,7 @@
 package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
@@ -76,6 +77,7 @@ public class IntegrationServiceTest {
     private static final String GODKAND_PERSON_ID = "192011189228";
     private static final String FINNS_EJ_HSA_ID = "nonExistingHsaId";
     private static final String FINNS_EJ_PERSON_ID = "196705053723";
+    private static final String INVALID_PERSON_ID = "XXYYZZAABBCC";
 
     private HoSPersonType verifyHosPerson;
 
@@ -101,6 +103,7 @@ public class IntegrationServiceTest {
         when(privatlakareRepository.findByPersonId(GODKAND_PERSON_ID)).thenReturn(privatlakare);
         when(privatlakareRepository.findByHsaId(FINNS_EJ_HSA_ID)).thenReturn(null);
         when(privatlakareRepository.findByPersonId(FINNS_EJ_PERSON_ID)).thenReturn(null);
+        when(privatlakareRepository.findByPersonId(INVALID_PERSON_ID)).thenReturn(null);
         when(privatlakareRepository.findByHsaId(EJ_GODKAND_HSA_ID)).thenReturn(privatlakareEjGodkand);
         when(privatlakareRepository.findByPersonId(EJ_GODKAND_PERSON_ID)).thenReturn(privatlakareEjGodkand);
         when(privatlakareRepository.findByHsaId(EJ_LAKARE_HSA_ID)).thenReturn(privatlakareEjLakare);
@@ -137,6 +140,15 @@ public class IntegrationServiceTest {
         GetPrivatePractitionerResponseType response = integrationService.getPrivatePractitionerByPersonId(FINNS_EJ_PERSON_ID);
         assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
         assertNull(response.getHoSPerson());
+        assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(FINNS_EJ_PERSON_ID));
+    }
+
+    @Test
+    public void testGetPrivatePractitionerByInvalidPersonIdNonExisting() {
+        GetPrivatePractitionerResponseType response = integrationService.getPrivatePractitionerByPersonId(INVALID_PERSON_ID);
+        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+        assertNull(response.getHoSPerson());
+        assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(INVALID_PERSON_ID));
     }
 
     @Test
@@ -227,6 +239,13 @@ public class IntegrationServiceTest {
     public void testValidatePrivatePractitionerByPersonIdNonExisting() {
         ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(FINNS_EJ_PERSON_ID);
         assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+        assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(FINNS_EJ_PERSON_ID));
     }
 
+    @Test
+    public void testValidatePrivatePractitionerByInvalidPersonIdNonExisting() {
+        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(INVALID_PERSON_ID);
+        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+        assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(INVALID_PERSON_ID));
+    }
 }
