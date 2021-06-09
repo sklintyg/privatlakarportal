@@ -225,7 +225,7 @@ public class IntegrationServiceTest {
 
     @Test
     public void testValidatePrivatePractitionerByPersonIdNonExisting() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(FINNS_EJ_PERSON_ID);
+        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(FINNS_EJ_PERSON_ID);
         assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
     }
 
