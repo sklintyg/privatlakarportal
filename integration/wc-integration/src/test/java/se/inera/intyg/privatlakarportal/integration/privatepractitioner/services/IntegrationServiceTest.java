@@ -215,6 +215,7 @@ public class IntegrationServiceTest {
     public void testValidatePrivatePractitionerByPersonIdEjGodkand() {
         ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(EJ_GODKAND_PERSON_ID);
         assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+        assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(EJ_GODKAND_PERSON_ID));
     }
 
     @Test
@@ -227,6 +228,7 @@ public class IntegrationServiceTest {
     public void testValidatePrivatePractitionerByPersonIdEjLakare() {
         ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(EJ_LAKARE_PERSON_ID);
         assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+        assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(EJ_LAKARE_PERSON_ID));
     }
 
     @Test

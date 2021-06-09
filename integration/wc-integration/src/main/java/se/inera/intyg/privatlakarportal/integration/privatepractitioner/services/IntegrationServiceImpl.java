@@ -58,6 +58,11 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 @Service
 public class IntegrationServiceImpl implements IntegrationService {
 
+    public static final String NO_PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_EXISTS =
+        "No private practitioner with personal identity number: %s exists.";
+    private static final String PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_IS_NOT_AUTHORIZED =
+        "Private practitioner with personal identity number: %s is not authorized to use webcert.";
+
     @Autowired
     PrivatlakareRepository privatlakareRepository;
 
@@ -99,9 +104,7 @@ public class IntegrationServiceImpl implements IntegrationService {
         if (privatlakare == null) {
             response.setHoSPerson(null);
             response.setResultCode(ResultCodeEnum.ERROR);
-            response.setResultText(
-                "No private practitioner with personal identity number: " + getPersonalIdentifyNumberHash(personalIdentityNumber)
-                    + " exists.");
+            response.setResultText(errorTextForMissingPractitioner(personalIdentityNumber));
         } else {
             response.setResultCode(ResultCodeEnum.OK);
             checkFirstLogin(privatlakare);
@@ -147,9 +150,7 @@ public class IntegrationServiceImpl implements IntegrationService {
 
         if (privatlakare == null) {
             response.setResultCode(ResultCodeEnum.ERROR);
-            response.setResultText(
-                "No private practitioner with personal identity number: " + getPersonalIdentifyNumberHash(personalIdentityNumber)
-                    + " exists.");
+            response.setResultText(errorTextForMissingPractitioner(personalIdentityNumber));
         } else {
             hospUpdateService.checkForUpdatedHospInformation(privatlakare);
             if (privatlakare.isGodkandAnvandare() && PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
@@ -158,9 +159,7 @@ public class IntegrationServiceImpl implements IntegrationService {
                 checkFirstLogin(privatlakare);
             } else {
                 response.setResultCode(ResultCodeEnum.ERROR);
-                response.setResultText(
-                    "Private practitioner with personal identity number: " + personalIdentityNumber
-                        + " is not authorized to use webcert.");
+                response.setResultText(errorTextForNotAuthorizedPractitioner(personalIdentityNumber));
             }
         }
 
@@ -311,6 +310,18 @@ public class IntegrationServiceImpl implements IntegrationService {
         }
 
         response.setHoSPerson(hoSPersonType);
+    }
+
+    private String errorTextForNotAuthorizedPractitioner(String personalIdentityNumber) {
+        return getMessageForPrivatePractitioner(PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_IS_NOT_AUTHORIZED, personalIdentityNumber);
+    }
+
+    private String errorTextForMissingPractitioner(String personalIdentityNumber) {
+        return getMessageForPrivatePractitioner(NO_PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_EXISTS, personalIdentityNumber);
+    }
+
+    private String getMessageForPrivatePractitioner(String message, String personalIdentityNumber) {
+        return String.format(message, getPersonalIdentifyNumberHash(personalIdentityNumber));
     }
 
     private String getPersonalIdentifyNumberHash(String personalIdentityNumber) {
