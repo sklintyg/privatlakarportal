@@ -28,7 +28,8 @@
     <p class="leading-number">
       <span class="number-circle leading">3</span>
       <!--span message key="label.start.3"></span-->
-      Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms({terms:'webcert'})">Webcerts användarvillkor</a> (endast första gången).
+      <span ng-if="userTermsActive">Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms({terms:'webcert'})">Webcerts användarvillkor</a> (endast första gången).</span>
+      <span ng-if="!userTermsActive" message key="label.start.subscription.in.use.3"></span>
     </p>
   </div>
 </div>

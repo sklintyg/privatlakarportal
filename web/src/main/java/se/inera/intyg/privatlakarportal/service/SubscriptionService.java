@@ -17,17 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('privatlakareApp')
-.controller('CompleteCtrl', function($scope, $window, APP_CONFIG, SubscriptionService) {
-  'use strict';
+package se.inera.intyg.privatlakarportal.service;
 
-  $scope.userTermsActive = false;
+public interface SubscriptionService {
 
-  SubscriptionService.loadSubscription().then(function(data) {
-    $scope.userTermsActive = !data.subscriptionInUse;
-  });
+    boolean isSubscriptionInUse();
 
-  $scope.goToApp = function() {
-    $window.location = APP_CONFIG.webcertStartUrl;
-  };
-});
+    boolean isSubscriptionRequired();
+
+}

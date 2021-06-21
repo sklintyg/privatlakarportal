@@ -102,10 +102,11 @@ var ppMessages = {
 
     // Start
     'label.start.header': 'Skapa konto i Webcert för privatläkare',
-    'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett konto i Webcert. För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring för din enskilda verksamhet.',
-    'label.start.1': 'Du lämnar uppgifter om dig själv och din enskilda verksamhet. Uppgifterna behövs för att du ska kunna använda alla funktioner i Webcert.',
+    'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett konto i Webcert. För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring för din enskilda näringsverksamhet/firma.',
+    'label.start.1': 'Du lämnar uppgifter om dig själv och din enskilda näringsverksamhet/firma. Uppgifterna behövs för att du ska kunna använda alla funktioner i Webcert.',
     'label.start.2': 'Din yrkeslegitimation verifieras automatiskt mot Socialstyrelsens register över legitimerad hälso- och sjukvårdspersonal (HOSP).',
     'label.start.3': 'Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms">Webcerts användarvillkor</a> (endast första gången).',
+    'label.start.subscription.in.use.3': 'Efter godkänd verifiering mot Socialstyrelsens register över legitimerad hälso- och sjukvårdspersonal (HOSP) kan du börja använda Webcert.',
 
     'label.modal.title.webcertvillkor': 'Användarvillkor för Webcert',
     'label.modal.content.title.webcertvillkor': 'Användarvillkor för Webcert',
@@ -120,7 +121,7 @@ var ppMessages = {
 
     // Register form step 1
     'label.form.grunduppgifter': 'Dina och verksamhetens uppgifter',
-    'label.step1intro': 'För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring för din enskilda verksamhet. Ange information om dig själv och din enskilda verksamhet.',
+    'label.step1intro': 'För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring för din enskilda näringsverksamhet/firma. Ange information om dig själv och din enskilda näringsverksamhet/firma.',
     'label.alert.pu': 'Ditt namn har uppdaterats från folkbokföringens register. För att ditt nya namn ska användas i Webcert behöver du logga ut ur Webcert och sedan logga in igen.',
 
     'label.form.personnummer': 'Personnummer',
@@ -134,7 +135,7 @@ var ppMessages = {
     'label.form.befattning.help': 'Välj din huvudsakliga befattning enligt AID-etikett (Arbetsidentifikation kommuner och regioner).',
     'label.form.befattning.error.required': 'Befattning måste anges innan du kan fortsätta.',
 
-    'label.form.verksamhetensnamn': 'Namn på din enskilda verksamhet*',
+    'label.form.verksamhetensnamn': 'Namn på din enskild näringsverksamhet/firma*',
     'label.form.verksamhetensnamn.help': 'Ange verksamhetens fullständiga namn.',
     'label.form.verksamhetensnamn.error.required': 'Verksamhetens namn måste anges innan du kan fortsätta.',
 
@@ -212,7 +213,8 @@ var ppMessages = {
 
     // Complete
     'label.complete.header': 'Ditt konto är skapat',
-    'label.complete.text': '<p>Dina och verksamhetens uppgifter finns nu sparade och du kan nå dem via länken "Ändra uppgifter" om du behöver uppdatera dem.</p><p>När du första gången går till Webcert för att skriva intyg måste du godkänna de villkor som gäller för att använda tjänsten.</p>',
+    'label.complete.text': 'Dina och verksamhetens uppgifter finns nu sparade och du kan nå dem via länken ”Ändra uppgifter”.',
+    'label.complete.text.user.terms.active': 'När du första gången går till Webcert för att skriva intyg måste du godkänna de villkor som gäller för att använda tjänsten.',
     'label.gotowebcert': 'Gå till Webcert',
 
     // Waiting

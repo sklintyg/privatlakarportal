@@ -5,7 +5,8 @@
         <h1 class="page-header"><span message key="label.complete.header"></span></h1>
         <div class="row">
           <div class="col-md-7">
-            <span message key="label.complete.text"></span>
+            <p message key="label.complete.text"></p>
+            <p ng-if="userTermsActive" message key="label.complete.text.user.terms.active"></p>
             <div class="buttonbar section-line top-pad-1">
               <button id="goToWebcertBtn" class="btn btn-success" ng-click="goToApp()"><span message key="label.gotowebcert"></span></button>
             </div>

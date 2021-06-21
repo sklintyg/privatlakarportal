@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-angular.module('privatlakareApp')
-.controller('CompleteCtrl', function($scope, $window, APP_CONFIG, SubscriptionService) {
-  'use strict';
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-  $scope.userTermsActive = false;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SubscriptionResponse {
 
-  SubscriptionService.loadSubscription().then(function(data) {
-    $scope.userTermsActive = !data.subscriptionInUse;
-  });
+    private boolean subscriptionInUse;
 
-  $scope.goToApp = function() {
-    $window.location = APP_CONFIG.webcertStartUrl;
-  };
-});
+}

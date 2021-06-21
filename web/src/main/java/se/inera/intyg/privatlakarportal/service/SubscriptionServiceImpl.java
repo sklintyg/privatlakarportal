@@ -16,18 +16,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package se.inera.intyg.privatlakarportal.service;
 
-angular.module('privatlakareApp')
-.controller('CompleteCtrl', function($scope, $window, APP_CONFIG, SubscriptionService) {
-  'use strict';
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-  $scope.userTermsActive = false;
+@Service
+public class SubscriptionServiceImpl implements SubscriptionService {
 
-  SubscriptionService.loadSubscription().then(function(data) {
-    $scope.userTermsActive = !data.subscriptionInUse;
-  });
+    @Value("${subscription.adaptation}")
+    private boolean subscriptionAdaptation;
 
-  $scope.goToApp = function() {
-    $window.location = APP_CONFIG.webcertStartUrl;
-  };
-});
+    @Value("${subscription.required}")
+    private boolean subscriptionRequired;
+
+    @Override
+    public boolean isSubscriptionInUse() {
+        return subscriptionAdaptation || subscriptionRequired;
+    }
+
+    @Override
+    public boolean isSubscriptionRequired() {
+        return subscriptionRequired;
+    }
+}

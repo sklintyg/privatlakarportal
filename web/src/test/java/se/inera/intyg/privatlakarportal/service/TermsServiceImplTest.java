@@ -39,14 +39,14 @@ import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
 import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 
-/**
- * Created by pebe on 2015-09-11.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class TermsServiceImplTest {
 
     @Mock
     private MedgivandeTextRepository medgivandeTextRepository;
+
+    @Mock
+    private SubscriptionService subscriptionService;
 
     @Mock
     private RestTemplate restTemplate;
@@ -73,6 +73,8 @@ public class TermsServiceImplTest {
     public void shouldReturnFetchedValueIfResponseOk() {
         final var hsaId = "HSA_ID";
 
+        when(subscriptionService.isSubscriptionRequired()).thenReturn(false);
+
         setMockToReturnValue(HttpStatus.OK, true);
         final var trueResponse = termsService.getWebcertUserTermsApproved(hsaId);
 
@@ -84,8 +86,20 @@ public class TermsServiceImplTest {
     }
 
     @Test
+    public void shouldReturnFasleIfSubscriptionIsRequired() {
+        final var hsaId = "HSA_ID";
+
+        when(subscriptionService.isSubscriptionRequired()).thenReturn(true);
+        final var falseResponse = termsService.getWebcertUserTermsApproved(hsaId);
+
+        assertFalse(falseResponse);
+    }
+
+    @Test
     public void shouldReturnFalseIfFailedRestCall() {
         final var hsaId = "HSA_ID";
+
+        when(subscriptionService.isSubscriptionRequired()).thenReturn(false);
 
         setMockToReturnValue(HttpStatus.INTERNAL_SERVER_ERROR, true);
 

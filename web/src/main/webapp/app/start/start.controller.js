@@ -18,8 +18,14 @@
  */
 
 angular.module('privatlakareApp')
-.controller('MainCtrl', function($scope, $window) {
+.controller('MainCtrl', function($scope, $window, SubscriptionService) {
   'use strict';
+
+  $scope.userTermsActive = false;
+
+  SubscriptionService.loadSubscription().then(function(data) {
+    $scope.userTermsActive = !data.subscriptionInUse;
+  });
 
   $scope.toWebcertLandingPage = function() {
     $window.location.href = 'https://webcert.intygstjanster.se/';

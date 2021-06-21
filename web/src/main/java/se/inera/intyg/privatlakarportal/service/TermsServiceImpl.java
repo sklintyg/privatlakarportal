@@ -32,16 +32,16 @@ import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
 import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 
-/**
- * Created by pebe on 2015-09-09.
- */
 @Service
 public class TermsServiceImpl implements TermsService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TermsServiceImpl.class);
 
     @Autowired
-    MedgivandeTextRepository medgivandeTextRepository;
+    private MedgivandeTextRepository medgivandeTextRepository;
+
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @Value("${webcert.terms.approved.url}")
     private String termsApprovedUrl;
@@ -67,10 +67,17 @@ public class TermsServiceImpl implements TermsService {
 
     @Override
     public Boolean getWebcertUserTermsApproved(String hsaId) {
-        final var response = restTemplate.getForEntity(termsApprovedUrl + "/" + hsaId, Boolean.class);
-        if (response.hasBody() && response.getStatusCode() == HttpStatus.OK) {
-            return response.getBody();
+        if (onlyFetchUserTermsIfSubscriptionIsNotRequired()) {
+            final var response = restTemplate.getForEntity(termsApprovedUrl + "/" + hsaId, Boolean.class);
+            if (response.hasBody() && response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            }
         }
         return false;
     }
+
+    private boolean onlyFetchUserTermsIfSubscriptionIsNotRequired() {
+        return !subscriptionService.isSubscriptionRequired();
+    }
+
 }

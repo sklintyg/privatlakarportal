@@ -17,17 +17,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('privatlakareApp')
-.controller('CompleteCtrl', function($scope, $window, APP_CONFIG, SubscriptionService) {
-  'use strict';
+angular.module('privatlakareApp').factory('SubscriptionService',
+    function($log, $q, SubscriptionProxy) {
+      'use strict';
 
-  $scope.userTermsActive = false;
+      function _loadSubscription() {
 
-  SubscriptionService.loadSubscription().then(function(data) {
-    $scope.userTermsActive = !data.subscriptionInUse;
-  });
+        var promise = $q.defer();
+        var content = {
+          subscriptionInUse: true
+        };
 
-  $scope.goToApp = function() {
-    $window.location = APP_CONFIG.webcertStartUrl;
-  };
-});
+        SubscriptionProxy.getSubscription().then(function(response) {
+          content = response;
+          promise.resolve(content);
+        }, function(errorData) {
+          $log.debug('Failed to get subscription information.');
+          $log.debug(errorData);
+          promise.resolve(content);
+        });
+
+        return promise.promise;
+      }
+
+      return {
+        loadSubscription: _loadSubscription
+      };
+    });
