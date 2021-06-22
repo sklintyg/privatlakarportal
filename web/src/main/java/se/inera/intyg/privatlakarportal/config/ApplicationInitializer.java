@@ -67,6 +67,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
 
+        FilterRegistration.Dynamic accessedThroughLinkFilter = servletContext.addFilter("accessedThroughLinkFilter",
+            DelegatingFilterProxy.class);
+        accessedThroughLinkFilter.addMappingForUrlPatterns(null, false, "/*");
+
         // Spring session filter
         FilterRegistration.Dynamic springSessionRepositoryFilter = servletContext.addFilter("springSessionRepositoryFilter",
             DelegatingFilterProxy.class);
