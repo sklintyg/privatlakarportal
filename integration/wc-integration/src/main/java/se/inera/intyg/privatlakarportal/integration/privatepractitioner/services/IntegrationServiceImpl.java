@@ -37,6 +37,7 @@ import se.inera.intyg.privatlakarportal.persistence.model.Specialitet;
 import se.inera.intyg.privatlakarportal.persistence.model.Vardform;
 import se.inera.intyg.privatlakarportal.persistence.model.Verksamhetstyp;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
+import se.inera.intyg.schemas.contract.Personnummer;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.types.v1.ArbetsplatsKod;
 import se.riv.infrastructure.directory.privatepractitioner.types.v1.CV;
@@ -59,14 +60,24 @@ import se.riv.infrastructure.directory.privatepractitioner.validateprivatepracti
 @Service
 public class IntegrationServiceImpl implements IntegrationService {
 
-    @Autowired
-    PrivatlakareRepository privatlakareRepository;
+    public static final String NO_PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_EXISTS =
+        "No private practitioner with personal identity number: %s exists.";
+    private static final String PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_IS_NOT_AUTHORIZED =
+        "Private practitioner with personal identity number: %s is not authorized to use webcert.";
+
+    private final PrivatlakareRepository privatlakareRepository;
+
+    private final HospUpdateService hospUpdateService;
+
+    private final DateHelperService dateHelperService;
 
     @Autowired
-    HospUpdateService hospUpdateService;
-
-    @Autowired
-    DateHelperService dateHelperService;
+    public IntegrationServiceImpl(PrivatlakareRepository privatlakareRepository,
+        HospUpdateService hospUpdateService, DateHelperService dateHelperService) {
+        this.privatlakareRepository = privatlakareRepository;
+        this.hospUpdateService = hospUpdateService;
+        this.dateHelperService = dateHelperService;
+    }
 
     @Override
     @Transactional
@@ -100,7 +111,7 @@ public class IntegrationServiceImpl implements IntegrationService {
         if (privatlakare == null) {
             response.setHoSPerson(null);
             response.setResultCode(ResultCodeEnum.ERROR);
-            response.setResultText("No private practitioner with personal identity number: " + personalIdentityNumber + " exists.");
+            response.setResultText(errorTextForMissingPractitioner(personalIdentityNumber));
         } else {
             response.setResultCode(ResultCodeEnum.OK);
             checkFirstLogin(privatlakare);
@@ -146,7 +157,7 @@ public class IntegrationServiceImpl implements IntegrationService {
 
         if (privatlakare == null) {
             response.setResultCode(ValidatePrivatePractitionerResultCode.ERROR_NO_ACCOUNT);
-            response.setResultText("No private practitioner with personal identity number: " + personalIdentityNumber + " exists.");
+            response.setResultText(errorTextForMissingPractitioner(personalIdentityNumber));
         } else {
             hospUpdateService.checkForUpdatedHospInformation(privatlakare);
             if (privatlakare.isGodkandAnvandare() && PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
@@ -155,9 +166,7 @@ public class IntegrationServiceImpl implements IntegrationService {
                 checkFirstLogin(privatlakare);
             } else {
                 response.setResultCode(ValidatePrivatePractitionerResultCode.ERROR_NOT_AUTHORIZED_IN_HOSP);
-                response.setResultText(
-                    "Private practitioner with personal identity number: " + personalIdentityNumber
-                        + " is not authorized to use webcert.");
+                response.setResultText(errorTextForNotAuthorizedPractitioner(personalIdentityNumber));
             }
         }
 
@@ -179,7 +188,7 @@ public class IntegrationServiceImpl implements IntegrationService {
     private static final String PERSONID_ROOT = "1.2.752.129.2.1.3.1";
 
     private HsaId convertToHsaId(String ext) {
-        if (HSAID_ROOT == null || ext == null) {
+        if (ext == null) {
             return null;
         }
         HsaId hsaId = new HsaId();
@@ -189,7 +198,7 @@ public class IntegrationServiceImpl implements IntegrationService {
     }
 
     private ArbetsplatsKod convertToArbetsplatsKod(String ext) {
-        if (ARBETSPLATSKOD_ROOT == null || ext == null) {
+        if (ext == null) {
             return null;
         }
         ArbetsplatsKod arbetsplatsKod = new ArbetsplatsKod();
@@ -199,7 +208,7 @@ public class IntegrationServiceImpl implements IntegrationService {
     }
 
     private PersonId convertToPersonId(String ext) {
-        if (PERSONID_ROOT == null || ext == null) {
+        if (ext == null) {
             return null;
         }
         PersonId personId = new PersonId();
@@ -310,4 +319,21 @@ public class IntegrationServiceImpl implements IntegrationService {
         response.setHoSPerson(hoSPersonType);
     }
 
+    private String errorTextForNotAuthorizedPractitioner(String personalIdentityNumber) {
+        return getMessageWithHashedPersonalId(PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_IS_NOT_AUTHORIZED, personalIdentityNumber);
+    }
+
+    private String errorTextForMissingPractitioner(String personalIdentityNumber) {
+        return getMessageWithHashedPersonalId(NO_PRACTITIONER_WITH_PERSONAL_IDENTITY_NUMBER_EXISTS, personalIdentityNumber);
+    }
+
+    private String getMessageWithHashedPersonalId(String message, String personalIdentityNumber) {
+        return String.format(message, getPersonalIdentityNumberHash(personalIdentityNumber));
+    }
+
+    private String getPersonalIdentityNumberHash(String personalIdentityNumber) {
+        return Personnummer.getPersonnummerHashSafe(
+            Personnummer.createPersonnummer(personalIdentityNumber).orElse(null)
+        );
+    }
 }

@@ -74,8 +74,7 @@ public class GetPrivatePractitionerIT extends BaseIntegrationTest {
             .post(GET_PRIVATE_PRACTITIONER_V1_0)
             .then().statusCode(200)
             .rootPath(BASE)
-            .body("resultCode", is(ResultCodeEnum.ERROR.value()))
-            .body("resultText", is("No private practitioner with personal identity number: " + PNR_OKANT + " exists."));
+            .body("resultCode", is(ResultCodeEnum.ERROR.value()));
     }
 
     @Test
