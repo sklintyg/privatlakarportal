@@ -36,6 +36,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
+    public boolean isSubscriptionAdaptationAndNotRequired() {
+        return subscriptionAdaptation && !subscriptionRequired;
+    }
+
+    @Override
     public boolean isSubscriptionRequired() {
         return subscriptionRequired;
     }

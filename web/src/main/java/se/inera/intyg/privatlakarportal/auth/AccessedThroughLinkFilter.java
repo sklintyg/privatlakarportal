@@ -25,8 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
+import se.inera.intyg.privatlakarportal.service.SubscriptionService;
 
 public class AccessedThroughLinkFilter extends OncePerRequestFilter {
 
@@ -36,6 +38,9 @@ public class AccessedThroughLinkFilter extends OncePerRequestFilter {
     private static final String ROOT_URI = "/";
     private static final String SESSION = "SESSION";
     private static final String REFERRER = "referer";
+
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -51,7 +56,7 @@ public class AccessedThroughLinkFilter extends OncePerRequestFilter {
     }
 
     private boolean isAllowed(HttpServletRequest request) {
-        if (isRootUri(request) && !hasSessionCookie(request)) {
+        if (subscriptionService.isSubscriptionAdaptationAndNotRequired() && isRootUri(request) && !hasSessionCookie(request)) {
             return isUrlAccessedThroughLink(request);
         }
         return true;

@@ -23,6 +23,8 @@ public interface SubscriptionService {
 
     boolean isSubscriptionInUse();
 
+    boolean isSubscriptionAdaptationAndNotRequired();
+
     boolean isSubscriptionRequired();
 
 }

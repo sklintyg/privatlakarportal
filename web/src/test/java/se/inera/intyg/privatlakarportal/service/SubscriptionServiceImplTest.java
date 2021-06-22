@@ -40,4 +40,20 @@ public class SubscriptionServiceImplTest extends TestCase {
         assertTrue(subscriptionService.isSubscriptionInUse());
     }
 
+    @Test
+    public void subscriptionAdaptationAndNotRequiredShouldReturnTrue() {
+        ReflectionTestUtils.setField(subscriptionService, "subscriptionAdaptation", true);
+        ReflectionTestUtils.setField(subscriptionService, "subscriptionRequired", false);
+
+        assertTrue(subscriptionService.isSubscriptionAdaptationAndNotRequired());
+    }
+
+    @Test
+    public void subscriptionAdaptationAndNotRequiredShouldReturnFalse() {
+        ReflectionTestUtils.setField(subscriptionService, "subscriptionAdaptation", true);
+        ReflectionTestUtils.setField(subscriptionService, "subscriptionRequired", true);
+
+        assertFalse(subscriptionService.isSubscriptionAdaptationAndNotRequired());
+    }
+
 }
