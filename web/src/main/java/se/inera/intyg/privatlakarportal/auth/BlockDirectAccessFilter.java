@@ -30,9 +30,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 import se.inera.intyg.privatlakarportal.service.SubscriptionService;
 
-public class AccessedThroughLinkFilter extends OncePerRequestFilter {
+public class BlockDirectAccessFilter extends OncePerRequestFilter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AccessedThroughLinkFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BlockDirectAccessFilter.class);
 
     private static final int FORBIDDEN = 403;
     private static final String ROOT_URI = "/";

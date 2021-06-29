@@ -18,12 +18,12 @@
  */
 
 angular.module('privatlakareApp')
-.controller('MainCtrl', function($scope, $window, SubscriptionService) {
+.controller('MainCtrl', function($scope, $window, SubscriptionProxy) {
   'use strict';
 
   $scope.userTermsActive = false;
 
-  SubscriptionService.loadSubscription().then(function(data) {
+  SubscriptionProxy.getSubscriptionState().then(function(data) {
     $scope.userTermsActive = !data.subscriptionInUse;
   });
 

@@ -18,17 +18,13 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.privatlakarportal.service.SubscriptionService;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.SubscriptionResponse;
 
-@Api(value = "/subscription", produces = MediaType.APPLICATION_JSON)
 @RestController
 @RequestMapping("/api/subscription")
 public class SubscriptionController {
@@ -36,8 +32,7 @@ public class SubscriptionController {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    @ApiOperation(value = "getSubscriptionState")
+    @GetMapping("/state")
     public SubscriptionResponse getSubscriptionState() {
         return new SubscriptionResponse(subscriptionService.isSubscriptionInUse());
     }

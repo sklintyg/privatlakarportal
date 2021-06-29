@@ -120,7 +120,7 @@ public class RegisterServiceImpl implements RegisterService {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(userService.getUser().getPersonalIdentityNumber());
 
         if (privatlakare == null) {
-            return new RegistrationWithHospInformation(null, null);
+            return new RegistrationWithHospInformation(null, null, false);
         }
 
         Registration registration = new Registration();

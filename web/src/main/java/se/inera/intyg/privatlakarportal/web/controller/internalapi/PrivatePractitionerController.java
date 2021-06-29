@@ -70,7 +70,7 @@ public class PrivatePractitionerController {
     public ResponseEntity<ValidatePrivatePractitionerResponse> validatePrivatePractitioner(
         @RequestBody ValidatePrivatePractitionerRequest request) {
         final var response = integrationService.validatePrivatePractitionerByPersonId(request.getPersonalIdentityNumber());
-         return ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
     }
 
     private List<PrivatePractitionerDto> convert(List<PrivatePractitioner> privatePractitioners) {

@@ -39,9 +39,9 @@ describe('Proxy: SubscriptionProxy', function() {
       var onSuccess = jasmine.createSpy('onSuccess');
       var onError = jasmine.createSpy('onError');
 
-      $httpBackend.expectGET('/api/subscription').respond(200, {subscription: {subscriptionInUse: true}});
+      $httpBackend.expectGET('/api/subscription/state').respond(200, {subscription: {subscriptionInUse: true}});
 
-      SubscriptionProxy.getSubscription().then(onSuccess, onError);
+      SubscriptionProxy.getSubscriptionState().then(onSuccess, onError);
       $httpBackend.flush();
       $rootScope.$apply();
 
@@ -54,9 +54,9 @@ describe('Proxy: SubscriptionProxy', function() {
       var onSuccess = jasmine.createSpy('onSuccess');
       var onError = jasmine.createSpy('onError');
 
-      $httpBackend.expectGET('/api/subscription').respond(400, {});
+      $httpBackend.expectGET('/api/subscription/state').respond(400, {});
 
-      SubscriptionProxy.getSubscription().then(onSuccess, onError);
+      SubscriptionProxy.getSubscriptionState().then(onSuccess, onError);
       $httpBackend.flush();
       $rootScope.$apply();
 

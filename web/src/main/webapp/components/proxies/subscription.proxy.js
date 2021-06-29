@@ -21,9 +21,9 @@ angular.module('privatlakareApp').factory('SubscriptionProxy',
     function($http, $log, $q, networkConfig) {
       'use strict';
 
-      function _getSubscription() {
+      function _getSubscriptionState() {
         var promise = $q.defer();
-        var restPath = '/api/subscription';
+        var restPath = '/api/subscription/state';
 
         $http.get(restPath, {timeout: networkConfig.defaultTimeout}).success(function(response) {
           if (response) {
@@ -31,15 +31,15 @@ angular.module('privatlakareApp').factory('SubscriptionProxy',
           } else {
             promise.reject(null);
           }
-        }).error(function(response, status) {
-          $log.error('error ' + status);
-          promise.reject(response);
+        }).error(function(response, statusCode) {
+          $log.error('Could not get subscription state. Status code: ' + statusCode);
+          promise.reject(null);
         });
 
         return promise.promise;
       }
 
       return {
-        getSubscription: _getSubscription
+        getSubscriptionState: _getSubscriptionState
       };
     });

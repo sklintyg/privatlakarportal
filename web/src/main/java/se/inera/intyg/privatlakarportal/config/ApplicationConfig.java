@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import se.inera.intyg.infra.security.common.cookie.IneraCookieSerializer;
 import se.inera.intyg.infra.security.filter.InternalApiFilter;
 import se.inera.intyg.infra.security.filter.PrincipalUpdatedFilter;
-import se.inera.intyg.privatlakarportal.auth.AccessedThroughLinkFilter;
+import se.inera.intyg.privatlakarportal.auth.BlockDirectAccessFilter;
 
 @Configuration
 @EnableTransactionManagement
@@ -96,7 +96,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public AccessedThroughLinkFilter accessedThroughLinkFilter() {
-        return new AccessedThroughLinkFilter();
+    public BlockDirectAccessFilter blockDirectAccessFilter() {
+        return new BlockDirectAccessFilter();
     }
 }

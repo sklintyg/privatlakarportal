@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-    @Value("${subscription.adaptation}")
+    @Value("${subscription.adaptation.period}")
     private boolean subscriptionAdaptation;
 
     @Value("${subscription.required}")

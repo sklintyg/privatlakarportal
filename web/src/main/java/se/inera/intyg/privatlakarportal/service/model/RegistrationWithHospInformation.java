@@ -29,12 +29,6 @@ public class RegistrationWithHospInformation {
     private HospInformation hospInformation;
     private boolean webcertUserTermsApproved;
 
-    public RegistrationWithHospInformation(Registration registration, HospInformation hospInformation) {
-        this.registration = registration;
-        this.hospInformation = hospInformation;
-        this.webcertUserTermsApproved = false;
-    }
-
     public RegistrationWithHospInformation(Registration registration, HospInformation hospInformation, boolean webcertUserTermsApproved) {
         this.registration = registration;
         this.hospInformation = hospInformation;
