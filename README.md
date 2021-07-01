@@ -23,10 +23,11 @@ Gör så här för att testa att WC kan anropa och hämta information från PP i
 
 1. Starta PP enligt tidigare instruktion
 2. Sätt följande properties i filen `webcert/webcert-dev.properties` i WC, vilket gör att WC anropar PP istället för en lokal stubbe. Notera att lokal stubbe för PP fortfarande startar, men att trafiken istället går till PP.
-	```
-    privatepractitioner.base.url=http://localhost:8060/services
-	privatepractitioner.portal.registration.url=http://localhost:8060
-    ```
+   
+		privatepractitioner.base.url=http://localhost:8060/services
+		privatepractitioner.portal.registration.url=http://localhost:8060
+		privatepractitioner.internalapi.base.url=http://localhost:8160/internalapi
+    
 3. Starta WC
 4. Starta en browser och gå till WC på https://wc.localtest.me/welcome.html
 5. Välj "Frida Kranstege (Privatläkare, Godkänd)" och klicka på "Logga in"
