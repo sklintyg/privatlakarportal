@@ -156,7 +156,7 @@ public class IntegrationServiceImpl implements IntegrationService {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(personalIdentityNumber);
 
         if (privatlakare == null) {
-            response.setResultCode(ValidatePrivatePractitionerResultCode.ERROR_NO_ACCOUNT);
+            response.setResultCode(ValidatePrivatePractitionerResultCode.NO_ACCOUNT);
             response.setResultText(errorTextForMissingPractitioner(personalIdentityNumber));
         } else {
             hospUpdateService.checkForUpdatedHospInformation(privatlakare);
@@ -165,7 +165,7 @@ public class IntegrationServiceImpl implements IntegrationService {
                 // Check if this is the first time the user logins to Webcert after getting godkand status
                 checkFirstLogin(privatlakare);
             } else {
-                response.setResultCode(ValidatePrivatePractitionerResultCode.ERROR_NOT_AUTHORIZED_IN_HOSP);
+                response.setResultCode(ValidatePrivatePractitionerResultCode.NOT_AUTHORIZED_IN_HOSP);
                 response.setResultText(errorTextForNotAuthorizedPractitioner(personalIdentityNumber));
             }
         }

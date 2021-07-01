@@ -216,7 +216,7 @@ public class IntegrationServiceTest {
     @Test
     public void testValidatePrivatePractitionerByPersonIdEjGodkand() {
         ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(EJ_GODKAND_PERSON_ID);
-        assertEquals(ValidatePrivatePractitionerResultCode.ERROR_NOT_AUTHORIZED_IN_HOSP, response.getResultCode());
+        assertEquals(ValidatePrivatePractitionerResultCode.NOT_AUTHORIZED_IN_HOSP, response.getResultCode());
         assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(EJ_GODKAND_PERSON_ID));
     }
 
@@ -229,7 +229,7 @@ public class IntegrationServiceTest {
     @Test
     public void testValidatePrivatePractitionerByPersonIdEjLakare() {
         ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(EJ_LAKARE_PERSON_ID);
-        assertEquals(ValidatePrivatePractitionerResultCode.ERROR_NO_ACCOUNT, response.getResultCode());
+        assertEquals(ValidatePrivatePractitionerResultCode.NO_ACCOUNT, response.getResultCode());
         assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(EJ_LAKARE_PERSON_ID));
     }
 
@@ -242,14 +242,14 @@ public class IntegrationServiceTest {
     @Test
     public void testValidatePrivatePractitionerByPersonIdNonExisting() {
         ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(FINNS_EJ_PERSON_ID);
-        assertEquals(ValidatePrivatePractitionerResultCode.ERROR_NO_ACCOUNT, response.getResultCode());
+        assertEquals(ValidatePrivatePractitionerResultCode.NO_ACCOUNT, response.getResultCode());
         assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(FINNS_EJ_PERSON_ID));
     }
 
     @Test
     public void testValidatePrivatePractitionerByInvalidPersonIdNonExisting() {
         ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(INVALID_PERSON_ID);
-        assertEquals(ValidatePrivatePractitionerResultCode.ERROR_NO_ACCOUNT, response.getResultCode());
+        assertEquals(ValidatePrivatePractitionerResultCode.NO_ACCOUNT, response.getResultCode());
         assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(INVALID_PERSON_ID));
     }
 }
