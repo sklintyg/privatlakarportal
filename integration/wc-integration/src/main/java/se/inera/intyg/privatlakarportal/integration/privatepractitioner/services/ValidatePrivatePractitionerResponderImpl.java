@@ -35,7 +35,7 @@ public class ValidatePrivatePractitionerResponderImpl implements ValidatePrivate
     public ValidatePrivatePractitionerResponseType validatePrivatePractitioner(String s,
         ValidatePrivatePractitionerType validatePrivatePractitionerType) {
 
-        throw new UnsupportedOperationException("Method is deprecated and shall be removed.");
+        throw new UnsupportedOperationException("Method has been replaced by '/validate' API in PrivatePractitionerController.");
     }
 
 }
