@@ -18,14 +18,30 @@
  */
 package se.inera.intyg.privatlakarportal.service;
 
-import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-/**
- * Created by pebe on 2015-09-09.
- */
-public interface TermsService {
+@Service
+public class SubscriptionServiceImpl implements SubscriptionService {
 
-    Terms getTerms();
+    @Value("${subscription.adaptation.period}")
+    private boolean subscriptionAdaptation;
 
-    Boolean getWebcertUserTermsApproved(String hsaId);
+    @Value("${subscription.required}")
+    private boolean subscriptionRequired;
+
+    @Override
+    public boolean isSubscriptionInUse() {
+        return subscriptionAdaptation || subscriptionRequired;
+    }
+
+    @Override
+    public boolean isSubscriptionAdaptationAndNotRequired() {
+        return subscriptionAdaptation && !subscriptionRequired;
+    }
+
+    @Override
+    public boolean isSubscriptionRequired() {
+        return subscriptionRequired;
+    }
 }

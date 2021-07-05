@@ -29,6 +29,7 @@ angular.module('privatlakareApp')
   $scope.user = UserModel.get();
   $scope.registerModel = RegisterModel.reset();
   $scope.viewState = MinsidaViewState.reset();
+  $scope.webcertUserTermsApproved = false;
 
   $scope.$on('$stateChangeSuccess', function(ev, to, toParams, from) {
     if (from.name === 'app.minsida.terms') {
@@ -48,6 +49,7 @@ angular.module('privatlakareApp')
       MinsidaViewState.setUndoModel($scope.registerModel);
       HospModel.init();
       HospService.updateHosp('update', HospViewState, HospModel, lakarData.hospInformation);
+      $scope.webcertUserTermsApproved = lakarData.webcertUserTermsApproved;
     } else {
       $scope.registerModel = RegisterModel.reset();
       $scope.viewState = MinsidaViewState.reset();

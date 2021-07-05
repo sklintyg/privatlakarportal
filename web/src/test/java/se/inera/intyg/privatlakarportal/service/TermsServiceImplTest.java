@@ -19,6 +19,11 @@
 package se.inera.intyg.privatlakarportal.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -27,18 +32,24 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
 import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 
-/**
- * Created by pebe on 2015-09-11.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class TermsServiceImplTest {
 
     @Mock
     private MedgivandeTextRepository medgivandeTextRepository;
+
+    @Mock
+    private SubscriptionService subscriptionService;
+
+    @Mock
+    private RestTemplate restTemplate;
 
     @InjectMocks
     private TermsServiceImpl termsService;
@@ -56,5 +67,48 @@ public class TermsServiceImplTest {
         assertEquals(LocalDate.parse("2015-09-01").atStartOfDay(), response.getDate());
         assertEquals("Testtext", response.getText());
         assertEquals(1L, response.getVersion());
+    }
+
+    @Test
+    public void shouldReturnFetchedValueIfResponseOk() {
+        final var hsaId = "HSA_ID";
+
+        when(subscriptionService.isSubscriptionRequired()).thenReturn(false);
+
+        setMockToReturnValue(HttpStatus.OK, true);
+        final var trueResponse = termsService.getWebcertUserTermsApproved(hsaId);
+
+        setMockToReturnValue(HttpStatus.OK, false);
+        final var falseResponse = termsService.getWebcertUserTermsApproved(hsaId);
+
+        assertTrue(trueResponse);
+        assertFalse(falseResponse);
+    }
+
+    @Test
+    public void shouldReturnFasleIfSubscriptionIsRequired() {
+        final var hsaId = "HSA_ID";
+
+        when(subscriptionService.isSubscriptionRequired()).thenReturn(true);
+        final var falseResponse = termsService.getWebcertUserTermsApproved(hsaId);
+
+        assertFalse(falseResponse);
+    }
+
+    @Test
+    public void shouldReturnFalseIfFailedRestCall() {
+        final var hsaId = "HSA_ID";
+
+        when(subscriptionService.isSubscriptionRequired()).thenReturn(false);
+
+        setMockToReturnValue(HttpStatus.INTERNAL_SERVER_ERROR, true);
+
+        final var response = termsService.getWebcertUserTermsApproved(hsaId);
+
+        assertFalse(response);
+    }
+
+    private void setMockToReturnValue(HttpStatus httpStatus, Boolean responseBody) {
+        doReturn(new ResponseEntity<>(responseBody, httpStatus)).when(restTemplate).getForEntity(any(String.class), eq(Boolean.class));
     }
 }

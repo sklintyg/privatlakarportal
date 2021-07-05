@@ -67,6 +67,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
 
+        FilterRegistration.Dynamic blockDirectAccessFilter = servletContext.addFilter("blockDirectAccessFilter",
+            DelegatingFilterProxy.class);
+        blockDirectAccessFilter.addMappingForUrlPatterns(null, false, "/*");
+
         // Spring session filter
         FilterRegistration.Dynamic springSessionRepositoryFilter = servletContext.addFilter("springSessionRepositoryFilter",
             DelegatingFilterProxy.class);

@@ -16,25 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
+package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/**
- * Created by pebe on 2015-08-19.
- */
-@RunWith(MockitoJUnitRunner.class)
-public class ValidatePrivatePractitionerResponderTest {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SubscriptionResponse {
 
-    @InjectMocks
-    private ValidatePrivatePractitionerResponderImpl validatePrivatePractitionerResponder = new ValidatePrivatePractitionerResponderImpl();
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testDeprecated() {
-        validatePrivatePractitionerResponder.validatePrivatePractitioner(null, null);
-    }
+    private boolean subscriptionInUse;
 
 }

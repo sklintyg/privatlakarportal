@@ -36,9 +36,13 @@ public class GetRegistrationResponse {
     @ApiModelProperty(name = "hospInformation", dataType = "HospInformation")
     private HospInformation hospInformation;
 
-    public GetRegistrationResponse(Registration registration, HospInformation hospInformation) {
+    @ApiModelProperty(name = "webcertUserTermsApproved", dataType = "Boolean")
+    private boolean webcertUserTermsApproved;
+
+    public GetRegistrationResponse(Registration registration, HospInformation hospInformation, boolean webcertUserTermsApproved) {
         this.registration = registration;
         this.hospInformation = hospInformation;
+        this.webcertUserTermsApproved = webcertUserTermsApproved;
     }
 
     public Registration getRegistration() {
@@ -55,5 +59,13 @@ public class GetRegistrationResponse {
 
     public void setHospInformation(HospInformation hospInformation) {
         this.hospInformation = hospInformation;
+    }
+
+    public boolean isWebcertUserTermsApproved() {
+        return webcertUserTermsApproved;
+    }
+
+    public void setWebcertUserTermsApproved(boolean webcertUserTermsApproved) {
+        this.webcertUserTermsApproved = webcertUserTermsApproved;
     }
 }

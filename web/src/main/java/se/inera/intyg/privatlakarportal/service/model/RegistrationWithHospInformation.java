@@ -26,12 +26,13 @@ import se.inera.intyg.privatlakarportal.common.model.Registration;
 public class RegistrationWithHospInformation {
 
     private Registration registration;
-
     private HospInformation hospInformation;
+    private boolean webcertUserTermsApproved;
 
-    public RegistrationWithHospInformation(Registration registration, HospInformation hospInformation) {
+    public RegistrationWithHospInformation(Registration registration, HospInformation hospInformation, boolean webcertUserTermsApproved) {
         this.registration = registration;
         this.hospInformation = hospInformation;
+        this.webcertUserTermsApproved = webcertUserTermsApproved;
     }
 
     public HospInformation getHospInformation() {
@@ -48,5 +49,13 @@ public class RegistrationWithHospInformation {
 
     public void setRegistration(Registration registration) {
         this.registration = registration;
+    }
+
+    public boolean isWebcertUserTermsApproved() {
+        return webcertUserTermsApproved;
+    }
+
+    public void setWebcertUserTermsApproved(boolean webcertUserTermsApproved) {
+        this.webcertUserTermsApproved = webcertUserTermsApproved;
     }
 }
