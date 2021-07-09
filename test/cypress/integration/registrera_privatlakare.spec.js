@@ -76,16 +76,6 @@ describe('Registrera Privatläkare', function() {
     cy.get('#hospUpdate').should('not.be.visible');
     cy.get('#hospComplete').should('be.visible');
 
-    // Visa användarvillkor
-    cy.get('#termsLink').click();
-    cy.get('.modal-dialog').should('be.visible');
-    cy.get('#termsModal').should('not.be.empty');
-
-    // Stäng användarvillkor
-    cy.get('#dismissBtn').click();
-    cy.wait(300);
-    cy.get('.modal-dialog').should('not.be.visible');
-
     // Godkänn användarvillkoren
     cy.get('#registerBtn').should('be.disabled');
     cy.get('#godkannvillkor').check();
