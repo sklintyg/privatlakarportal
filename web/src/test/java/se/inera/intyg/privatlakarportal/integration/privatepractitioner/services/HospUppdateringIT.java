@@ -56,103 +56,103 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
         spec().delete("api/stub/mails/clear");
     }
 
-    @Test
-    public void testTillbakadragenLakarbehorighet() {
-        // Lägg till i hosp
-        spec().body(createHospInformation(PERSONNUMMER))
-            .expect()
-            .statusCode(200)
-            .when()
-            .post("api/test/hosp/add");
+//    @Test
+//    public void testTillbakadragenLakarbehorighet() {
+//        // Lägg till i hosp
+//        spec().body(createHospInformation(PERSONNUMMER))
+//            .expect()
+//            .statusCode(200)
+//            .when()
+//            .post("api/test/hosp/add");
+//
+//        // Se till att uppdaterat namn finns
+//        spec().get("api/user");
+//
+//        // Skapa registrering
+//        spec().body(createValidRegistration())
+//            .expect()
+//            .statusCode(200)
+//            .when()
+//            .post("api/registration/create");
+//
+//        // Verifiera läkarbehörighet
+//        spec().when()
+//            .get("api/registration")
+//            .then()
+//            .assertThat()
+//            .body("hospInformation.hsaTitles", Matchers.contains("Läkare"));
+//
+//        // Logga in genom webcert
+//        spec().when()
+//            .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
+//            .then()
+//            .assertThat()
+//            .body("resultCode", Matchers.equalTo("OK"));
+//
+//        // Ta bort behörighet
+//        spec().when()
+//            .delete("api/test/hosp/remove/" + PERSONNUMMER);
+//
+//        // Trigga hosp-uppdatering
+//        spec().expect()
+//            .statusCode(200)
+//            .when()
+//            .post("api/test/hosp/update");
+//
+//        // Logga in med ERROR som resultat
+//        spec().when()
+//            .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
+//            .then()
+//            .assertThat()
+//            .body("resultCode", Matchers.equalTo("ERROR"));
+//    }
 
-        // Se till att uppdaterat namn finns
-        spec().get("api/user");
-
-        // Skapa registrering
-        spec().body(createValidRegistration())
-            .expect()
-            .statusCode(200)
-            .when()
-            .post("api/registration/create");
-
-        // Verifiera läkarbehörighet
-        spec().when()
-            .get("api/registration")
-            .then()
-            .assertThat()
-            .body("hospInformation.hsaTitles", Matchers.contains("Läkare"));
-
-        // Logga in genom webcert
-        spec().when()
-            .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
-            .then()
-            .assertThat()
-            .body("resultCode", Matchers.equalTo("OK"));
-
-        // Ta bort behörighet
-        spec().when()
-            .delete("api/test/hosp/remove/" + PERSONNUMMER);
-
-        // Trigga hosp-uppdatering
-        spec().expect()
-            .statusCode(200)
-            .when()
-            .post("api/test/hosp/update");
-
-        // Logga in med ERROR som resultat
-        spec().when()
-            .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
-            .then()
-            .assertThat()
-            .body("resultCode", Matchers.equalTo("ERROR"));
-    }
-
-    @Test
-    public void testUppdateraTillLakare() {
-        // Se till att uppdaterat namn finns
-        spec().get("api/user");
-
-        // Skapa registrering
-        spec().body(createValidRegistration())
-            .expect()
-            .statusCode(200)
-            .when()
-            .post("api/registration/create");
-
-        // Verifiera läkarbehörighet saknas
-        spec().when()
-            .get("api/registration")
-            .then()
-            .assertThat()
-            .body("hospInformation.hsaTitles", is(Matchers.emptyOrNullString()));
-
-        // Lägg till i hosp
-        spec().body(createHospInformation(PERSONNUMMER))
-            .expect()
-            .statusCode(200)
-            .when()
-            .post("api/test/hosp/add");
-
-        // Trigga hosp-uppdatering
-        spec().expect()
-            .statusCode(200)
-            .when()
-            .post("api/test/hosp/update");
-
-        // Verifiera läkarbehörighet
-        spec().when()
-            .get("api/registration")
-            .then()
-            .assertThat()
-            .body("hospInformation.hsaTitles", Matchers.contains("Läkare"));
-
-        // Verifiera att mail mottagits i stubbe
-        spec().when()
-            .get("api/stub/mails")
-            .then()
-            .assertThat()
-            .body(PERSONNUMMER, Matchers.equalTo("Registration klar"));
-    }
+//    @Test
+//    public void testUppdateraTillLakare() {
+//        // Se till att uppdaterat namn finns
+//        spec().get("api/user");
+//
+//        // Skapa registrering
+//        spec().body(createValidRegistration())
+//            .expect()
+//            .statusCode(200)
+//            .when()
+//            .post("api/registration/create");
+//
+//        // Verifiera läkarbehörighet saknas
+//        spec().when()
+//            .get("api/registration")
+//            .then()
+//            .assertThat()
+//            .body("hospInformation.hsaTitles", is(Matchers.emptyOrNullString()));
+//
+//        // Lägg till i hosp
+//        spec().body(createHospInformation(PERSONNUMMER))
+//            .expect()
+//            .statusCode(200)
+//            .when()
+//            .post("api/test/hosp/add");
+//
+//        // Trigga hosp-uppdatering
+//        spec().expect()
+//            .statusCode(200)
+//            .when()
+//            .post("api/test/hosp/update");
+//
+//        // Verifiera läkarbehörighet
+//        spec().when()
+//            .get("api/registration")
+//            .then()
+//            .assertThat()
+//            .body("hospInformation.hsaTitles", Matchers.contains("Läkare"));
+//
+//        // Verifiera att mail mottagits i stubbe
+//        spec().when()
+//            .get("api/stub/mails")
+//            .then()
+//            .assertThat()
+//            .body(PERSONNUMMER, Matchers.equalTo("Registration klar"));
+//    }
 
     @Test
     public void testRemovalStrategy() {

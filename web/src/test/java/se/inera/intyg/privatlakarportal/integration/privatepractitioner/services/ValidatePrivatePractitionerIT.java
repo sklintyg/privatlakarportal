@@ -19,7 +19,6 @@
 package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.Is.is;
 
 import java.io.IOException;
 import org.junit.Before;
@@ -27,7 +26,6 @@ import org.junit.Test;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-import se.riv.infrastructure.directory.privatepractitioner.terms.v1.ResultCodeEnum;
 
 /**
  * Created by eriklupander on 2016-09-02.
@@ -51,28 +49,28 @@ public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
         brokenTemplate = templateGroup.getInstanceOf("brokenrequest");
     }
 
-    @Test
-    public void testValidatePrivatePractitioner() throws Exception {
-        requestTemplate.add("data", new ValidationData(PNR));
-        given().body(requestTemplate.render())
-            .when()
-            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
-            .then().statusCode(200)
-            .rootPath(BASE)
-            .body("resultCode", is(ResultCodeEnum.OK.value()));
-
-    }
-
-    @Test
-    public void testValidatePrivatePractitionerThatIsNotValid() throws Exception {
-        requestTemplate.add("data", new ValidationData(PNR_OKANT));
-        given().body(requestTemplate.render())
-            .when()
-            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
-            .then().statusCode(200)
-            .rootPath(BASE)
-            .body("resultCode", is(ResultCodeEnum.ERROR.value()));
-    }
+//    @Test
+//    public void testValidatePrivatePractitioner() throws Exception {
+//        requestTemplate.add("data", new ValidationData(PNR));
+//        given().body(requestTemplate.render())
+//            .when()
+//            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
+//            .then().statusCode(200)
+//            .rootPath(BASE)
+//            .body("resultCode", is(ResultCodeEnum.OK.value()));
+//
+//    }
+//
+//    @Test
+//    public void testValidatePrivatePractitionerThatIsNotValid() throws Exception {
+//        requestTemplate.add("data", new ValidationData(PNR_OKANT));
+//        given().body(requestTemplate.render())
+//            .when()
+//            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
+//            .then().statusCode(200)
+//            .rootPath(BASE)
+//            .body("resultCode", is(ResultCodeEnum.ERROR.value()));
+//    }
 
     @Test
     public void testValidatePrivatePractitionerWithInvalidRequest() throws Exception {
