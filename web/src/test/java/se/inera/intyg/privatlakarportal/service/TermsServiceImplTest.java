@@ -34,6 +34,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
@@ -86,7 +87,7 @@ public class TermsServiceImplTest {
     }
 
     @Test
-    public void shouldReturnFasleIfSubscriptionIsRequired() {
+    public void shouldReturnFalseIfSubscriptionIsRequired() {
         final var hsaId = "HSA_ID";
 
         when(subscriptionService.isSubscriptionRequired()).thenReturn(true);
@@ -108,7 +109,24 @@ public class TermsServiceImplTest {
         assertFalse(response);
     }
 
+    @Test
+    public void shouldReturnFalseIfExceptionOnRestCall() {
+        final var hsaId = "HSA_ID";
+
+        when(subscriptionService.isSubscriptionRequired()).thenReturn(false);
+
+        setMockToReturnException();
+
+        final var response = termsService.getWebcertUserTermsApproved(hsaId);
+
+        assertFalse(response);
+    }
+
     private void setMockToReturnValue(HttpStatus httpStatus, Boolean responseBody) {
         doReturn(new ResponseEntity<>(responseBody, httpStatus)).when(restTemplate).getForEntity(any(String.class), eq(Boolean.class));
+    }
+
+    private void setMockToReturnException() {
+        when(restTemplate.getForEntity(any(String.class), eq(Boolean.class))).thenThrow(new RestClientException("Test RestClientException"));
     }
 }

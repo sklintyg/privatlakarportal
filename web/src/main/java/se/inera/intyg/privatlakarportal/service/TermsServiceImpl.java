@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -68,9 +69,14 @@ public class TermsServiceImpl implements TermsService {
     @Override
     public Boolean getWebcertUserTermsApproved(String hsaId) {
         if (onlyFetchUserTermsIfSubscriptionIsNotRequired()) {
-            final var response = restTemplate.getForEntity(termsApprovedUrl + "/" + hsaId, Boolean.class);
-            if (response.hasBody() && response.getStatusCode() == HttpStatus.OK) {
-                return response.getBody();
+            try {
+                final var response = restTemplate.getForEntity(termsApprovedUrl + "/" + hsaId, Boolean.class);
+                if (response.hasBody() && response.getStatusCode() == HttpStatus.OK) {
+                    return response.getBody();
+                }
+            } catch (RestClientException e) {
+                LOG.error("Failed call to Webcert for approved terms information", e);
+                return false;
             }
         }
         return false;
