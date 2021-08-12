@@ -137,7 +137,7 @@ var ppMessages = {
     'label.form.befattning.error.required': 'Befattning måste anges innan du kan fortsätta.',
 
     'label.form.verksamhetensnamn': 'Namn på din enskild näringsverksamhet/firma*',
-    'label.form.verksamhetensnamn.help': 'Ange verksamhetens fullständiga namn.',
+    'label.form.verksamhetensnamn.help': 'Ange din enskilda näringsverksamhet/firmas fullständiga namn.',
     'label.form.verksamhetensnamn.error.required': 'Verksamhetens namn måste anges innan du kan fortsätta.',
 
     'label.form.agarform': 'Ägarform',
