@@ -18,76 +18,36 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
 
-import static io.restassured.RestAssured.given;
+import static org.hamcrest.core.Is.is;
 
-import java.io.IOException;
-import org.junit.Before;
 import org.junit.Test;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupFile;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResultCode;
 
-/**
- * Created by eriklupander on 2016-09-02.
- */
-public class ValidatePrivatePractitionerIT extends BaseIntegrationTest {
+public class ValidatePrivatePractitionerIT extends BaseRestIntegrationTest {
 
-    private static final String BASE = "Envelope.Body.ValidatePrivatePractitionerResponse.";
-    private static final String VALIDATE_PRIVATE_PRACTITIONER_V1_0 = "services/validate-private-practitioner/v1.0";
-    private static final String PNR = "191212121212";
-    private static final String PNR_OKANT = "okant-pnr";
-
-    private ST requestTemplate;
-    private ST brokenTemplate;
-    private STGroup templateGroup;
-
-    @Before
-    public void setup() throws IOException {
-        // Setup String template resource
-        templateGroup = new STGroupFile("integrationtestTemplates/validatePrivatePractitioner.v1.stg");
-        requestTemplate = templateGroup.getInstanceOf("request");
-        brokenTemplate = templateGroup.getInstanceOf("brokenrequest");
-    }
-
-//    @Test
-//    public void testValidatePrivatePractitioner() throws Exception {
-//        requestTemplate.add("data", new ValidationData(PNR));
-//        given().body(requestTemplate.render())
-//            .when()
-//            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
-//            .then().statusCode(200)
-//            .rootPath(BASE)
-//            .body("resultCode", is(ResultCodeEnum.OK.value()));
-//
-//    }
-//
-//    @Test
-//    public void testValidatePrivatePractitionerThatIsNotValid() throws Exception {
-//        requestTemplate.add("data", new ValidationData(PNR_OKANT));
-//        given().body(requestTemplate.render())
-//            .when()
-//            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
-//            .then().statusCode(200)
-//            .rootPath(BASE)
-//            .body("resultCode", is(ResultCodeEnum.ERROR.value()));
-//    }
+    private static final String VALIDATE_PRIVATE_PRACTITIONER = "api/test/webcert/validatePrivatePractitioner/";
+    private static final String RESULT_CODE = "resultCode";
+    private static final String PERSONAL_IDENTITY_NUMBER = "191212121212";
+    private static final String PERSONAL_IDENTITY_NUMBER_UNKNOWN = "UNKNOWN";
 
     @Test
-    public void testValidatePrivatePractitionerWithInvalidRequest() throws Exception {
-        given().body(brokenTemplate.render())
+    public void testValidatePrivatePractitioner() {
+        spec()
+            .expect()
+            .statusCode(200)
+            .body(RESULT_CODE, is(ValidatePrivatePractitionerResultCode.OK.name()))
             .when()
-            .post(VALIDATE_PRIVATE_PRACTITIONER_V1_0)
-            .then().statusCode(500)
-            .rootPath(BASE);
+            .post(VALIDATE_PRIVATE_PRACTITIONER + PERSONAL_IDENTITY_NUMBER);
     }
 
-    private class ValidationData {
-
-        public final String personId;
-
-        public ValidationData(String personId) {
-            this.personId = personId;
-        }
+    @Test
+    public void testValidatePrivatePractitionerThatIsNotValid() {
+        spec()
+            .expect()
+            .statusCode(200)
+            .body(RESULT_CODE, is(ValidatePrivatePractitionerResultCode.NO_ACCOUNT.name()))
+            .when()
+            .post(VALIDATE_PRIVATE_PRACTITIONER + PERSONAL_IDENTITY_NUMBER_UNKNOWN);
     }
 
 }
