@@ -104,7 +104,7 @@ public class HospUppdateringIT extends BaseRestIntegrationTest {
             .post("api/test/webcert/validatePrivatePractitioner/" + PERSONNUMMER)
             .then()
             .assertThat()
-            .body("resultCode", Matchers.equalTo("ERROR"));
+            .body("resultCode", Matchers.equalTo("NOT_AUTHORIZED_IN_HOSP"));
     }
 
     @Test

@@ -108,6 +108,9 @@ public class RegisterServiceImplTest {
     @Mock
     private MonitoringLogService monitoringLogService;
 
+    @Mock
+    private TermsService termsService;
+
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
@@ -412,6 +415,7 @@ public class RegisterServiceImplTest {
     public void getRegistration() throws IOException {
         Privatlakare testPrivatlakare = readPrivatlakare("RegisterServiceImplTest/test_lakare.json");
         when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(testPrivatlakare);
+        when(termsService.getWebcertUserTermsApproved(any(String.class))).thenReturn(true);
 
         RegistrationWithHospInformation registration = registerService.getRegistration();
 
@@ -448,6 +452,7 @@ public class RegisterServiceImplTest {
         RegistrationWithHospInformation registration = registerService.getRegistration();
         assertNull(registration.getHospInformation());
         assertNull(registration.getRegistration());
+        assertFalse(registration.isWebcertUserTermsApproved());
     }
 
 }

@@ -16,25 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
+package se.inera.intyg.privatlakarportal.integration.terms.stub;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import org.springframework.stereotype.Controller;
 
-/**
- * Created by pebe on 2015-08-19.
- */
-@RunWith(MockitoJUnitRunner.class)
-public class ValidatePrivatePractitionerResponderTest {
+@Controller
+@Path("/terms")
+public class TermsRestStub {
 
-    @InjectMocks
-    private ValidatePrivatePractitionerResponderImpl validatePrivatePractitionerResponder = new ValidatePrivatePractitionerResponderImpl();
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testDeprecated() {
-        validatePrivatePractitionerResponder.validatePrivatePractitioner(null, null);
+    @GET
+    @Path("/approved/{hsaId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean getTermsApproved(@PathParam("hsaId") String hsaId) {
+        return true;
     }
 
 }

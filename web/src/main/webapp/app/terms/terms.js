@@ -79,7 +79,7 @@ angular.module('privatlakareApp')
     }
   }).state('app.minsida.terms', {
     url: '/terms',
-    onEnter: openPortalTerms,
+    onEnter: openExternalAppTerms,
     onExit: closeTerms,
     params: {
       terms: 'webcert',

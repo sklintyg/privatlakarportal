@@ -18,26 +18,41 @@
  */
 package se.inera.intyg.privatlakarportal.service;
 
+import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
 import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
 
-/**
- * Created by pebe on 2015-09-09.
- */
 @Service
 public class TermsServiceImpl implements TermsService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TermsServiceImpl.class);
 
     @Autowired
-    MedgivandeTextRepository medgivandeTextRepository;
+    private MedgivandeTextRepository medgivandeTextRepository;
+
+    @Autowired
+    private SubscriptionService subscriptionService;
+
+    @Value("${webcert.terms.approved.url}")
+    private String termsApprovedUrl;
+
+    private RestTemplate restTemplate;
+
+    @PostConstruct
+    public void init() {
+        restTemplate = new RestTemplate();
+    }
 
     @Override
     public Terms getTerms() {
@@ -50,4 +65,25 @@ public class TermsServiceImpl implements TermsService {
         }
         return new Terms(medgivandeText.getMedgivandeText(), medgivandeText.getVersion(), medgivandeText.getDatum());
     }
+
+    @Override
+    public Boolean getWebcertUserTermsApproved(String hsaId) {
+        if (onlyFetchUserTermsIfSubscriptionIsNotRequired()) {
+            try {
+                final var response = restTemplate.getForEntity(termsApprovedUrl + "/" + hsaId, Boolean.class);
+                if (response.hasBody() && response.getStatusCode() == HttpStatus.OK) {
+                    return response.getBody();
+                }
+            } catch (RestClientException e) {
+                LOG.error("Failed call to Webcert for approved terms information", e);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean onlyFetchUserTermsIfSubscriptionIsNotRequired() {
+        return !subscriptionService.isSubscriptionRequired();
+    }
+
 }

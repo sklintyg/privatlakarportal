@@ -86,6 +86,7 @@ dependencies {
     compile "se.inera.intyg.infra:postnummerservice-integration:${infraVersion}"
     compile "se.inera.intyg.infra:security-filter:${infraVersion}"
     compile "se.inera.intyg.infra:security-common:${infraVersion}"
+    compile "se.inera.intyg.infra:privatepractitioner:${infraVersion}"
 
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
 

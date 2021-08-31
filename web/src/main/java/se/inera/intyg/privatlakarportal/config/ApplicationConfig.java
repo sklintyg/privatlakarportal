@@ -93,4 +93,5 @@ public class ApplicationConfig {
     public InternalApiFilter internalApiFilter() {
         return new InternalApiFilter();
     }
+
 }

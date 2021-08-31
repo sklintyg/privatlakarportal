@@ -40,6 +40,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResultCode;
 import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
 import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
@@ -107,7 +109,7 @@ public class IntegrationServiceTest {
         when(privatlakareRepository.findByHsaId(EJ_GODKAND_HSA_ID)).thenReturn(privatlakareEjGodkand);
         when(privatlakareRepository.findByPersonId(EJ_GODKAND_PERSON_ID)).thenReturn(privatlakareEjGodkand);
         when(privatlakareRepository.findByHsaId(EJ_LAKARE_HSA_ID)).thenReturn(privatlakareEjLakare);
-        when(privatlakareRepository.findByPersonId(EJ_LAKARE_PERSON_ID)).thenReturn(privatlakareEjLakare);
+        when(privatlakareRepository.findByPersonId(EJ_LAKARE_PERSON_ID)).thenReturn(null);
 
         when(dateHelperService.now()).thenReturn(LocalDate.parse("2015-09-09").atStartOfDay());
     }
@@ -166,8 +168,8 @@ public class IntegrationServiceTest {
 
     @Test
     public void testValidatePrivatePractitionerByPersonId() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(GODKAND_PERSON_ID);
-        assertEquals(ResultCodeEnum.OK, response.getResultCode());
+        ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(GODKAND_PERSON_ID);
+        assertEquals(ValidatePrivatePractitionerResultCode.OK, response.getResultCode());
 
         // Startdates should NOT be updated to current time
         Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
@@ -197,8 +199,8 @@ public class IntegrationServiceTest {
         privatlakare.setEnhetStartdatum(null);
         privatlakare.setVardgivareStartdatum(null);
 
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(GODKAND_PERSON_ID);
-        assertEquals(ResultCodeEnum.OK, response.getResultCode());
+        ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(GODKAND_PERSON_ID);
+        assertEquals(ValidatePrivatePractitionerResultCode.OK, response.getResultCode());
 
         // Startdates should be updated to current time
         assertNotNull(privatlakare.getEnhetStartdatum());
@@ -213,8 +215,8 @@ public class IntegrationServiceTest {
 
     @Test
     public void testValidatePrivatePractitionerByPersonIdEjGodkand() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(EJ_GODKAND_PERSON_ID);
-        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+        ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(EJ_GODKAND_PERSON_ID);
+        assertEquals(ValidatePrivatePractitionerResultCode.NOT_AUTHORIZED_IN_HOSP, response.getResultCode());
         assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(EJ_GODKAND_PERSON_ID));
     }
 
@@ -226,8 +228,8 @@ public class IntegrationServiceTest {
 
     @Test
     public void testValidatePrivatePractitionerByPersonIdEjLakare() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(EJ_LAKARE_PERSON_ID);
-        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+        ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(EJ_LAKARE_PERSON_ID);
+        assertEquals(ValidatePrivatePractitionerResultCode.NO_ACCOUNT, response.getResultCode());
         assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(EJ_LAKARE_PERSON_ID));
     }
 
@@ -239,15 +241,15 @@ public class IntegrationServiceTest {
 
     @Test
     public void testValidatePrivatePractitionerByPersonIdNonExisting() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(FINNS_EJ_PERSON_ID);
-        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+        ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(FINNS_EJ_PERSON_ID);
+        assertEquals(ValidatePrivatePractitionerResultCode.NO_ACCOUNT, response.getResultCode());
         assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(FINNS_EJ_PERSON_ID));
     }
 
     @Test
     public void testValidatePrivatePractitionerByInvalidPersonIdNonExisting() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByPersonId(INVALID_PERSON_ID);
-        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
+        ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(INVALID_PERSON_ID);
+        assertEquals(ValidatePrivatePractitionerResultCode.NO_ACCOUNT, response.getResultCode());
         assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(INVALID_PERSON_ID));
     }
 }

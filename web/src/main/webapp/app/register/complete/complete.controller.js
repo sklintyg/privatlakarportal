@@ -18,9 +18,14 @@
  */
 
 angular.module('privatlakareApp')
-.controller('CompleteCtrl', function($scope, $window,
-    APP_CONFIG) {
+.controller('CompleteCtrl', function($scope, $window, APP_CONFIG, SubscriptionProxy) {
   'use strict';
+
+  $scope.userTermsActive = false;
+
+  SubscriptionProxy.getSubscriptionState().then(function(data) {
+    $scope.userTermsActive = !data.subscriptionInUse;
+  });
 
   $scope.goToApp = function() {
     $window.location = APP_CONFIG.webcertStartUrl;
