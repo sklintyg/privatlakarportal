@@ -36,6 +36,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 import se.inera.intyg.privatlakarportal.persistence.model.MedgivandeText;
 import se.inera.intyg.privatlakarportal.persistence.repository.MedgivandeTextRepository;
@@ -68,6 +69,14 @@ public class TermsServiceImplTest {
         assertEquals(LocalDate.parse("2015-09-01").atStartOfDay(), response.getDate());
         assertEquals("Testtext", response.getText());
         assertEquals(1L, response.getVersion());
+    }
+
+    @Test(expected = PrivatlakarportalServiceException.class)
+    public void testGetTermsFail() {
+
+        when(medgivandeTextRepository.findLatest()).thenReturn(null);
+
+        termsService.getTerms();
     }
 
     @Test
