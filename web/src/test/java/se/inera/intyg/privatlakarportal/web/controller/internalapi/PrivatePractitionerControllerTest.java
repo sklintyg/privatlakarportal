@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerRequest;
+import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
+import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
 import se.inera.intyg.privatlakarportal.service.PrivatePractitionerService;
 import se.inera.intyg.privatlakarportal.service.model.PrivatePractitioner;
 import se.inera.intyg.privatlakarportal.web.controller.internalapi.dto.PrivatePractitionerDto;
@@ -40,8 +44,13 @@ import se.inera.intyg.privatlakarportal.web.controller.internalapi.dto.PrivatePr
 @RunWith(MockitoJUnitRunner.class)
 public class PrivatePractitionerControllerTest {
 
+    private static final String PERSONAL_IDENTITY_NUMBER = "191212121212";
+
     @Mock
     private PrivatePractitionerService privatePractitionerService;
+
+    @Mock
+    private IntegrationService integrationService;
 
     @InjectMocks
     private PrivatePractitionerController privatePractitionerController;
@@ -102,17 +111,17 @@ public class PrivatePractitionerControllerTest {
 
     @Test
     public void getPrivatePractitioner_personId_ok() {
-        String personId = "191212121212";
         String hsaID = "SE123";
         String name = "My Name";
         String careprovider = "My Careprovider";
         String email = "my@email.com";
         LocalDateTime registrationDate = LocalDateTime.now();
 
-        when(privatePractitionerService.getPrivatePractitioner(personId))
+        when(privatePractitionerService.getPrivatePractitioner(PERSONAL_IDENTITY_NUMBER))
             .thenReturn(new PrivatePractitioner(hsaID, name, careprovider, email, registrationDate));
 
-        ResponseEntity<PrivatePractitionerDto> privatePractitionerResponse = privatePractitionerController.getPrivatePractitioner(personId);
+        ResponseEntity<PrivatePractitionerDto> privatePractitionerResponse = privatePractitionerController
+            .getPrivatePractitioner(PERSONAL_IDENTITY_NUMBER);
 
         assertNotNull(privatePractitionerResponse);
         assertTrue(privatePractitionerResponse.getStatusCode() == HttpStatus.OK);
@@ -142,5 +151,17 @@ public class PrivatePractitionerControllerTest {
 
         assertNotNull(notFoundResponse);
         assertTrue(notFoundResponse.getStatusCode() == HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void validatePrivatePractitioner() {
+        var validatePrivatePractitionerResponse = new ValidatePrivatePractitionerResponse();
+        when(integrationService.validatePrivatePractitionerByPersonId(anyString())).thenReturn(validatePrivatePractitionerResponse);
+
+        ValidatePrivatePractitionerRequest validatePrivatePractitionerRequest = new ValidatePrivatePractitionerRequest(PERSONAL_IDENTITY_NUMBER);
+        var response = privatePractitionerController.validatePrivatePractitioner(validatePrivatePractitionerRequest);
+
+        verify(integrationService).validatePrivatePractitionerByPersonId(PERSONAL_IDENTITY_NUMBER);
+        assertNotNull(response);
     }
 }

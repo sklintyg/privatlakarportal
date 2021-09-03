@@ -18,15 +18,29 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import se.inera.intyg.infra.integration.postnummer.model.Omrade;
+import se.inera.intyg.infra.integration.postnummer.service.PostnummerService;
+import se.inera.intyg.privatlakarportal.common.model.Registration;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
+import se.inera.intyg.privatlakarportal.service.model.HospInformation;
+import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
+import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistrationRequest;
+import se.inera.intyg.privatlakarportal.web.controller.api.dto.SaveRegistrationRequest;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterControllerTest {
@@ -34,8 +48,22 @@ public class RegisterControllerTest {
     @Mock
     private RegisterService registerService;
 
+    @Mock
+    private PostnummerService postnummerService;
+
     @InjectMocks
     private RegisterController registerController = new RegisterController();
+
+    @Test
+    public void testGetRegistration() {
+        var registrationWithHospInformation = new RegistrationWithHospInformation(new Registration(), new HospInformation(), true);
+        when(registerService.getRegistration()).thenReturn(registrationWithHospInformation);
+
+        var getRegistrationResponse = registerController.getRegistration();
+
+        verify(registerService).getRegistration();
+        assertTrue(getRegistrationResponse.isWebcertUserTermsApproved());
+    }
 
     @Test
     public void testCreateRegistration() {
@@ -44,5 +72,40 @@ public class RegisterControllerTest {
         registerController.createRegistration(request);
 
         verify(registerService).createRegistration(request.getRegistration(), 1L);
+    }
+
+    @Test
+    public void testCreateRegistrationSave() {
+        when(registerService.saveRegistration(any())).thenReturn(SaveRegistrationResponseStatus.OK);
+
+        SaveRegistrationRequest request = new SaveRegistrationRequest();
+        request.setRegistration(new Registration());
+        var saveRegistrationResponse = registerController.createRegistration(request);
+
+        verify(registerService).saveRegistration(request.getRegistration());
+        assertEquals(SaveRegistrationResponseStatus.OK, saveRegistrationResponse.getStatus());
+
+    }
+
+    @Test
+    public void testGetHospInformation() {
+        when(registerService.getHospInformation()).thenReturn(new HospInformation());
+
+        var getHospInformationResponse = registerController.getHospInformation();
+
+        verify(registerService).getHospInformation();
+        assertNotNull(getHospInformationResponse.getHospInformation());
+    }
+
+    @Test
+    public void testGetOmrade() {
+        var zipCode = "Zip code";
+        var omrade = new Omrade("", "", "", "");
+        when(postnummerService.getOmradeByPostnummer(anyString())).thenReturn(Collections.singletonList(omrade));
+
+        var getOmradeResponse = registerController.getOmrade(zipCode);
+
+        verify(postnummerService).getOmradeByPostnummer(zipCode);
+        assertEquals(1, getOmradeResponse.getOmradeList().size());
     }
 }
