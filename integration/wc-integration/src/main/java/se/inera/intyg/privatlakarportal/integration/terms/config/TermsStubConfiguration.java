@@ -28,8 +28,6 @@ import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxws.EndpointImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -41,12 +39,6 @@ import se.inera.intyg.privatlakarportal.integration.terms.stub.TermsWebServiceSt
 @ComponentScan(basePackages = "se.inera.intyg.privatlakarportal.integration.terms.stub")
 @Profile({"dev", "wc-stub"})
 public class TermsStubConfiguration {
-
-    @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
-    private TermsRestStub termsRestStub;
 
     @Bean
     TermsWebServiceStub termsWebServiceStub() {
@@ -60,15 +52,14 @@ public class TermsStubConfiguration {
 
     @Bean
     public EndpointImpl termsWsResponder() {
-        Bus bus = (Bus) applicationContext.getBean(Bus.DEFAULT_BUS_ID);
         Object implementor = termsWebServiceStub();
-        EndpointImpl endpoint = new EndpointImpl(bus, implementor);
+        EndpointImpl endpoint = new EndpointImpl(springBus(), implementor);
         endpoint.publish("/stubs/get-private-practitioner-terms/v1.0");
         return endpoint;
     }
 
     @Bean
-    public Server server() {
+    public Server server(TermsRestStub termsRestStub) {
         List<JacksonJsonProvider> providers = new ArrayList<>();
         providers.add(getJsonProvider());
 

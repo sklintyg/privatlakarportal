@@ -20,6 +20,7 @@ package se.inera.intyg.privatlakarportal.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -31,7 +32,9 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Optional;
+import javax.xml.ws.WebServiceException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -75,6 +78,7 @@ import se.inera.intyg.privatlakarportal.service.model.HospInformation;
 import se.inera.intyg.privatlakarportal.service.model.RegistrationWithHospInformation;
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
+import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterServiceImplTest {
@@ -319,6 +323,22 @@ public class RegisterServiceImplTest {
     }
 
     @Test
+    public void testCreateRegistrationHospFail() throws HospUpdateFailedToContactHsaException {
+
+        PrivatlakareId privatlakareId = new PrivatlakareId();
+        privatlakareId.setId(1);
+        when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
+
+        when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenThrow(new HospUpdateFailedToContactHsaException(new WebServiceException("Fail")));
+
+        Registration registration = createValidRegistration();
+        RegistrationStatus response = registerService.createRegistration(registration, 1L);
+
+        verify(privatlakareRepository).save(any(Privatlakare.class));
+        assertEquals(response, RegistrationStatus.WAITING_FOR_HOSP);
+    }
+
+    @Test
     public void testCreateRegistrationEjIPUService() {
 
         when(userService.getUser()).thenReturn(new PrivatlakarUser(PERSON_ID, "Test User"));
@@ -453,6 +473,29 @@ public class RegisterServiceImplTest {
         assertNull(registration.getHospInformation());
         assertNull(registration.getRegistration());
         assertFalse(registration.isWebcertUserTermsApproved());
+    }
+
+    @Test
+    public void getPrivatlakareFound() {
+        var privatlakare = new Privatlakare();
+        privatlakare.setVardformer(Collections.emptySet());
+        privatlakare.setSpecialiteter(Collections.emptyList());
+        privatlakare.setLegitimeradeYrkesgrupper(Collections.emptySet());
+        privatlakare.setMedgivande(Collections.emptySet());
+        privatlakare.setBefattningar(Collections.emptySet());
+        privatlakare.setVerksamhetstyper(Collections.emptySet());
+        when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(privatlakare);
+
+        PrivatlakareDto privatlakareDto = registerService.getPrivatlakare(PERSON_ID);
+        assertNotNull(privatlakareDto);
+    }
+
+    @Test
+    public void getPrivatlakareNotFound() {
+        when(privatlakareRepository.findByPersonId(PERSON_ID)).thenReturn(null);
+
+        PrivatlakareDto privatlakareDto = registerService.getPrivatlakare(PERSON_ID);
+        assertNull(privatlakareDto);
     }
 
 }
