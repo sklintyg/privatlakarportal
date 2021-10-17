@@ -52,7 +52,6 @@ import se.riv.infrastructure.directory.privatepractitioner.v1.ResultCodeEnum;
 import se.riv.infrastructure.directory.privatepractitioner.v1.SpecialitetType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.VardgivareType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.VerksamhetType;
-import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
 /**
  * Created by pebe on 2015-08-17.
@@ -116,32 +115,6 @@ public class IntegrationServiceImpl implements IntegrationService {
             response.setResultCode(ResultCodeEnum.OK);
             checkFirstLogin(privatlakare);
             convertPrivatlakareToResponse(privatlakare, response);
-        }
-
-        return response;
-    }
-
-    @Override
-    @Transactional
-    public ValidatePrivatePractitionerResponseType validatePrivatePractitionerByHsaId(String personHsaId) {
-
-        ValidatePrivatePractitionerResponseType response = new ValidatePrivatePractitionerResponseType();
-
-        Privatlakare privatlakare = privatlakareRepository.findByHsaId(personHsaId);
-
-        if (privatlakare == null) {
-            response.setResultCode(ResultCodeEnum.ERROR);
-            response.setResultText("No private practitioner with hsa id: " + personHsaId + " exists.");
-        } else {
-            hospUpdateService.checkForUpdatedHospInformation(privatlakare);
-            if (privatlakare.isGodkandAnvandare() && PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
-                response.setResultCode(ResultCodeEnum.OK);
-                // Check if this is the first time the user logins to Webcert after getting godkand status
-                checkFirstLogin(privatlakare);
-            } else {
-                response.setResultCode(ResultCodeEnum.ERROR);
-                response.setResultText("Private practitioner with hsa id: " + personHsaId + " is not authorized to use webcert.");
-            }
         }
 
         return response;

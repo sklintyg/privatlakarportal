@@ -51,7 +51,6 @@ import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepos
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerresponder.v1.GetPrivatePractitionerResponseType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.HoSPersonType;
 import se.riv.infrastructure.directory.privatepractitioner.v1.ResultCodeEnum;
-import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitionerresponder.v1.ValidatePrivatePractitionerResponseType;
 
 /**
  * Created by pebe on 2015-08-18.
@@ -71,9 +70,7 @@ public class IntegrationServiceTest {
     @InjectMocks
     private IntegrationServiceImpl integrationService;
 
-    private static final String EJ_GODKAND_HSA_ID = "nonExistingId";
     private static final String EJ_GODKAND_PERSON_ID = "191212121212";
-    private static final String EJ_LAKARE_HSA_ID = "ejLakareHsaId";
     private static final String EJ_LAKARE_PERSON_ID = "201212121212";
     private static final String GODKAND_HSA_ID = "existingHsaId";
     private static final String GODKAND_PERSON_ID = "192011189228";
@@ -106,9 +103,7 @@ public class IntegrationServiceTest {
         when(privatlakareRepository.findByHsaId(FINNS_EJ_HSA_ID)).thenReturn(null);
         when(privatlakareRepository.findByPersonId(FINNS_EJ_PERSON_ID)).thenReturn(null);
         when(privatlakareRepository.findByPersonId(INVALID_PERSON_ID)).thenReturn(null);
-        when(privatlakareRepository.findByHsaId(EJ_GODKAND_HSA_ID)).thenReturn(privatlakareEjGodkand);
         when(privatlakareRepository.findByPersonId(EJ_GODKAND_PERSON_ID)).thenReturn(privatlakareEjGodkand);
-        when(privatlakareRepository.findByHsaId(EJ_LAKARE_HSA_ID)).thenReturn(privatlakareEjLakare);
         when(privatlakareRepository.findByPersonId(EJ_LAKARE_PERSON_ID)).thenReturn(null);
 
         when(dateHelperService.now()).thenReturn(LocalDate.parse("2015-09-09").atStartOfDay());
@@ -154,19 +149,6 @@ public class IntegrationServiceTest {
     }
 
     @Test
-    public void testValidatePrivatePractitionerByHsaId() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(GODKAND_HSA_ID);
-        assertEquals(ResultCodeEnum.OK, response.getResultCode());
-
-        // Startdates should NOT be updated to current time
-        Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
-        assertEquals(verifyHosPerson.getEnhet().getStartdatum(), privatlakare.getEnhetStartdatum());
-        assertEquals(verifyHosPerson.getEnhet().getVardgivare().getStartdatum(), privatlakare.getVardgivareStartdatum());
-        // HospUpdateService should be called to verify that privatlakare still has lakarbehorighet
-        verify(hospUpdateService).checkForUpdatedHospInformation(privatlakare);
-    }
-
-    @Test
     public void testValidatePrivatePractitionerByPersonId() {
         ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(GODKAND_PERSON_ID);
         assertEquals(ValidatePrivatePractitionerResultCode.OK, response.getResultCode());
@@ -177,20 +159,6 @@ public class IntegrationServiceTest {
         assertEquals(verifyHosPerson.getEnhet().getVardgivare().getStartdatum(), privatlakare.getVardgivareStartdatum());
         // HospUpdateService should be called to verify that privatlakare still has lakarbehorighet
         verify(hospUpdateService).checkForUpdatedHospInformation(privatlakare);
-    }
-
-    @Test
-    public void testValidatePrivatePractitionerByHsaIdFirstLogin() {
-        Privatlakare privatlakare = privatlakareRepository.findByHsaId(GODKAND_HSA_ID);
-        privatlakare.setEnhetStartdatum(null);
-        privatlakare.setVardgivareStartdatum(null);
-
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(GODKAND_HSA_ID);
-        assertEquals(ResultCodeEnum.OK, response.getResultCode());
-
-        // Startdates should be updated to current time
-        assertNotNull(privatlakare.getEnhetStartdatum());
-        assertNotNull(privatlakare.getVardgivareStartdatum());
     }
 
     @Test
@@ -208,12 +176,6 @@ public class IntegrationServiceTest {
     }
 
     @Test
-    public void testValidatePrivatePractitionerByHsaIdEjGodkand() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(EJ_GODKAND_HSA_ID);
-        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
-    }
-
-    @Test
     public void testValidatePrivatePractitionerByPersonIdEjGodkand() {
         ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(EJ_GODKAND_PERSON_ID);
         assertEquals(ValidatePrivatePractitionerResultCode.NOT_AUTHORIZED_IN_HOSP, response.getResultCode());
@@ -221,22 +183,10 @@ public class IntegrationServiceTest {
     }
 
     @Test
-    public void testValidatePrivatePractitionerByHsaIdEjLakare() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(EJ_LAKARE_HSA_ID);
-        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
-    }
-
-    @Test
     public void testValidatePrivatePractitionerByPersonIdEjLakare() {
         ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(EJ_LAKARE_PERSON_ID);
         assertEquals(ValidatePrivatePractitionerResultCode.NO_ACCOUNT, response.getResultCode());
         assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(EJ_LAKARE_PERSON_ID));
-    }
-
-    @Test
-    public void testValidatePrivatePractitionerByHsaIdNonExisting() {
-        ValidatePrivatePractitionerResponseType response = integrationService.validatePrivatePractitionerByHsaId(FINNS_EJ_HSA_ID);
-        assertEquals(ResultCodeEnum.ERROR, response.getResultCode());
     }
 
     @Test
