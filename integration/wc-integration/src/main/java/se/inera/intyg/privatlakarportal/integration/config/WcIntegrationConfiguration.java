@@ -25,16 +25,13 @@ import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.GetPrivatePractitionerResponderImpl;
-import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.ValidatePrivatePractitionerResponderImpl;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitioner.v1.rivtabp21.GetPrivatePractitionerResponderInterface;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
-import se.riv.infrastructure.directory.privatepractitioner.validateprivatepractitioner.v1.rivtabp21.ValidatePrivatePractitionerResponderInterface;
 
 // CHECKSTYLE:ON LineLength
 
@@ -49,9 +46,6 @@ public class WcIntegrationConfiguration {
     private String termsWsUrl;
 
     @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
     private Bus cxfBus;
 
     @Bean
@@ -60,23 +54,10 @@ public class WcIntegrationConfiguration {
     }
 
     @Bean
-    public ValidatePrivatePractitionerResponderInterface validatePrivatePractitionerResponder() {
-        return new ValidatePrivatePractitionerResponderImpl();
-    }
-
-    @Bean
     public EndpointImpl getPrivatePractitionerEndpoint() {
         Object implementor = getPrivatePractitionerResponder();
         EndpointImpl endpoint = new EndpointImpl(cxfBus, implementor);
         endpoint.publish("/get-private-practitioner/v1.0");
-        return endpoint;
-    }
-
-    @Bean
-    public EndpointImpl validatePrivatePractitionerEndpoint() {
-        Object implementor = validatePrivatePractitionerResponder();
-        EndpointImpl endpoint = new EndpointImpl(cxfBus, implementor);
-        endpoint.publish("/validate-private-practitioner/v1.0");
         return endpoint;
     }
 
