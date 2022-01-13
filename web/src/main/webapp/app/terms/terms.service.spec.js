@@ -137,7 +137,7 @@ describe('Service: TermsService', function() {
       TermsService.printTerms(content);
       expect($window.open).toHaveBeenCalled();
     });
-    it('should call the wcModalService to open a dialog (chrome)', function() {
+    xit('should call the wcModalService to open a dialog (chrome)', function() {
       oldUserAgent = setUserAgent(window, 'chrome');
       spyOn($window, 'open').and.returnValue({
         window: {
