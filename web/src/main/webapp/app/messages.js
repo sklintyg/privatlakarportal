@@ -101,10 +101,10 @@ var ppMessages = {
     'footer.cookies.modal.body': '<p>En kaka är en textfil som webbsidan begär att få spara på din dator för att möjliggöra automatisk inloggning i olika e-tjänster under 60 minuter efter det du identifierat dig med en e-legitimation.</p><p>Den här webbsidan innehåller två så kallade kakor (cookies):</p><ul><li>En sessionskaka som innehåller ett unikt slumptal för att identifiera just din inloggning och försvinner när webbläsaren stängs av.</li><li>En informationskaka om vilken av servrarna på vår webbplats som hanterade din inloggning och den kakan finns kvar i webbläsaren även efter omstart.</li></ul><p>Dessa två kakor behövs för att på ett säkert sätt låta dig komma åt olika e-tjänster som en inloggad och identifierad användare. Kakorna i sig innehåller inga personliga uppgifter och används inte av någon annan.</p><h3>Undvika kakor</h3><p>Vill du inte acceptera kakor kan din webbläsare ställas in så att du automatiskt nekar till lagring av kakor eller informeras varje gång en webbplats begär att få lagra en kaka. Genom webbläsaren kan också tidigare lagrade kakor raderas. Se webbläsarens hjälpsidor för mer information.</p><p>Väljer du att inte acceptera kakor så kan du inte identifiera dig med e-legitimation i denna e-tjänst.</p><p>Mer information om kakor kan du finna på <LINK:ptsCookiesModal>.</p>',
 
     // Start
-    'label.start.header': 'Skapa konto i Webcert för dig som bedriver enskild näringsverksamhet/firma',
-    'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett konto i Webcert. För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring för din enskilda näringsverksamhet/firma.',
-    'label.start.intro.subscription.in.use': 'Dina abonnemangsuppgifter är införda i Ineras kundhanteringssystem. Du som har eller är på väg att få en läkarlegitimation kan nu skapa ett konto i Webcert.',
-    'label.start.1': 'Du lämnar uppgifter om dig själv och din enskilda näringsverksamhet/firma. Uppgifterna behövs för att du ska kunna använda alla funktioner i Webcert.',
+    'label.start.header': 'Skapa konto i Webcert',
+    'label.start.intro': 'Du som har eller är på väg att få en läkarlegitimation kan skapa ett konto i Webcert. För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring för din verksamhet.',
+    'label.start.intro.subscription.in.use': '<p>Dina abonnemangsuppgifter är införda i Ineras kundhanteringssystem. Du som har eller är på väg att få en läkarlegitimation kan nu skapa ett konto i Webcert.</p><p>Intyg som utfärdas med Bank-id, Mobilt bank-id eller Telia e-legitimation är enbart den enskilde läkarens intyg och kan inte kopplas samman, överlåtas eller delas med någon organisation.</p>',
+    'label.start.1': 'Du lämnar uppgifter om dig själv och din verksamhet. Uppgifterna behövs för att du ska kunna använda alla funktioner i Webcert.',
     'label.start.2': 'Din yrkeslegitimation verifieras automatiskt mot Socialstyrelsens register över legitimerad hälso- och sjukvårdspersonal (HOSP).',
     'label.start.3': 'Du går vidare till Webcert och godkänner <a id="termsLink" ui-sref=".terms">Webcerts användarvillkor</a> (endast första gången).',
     'label.start.subscription.in.use.3': 'Efter godkänd verifiering mot Socialstyrelsens register över legitimerad hälso- och sjukvårdspersonal (HOSP) kan du börja använda Webcert.',
@@ -122,7 +122,7 @@ var ppMessages = {
 
     // Register form step 1
     'label.form.grunduppgifter': 'Dina och verksamhetens uppgifter',
-    'label.step1intro': 'För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring för din enskilda näringsverksamhet/firma. Ange information om dig själv och din enskilda näringsverksamhet/firma.',
+    'label.step1intro': 'För att använda Webcert med e-legitimation ska du ha ansvarsförsäkring. Ange information om dig själv och din verksamhet.',
     'label.alert.pu': 'Ditt namn har uppdaterats från folkbokföringens register. För att ditt nya namn ska användas i Webcert behöver du logga ut ur Webcert och sedan logga in igen.',
 
     'label.form.personnummer': 'Personnummer',
@@ -136,8 +136,8 @@ var ppMessages = {
     'label.form.befattning.help': 'Välj din huvudsakliga befattning enligt AID-etikett (Arbetsidentifikation kommuner och regioner).',
     'label.form.befattning.error.required': 'Befattning måste anges innan du kan fortsätta.',
 
-    'label.form.verksamhetensnamn': 'Namn på din enskild näringsverksamhet/firma*',
-    'label.form.verksamhetensnamn.help': 'Ange din enskilda näringsverksamhet/firmas fullständiga namn.',
+    'label.form.verksamhetensnamn': 'Namn på din verksamhet*',
+    'label.form.verksamhetensnamn.help': 'Ange verksamhetens fullständiga namn.',
     'label.form.verksamhetensnamn.error.required': 'Verksamhetens namn måste anges innan du kan fortsätta.',
 
     'label.form.agarform': 'Ägarform',
