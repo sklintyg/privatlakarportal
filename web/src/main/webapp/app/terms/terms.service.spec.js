@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* globals window */
 describe('Service: TermsService', function() {
   'use strict';
 
@@ -89,27 +88,6 @@ describe('Service: TermsService', function() {
   });
   describe('printTerms', function() {
 
-    var oldUserAgent;
-
-    function setUserAgent(window, userAgent) {
-      var oldUserAgent = window.navigator.userAgent;
-      if (window.navigator.userAgent !== userAgent) {
-        var userAgentProp = {
-          get: function() {
-            return userAgent;
-          }
-        };
-        try {
-          Object.defineProperty(window.navigator, 'userAgent', userAgentProp);
-        } catch (e) {
-          window.navigator = Object.create(navigator, {
-            userAgent: userAgentProp
-          });
-        }
-      }
-      return oldUserAgent;
-    }
-
     it('should call the wcModalService to open a dialog (not chrome)', function() {
       spyOn($window, 'open').and.returnValue({
         window: {
@@ -138,7 +116,6 @@ describe('Service: TermsService', function() {
       expect($window.open).toHaveBeenCalled();
     });
     it('should call the wcModalService to open a dialog (chrome)', function() {
-      oldUserAgent = setUserAgent(window, 'chrome');
       spyOn($window, 'open').and.returnValue({
         window: {
           focus: function() {
@@ -165,7 +142,6 @@ describe('Service: TermsService', function() {
       TermsService.printTerms(content);
       $timeout.flush();
       expect($window.open).toHaveBeenCalled();
-      setUserAgent(window, oldUserAgent);
     });
   });
 
