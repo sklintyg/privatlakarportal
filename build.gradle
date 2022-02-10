@@ -20,6 +20,7 @@ ext {
     cxfVersion = "3.2.4"
     geronimoJmsVersion = "1.1.1"
     guavaVersion = "28.2-jre"
+    h2Version = "2.1.210"
     hibernateVersion = "5.3.15.Final"
     jadiraUserTypeVersion = "6.0.1.GA"
     jaxb2Version = "1.11.1"
