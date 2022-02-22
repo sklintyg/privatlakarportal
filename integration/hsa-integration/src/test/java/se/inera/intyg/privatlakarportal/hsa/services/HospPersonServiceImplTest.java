@@ -137,7 +137,7 @@ public class HospPersonServiceImplTest {
     }
 
     @Test
-    public void testtRemoveFromCertifierFalse() {
+    public void testRemoveFromCertifierFalse() {
         Result result = new Result();
         result.setResultCode("Fail");
         result.setResultText("Det blev inte bra.");
