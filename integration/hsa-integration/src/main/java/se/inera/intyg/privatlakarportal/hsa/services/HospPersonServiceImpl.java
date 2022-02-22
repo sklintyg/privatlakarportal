@@ -114,7 +114,7 @@ public class HospPersonServiceImpl implements HospPersonService {
         Result result = authorizationManagementService
                 .handleHospCertificationPersonResponseType(certifierId, add ? "add" : "remove", personId, reason);
 
-        if (!"OK".equals(result.getResultText())) {
+        if (!"OK".equals(result.getResultCode())) {
             LOG.error("handleCertifier returned result '{}' for certifierId '{}'", result.getResultText(), certifierId);
             return false;
         }
