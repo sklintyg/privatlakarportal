@@ -38,6 +38,7 @@ import java.util.List;
 public class HospPersonServiceImpl implements HospPersonService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HospPersonServiceImpl.class);
+    private static final String OK = "OK";
 
     @Autowired
     private HsatkAuthorizationManagementService authorizationManagementService;
@@ -114,7 +115,7 @@ public class HospPersonServiceImpl implements HospPersonService {
         Result result = authorizationManagementService
                 .handleHospCertificationPersonResponseType(certifierId, add ? "add" : "remove", personId, reason);
 
-        if (!"OK".equals(result.getResultText())) {
+        if (!OK.equals(result.getResultCode())) {
             LOG.error("handleCertifier returned result '{}' for certifierId '{}'", result.getResultText(), certifierId);
             return false;
         }
