@@ -29,7 +29,8 @@ public class PrivatePractitioner {
     private final String email;
     private final LocalDateTime registrationDate;
 
-    public PrivatePractitioner(String hsaId, String personId, String name, String careproviderName, String email, LocalDateTime registrationDate) {
+    public PrivatePractitioner(String hsaId, String personId, String name, String careproviderName, String email,
+        LocalDateTime registrationDate) {
         this.hsaId = hsaId;
         this.personId = personId;
         this.name = name;
