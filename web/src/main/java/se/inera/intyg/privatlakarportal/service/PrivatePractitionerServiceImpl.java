@@ -31,7 +31,7 @@ public class PrivatePractitionerServiceImpl implements PrivatePractitionerServic
 
     private static final String PNR_PATTERN = "\\d{12}";
 
-    private PrivatlakareRepository privatlakareRepository;
+    private final PrivatlakareRepository privatlakareRepository;
 
     @Autowired
     public PrivatePractitionerServiceImpl(PrivatlakareRepository privatlakareRepository) {
@@ -59,14 +59,14 @@ public class PrivatePractitionerServiceImpl implements PrivatePractitionerServic
 
     @Override
     public List<PrivatePractitioner> getPrivatePractitioners() {
-        List<Privatlakare> allPrivatlakare = privatlakareRepository.findAll();
+        final var allPrivatlakare = privatlakareRepository.findAll();
 
         if (allPrivatlakare.isEmpty()) {
             return List.of();
         }
 
-        return allPrivatlakare.stream().map(
-            pp -> convert(pp))
+        return allPrivatlakare.stream()
+            .map(this::convert)
             .collect(Collectors.toList());
     }
 
@@ -76,7 +76,7 @@ public class PrivatePractitionerServiceImpl implements PrivatePractitionerServic
             return null;
         }
 
-        return new PrivatePractitioner(privatlakare.getHsaId(), privatlakare.getFullstandigtNamn(),
+        return new PrivatePractitioner(privatlakare.getHsaId(), privatlakare.getPersonId(), privatlakare.getFullstandigtNamn(),
             privatlakare.getVardgivareNamn(), privatlakare.getEpost(), privatlakare.getRegistreringsdatum());
     }
 }

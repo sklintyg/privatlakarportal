@@ -39,8 +39,8 @@ import se.inera.intyg.privatlakarportal.web.controller.internalapi.dto.PrivatePr
 @RequestMapping("/internalapi/privatepractitioner")
 public class PrivatePractitionerController {
 
-    private PrivatePractitionerService privatePractitionerService;
-    private IntegrationService integrationService;
+    private final PrivatePractitionerService privatePractitionerService;
+    private final IntegrationService integrationService;
 
     @Autowired
     public PrivatePractitionerController(PrivatePractitionerService privatePractitionerService, IntegrationService integrationService) {
@@ -78,8 +78,8 @@ public class PrivatePractitionerController {
             return List.of();
         }
 
-        return privatePractitioners.stream().map(
-            pp -> convert(pp))
+        return privatePractitioners.stream()
+            .map(this::convert)
             .collect(Collectors.toList());
 
     }
@@ -89,7 +89,7 @@ public class PrivatePractitionerController {
             return null;
         }
 
-        return new PrivatePractitionerDto(privatePractitioner.getHsaId(), privatePractitioner.getName(),
+        return new PrivatePractitionerDto(privatePractitioner.getHsaId(), privatePractitioner.getPersonId(), privatePractitioner.getName(),
             privatePractitioner.getCareproviderName(), privatePractitioner.getEmail(), privatePractitioner.getRegistrationDate());
     }
 }
