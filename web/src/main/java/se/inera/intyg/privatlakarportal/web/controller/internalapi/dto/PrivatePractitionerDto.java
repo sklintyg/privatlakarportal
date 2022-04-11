@@ -22,14 +22,17 @@ import java.time.LocalDateTime;
 
 public class PrivatePractitionerDto {
 
-    private String hsaId;
-    private String name;
-    private String careproviderName;
-    private String email;
-    private LocalDateTime registrationDate;
+    private final String hsaId;
+    private final String personId;
+    private final String name;
+    private final String careproviderName;
+    private final String email;
+    private final LocalDateTime registrationDate;
 
-    public PrivatePractitionerDto(String hsaId, String name, String careproviderName, String email, LocalDateTime registrationDate) {
+    public PrivatePractitionerDto(String hsaId, String personId, String name, String careproviderName, String email,
+        LocalDateTime registrationDate) {
         this.hsaId = hsaId;
+        this.personId = personId;
         this.name = name;
         this.careproviderName = careproviderName;
         this.email = email;
@@ -38,6 +41,10 @@ public class PrivatePractitionerDto {
 
     public String getHsaId() {
         return hsaId;
+    }
+
+    public String getPersonId() {
+        return personId;
     }
 
     public String getName() {
