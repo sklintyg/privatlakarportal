@@ -16,24 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.service.monitoring;
 
-import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+package se.inera.intyg.privatlakarportal.service;
 
-/**
- * Interface used when logging to monitoring file. Used to ensure that the log entries are uniform and easy to parse.
- */
-public interface MonitoringLogService {
+public interface EraseService {
 
-    void logUserRegistered(String id, Long consentVersion, String hsaId, RegistrationStatus registrationStatus);
+    void erasePrivatePractitioner(String careProviderId);
 
-    void logUserDeleted(String id);
-
-    void logUserErased(String id);
-
-    void logUserLogin(String id, String authenticationScheme);
-
-    void logUserLogout(String id, String authenticationScheme);
-
-    void logUserDetailsChanged(String id);
 }
