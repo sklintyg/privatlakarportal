@@ -22,7 +22,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerRequest;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
 import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
+import se.inera.intyg.privatlakarportal.service.EraseService;
 import se.inera.intyg.privatlakarportal.service.PrivatePractitionerService;
 import se.inera.intyg.privatlakarportal.service.model.PrivatePractitioner;
 import se.inera.intyg.privatlakarportal.web.controller.internalapi.dto.PrivatePractitionerDto;
@@ -41,11 +44,14 @@ public class PrivatePractitionerController {
 
     private final PrivatePractitionerService privatePractitionerService;
     private final IntegrationService integrationService;
+    private final EraseService eraseService;
 
     @Autowired
-    public PrivatePractitionerController(PrivatePractitionerService privatePractitionerService, IntegrationService integrationService) {
+    public PrivatePractitionerController(PrivatePractitionerService privatePractitionerService, IntegrationService integrationService,
+        EraseService eraseService) {
         this.privatePractitionerService = privatePractitionerService;
         this.integrationService = integrationService;
+        this.eraseService = eraseService;
     }
 
     @GetMapping("")
@@ -71,6 +77,11 @@ public class PrivatePractitionerController {
         @RequestBody ValidatePrivatePractitionerRequest request) {
         final var response = integrationService.validatePrivatePractitionerByPersonId(request.getPersonalIdentityNumber());
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/erase/{id}")
+    public void erasePrivatePractitioner(@PathVariable("id") String careProviderId) {
+        eraseService.erasePrivatePractitioner(careProviderId);
     }
 
     private List<PrivatePractitionerDto> convert(List<PrivatePractitioner> privatePractitioners) {

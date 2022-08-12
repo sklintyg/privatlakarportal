@@ -43,6 +43,11 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     @Override
+    public void logUserErased(String hsaId) {
+        logEvent(MonitoringEvent.USER_DELETED, hsaId);
+    }
+
+    @Override
     public void logUserLogin(String id, String authenticationScheme) {
         logEvent(MonitoringEvent.USER_LOGIN, HashUtility.hash(id), authenticationScheme);
     }
