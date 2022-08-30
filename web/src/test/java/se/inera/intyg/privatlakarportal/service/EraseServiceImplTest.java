@@ -105,7 +105,8 @@ class EraseServiceImplTest {
     @Test
     public void shouldThrowIfExceptionWhenErasingCertifier() {
         doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
-        doThrow(new WebServiceException("Exception")).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
+        doThrow(new WebServiceException("Exception")).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID,
+            "Avslutat konto i Webcert.");
 
         assertThrows(WebServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
 
