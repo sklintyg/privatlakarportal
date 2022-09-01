@@ -26,6 +26,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import javax.xml.ws.WebServiceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,6 +34,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
@@ -44,21 +47,26 @@ class EraseServiceImplTest {
     private PrivatlakareRepository privatlakareRepository;
     @Mock
     private MonitoringLogService monitoringLogService;
+    @Mock
+    private HospPersonService hospPersonService;
 
     @InjectMocks
     private EraseServiceImpl eraseService;
 
     private static final String HSA_ID = "SE23100000175-5TEST";
-    private static final Privatlakare PRIVATE_PRACTTIONER = new Privatlakare();
+    private static final String PERSON_ID = "1912121211212";
+    private Privatlakare privatePractitioner;
 
     @BeforeEach
     public void init() {
         ReflectionTestUtils.setField(eraseService, "erasePrivatePractitioner", true);
+        privatePractitioner = getPrivatePractitioner();
     }
 
     @Test
     public void shouldMonitorlogWhenPrivatePractitionerIsErased() {
-        doReturn(PRIVATE_PRACTTIONER).when(privatlakareRepository).findByHsaId(HSA_ID);
+        doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
+        doReturn(true).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
 
         eraseService.erasePrivatePractitioner(HSA_ID);
 
@@ -66,29 +74,71 @@ class EraseServiceImplTest {
     }
 
     @Test
-    public void shouldEraseWhenPrivatePractitionerIsFound() {
-        doReturn(PRIVATE_PRACTTIONER).when(privatlakareRepository).findByHsaId(HSA_ID);
+    public void shouldEraseAccountWhenPrivatePractitionerIsFound() {
+        doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
+        doReturn(true).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
 
         eraseService.erasePrivatePractitioner(HSA_ID);
 
-        verify(privatlakareRepository).delete(PRIVATE_PRACTTIONER);
+        verify(privatlakareRepository).delete(privatePractitioner);
     }
 
     @Test
     public void shouldThrowExceptionWhenDeletePrivatePractitionerFailure() {
-        doReturn(PRIVATE_PRACTTIONER).when(privatlakareRepository).findByHsaId(HSA_ID);
-        doThrow(new RuntimeException()).when(privatlakareRepository).delete(PRIVATE_PRACTTIONER);
+        doReturn(true).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
+        doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
+        doThrow(new RuntimeException()).when(privatlakareRepository).delete(privatePractitioner);
 
         assertThrows(RuntimeException.class, () -> eraseService.erasePrivatePractitioner(HSA_ID));
     }
 
     @Test
-    public void shouldNotEraseWhenNoPrivatePractitionerFound() {
+    public void shouldNotEraseAccountWhenFailureErasingCertifier() {
+        doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
+        doReturn(false).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
+
+        assertThrows(PrivatlakarportalServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
+
+        verifyNoMoreInteractions(privatlakareRepository);
+    }
+
+    @Test
+    public void shouldThrowIfExceptionWhenErasingCertifier() {
+        doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
+        doThrow(new WebServiceException("Exception")).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID,
+            "Avslutat konto i Webcert.");
+
+        assertThrows(WebServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
+
+        verifyNoMoreInteractions(privatlakareRepository);
+    }
+
+    @Test
+    public void shouldNotMonitorLogWhenResultNotOkFromEraseCertifier() {
+        doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
+        doReturn(false).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
+
+        assertThrows(PrivatlakarportalServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
+
+        verifyNoInteractions(monitoringLogService);
+    }
+
+    @Test
+    public void shouldNotEraseAccountWhenPrivatePractitionerNotFound() {
         doReturn(null).when(privatlakareRepository).findByHsaId(HSA_ID);
 
         eraseService.erasePrivatePractitioner(HSA_ID);
 
         verifyNoMoreInteractions(privatlakareRepository);
+    }
+
+    @Test
+    public void shouldNotEraseFromCertifierWhenPrivatePractitionerNotFound() {
+        doReturn(null).when(privatlakareRepository).findByHsaId(HSA_ID);
+
+        eraseService.erasePrivatePractitioner(HSA_ID);
+
+        verifyNoMoreInteractions(hospPersonService);
     }
 
     @Test
@@ -101,9 +151,9 @@ class EraseServiceImplTest {
     }
 
     @Test
-    public void shouldNotEraseWhenEraseConfigInactivated() {
+    public void shouldNotEraseAccountWhenEraseConfigInactivated() {
         ReflectionTestUtils.setField(eraseService, "erasePrivatePractitioner", false);
-        doReturn(PRIVATE_PRACTTIONER).when(privatlakareRepository).findByHsaId(HSA_ID);
+        doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
 
         eraseService.erasePrivatePractitioner(HSA_ID);
 
@@ -111,13 +161,29 @@ class EraseServiceImplTest {
     }
 
     @Test
+    public void shouldNotEraseFromCertifierWhenEraseConfigInactivated() {
+        ReflectionTestUtils.setField(eraseService, "erasePrivatePractitioner", false);
+        doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
+
+        eraseService.erasePrivatePractitioner(HSA_ID);
+
+        verifyNoMoreInteractions(hospPersonService);
+    }
+
+    @Test
     public void shouldNotMonitorLogWhenEraseConfigInactivated() {
         ReflectionTestUtils.setField(eraseService, "erasePrivatePractitioner", false);
-        doReturn(PRIVATE_PRACTTIONER).when(privatlakareRepository).findByHsaId(HSA_ID);
+        doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
 
         eraseService.erasePrivatePractitioner(HSA_ID);
 
         verifyNoInteractions(monitoringLogService);
     }
 
+    private Privatlakare getPrivatePractitioner() {
+        final var privatePractitioner = new Privatlakare();
+        privatePractitioner.setHsaId(HSA_ID);
+        privatePractitioner.setPersonId(PERSON_ID);
+        return privatePractitioner;
+    }
 }

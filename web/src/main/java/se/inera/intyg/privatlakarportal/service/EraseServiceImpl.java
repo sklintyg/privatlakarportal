@@ -24,6 +24,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
+import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
+import se.inera.intyg.privatlakarportal.hsa.services.HospPersonService;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.intyg.privatlakarportal.service.monitoring.MonitoringLogService;
 
@@ -36,10 +39,13 @@ public class EraseServiceImpl implements EraseService {
     private boolean erasePrivatePractitioner;
 
     private final PrivatlakareRepository privatlakareRepository;
+    private final HospPersonService hospPersonService;
     private final MonitoringLogService monitoringLogService;
 
-    public EraseServiceImpl(PrivatlakareRepository privatlakareRepository, MonitoringLogService monitoringLogService) {
+    public EraseServiceImpl(PrivatlakareRepository privatlakareRepository, HospPersonService hospPersonService,
+        MonitoringLogService monitoringLogService) {
         this.privatlakareRepository = privatlakareRepository;
+        this.hospPersonService = hospPersonService;
         this.monitoringLogService = monitoringLogService;
     }
 
@@ -59,9 +65,16 @@ public class EraseServiceImpl implements EraseService {
             return;
         }
 
-        privatlakareRepository.delete(privatePractitioner);
-        monitoringLogService.logUserErased(careProviderId);
-        LOG.info("Erased private practitioner with hsa-id {}.", careProviderId);
-    }
+        if (hospPersonService.removeFromCertifier(privatePractitioner.getPersonId(), privatePractitioner.getHsaId(),
+            "Avslutat konto i Webcert.")) {
+            privatlakareRepository.delete(privatePractitioner);
+            monitoringLogService.logUserErased(careProviderId);
+            LOG.info("Erased private practitioner with hsa-id {}.", careProviderId);
 
+        } else {
+            LOG.error("Failure unregistering private practitioner {} in certifier branch.", privatePractitioner.getHsaId());
+            throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.EXTERNAL_ERROR,
+                "Failure unregistering private practitioner in certifier branch.");
+        }
+    }
 }
