@@ -54,6 +54,7 @@ class EraseServiceImplTest {
     private EraseServiceImpl eraseService;
 
     private static final String HSA_ID = "SE23100000175-5TEST";
+    private static final String CERTIFIER_ID_NULL = null;
     private static final String PERSON_ID = "1912121211212";
     private Privatlakare privatePractitioner;
 
@@ -66,7 +67,7 @@ class EraseServiceImplTest {
     @Test
     public void shouldMonitorlogWhenPrivatePractitionerIsErased() {
         doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
-        doReturn(true).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
+        doReturn(true).when(hospPersonService).removeFromCertifier(PERSON_ID, CERTIFIER_ID_NULL, "Avslutat konto i Webcert.");
 
         eraseService.erasePrivatePractitioner(HSA_ID);
 
@@ -76,7 +77,7 @@ class EraseServiceImplTest {
     @Test
     public void shouldEraseAccountWhenPrivatePractitionerIsFound() {
         doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
-        doReturn(true).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
+        doReturn(true).when(hospPersonService).removeFromCertifier(PERSON_ID, CERTIFIER_ID_NULL, "Avslutat konto i Webcert.");
 
         eraseService.erasePrivatePractitioner(HSA_ID);
 
@@ -85,7 +86,7 @@ class EraseServiceImplTest {
 
     @Test
     public void shouldThrowExceptionWhenDeletePrivatePractitionerFailure() {
-        doReturn(true).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
+        doReturn(true).when(hospPersonService).removeFromCertifier(PERSON_ID, CERTIFIER_ID_NULL, "Avslutat konto i Webcert.");
         doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
         doThrow(new RuntimeException()).when(privatlakareRepository).delete(privatePractitioner);
 
@@ -95,7 +96,7 @@ class EraseServiceImplTest {
     @Test
     public void shouldNotEraseAccountWhenFailureErasingCertifier() {
         doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
-        doReturn(false).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
+        doReturn(false).when(hospPersonService).removeFromCertifier(PERSON_ID, CERTIFIER_ID_NULL, "Avslutat konto i Webcert.");
 
         assertThrows(PrivatlakarportalServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
 
@@ -105,7 +106,7 @@ class EraseServiceImplTest {
     @Test
     public void shouldThrowIfExceptionWhenErasingCertifier() {
         doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
-        doThrow(new WebServiceException("Exception")).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID,
+        doThrow(new WebServiceException("Exception")).when(hospPersonService).removeFromCertifier(PERSON_ID, CERTIFIER_ID_NULL,
             "Avslutat konto i Webcert.");
 
         assertThrows(WebServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
@@ -116,7 +117,7 @@ class EraseServiceImplTest {
     @Test
     public void shouldNotMonitorLogWhenResultNotOkFromEraseCertifier() {
         doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
-        doReturn(false).when(hospPersonService).removeFromCertifier(PERSON_ID, HSA_ID, "Avslutat konto i Webcert.");
+        doReturn(false).when(hospPersonService).removeFromCertifier(PERSON_ID, CERTIFIER_ID_NULL, "Avslutat konto i Webcert.");
 
         assertThrows(PrivatlakarportalServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
 
