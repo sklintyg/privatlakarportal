@@ -8,5 +8,9 @@ dependencies {
     compile "org.springframework.data:spring-data-jpa"
     compile "org.springframework:spring-orm"
 
+    compile "org.hibernate:hibernate-core"
+    compile "org.hibernate:hibernate-hikaricp"
+    compile "org.hibernate:hibernate-entitymanager"
+
     testCompile "org.springframework:spring-test"
 }
