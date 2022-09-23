@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.integration.privatepractitioner.services;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -38,8 +39,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.unitils.reflectionassert.ReflectionAssert;
-import org.unitils.reflectionassert.ReflectionComparatorMode;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResultCode;
 import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
@@ -114,7 +113,10 @@ public class IntegrationServiceTest {
         GetPrivatePractitionerResponseType response = integrationService.getPrivatePractitionerByHsaId(GODKAND_HSA_ID);
         assertEquals(ResultCodeEnum.OK, response.getResultCode());
         assertNotNull(response.getHoSPerson());
-        ReflectionAssert.assertReflectionEquals(verifyHosPerson, response.getHoSPerson(), ReflectionComparatorMode.LENIENT_ORDER);
+        assertThat(response.getHoSPerson())
+            .usingRecursiveComparison()
+            .withStrictTypeChecking()
+            .isEqualTo(verifyHosPerson);
     }
 
     @Test
@@ -122,7 +124,10 @@ public class IntegrationServiceTest {
         GetPrivatePractitionerResponseType response = integrationService.getPrivatePractitionerByPersonId(GODKAND_PERSON_ID);
         assertEquals(ResultCodeEnum.OK, response.getResultCode());
         assertNotNull(response.getHoSPerson());
-        ReflectionAssert.assertReflectionEquals(verifyHosPerson, response.getHoSPerson(), ReflectionComparatorMode.LENIENT_ORDER);
+        assertThat(response.getHoSPerson())
+            .usingRecursiveComparison()
+            .withStrictTypeChecking()
+            .isEqualTo(verifyHosPerson);
     }
 
     @Test

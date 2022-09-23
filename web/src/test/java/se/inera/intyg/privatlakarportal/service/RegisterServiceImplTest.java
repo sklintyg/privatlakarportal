@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -47,8 +48,6 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
 import org.springframework.core.io.ClassPathResource;
-import org.unitils.reflectionassert.ReflectionAssert;
-import org.unitils.reflectionassert.ReflectionComparatorMode;
 import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -121,7 +120,7 @@ public class RegisterServiceImplTest {
     @InjectMocks
     private RegisterService registerService = new RegisterServiceImpl();
 
-    private MailStubStore mailStore = new MailStubStore();
+    private final MailStubStore mailStore = new MailStubStore();
 
     private Privatlakare readPrivatlakare(String path) throws IOException {
         Privatlakare verifyPrivatlakare = new CustomObjectMapper().readValue(new ClassPathResource(
@@ -194,7 +193,7 @@ public class RegisterServiceImplTest {
             PrivatlakareId privatlakareId = new PrivatlakareId();
             privatlakareId.setId(i);
             when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
-            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(Integer.valueOf(i));
+            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(i);
 
             when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.AUTHORIZED);
             Registration registration = createValidRegistration();
@@ -213,7 +212,7 @@ public class RegisterServiceImplTest {
             PrivatlakareId privatlakareId = new PrivatlakareId();
             privatlakareId.setId(i);
             when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
-            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(Integer.valueOf(i));
+            when(privatlakareidRepository.findLatestGeneratedHsaId()).thenReturn(i);
 
             when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenReturn(RegistrationStatus.AUTHORIZED);
             Registration registration = createValidRegistration();
@@ -260,13 +259,14 @@ public class RegisterServiceImplTest {
         assertEquals(1, savedPrivatlakare.getValue().getMedgivande().size());
 
         Privatlakare verifyPrivatlakare = readPrivatlakare("RegisterServiceImplTest/test.json");
-        ReflectionAssert.assertReflectionEquals(verifyPrivatlakare, savedPrivatlakare.getValue(), ReflectionComparatorMode.LENIENT_ORDER);
+        assertThat(savedPrivatlakare.getValue())
+            .usingRecursiveComparison()
+            .withStrictTypeChecking()
+            .isEqualTo(verifyPrivatlakare);
     }
 
     @Test
     public void testCreateRegistrationLakareUtanMedgivande() {
-
-
         PrivatlakareId privatlakareId = new PrivatlakareId();
         privatlakareId.setId(1);
         Registration registration = createValidRegistration();

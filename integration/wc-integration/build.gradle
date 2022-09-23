@@ -5,5 +5,5 @@ dependencies {
     compile "se.inera.intyg.infrastructure.directory.privatepractitioner.terms:intyg-infrastructure-directory-privatepractitioner-terms-schemas:${ppTermsSchemasVersion}"
     compile "se.inera.intyg.infra:privatepractitioner:${infraVersion}"
 
-    testCompile "org.unitils:unitils-core:${unitilsVersion}"
+    testCompile "org.assertj:assertj-core"
 }

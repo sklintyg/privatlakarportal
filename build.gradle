@@ -28,7 +28,6 @@ ext {
     stAntlr4Version = "4.3.4"
     swaggerVersion = "2.9.2"
     swaggerJaxrsVersion = "1.6.0"
-    unitilsVersion = "3.4.6"
     shedlockSpringVersion = "4.42.0"
 
     nodeJsVersion = "12.22.12"
