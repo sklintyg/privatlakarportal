@@ -127,5 +127,6 @@ dependencies {
     testCompile "io.rest-assured:rest-assured"
     testCompile "io.rest-assured:json-schema-validator"
 
+    gretty "org.glassfish.web:jakarta.servlet.jsp.jstl"
     gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }
