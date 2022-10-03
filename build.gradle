@@ -26,8 +26,7 @@ ext {
     picocliVersion = "4.6.3"
     springSecurityExtensionsVersion = "1.0.3.RELEASE"
     stAntlr4Version = "4.3.4"
-    swaggerVersion = "2.9.2"
-    swaggerJaxrsVersion = "1.6.0"
+    springDocVersion = "1.6.11"
     shedlockSpringVersion = "4.42.0"
 
     nodeJsVersion = "12.22.12"

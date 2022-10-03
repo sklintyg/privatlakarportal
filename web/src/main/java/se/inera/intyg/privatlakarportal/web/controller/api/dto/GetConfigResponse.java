@@ -18,29 +18,28 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Map;
 
 /**
  * Created by pebe on 2015-08-28.
  */
-@ApiModel(description = "Response-object för config-tjänst")
+@Schema(description = "Response-object för config-tjänst")
 public class GetConfigResponse {
 
-    @ApiModelProperty(name = "webcertUrl", dataType = "String")
+    @Schema(name = "webcertUrl", type = "String")
     private String webcertUrl;
 
-    @ApiModelProperty(name = "webcertStartUrl", dataType = "String")
+    @Schema(name = "webcertStartUrl", type = "String")
     private String webcertStartUrl;
 
-    @ApiModelProperty(name = "befattningar", dataType = "Map<String, String>")
+    @Schema(name = "befattningar", type = "Map<String, String>")
     private Map<String, String> befattningar;
 
-    @ApiModelProperty(name = "vardformer", dataType = "Map<String, String>")
+    @Schema(name = "vardformer", type = "Map<String, String>")
     private Map<String, String> vardformer;
 
-    @ApiModelProperty(name = "verksamhetstyper", dataType = "Map<String, String>")
+    @Schema(name = "verksamhetstyper", type = "Map<String, String>")
     private Map<String, String> verksamhetstyper;
 
     public GetConfigResponse(String webcertUrl, String webcertStartUrl, Map<String, String> befattningar,

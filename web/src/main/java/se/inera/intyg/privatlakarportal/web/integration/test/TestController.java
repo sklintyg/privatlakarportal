@@ -18,10 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.web.integration.test;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto
 /**
  * Created by pebe on 2015-09-02.
  */
-@Api(value = "/test", description = "Rest-api för test-tjänster.", produces = MediaType.APPLICATION_JSON, tags = "testability, test")
+@Tag(name = "/test", description = "Rest-api för test-tjänster.")
 @RestController
 @RequestMapping("/api/test")
 @Profile({"dev", "testability-api"})

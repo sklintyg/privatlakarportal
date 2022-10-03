@@ -18,10 +18,8 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import javax.ws.rs.core.MediaType;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,25 +30,28 @@ import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetTermsResponse;
 /**
  * Created by pebe on 2015-08-21.
  */
-@Api(value = "/terms", description = "REST API för term-service", produces = MediaType.APPLICATION_JSON)
+@Tag(name = "/terms", description = "REST API för term-service")
 @RestController
 @RequestMapping("/api/terms")
 public class TermsController {
 
-    @Autowired
-    private TermsService termsService;
+    private final TermsService termsService;
 
-    @Autowired
-    private WebcertTermsService webcertTermsService;
+    private final WebcertTermsService webcertTermsService;
+
+    public TermsController(TermsService termsService, WebcertTermsService webcertTermsService) {
+        this.termsService = termsService;
+        this.webcertTermsService = webcertTermsService;
+    }
 
     @RequestMapping(value = "/webcert", method = RequestMethod.GET)
-    @ApiOperation(value = "getWebcertTerms")
+    @Operation(summary = "getWebcertTerms")
     public GetTermsResponse getWebcertTerms() {
         return new GetTermsResponse(webcertTermsService.getTerms());
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    @ApiOperation(value = "getTerms")
+    @Operation(summary = "getTerms")
     public GetTermsResponse getTerms() {
         return new GetTermsResponse(termsService.getTerms());
     }

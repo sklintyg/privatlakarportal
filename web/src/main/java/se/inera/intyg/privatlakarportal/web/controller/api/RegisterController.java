@@ -18,9 +18,8 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import javax.ws.rs.core.MediaType;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,7 +42,7 @@ import se.inera.intyg.privatlakarportal.web.controller.api.dto.SaveRegistrationR
 /**
  * Created by pebe on 2015-06-25.
  */
-@Api(value = "/registration", description = "REST API för registration-service", produces = MediaType.APPLICATION_JSON)
+@Tag(name = "/registration", description = "REST API för registration-service")
 @RestController
 @RequestMapping("/api/registration")
 public class RegisterController {
@@ -54,7 +53,7 @@ public class RegisterController {
     @Autowired
     private PostnummerService postnummerService;
 
-    @ApiOperation(value = "getRegistration")
+    @Operation(summary = "getRegistration")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public GetRegistrationResponse getRegistration() {
         RegistrationWithHospInformation registrationWithHospInformation = registerService.getRegistration();
@@ -62,27 +61,27 @@ public class RegisterController {
             registrationWithHospInformation.getHospInformation(), registrationWithHospInformation.isWebcertUserTermsApproved());
     }
 
-    @ApiOperation(value = "createRegistration", nickname = "create")
+    @Operation(summary = "createRegistration", description = "create")
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
     public CreateRegistrationResponse createRegistration(@RequestBody CreateRegistrationRequest request) {
         RegistrationStatus status = registerService.createRegistration(request.getRegistration(), request.getGodkantMedgivandeVersion());
         return new CreateRegistrationResponse(status);
     }
 
-    @ApiOperation(value = "createRegistration", nickname = "save")
+    @Operation(summary = "createRegistration", description = "save")
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = "application/json")
     public SaveRegistrationResponse createRegistration(@RequestBody SaveRegistrationRequest request) {
         SaveRegistrationResponseStatus status = registerService.saveRegistration(request.getRegistration());
         return new SaveRegistrationResponse(status);
     }
 
-    @ApiOperation(value = "getHospInformation")
+    @Operation(summary = "getHospInformation")
     @RequestMapping(value = "/hospInformation", method = RequestMethod.GET)
     public GetHospInformationResponse getHospInformation() {
         return new GetHospInformationResponse(registerService.getHospInformation());
     }
 
-    @ApiOperation(value = "getOmrade")
+    @Operation(summary = "getOmrade")
     @RequestMapping(value = "/omrade/{postnummer}", method = RequestMethod.GET)
     public GetOmradeResponse getOmrade(@PathVariable("postnummer") String postnummer) {
         return new GetOmradeResponse(postnummerService.getOmradeByPostnummer(postnummer));

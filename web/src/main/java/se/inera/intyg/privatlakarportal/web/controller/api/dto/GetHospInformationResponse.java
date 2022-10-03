@@ -18,17 +18,16 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import se.inera.intyg.privatlakarportal.service.model.HospInformation;
 
 /**
  * Created by pebe on 2015-08-13.
  */
-@ApiModel(description = "Response-object för getHospInformation")
+@Schema(description = "Response-object för getHospInformation")
 public class GetHospInformationResponse {
 
-    @ApiModelProperty(name = "hospInformation", dataType = "HospInformation")
+    @Schema(name = "hospInformation", type = "HospInformation")
     private HospInformation hospInformation;
 
     public GetHospInformationResponse(HospInformation hospInformation) {

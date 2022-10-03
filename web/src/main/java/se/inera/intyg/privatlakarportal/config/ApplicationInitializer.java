@@ -56,13 +56,18 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         appContext.register(ApplicationConfig.class, PersistenceConfigDev.class, MailServiceConfig.class,
             HsaConfiguration.class, JobConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
             WcIntegrationConfiguration.class, ServiceConfig.class, DynamicLinkConfig.class, PostnummerserviceConfig.class,
-            PersistenceConfig.class, PersistenceConfigDev.class, MonitoringConfiguration.class);
+            PersistenceConfig.class, PersistenceConfigDev.class, MonitoringConfiguration.class, SwaggerConfig.class);
 
         servletContext.addListener(new ContextLoaderListener(appContext));
 
         AnnotationConfigWebApplicationContext webConfig = new AnnotationConfigWebApplicationContext();
         webConfig.register(WebConfig.class);
-        webConfig.register(SwaggerConfig.class);
+        webConfig.register(this.getClass(), org.springdoc.webmvc.ui.SwaggerConfig.class,
+            org.springdoc.core.SwaggerUiConfigProperties.class, org.springdoc.core.SwaggerUiOAuthProperties.class,
+            org.springdoc.webmvc.core.SpringDocWebMvcConfiguration.class,
+            org.springdoc.webmvc.core.MultipleOpenApiSupportConfiguration.class,
+            org.springdoc.core.SpringDocConfiguration.class, org.springdoc.core.SpringDocConfigProperties.class,
+            org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class);
         ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(webConfig));
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
