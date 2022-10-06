@@ -18,10 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
-import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +36,7 @@ import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetConfigResponse
 /**
  * Created by pebe on 2015-08-28.
  */
-@Api(value = "/config", description = "Config-api för Privatläkarportalen", produces = MediaType.APPLICATION_JSON)
+@Tag(name = "/config", description = "Config-api för Privatläkarportalen")
 @RestController
 @RequestMapping("/api/config")
 public class ConfigController {
@@ -49,7 +48,7 @@ public class ConfigController {
     private DynamicLinkService dynamicLinkService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    @ApiOperation(value = "getConfig")
+    @Operation(summary = "getConfig")
     public GetConfigResponse getConfig() {
         return new GetConfigResponse(
             env.getProperty("webcert.host.url"),
@@ -60,7 +59,7 @@ public class ConfigController {
     }
 
     @RequestMapping(value = "/links", method = RequestMethod.GET, produces = "application/json")
-    @ApiOperation(value = "/links")
+    @Operation(summary = "/links")
     public Map<String, DynamicLink> getLinks() {
         return dynamicLinkService.getAllAsMap();
     }

@@ -18,8 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import se.inera.intyg.privatlakarportal.common.model.Registration;
 import se.inera.intyg.privatlakarportal.service.model.HospInformation;
 
@@ -27,16 +26,16 @@ import se.inera.intyg.privatlakarportal.service.model.HospInformation;
  * Created by pebe on 2015-08-06.
  */
 
-@ApiModel(description = "Response-object för getRegistration")
+@Schema(description = "Response-object för getRegistration")
 public class GetRegistrationResponse {
 
-    @ApiModelProperty(name = "registration", dataType = "Registration")
+    @Schema(name = "registration", type = "Registration")
     private Registration registration;
 
-    @ApiModelProperty(name = "hospInformation", dataType = "HospInformation")
+    @Schema(name = "hospInformation", type = "HospInformation")
     private HospInformation hospInformation;
 
-    @ApiModelProperty(name = "webcertUserTermsApproved", dataType = "Boolean")
+    @Schema(name = "webcertUserTermsApproved", type = "Boolean")
     private boolean webcertUserTermsApproved;
 
     public GetRegistrationResponse(Registration registration, HospInformation hospInformation, boolean webcertUserTermsApproved) {

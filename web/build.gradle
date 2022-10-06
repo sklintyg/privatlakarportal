@@ -1,6 +1,6 @@
 apply plugin: 'war'
 apply plugin: 'org.gretty'
-apply plugin: 'com.moowork.grunt'
+apply plugin: 'nebula.grunt'
 apply plugin: 'idea'
 
 test {
@@ -12,6 +12,7 @@ task restAssuredTest(type: Test) {
     systemProperty "integration.tests.baseUrl", System.properties['baseUrl'] ?: 'http://localhost:8060/'
     systemProperty "integration.tests.actuatorUrl", System.properties['actuatorUrl'] ?: "http://localhost:8160/"
     include '**/*IT*'
+    useJUnitPlatform()
 }
 
 idea {
@@ -106,12 +107,11 @@ dependencies {
     compile "org.springframework.session:spring-session-data-redis"
     compile "com.googlecode.json-simple:json-simple:${jsonSimpleVersion}"
     compile "wsdl4j:wsdl4j"
-    compile "io.springfox:springfox-swagger2:${swaggerVersion}"
-    compile "io.springfox:springfox-swagger-ui:${swaggerVersion}"
-    compile("io.swagger:swagger-jaxrs:${swaggerJaxrsVersion}") {
-        exclude(module: "jsr311-api")
-        transitive = false
-    }
+
+    compile "org.springdoc:springdoc-openapi-ui:${springDocVersion}"
+    compile "org.springdoc:springdoc-openapi-data-rest:${springDocVersion}"
+    compile "org.springframework.boot:spring-boot:${springbootMavenBomVersion}"
+    compile "org.springframework.boot:spring-boot-autoconfigure:${springbootMavenBomVersion}"
 
     compile "mysql:mysql-connector-java"
 
@@ -120,12 +120,12 @@ dependencies {
 
     testCompile "org.hamcrest:hamcrest"
     testCompile "org.hamcrest:hamcrest-library"
-    testCompile "org.unitils:unitils-core:${unitilsVersion}"
-    testCompile "org.antlr:ST4:${stringTemplateVersion}"
+    testCompile "org.assertj:assertj-core"
+    testCompile "org.antlr:ST4:${stAntlr4Version}"
 
     testCompile "io.rest-assured:rest-assured"
     testCompile "io.rest-assured:json-schema-validator"
-    testCompile "com.sun.xml.bind:jaxb-osgi:${jaxbOsgiVersion}" // Can remove when rest-assured in BOM > version 4.0
 
+    gretty "org.glassfish.web:jakarta.servlet.jsp.jstl"
     gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }

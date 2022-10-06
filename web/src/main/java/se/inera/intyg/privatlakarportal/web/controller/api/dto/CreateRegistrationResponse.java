@@ -18,14 +18,13 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 
-@ApiModel(description = "Response-objekt för registration-tjänst")
+@Schema(description = "Response-objekt för registration-tjänst")
 public class CreateRegistrationResponse {
 
-    @ApiModelProperty(name = "STATUS", dataType = "RegistrationStatus")
+    @Schema(name = "STATUS", type = "RegistrationStatus")
     private RegistrationStatus status;
 
     public CreateRegistrationResponse(RegistrationStatus status) {

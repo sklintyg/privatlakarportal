@@ -18,17 +18,16 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import se.inera.intyg.privatlakarportal.service.model.SaveRegistrationResponseStatus;
 
 /**
  * Created by pebe on 2015-08-17.
  */
-@ApiModel(description = "Response-obect för SaveRegistration")
+@Schema(description = "Response-obect för SaveRegistration")
 public class SaveRegistrationResponse {
 
-    @ApiModelProperty(name = "status", dataType = "SaveRegistrationResponseStatus")
+    @Schema(name = "status", type = "SaveRegistrationResponseStatus")
     private SaveRegistrationResponseStatus status;
 
     public SaveRegistrationResponse(SaveRegistrationResponseStatus status) {

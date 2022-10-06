@@ -1,12 +1,12 @@
 plugins {
-    id "se.inera.intyg.plugin.common" version "3.1.4" apply false
-    id "org.gretty" version "3.0.1" apply false
-    id "com.moowork.node" version "1.3.1" apply false
-    id "io.spring.dependency-management" version "1.0.9.RELEASE" apply false
+    id "se.inera.intyg.plugin.common" version "3.2.0" apply false
+    id "org.gretty" version "3.0.8" apply false
+    id "nebula.node" version "1.4.2" apply false
+    id "io.spring.dependency-management" version "1.0.13.RELEASE" apply false
 }
 
 ext {
-    infraVersion = System.properties['infraVersion'] ?: '3.17.2-SNAPSHOT'
+    infraVersion = System.properties['infraVersion'] ?: '3.18.0-SNAPSHOT'
     refDataVersion = System.properties['refDataVersion'] ?: '1.0-SNAPSHOT'
 
     ppSchemasVersion = "1.0.5"
@@ -16,32 +16,23 @@ ext {
 
     schemasContractVersion = "2.1.8"
 
-    commonsIOVersion = "2.6"
-    cxfVersion = "3.2.4"
+    commonsIOVersion = "2.11.0"
+    cxfVersion = "3.5.3"
     geronimoJmsVersion = "1.1.1"
-    guavaVersion = "28.2-jre"
-    h2Version = "2.1.210"
-    hibernateVersion = "5.3.15.Final" // included because of bug in BOM version 5.4.12
-    springFrameworkVersion = "5.2.20.RELEASE" // included because of vulnerability (CVE-2022-22965) in 5.2.4.RELEASE
+    guavaVersion = "31.1-jre"
     jadiraUserTypeVersion = "6.0.1.GA"
-    jaxb2Version = "1.11.1"
-    jaxbXjcVersion = "2.3.2"
-    jaxbCoreVersion = "2.3.0.1"
-    jaxbImplVersion = "2.3.2"
-    jaxbOsgiVersion ="2.3.2"
+    jaxb2Version = "0.13.1"
     jsonSimpleVersion = "1.1.1"
+    picocliVersion = "4.6.3"
     springSecurityExtensionsVersion = "1.0.3.RELEASE"
-    stringTemplateVersion = "4.3"
-    swaggerVersion = "2.9.2"
-    swaggerJaxrsVersion = "1.6.0"
-    unitilsVersion = "3.4.6"
-    wsdl4jVersion = "1.6.3"
-    shedlockSpringVersion = "4.5.0"
+    stAntlr4Version = "4.3.4"
+    springDocVersion = "1.6.11"
+    shedlockSpringVersion = "4.42.0"
 
     nodeJsVersion = "12.22.12"
     npmVersion = "6.14.16"
 
-    springbootMavenBomVersion = "2.2.5.RELEASE"
+    springbootMavenBomVersion = "2.7.3"
 }
 
 allprojects {
@@ -74,92 +65,6 @@ allprojects {
     }
 
     dependencies {
-        // Exclude and import of non-BOM version of Hibernate due to
-        // bug in BOM-version 5.4.12.
-        compile("org.hibernate:hibernate-core") {
-            version {
-                strictly "${hibernateVersion}"
-            }
-        }
-        compile("org.hibernate:hibernate-hikaricp") {
-            version {
-                strictly "${hibernateVersion}"
-            }
-        }
-        compile("org.hibernate:hibernate-entitymanager") {
-            version {
-                strictly "${hibernateVersion}"
-            }
-        }
-
-        // Exclude and import of non-BOM version of Spring Framework due to
-        // vulnerability (CVE-2022-22965) in BOM-version 5.2.4.RELEASE.
-        compile("org.springframework:spring-web") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-webmvc") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-aop") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-beans") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-context") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-core") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-expression") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-test") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-context-support") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-oxm") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-orm") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-tx") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-        compile("org.springframework:spring-jdbc") {
-            version {
-                strictly "${springFrameworkVersion}"
-            }
-        }
-
         compile "javax.annotation:javax.annotation-api"
         compile "jakarta.xml.bind:jakarta.xml.bind-api"
         compile "jakarta.xml.ws:jakarta.xml.ws-api"
@@ -174,7 +79,7 @@ allprojects {
         testAnnotationProcessor 'org.projectlombok:lombok'
 
         testCompile "se.inera.intyg.refdata:refdata:${refDataVersion}"
-        testCompile "junit:junit:4.+"
+        testCompile "junit:junit"
         testCompile "org.junit.jupiter:junit-jupiter-api"
         testCompile "org.junit.jupiter:junit-jupiter-params"
         testCompile "org.mockito:mockito-junit-jupiter"
