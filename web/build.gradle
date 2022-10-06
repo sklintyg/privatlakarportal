@@ -10,7 +10,7 @@ test {
 task restAssuredTest(type: Test) {
     outputs.upToDateWhen { false }
     systemProperty "integration.tests.baseUrl", System.properties['baseUrl'] ?: 'http://localhost:8060/'
-    systemProperty "integration.tests.actuatorUrl", System.properties['actuatorUrl'] ?: "http://localhost:8160/"
+    systemProperty "integration.tests.actuatorUrl", System.properties['actuatorUrl'] ?: "http://localhost:8160"
     include '**/*IT*'
     useJUnitPlatform()
 }
