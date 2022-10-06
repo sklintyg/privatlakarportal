@@ -44,8 +44,8 @@ import se.inera.intyg.privatlakarportal.web.controller.api.dto.CreateRegistratio
 
 public class ErasePrivatePractitionerIT extends BaseRestIntegrationTest {
 
-    private static final String INTERNAL_BASE_URI = System.getProperty("integration.tests.actuatorUrl", "http://localhost:8160/");
-    private static final String ERASE_PRIVATE_PRACTITIONER_URL = INTERNAL_BASE_URI + "internalapi/privatepractitioner/erase";
+    private static final String INTERNAL_BASE_URI = System.getProperty("integration.tests.actuatorUrl", "http://localhost:8081");
+    private static final String ERASE_PRIVATE_PRACTITIONER_URL = INTERNAL_BASE_URI + "/internalapi/privatepractitioner/erase";
 
     private static final String PERSONNUMMER = "195107132119";
     private static final String FORNAMN = "Valdemar";
