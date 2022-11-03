@@ -107,6 +107,19 @@ allprojects {
     }
 }
 
+gradle.taskGraph.whenReady {
+    def runningRestAssuredTest = false
+    project('privatlakarportal-web') { runningRestAssuredTest = gradle.taskGraph.getAllTasks().contains(restAssuredTest) }
+
+    if (runningRestAssuredTest) {
+        project('privatlakarportal-web') { test.enabled(false) }
+        project('privatlakarportal-persistence') { test.enabled(false) }
+        project('privatlakarportal-wc-integration') { test.enabled(false) }
+        project('privatlakarportal-hsa-integration') { test.enabled(false) }
+        project('privatlakarportal-common') { test.enabled(false) }
+    }
+}
+
 task tagRelease(type: TagReleaseTask)
 
 def environment = project.findProperty('env') ?: "local"
