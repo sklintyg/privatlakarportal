@@ -6,7 +6,7 @@ plugins {
 }
 
 ext {
-    infraVersion = System.properties['infraVersion'] ?: '3.18.0-SNAPSHOT'
+    infraVersion = System.properties['infraVersion'] ?: '3.19.0-SNAPSHOT'
     refDataVersion = System.properties['refDataVersion'] ?: '1.0-SNAPSHOT'
 
     ppSchemasVersion = "1.0.5"
@@ -17,7 +17,7 @@ ext {
     schemasContractVersion = "2.1.8"
 
     commonsIOVersion = "2.11.0"
-    cxfVersion = "3.5.3"
+    cxfVersion = "3.5.5"
     geronimoJmsVersion = "1.1.1"
     guavaVersion = "31.1-jre"
     jadiraUserTypeVersion = "6.0.1.GA"
@@ -32,7 +32,7 @@ ext {
     nodeJsVersion = "12.22.12"
     npmVersion = "6.14.16"
 
-    springbootMavenBomVersion = "2.7.3"
+    springbootMavenBomVersion = "2.7.6"
 }
 
 allprojects {
