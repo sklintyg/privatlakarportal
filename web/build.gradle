@@ -113,7 +113,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot:${springbootMavenBomVersion}"
     compile "org.springframework.boot:spring-boot-autoconfigure:${springbootMavenBomVersion}"
 
-    compile "mysql:mysql-connector-java"
+    compile "com.mysql:mysql-connector-j"
 
     compileOnly "javax.servlet:javax.servlet-api"
     compileOnly "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api"
