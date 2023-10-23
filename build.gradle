@@ -26,7 +26,7 @@ ext {
     springSecurityExtensionsVersion = "1.0.3.RELEASE"
     stAntlr4Version = "4.3.4"
     springDocVersion = "1.7.0"
-    shedlockSpringVersion = "4.42.0"
+    shedlockSpringVersion = "4.46.0"
 
     nodeJsVersion = "12.22.12"
     npmVersion = "6.14.16"
