@@ -1,4 +1,4 @@
-apply plugin: 'nebula.node'
+apply plugin: 'com.netflix.nebula.node'
 apply plugin: 'idea'
 
 idea {
@@ -16,18 +16,19 @@ node {
     npmWorkDir = file("${rootProject.projectDir}/.gradle/npm")
 }
 
-task cypressTest(type: NodeTask, dependsOn: [npmInstall] ) {
+tasks.register('cypressTest', NodeTask) {
+    dependsOn npmInstall
     outputs.upToDateWhen { false }
 
     project.delete(files("${buildDir}/test-results"))
 
     def baseUrl = System.properties['baseUrl'] ?: "http://localhost:8060"
 
-    script = file( 'scripts/run.js' )
+    script = file('scripts/run.js')
     args = ['baseUrl=' + baseUrl]
 
 }
 
 dependencies {
-    runtime project(':privatlakarportal-web')
+    runtimeOnly project(':privatlakarportal-web')
 }

@@ -13,16 +13,19 @@ if (project.hasProperty("codeQuality")) {
 }
 
 dependencies {
-    compile project(":privatlakarportal-common")
+    implementation project(":privatlakarportal-common")
+    implementation project(":privatlakarportal-persistence")
 
-    compile "se.inera.intyg.infra:common-redis-cache-core:${infraVersion}"
-    compile "se.inera.intyg.infra:monitoring:${infraVersion}"
-    compile "se.inera.intyg.infra:hsatk-integration:${infraVersion}"
-    compile "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2Version}"
-    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider"
-    compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
-    compile "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
-    compile "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
-    compile "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
+    implementation "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider"
+    implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
+    implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
+    implementation "org.springframework:spring-context-support"
+    implementation "org.springframework.data:spring-data-jpa"
+    implementation "se.inera.intyg.infra:hsa-integration-api:${infraVersion}"
+    implementation "se.inera.intyg.infra:hsatk-integration:${infraVersion}"
+    implementation "se.inera.intyg.infra:monitoring:${infraVersion}"
+    implementation "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
 
+    compileOnly "jakarta.persistence:jakarta.persistence-api"
+    testCompileOnly "jakarta.persistence:jakarta.persistence-api"
 }
