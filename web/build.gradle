@@ -81,14 +81,6 @@ grunt_build_no_minify.dependsOn npmInstall
 grunt_build_no_minify_no_karma.dependsOn npmInstall
 war.dependsOn createVersionPropertyFile
 
-publishing {
-    publications {
-        mavenWeb(org.gradle.api.publish.maven.MavenPublication) {
-            from components.web
-        }
-    }
-}
-
 dependencies {
     implementation project(":privatlakarportal-common")
     implementation project(":privatlakarportal-hsa-integration")
