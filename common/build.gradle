@@ -1,22 +1,18 @@
 dependencies {
-    compile project(":privatlakarportal-persistence")
+    implementation project(":privatlakarportal-persistence")
 
-    compile "org.apache.commons:commons-lang3"
-    compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
-    compile "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
-    compile "org.springframework:spring-context-support"
-    compile "org.springframework:spring-webmvc"
-    compile "org.springframework.data:spring-data-redis"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+    implementation "com.sun.mail:jakarta.mail"
+    implementation "commons-io:commons-io:${commonsIOVersion}"
+    implementation "org.apache.commons:commons-lang3"
+    implementation "org.springframework.data:spring-data-redis"
+    implementation "org.springframework:spring-context-support"
+    implementation "org.springframework:spring-webmvc"
 
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
-    compile "com.google.guava:guava:${guavaVersion}"
-    compile "com.sun.mail:jakarta.mail"
-    compile "jakarta.mail:jakarta.mail-api"
+    compileOnly "jakarta.persistence:jakarta.persistence-api"
+    compileOnly "jakarta.ws.rs:jakarta.ws.rs-api"
 
-    compile "commons-codec:commons-codec"
-    compile "commons-io:commons-io:${commonsIOVersion}"
+    testImplementation "org.aspectj:aspectjweaver"
 
-    compileOnly "javax.servlet:javax.servlet-api"
-
-    testCompile "org.aspectj:aspectjweaver"
+    testCompileOnly "jakarta.persistence:jakarta.persistence-api"
 }
