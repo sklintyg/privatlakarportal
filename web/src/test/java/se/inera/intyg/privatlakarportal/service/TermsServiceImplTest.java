@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Inera AB (http://www.inera.se)
+ * Copyright (C) 2024 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -136,6 +136,7 @@ public class TermsServiceImplTest {
     }
 
     private void setMockToReturnException() {
-        when(restTemplate.getForEntity(any(String.class), eq(Boolean.class))).thenThrow(new RestClientException("Test RestClientException"));
+        when(restTemplate.getForEntity(any(String.class), eq(Boolean.class))).thenThrow(
+            new RestClientException("Test RestClientException"));
     }
 }

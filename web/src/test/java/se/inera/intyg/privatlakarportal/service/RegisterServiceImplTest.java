@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Inera AB (http://www.inera.se)
+ * Copyright (C) 2024 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -280,7 +280,6 @@ public class RegisterServiceImplTest {
     public void testCreateRegistrationLakareFelMedgivandeVersion() {
         when(medgivandeTextRepository.findById(2L)).thenReturn(Optional.empty());
 
-
         PrivatlakareId privatlakareId = new PrivatlakareId();
         privatlakareId.setId(1);
 
@@ -329,7 +328,8 @@ public class RegisterServiceImplTest {
         privatlakareId.setId(1);
         when(privatlakareidRepository.save(any(PrivatlakareId.class))).thenReturn(privatlakareId);
 
-        when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenThrow(new HospUpdateFailedToContactHsaException(new WebServiceException("Fail")));
+        when(hospUpdateService.updateHospInformation(any(Privatlakare.class), eq(true))).thenThrow(
+            new HospUpdateFailedToContactHsaException(new WebServiceException("Fail")));
 
         Registration registration = createValidRegistration();
         RegistrationStatus response = registerService.createRegistration(registration, 1L);

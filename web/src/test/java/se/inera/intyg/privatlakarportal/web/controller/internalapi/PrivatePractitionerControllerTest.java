@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Inera AB (http://www.inera.se)
+ * Copyright (C) 2024 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -161,7 +161,8 @@ public class PrivatePractitionerControllerTest {
         var validatePrivatePractitionerResponse = new ValidatePrivatePractitionerResponse();
         when(integrationService.validatePrivatePractitionerByPersonId(anyString())).thenReturn(validatePrivatePractitionerResponse);
 
-        ValidatePrivatePractitionerRequest validatePrivatePractitionerRequest = new ValidatePrivatePractitionerRequest(PERSONAL_IDENTITY_NUMBER);
+        ValidatePrivatePractitionerRequest validatePrivatePractitionerRequest = new ValidatePrivatePractitionerRequest(
+            PERSONAL_IDENTITY_NUMBER);
         var response = privatePractitionerController.validatePrivatePractitioner(validatePrivatePractitionerRequest);
 
         verify(integrationService).validatePrivatePractitionerByPersonId(PERSONAL_IDENTITY_NUMBER);

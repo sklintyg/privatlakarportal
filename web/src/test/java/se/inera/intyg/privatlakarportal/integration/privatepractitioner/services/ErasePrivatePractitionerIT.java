@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Inera AB (http://www.inera.se)
+ * Copyright (C) 2024 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -156,7 +156,7 @@ public class ErasePrivatePractitionerIT extends BaseRestIntegrationTest {
     private String createHospInformation() throws JsonProcessingException {
         final var objectMapper = new ObjectMapper();
 
-        final var  body = Map.of(
+        final var body = Map.of(
             "personalIdentityNumber", PERSONNUMMER,
             "personalPrescriptionCode", "1234567",
             "educationCodes", Collections.emptyList(),
