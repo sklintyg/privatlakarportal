@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Inera AB (http://www.inera.se)
+ * Copyright (C) 2024 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -97,7 +97,7 @@ class EraseServiceImplTest {
         doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
         doReturn(false).when(hospPersonService).removeFromCertifier(PERSON_ID, CERTIFIER_ID_NULL, "Avslutat konto i Webcert.");
 
-        assertThrows(PrivatlakarportalServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
+        assertThrows(PrivatlakarportalServiceException.class, () -> eraseService.erasePrivatePractitioner(HSA_ID));
 
         verifyNoMoreInteractions(privatlakareRepository);
     }
@@ -108,7 +108,7 @@ class EraseServiceImplTest {
         doThrow(new WebServiceException("Exception")).when(hospPersonService).removeFromCertifier(PERSON_ID, CERTIFIER_ID_NULL,
             "Avslutat konto i Webcert.");
 
-        assertThrows(WebServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
+        assertThrows(WebServiceException.class, () -> eraseService.erasePrivatePractitioner(HSA_ID));
 
         verifyNoMoreInteractions(privatlakareRepository);
     }
@@ -118,7 +118,7 @@ class EraseServiceImplTest {
         doReturn(privatePractitioner).when(privatlakareRepository).findByHsaId(HSA_ID);
         doReturn(false).when(hospPersonService).removeFromCertifier(PERSON_ID, CERTIFIER_ID_NULL, "Avslutat konto i Webcert.");
 
-        assertThrows(PrivatlakarportalServiceException.class,  () -> eraseService.erasePrivatePractitioner(HSA_ID));
+        assertThrows(PrivatlakarportalServiceException.class, () -> eraseService.erasePrivatePractitioner(HSA_ID));
 
         verifyNoInteractions(monitoringLogService);
     }

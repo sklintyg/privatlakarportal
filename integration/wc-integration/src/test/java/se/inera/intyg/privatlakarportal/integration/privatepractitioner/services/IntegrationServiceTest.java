@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Inera AB (http://www.inera.se)
+ * Copyright (C) 2024 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -184,7 +184,8 @@ public class IntegrationServiceTest {
     public void testValidatePrivatePractitionerByPersonIdEjGodkand() {
         ValidatePrivatePractitionerResponse response = integrationService.validatePrivatePractitionerByPersonId(EJ_GODKAND_PERSON_ID);
         assertEquals(ValidatePrivatePractitionerResultCode.NOT_AUTHORIZED_IN_HOSP, response.getResultCode());
-        assertFalse("The personId must be hashed and not displayed in clear text.", response.getResultText().contains(EJ_GODKAND_PERSON_ID));
+        assertFalse("The personId must be hashed and not displayed in clear text.",
+            response.getResultText().contains(EJ_GODKAND_PERSON_ID));
     }
 
     @Test
