@@ -34,7 +34,6 @@ gretty {
 
     dependencies {
         gretty "org.glassfish.web:jakarta.servlet.jsp.jstl"
-        gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
     }
 }
 
