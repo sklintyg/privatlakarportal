@@ -13,7 +13,6 @@ plugins {
 
 ext {
     infraVersion = System.properties['infraVersion'] ?: '3.21.0-SNAPSHOT'
-    refDataVersion = System.properties['refDataVersion'] ?: '1.0-SNAPSHOT'
 
     ppSchemasVersion = "1.0.5.1"
     ppTermsSchemasVersion = "1.0.5.1"
@@ -70,7 +69,6 @@ allprojects {
         testImplementation "org.mockito:mockito-junit-jupiter"
         testImplementation "org.mockito:mockito-core"
         testImplementation "org.springframework:spring-test"
-        testImplementation "se.inera.intyg.refdata:refdata:${refDataVersion}"
 
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
