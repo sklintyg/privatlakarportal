@@ -1,5 +1,5 @@
 plugins {
-    id "io.spring.dependency-management" version "1.1.3" apply false
+    id "io.spring.dependency-management" version "1.1.6" apply false
     id "com.netflix.nebula.node" version "3.0.0" apply false
     id "org.gretty" version "3.0.9" apply false
     id 'test-report-aggregation'
@@ -9,31 +9,30 @@ plugins {
 }
 
 ext {
-    infraVersion = System.properties['infraVersion'] ?: '3.21.0-SNAPSHOT'
+    infraVersion = System.properties['infraVersion'] ?: '4.0.0-SNAPSHOT'
 
-    ppSchemasVersion = "1.0.5.1"
-    ppTermsSchemasVersion = "1.0.5.1"
-    rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5.1"
-    schemasContractVersion = "2.1.8.1"
+    ppSchemasVersion = "1.0.5.2"
+    ppTermsSchemasVersion = "1.0.5.2"
+    rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5.2"
+    schemasContractVersion = "2.1.8.2"
 
     commonsIOVersion = "2.14.0"
-    cxfVersion = "3.6.2"
+    cxfVersion = "4.0.5"
     geronimoJmsVersion = "1.1.1"
-    guavaVersion = "32.1.3-jre"
+    guavaVersion = "33.0.0-jre"
     jadiraUserTypeVersion = "6.0.1.GA"
-    jakartaJwsApiVersion = "2.1.0" // version 3.0.0 -> warning: "class file for javax.jws.soap.SOAPBinding$ParameterStyle not found"
-    jaxb2Version = "0.13.1"
+    jakartaJwsApiVersion = "3.0.0"
     jsonSimpleVersion = "1.1.1"
     picocliVersion = "4.7.5"
     springSecurityExtensionsVersion = "1.0.3.RELEASE"
     stAntlr4Version = "4.3.4"
-    springDocVersion = "1.7.0"
-    shedlockSpringVersion = "4.46.0"
+    springDocVersion = "1.8.0"
+    shedlockSpringVersion = "5.16.0"
 
     nodeJsVersion = "12.22.12"
     npmVersion = "6.14.16"
 
-    springbootMavenBomVersion = "2.7.17"
+    springbootMavenBomVersion = "3.3.4"
 
     nvdMirror = 'https://vulnz-nvd-mirror-devtest.intyg.nordicmedtest.se'
 }
@@ -45,8 +44,8 @@ allprojects {
 
     group = 'se.inera.privatlakarportal'
     version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 21
+    targetCompatibility = 21
 
     dependencyManagement {
         imports { mavenBom "org.springframework.boot:spring-boot-dependencies:${springbootMavenBomVersion}" }
