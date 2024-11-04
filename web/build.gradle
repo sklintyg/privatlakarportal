@@ -1,5 +1,5 @@
-apply plugin: 'com.netflix.nebula.grunt'
 apply plugin: 'org.gretty'
+apply plugin: 'com.netflix.nebula.grunt'
 apply plugin: 'idea'
 apply plugin: 'war'
 
@@ -35,9 +35,6 @@ gretty {
             "-Ddev.http.port=${useHttpPort}",
             "-Ddev.http.port.internal=${useInternalHttpPort}"]
 
-    dependencies {
-        gretty "org.glassfish.web:jakarta.servlet.jsp.jstl"
-    }
 }
 
 tasks.register('restAssuredTest', Test) {
