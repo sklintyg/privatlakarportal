@@ -16,7 +16,7 @@ dependencies {
     implementation project(":privatlakarportal-common")
     implementation project(":privatlakarportal-persistence")
 
-    implementation "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider"
+    implementation "com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider"
     implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
     implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
     implementation "org.springframework:spring-context-support"

@@ -19,7 +19,6 @@ ext {
     commonsIOVersion = "2.14.0"
     cxfVersion = "4.0.5"
     guavaVersion = "33.0.0-jre"
-    jadiraUserTypeVersion = "6.0.1.GA"
     jakartaJwsApiVersion = "3.0.0"
     jakartaMail = "2.0.1"
     jsonSimpleVersion = "1.1.1"
@@ -41,9 +40,10 @@ allprojects {
     apply plugin: "io.spring.dependency-management"
     apply plugin: 'java'
     apply plugin: 'jacoco'
+    apply plugin: 'idea'
 
     group = 'se.inera.privatlakarportal'
-    version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
+    version = System.properties['buildVersion'] ?: '4.0.0-SNAPSHOT'
     sourceCompatibility = 21
     targetCompatibility = 21
 
@@ -55,6 +55,7 @@ allprojects {
         options.encoding = "UTF-8"
         options.compilerArgs.add("-parameters")
     }
+    compileJava.dependsOn processResources
 
     dependencies {
         implementation "ch.qos.logback:logback-classic"
