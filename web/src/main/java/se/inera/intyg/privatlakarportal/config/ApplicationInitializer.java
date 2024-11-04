@@ -18,11 +18,11 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
-import io.prometheus.client.exporter.MetricsServlet;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import io.prometheus.client.servlet.jakarta.exporter.MetricsServlet;
+import jakarta.servlet.FilterRegistration;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRegistration;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.WebApplicationInitializer;
@@ -33,8 +33,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
-import se.inera.intyg.infra.monitoring.logging.LogbackConfiguratorContextListener;
 import se.inera.intyg.infra.monitoring.MonitoringConfiguration;
+import se.inera.intyg.infra.monitoring.logging.LogbackConfiguratorContextListener;
 import se.inera.intyg.infra.security.filter.RequestContextHolderUpdateFilter;
 import se.inera.intyg.infra.security.filter.SecurityHeadersFilter;
 import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;

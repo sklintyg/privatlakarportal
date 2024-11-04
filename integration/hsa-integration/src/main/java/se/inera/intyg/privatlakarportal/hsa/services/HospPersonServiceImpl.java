@@ -18,6 +18,10 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services;
 
+import jakarta.xml.ws.soap.SOAPFaultException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +32,6 @@ import se.inera.intyg.infra.integration.hsatk.model.HospCredentialsForPerson;
 import se.inera.intyg.infra.integration.hsatk.model.Result;
 import se.inera.intyg.infra.integration.hsatk.services.HsatkAuthorizationManagementService;
 import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
-
-import javax.xml.ws.soap.SOAPFaultException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class HospPersonServiceImpl implements HospPersonService {
@@ -78,7 +77,7 @@ public class HospPersonServiceImpl implements HospPersonService {
         List<String> specialityNames = new ArrayList<>();
         List<String> specialityCodes = new ArrayList<>();
         if (response.getHealthCareProfessionalLicenceSpeciality() != null
-                && response.getHealthCareProfessionalLicenceSpeciality().size() > 0) {
+            && response.getHealthCareProfessionalLicenceSpeciality().size() > 0) {
             for (HCPSpecialityCodes codes : response.getHealthCareProfessionalLicenceSpeciality()) {
                 specialityNames.add(codes.getSpecialityName());
                 specialityCodes.add(codes.getSpecialityCode());
@@ -113,7 +112,7 @@ public class HospPersonServiceImpl implements HospPersonService {
         LOG.debug("Calling handleCertifier for certifierId '{}'", certifierId);
 
         Result result = authorizationManagementService
-                .handleHospCertificationPersonResponseType(certifierId, add ? "add" : "remove", personId, reason);
+            .handleHospCertificationPersonResponseType(certifierId, add ? "add" : "remove", personId, reason);
 
         if (!OK.equals(result.getResultCode())) {
             LOG.error("handleCertifier returned result '{}' for certifierId '{}'", result.getResultText(), certifierId);

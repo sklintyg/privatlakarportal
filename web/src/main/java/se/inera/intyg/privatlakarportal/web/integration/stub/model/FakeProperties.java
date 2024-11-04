@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Inera AB (http://www.inera.se)
+ * Copyright (C) 2024 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,22 +16,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.hsa.config;
+package se.inera.intyg.privatlakarportal.web.integration.stub.model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import lombok.Data;
 
-@Configuration
-@ComponentScan({"se.inera.intyg.privatlakarportal.common.config"})
-@Profile({"dev", "hsa-stub"})
-public class HsaStubConfiguration {
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
+public class FakeProperties {
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
+    private String displayOrder;
+    private String env;
+    private boolean readOnly = false;
 
+    private List<String> allowedInApplications = new ArrayList<>();
+    private List<FakeLogins> logins = new ArrayList<FakeLogins>();
+
+    private Map<String, String> extraContextProperties = new HashMap<>();
 }

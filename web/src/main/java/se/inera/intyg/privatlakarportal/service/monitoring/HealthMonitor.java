@@ -20,12 +20,12 @@ package se.inera.intyg.privatlakarportal.service.monitoring;
 
 import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 
 /**

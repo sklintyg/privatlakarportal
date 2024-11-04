@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Inera AB (http://www.inera.se)
+ * Copyright (C) 2024 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,22 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.hsa.config;
+package se.inera.intyg.privatlakarportal.web.integration.stub.model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import java.time.LocalDateTime;
+import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Configuration
-@ComponentScan({"se.inera.intyg.privatlakarportal.common.config"})
-@Profile({"dev", "hsa-stub"})
-public class HsaStubConfiguration {
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class CareUnitStub extends AbstractUnitStub {
+
+    private static final long serialVersionUID = 460424685142490104L;
+
+    private LocalDateTime start;
+    private LocalDateTime end;
+
+    private List<SubUnitStub> subUnits;
 
 }

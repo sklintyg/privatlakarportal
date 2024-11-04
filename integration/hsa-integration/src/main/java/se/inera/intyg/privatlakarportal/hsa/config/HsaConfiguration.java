@@ -30,8 +30,7 @@ import org.springframework.context.annotation.ImportResource;
     "se.inera.intyg.privatlakarportal.common.config"
 })
 @Import(HsaStubConfiguration.class)
-@ImportResource({"classpath:pp-hsa-services-config.xml",
-        "classpath:hsatk-services-config.xml"})
+@ImportResource({"classpath:pp-hsa-services-config.xml"})
 public class HsaConfiguration {
 
 }

@@ -31,11 +31,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import jakarta.xml.ws.WebServiceException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
-import javax.xml.ws.WebServiceException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

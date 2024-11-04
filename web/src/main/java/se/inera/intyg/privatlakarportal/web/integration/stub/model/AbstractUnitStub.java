@@ -16,32 +16,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.persistence.model;
+package se.inera.intyg.privatlakarportal.web.integration.stub.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.io.Serializable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-/**
- * Created by pebe on 2015-06-24.
- */
-@Entity
-@Table(name = "PRIVATLAKARE_ID")
-public class PrivatlakareId {
+@NoArgsConstructor
+@Getter
+@Setter
+public abstract class AbstractUnitStub implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id", nullable = false)
-    private Integer id;
+    private String id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private String name;
 
-    public Integer getId() {
-        return id;
-    }
+    private String mail;
+
+    private String postalAddress;
+
+    private String postalCode;
+
+    private String postalTown;
+
+    private String telephoneNumber;
+
+    private String prescriptionCode;
+
+    private String healthCareProviderOrgno;
+
+    private String careProviderHsaId;
+
+    private String countyCode;
+
+    private String municipalityCode;
+
 }

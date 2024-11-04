@@ -18,9 +18,9 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
+import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javax.annotation.PostConstruct;
 import org.apache.cxf.Bus;
 import org.apache.cxf.ext.logging.LoggingFeature;
 import org.springframework.beans.factory.annotation.Autowired;

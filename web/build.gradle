@@ -9,9 +9,8 @@ gretty {
     def useInternalHttpPort = 8160 + (instance as Integer)
     def applicationDir = "${rootProject.projectDir}/devops/dev"
 
-    servletContainer = 'tomcat9'
+    servletContainer = 'tomcat10'
     contextPath = '/'
-
     integrationTestTask = null
     scanInterval = 0
     debugPort = 8860 + (instance as Integer)
@@ -19,11 +18,15 @@ gretty {
     debugSuspend = false
     fastReload = true
     inplaceMode = 'hard'
+    recompileOnSourceChange = false
+    reloadOnClassChange = false
+    reloadOnConfigChange = false
+    reloadOnLibChange = false
     serverConfigFile = "tomcat-gretty.xml"
 
     jvmArgs = [
             "-Dcatalina.base=${project.layout.buildDirectory.get().asFile}/catalina.base",
-            "-Dspring.profiles.active=dev,caching-enabled",
+            "-Dspring.profiles.active=dev,caching-enabled,hsa-integration-intyg-proxy-service,testability",
             "-Dlogback.file=${applicationDir}/config/logback-dev.xml",
             "-Djava.awt.headless=true",
             "-Dfile.encoding=UTF-8",
@@ -90,7 +93,6 @@ dependencies {
     implementation "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
 
     implementation "se.inera.intyg.infra:dynamiclink:${infraVersion}"
-    implementation "se.inera.intyg.infra:hsatk-integration:${infraVersion}"
     implementation "se.inera.intyg.infra:monitoring:${infraVersion}"
     implementation "se.inera.intyg.infra:pu-integration:${infraVersion}"
     implementation "se.inera.intyg.infra:postnummerservice-integration:${infraVersion}"
@@ -98,10 +100,11 @@ dependencies {
     implementation "se.inera.intyg.infra:security-filter:${infraVersion}"
     implementation "se.inera.intyg.infra:security-common:${infraVersion}"
 
-    implementation "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider"
+    implementation "com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider"
     implementation "com.google.guava:guava:${guavaVersion}"
     implementation "com.googlecode.json-simple:json-simple:${jsonSimpleVersion}"
-    implementation "io.prometheus:simpleclient_servlet"
+    implementation "io.prometheus:simpleclient_servlet_jakarta"
+    implementation "jakarta.servlet:jakarta.servlet-api"
     implementation "jakarta.ws.rs:jakarta.ws.rs-api"
     implementation "org.apache.cxf:cxf-rt-features-logging:${cxfVersion}"
     implementation "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"

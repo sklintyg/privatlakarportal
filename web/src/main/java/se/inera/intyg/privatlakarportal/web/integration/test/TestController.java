@@ -32,8 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import se.inera.intyg.infra.integration.hsatk.stub.HsaServiceStub;
-import se.inera.intyg.infra.integration.hsatk.stub.model.HsaPerson;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
@@ -42,6 +40,8 @@ import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.intyg.privatlakarportal.service.RegisterService;
+import se.inera.intyg.privatlakarportal.web.integration.stub.HsaServiceStub;
+import se.inera.intyg.privatlakarportal.web.integration.stub.model.HsaPerson;
 import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto;
 
 /**

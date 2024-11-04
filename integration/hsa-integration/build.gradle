@@ -22,7 +22,6 @@ dependencies {
     implementation "org.springframework:spring-context-support"
     implementation "org.springframework.data:spring-data-jpa"
     implementation "se.inera.intyg.infra:hsa-integration-api:${infraVersion}"
-    implementation "se.inera.intyg.infra:hsatk-integration:${infraVersion}"
     implementation "se.inera.intyg.infra:monitoring:${infraVersion}"
     implementation "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
 

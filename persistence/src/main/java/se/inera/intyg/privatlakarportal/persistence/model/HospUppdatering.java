@@ -18,12 +18,11 @@
  */
 package se.inera.intyg.privatlakarportal.persistence.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import org.hibernate.annotations.Type;
 
 /**
  * Created by pebe on 2015-09-03.
@@ -38,7 +37,7 @@ public class HospUppdatering {
     private Long id;
 
     @Column(name = "SENASTE_HOSP_UPPDATERING", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+
     private LocalDateTime senasteHospUppdatering;
 
     public HospUppdatering() {

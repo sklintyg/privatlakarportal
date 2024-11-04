@@ -55,7 +55,7 @@ public final class LocalDateAdapter {
      */
     public static LocalDate parseDate(String dateString) {
         if (dateString.matches(XSD_DATE_TIMEZONE_REGEXP) || dateString.matches(XSD_DATETIME_TIMEZONE_REGEXP)) {
-            return LocalDate.from(javax.xml.bind.DatatypeConverter.parseDate(dateString).toInstant().atZone(TIMEZONE));
+            return LocalDate.from(jakarta.xml.bind.DatatypeConverter.parseDate(dateString).toInstant().atZone(TIMEZONE));
         } else {
             return LocalDate.parse(dateString.substring(0, ISO_DATE_PATTERN.length()));
         }
@@ -66,7 +66,7 @@ public final class LocalDateAdapter {
      */
     public static LocalDateTime parseDateTime(String dateString) {
         if (dateString.matches(XSD_DATETIME_TIMEZONE_REGEXP) || dateString.matches(XSD_DATE_TIMEZONE_REGEXP)) {
-            return LocalDateTime.from(javax.xml.bind.DatatypeConverter.parseDateTime(dateString).toInstant().atZone(TIMEZONE));
+            return LocalDateTime.from(jakarta.xml.bind.DatatypeConverter.parseDateTime(dateString).toInstant().atZone(TIMEZONE));
         } else if (dateString.contains("T")) {
             return LocalDateTime.parse(dateString, ISO_DATETIME_FORMATTER);
         } else {

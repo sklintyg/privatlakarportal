@@ -18,8 +18,8 @@
  */
 package se.inera.intyg.privatlakarportal.common.service.stub;
 
+import jakarta.ws.rs.core.Response;
 import java.util.Map;
-import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;

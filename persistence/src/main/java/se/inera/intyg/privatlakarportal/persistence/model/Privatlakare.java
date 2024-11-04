@@ -19,20 +19,19 @@
 package se.inera.intyg.privatlakarportal.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 /**
  * Created by pebe on 2015-06-24.
@@ -90,11 +89,9 @@ public class Privatlakare {
     private String epost;
 
     @Column(name = "ENHET_STARTDATUM", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime enhetStartdatum;
 
     @Column(name = "ENHET_SLUTDATUM", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime enhetSlutDatum;
 
     @Column(name = "LAN", nullable = true)
@@ -110,11 +107,11 @@ public class Privatlakare {
     private String vardgivareNamn;
 
     @Column(name = "VARDGIVARE_STARTDATUM", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+
     private LocalDateTime vardgivareStartdatum;
 
     @Column(name = "VARDGIVARE_SLUTDATUM", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+
     private LocalDateTime vardgivareSlutdatum;
 
     @JsonManagedReference
@@ -139,7 +136,7 @@ public class Privatlakare {
     private Set<Vardform> vardformer;
 
     @Column(name = "SENASTE_HOSP_UPPDATERING", nullable = true)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+
     private LocalDateTime senasteHospUppdatering;
 
     @JsonManagedReference
@@ -147,7 +144,7 @@ public class Privatlakare {
     private Set<Medgivande> medgivande;
 
     @Column(name = "REGISTRERINGSDATUM", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+
     private LocalDateTime registreringsdatum;
 
     @Override

@@ -20,12 +20,12 @@ package se.inera.intyg.privatlakarportal.config;
 
 // CHECKSTYLE:OFF LineLength
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
+import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 import org.apache.cxf.ext.logging.LoggingFeature;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitionerterms.v1.rivtabp21.GetPrivatePractitionerTermsResponderInterface;
@@ -36,7 +36,6 @@ import se.riv.infrastructure.directory.privatepractitioner.getprivatepractitione
  * Created by pebe on 2015-09-07.
  */
 @Configuration
-@ComponentScan("se.inera.intyg.privatlakarportal.service, se.inera.intyg.privatlakarportal.common.service")
 @EnableScheduling
 public class ServiceConfig {
 
