@@ -18,7 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
-import io.prometheus.client.servlet.jakarta.exporter.MetricsServlet;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -53,7 +52,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servletContext.addListener(new LogbackConfiguratorContextListener());
 
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.register(ApplicationConfig.class, PersistenceConfigDev.class, MailServiceConfig.class,
+        appContext.register(WebSecurityConfig.class, ApplicationConfig.class, PersistenceConfigDev.class, MailServiceConfig.class,
             HsaConfiguration.class, JobConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
             WcIntegrationConfiguration.class, ServiceConfig.class, DynamicLinkConfig.class, PostnummerserviceConfig.class,
             PersistenceConfig.class, PersistenceConfigDev.class, MonitoringConfiguration.class, SwaggerConfig.class);
@@ -116,11 +115,6 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic cxfServlet = servletContext.addServlet("services", new CXFServlet());
         cxfServlet.setLoadOnStartup(1);
         cxfServlet.addMapping("/services/*");
-
-        // Prometheus filter
-        ServletRegistration.Dynamic prometheusServlet = servletContext.addServlet("prometheus", new MetricsServlet());
-        prometheusServlet.setLoadOnStartup(1);
-        prometheusServlet.addMapping("/metrics/*");
 
         // Listeners for session audit logging
         servletContext.addListener(new HttpSessionEventPublisher());

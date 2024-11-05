@@ -40,7 +40,7 @@ import se.inera.intyg.infra.security.filter.PrincipalUpdatedFilter;
 @EnableTransactionManagement
 @PropertySource(ignoreResourceNotFound = true,
     value = {"classpath:application.properties", "file:${dev.config.file}", "classpath:version.properties"})
-@ImportResource({"classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml"})
+@ImportResource({"classpath:META-INF/cxf/cxf.xml"})
 public class ApplicationConfig {
 
     @Autowired

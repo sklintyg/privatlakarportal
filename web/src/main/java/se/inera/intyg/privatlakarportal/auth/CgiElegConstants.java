@@ -18,27 +18,20 @@
  */
 package se.inera.intyg.privatlakarportal.auth;
 
-import org.springframework.security.authentication.AbstractAuthenticationToken;
+public class CgiElegConstants {
 
-/**
- * Created by eriklupander on 2015-06-16.
- */
-public class FakeElegAuthenticationToken extends AbstractAuthenticationToken {
-
-    private FakeElegCredentials fakeElegCredentials;
-
-    public FakeElegAuthenticationToken(FakeElegCredentials fakeElegCredentials) {
-        super(null);
-        this.fakeElegCredentials = fakeElegCredentials;
+    private CgiElegConstants() {
+        throw new IllegalStateException("Utility class");
     }
 
-    @Override
-    public Object getCredentials() {
-        return fakeElegCredentials;
-    }
+    public static final String PERSON_ID_ATTRIBUTE = "Subject_SerialNumber";
+    public static final String FORNAMN_ATTRIBUTE = "Subject_GivenName";
+    public static final String MELLAN_OCH_EFTERNAMN_ATTRIBUTE = "Subject_Surname";
+    public static final String UTFARDARE_ORGANISATIONSNAMN_ATTRIBUTE = "Issuer_OrganizationName";
+    public static final String UTFARDARE_CA_NAMN_ATTRIBUTE = "Issuer_CommonName";
+    public static final String SECURITY_LEVEL_ATTRIBUTE = "SecurityLevel";
+    public static final String RELYING_PARTY_REGISTRATION_ID = "eleg";
+    public static final String AUTHN_METHOD = "urn:sambi:names:attribute:authnMethod";
 
-    @Override
-    public Object getPrincipal() {
-        return null;
-    }
+
 }

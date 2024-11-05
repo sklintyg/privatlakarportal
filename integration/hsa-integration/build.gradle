@@ -6,12 +6,6 @@ sourceSets.main.java {
 
 clean.doLast { ant.delete(dir: generatedJavaDir.parent) }
 
-if (project.hasProperty("codeQuality")) {
-    license {
-        exclude "**/*.java" // This excludes too many files, but "generatedSource/**/*.java" does not work for some reason.
-    }
-}
-
 dependencies {
     implementation project(":privatlakarportal-common")
     implementation project(":privatlakarportal-persistence")

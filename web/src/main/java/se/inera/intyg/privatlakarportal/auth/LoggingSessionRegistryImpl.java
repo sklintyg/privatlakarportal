@@ -35,8 +35,7 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 
     @Override
     public void registerNewSession(String sessionId, Object principal) {
-        if (principal != null && principal instanceof PrivatlakarUser) {
-            PrivatlakarUser user = (PrivatlakarUser) principal;
+        if (principal instanceof final PrivatlakarUser user) {
             monitoringService.logUserLogin(user.getPersonalIdentityNumber(), user.getAuthenticationScheme());
         }
         super.registerNewSession(sessionId, principal);
@@ -48,8 +47,7 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
         if (sessionInformation != null) {
             Object principal = sessionInformation.getPrincipal();
 
-            if (principal instanceof PrivatlakarUser) {
-                PrivatlakarUser user = (PrivatlakarUser) principal;
+            if (principal instanceof final PrivatlakarUser user) {
                 monitoringService.logUserLogout(user.getPersonalIdentityNumber(), user.getAuthenticationScheme());
             }
         }

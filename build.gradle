@@ -18,12 +18,11 @@ ext {
 
     commonsIOVersion = "2.14.0"
     cxfVersion = "4.0.5"
-    guavaVersion = "33.0.0-jre"
+    guavaVersion = "33.3.1-jre"
     jakartaJwsApiVersion = "3.0.0"
     jakartaMail = "2.0.1"
     jsonSimpleVersion = "1.1.1"
     picocliVersion = "4.7.5"
-    springSecurityExtensionsVersion = "1.0.3.RELEASE"
     stAntlr4Version = "4.3.4"
     springDocVersion = "1.8.0"
     shedlockSpringVersion = "5.16.0"
@@ -43,7 +42,7 @@ allprojects {
     apply plugin: 'idea'
 
     group = 'se.inera.privatlakarportal'
-    version = System.properties['buildVersion'] ?: '4.0.0-SNAPSHOT'
+    version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
     sourceCompatibility = 21
     targetCompatibility = 21
 
@@ -55,6 +54,7 @@ allprojects {
         options.encoding = "UTF-8"
         options.compilerArgs.add("-parameters")
     }
+
     compileJava.dependsOn processResources
 
     dependencies {
@@ -62,8 +62,6 @@ allprojects {
         implementation "jakarta.annotation:jakarta.annotation-api"
         implementation "jakarta.jws:jakarta.jws-api:${jakartaJwsApiVersion}"
         implementation "jakarta.xml.ws:jakarta.xml.ws-api"
-
-        runtimeOnly "com.sun.xml.messaging.saaj:saaj-impl"
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
@@ -95,6 +93,7 @@ allprojects {
         }
     }
 
+
     jacocoTestReport {
         dependsOn test
 
@@ -112,6 +111,17 @@ allprojects {
             }))
         }
     }
+
+    configurations {
+        // Remove these due to conflict with Spring SAML which uses bcprov-jdk15.
+        implementation.exclude group: "org.bouncycastle", module: "bcpkix-jdk15on"
+        implementation.exclude group: "org.bouncycastle", module: "bcprov-jdk15on"
+        implementation.exclude group: "org.bouncycastle", module: "bcprov-jdk15"
+    }
+}
+
+subprojects.collect { subproject -> subproject.name }.each { subprojectName ->
+    dependencies { testReportAggregation project(":${subprojectName}") }
 }
 
 reporting {
