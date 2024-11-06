@@ -28,13 +28,14 @@ public class PrivatlakarUser implements Serializable {
     private static final long serialVersionUID = 8711015219408194075L;
     private static final int THIRTYONE = 31;
 
-    private String personalIdentityNumber;
+    private final String personalIdentityNumber;
     private String name;
-    private String authenticationScheme;
+    private final String authenticationScheme;
     private boolean nameFromPuService;
 
-    public PrivatlakarUser(String personalIdentityNumber, String name) {
+    public PrivatlakarUser(String personalIdentityNumber, String name, String authenticationScheme) {
         this.personalIdentityNumber = personalIdentityNumber;
+        this.authenticationScheme = authenticationScheme;
         this.name = name;
         nameFromPuService = false;
     }
@@ -49,10 +50,6 @@ public class PrivatlakarUser implements Serializable {
 
     public String getAuthenticationScheme() {
         return authenticationScheme;
-    }
-
-    public void setAuthenticationScheme(String authenticationScheme) {
-        this.authenticationScheme = authenticationScheme;
     }
 
     public boolean isNameFromPuService() {

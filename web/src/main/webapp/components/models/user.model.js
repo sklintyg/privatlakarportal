@@ -18,7 +18,7 @@
  */
 
 angular.module('privatlakareApp').factory('UserModel',
-    function($window, $timeout) {
+    function($window, $timeout, $cookies, $injector) {
       'use strict';
 
       var data = {};
@@ -35,12 +35,7 @@ angular.module('privatlakareApp').factory('UserModel',
         return data;
       }
 
-      function _changeLocation(newLocation) {
-        $timeout(function() {
-          $window.location.href = newLocation;
-        });
-      }
-
+      
       return {
 
         reset: _reset,
@@ -87,25 +82,28 @@ angular.module('privatlakareApp').factory('UserModel',
         isRegistered: function() {
           return data.status === 'NOT_AUTHORIZED' || data.status === 'AUTHORIZED' || data.status === 'WAITING_FOR_HOSP';
         },
-        fakeLogin: function() {
-          if (data.authenticationScheme === data.fakeSchemeId) {
-            _changeLocation('/welcome.html');
-          }
-        },
         logout: function() {
           if (data.authenticationScheme === data.fakeSchemeId) {
-            _changeLocation('/logout');
+            let http = $injector.get('$http');
+            http({
+              url: '/api/testability/logout',
+              method: 'POST'
+            })
+            .then(function() {
+              $window.location.href = '/welcome.html';
+            });
           } else {
-            _changeLocation('/saml/logout/');
+            var form = angular.element('<form></form>');
+            var input = angular.element('<input type="hidden" name="_csrf" />');
+            form.attr('method', 'POST');
+            form.attr('action', '/logout');
+            var csrfToken = $cookies.get('XSRF-TOKEN') || '';
+            input.val(csrfToken);
+            form.append(input);
+            angular.element(document.body).append(form);
+            form[0].submit();
           }
         },
-        getLogoutLocation: function() {
-          if (data.authenticationScheme === data.fakeSchemeId) {
-            return '/logout';
-          } else {
-            return '/saml/logout/';
-          }
-        }
       };
     }
 );

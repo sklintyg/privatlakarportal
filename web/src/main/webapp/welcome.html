@@ -72,25 +72,32 @@
   ]);
 
   angular.module('PpWelcomeApp.controllers', []).
-      controller('welcomeController', function($scope) {
+      controller('welcomeController', function($scope, $http, $window) {
         $scope.loginModel = loginArr;
         $scope.selectedIndex = '0';
         $scope.$watch('selectedIndex', function(newSelected, oldVal) {
           var jsonEl = angular.element( document.querySelector( '#userJson' ) );
           var jsonElView = angular.element( document.querySelector( '#userJsonDisplay' ) );
-          var selector = angular.element( document.querySelector( '#jsonSelect' ) );
-          //jsonEl.value = escape(JSON.stringify(loginArr[selector.selectedIndex], undefined, 2));
-          //console.log("newselected : " + newSelected + ", old : " + oldVal);
           var loginJson = JSON.stringify($scope.loginModel[newSelected], undefined, 1);
           jsonElView.text( loginJson );
           jsonEl.text( escape( loginJson ) );
         });
-
+        $scope.performFakeLogin = function() {
+            $http({
+                url: '/api/testability/fake',
+                method: 'POST',
+                data: loginArr[$scope.selectedIndex]
+            })
+            .then(
+                function success() {
+                    $window.location.href = "/#/start";
+                });
+        };
       });
 </script>
 </head>
 <body ng-controller="welcomeController">
-  <form id="loginForm" action="/fake" method="POST" class="form-inline" accept-charset="UTF-8">
+  <form id="loginForm" ng-submit="performFakeLogin()">
     <div class="container">
 
       <div id="content-container">
@@ -112,8 +119,6 @@
               <option value="4" id="private-practicioner-5">Daniel Pärsson (Ej registrerad - Ej i HoSP, NOT_STARTED)</option>
               <option value="5" id="private-practicioner-6">Maj Pärsson (Registrerad, NOT_AUTHORIZED, godkänd=false, läkare=true)</option>
             </select>
-            <a href="/swagger-ui/index.html" target="_blank">REST-dokumentation</a><br/>
-
             <input id="loginBtn" type="submit" value="Logga in" class="btn btn-primary"
                    style="margin-top: 20px;width: 100%">
 

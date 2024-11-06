@@ -227,7 +227,7 @@ public class UserServiceImplTest {
 
     // Create a fake SecurityContext for a user
     private SecurityContext getSecurityContext(final String personId, final String name) {
-        final PrivatlakarUser user = new PrivatlakarUser(personId, name);
+        final PrivatlakarUser user = new PrivatlakarUser(personId, name, "authScheme");
         return new SecurityContext() {
             @Override
             public void setAuthentication(Authentication authentication) {

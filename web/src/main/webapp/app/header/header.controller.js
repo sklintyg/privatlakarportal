@@ -46,7 +46,8 @@ angular.module('privatlakareApp').controller('HeaderController',
       /**
        * Exposed scope interaction functions
        */
-
-      $scope.logoutLocation = UserModel.getLogoutLocation();
+      $scope.logout = function() {
+          UserModel.logout();
+      }
     }
 );
