@@ -7,26 +7,22 @@ import static se.inera.intyg.privatlakarportal.auth.CgiElegConstants.MELLAN_OCH_
 import static se.inera.intyg.privatlakarportal.auth.CgiElegConstants.PERSON_ID_ATTRIBUTE;
 import static se.inera.intyg.privatlakarportal.auth.CgiElegConstants.RELYING_PARTY_REGISTRATION_ID;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.opensaml.core.xml.schema.impl.XSStringImpl;
 import org.opensaml.saml.saml2.core.SessionIndex;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.saml2.core.Saml2X509Credential;
 import org.springframework.security.saml2.provider.service.authentication.DefaultSaml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.OpenSaml4AuthenticationProvider;
 import org.springframework.security.saml2.provider.service.authentication.Saml2Authentication;
@@ -47,7 +43,6 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.DefaultCookieSerializer;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import se.inera.intyg.infra.security.common.cookie.IneraCookieSerializer;
 import se.inera.intyg.privatlakarportal.auth.CsrfCookieFilter;
@@ -61,6 +56,7 @@ import se.inera.intyg.privatlakarportal.auth.SpaCsrfTokenRequestHandler;
 @EnableRedisHttpSession
 @Slf4j
 @RequiredArgsConstructor
+@ComponentScan("se.inera.intyg.privatlakarportal.auth")
 public class WebSecurityConfig {
 
     private final ElegUserDetailsService elegUserDetailsService;
@@ -84,12 +80,12 @@ public class WebSecurityConfig {
     private String samlLogoutSuccessUrl;
     @Value("${saml.keystore.type:PKCS12}")
     private String keyStoreType;
-    @Value("${saml.keystore.file}")
-    private String keyStorePath;
-    @Value("${saml.keystore.alias}")
-    private String keyAlias;
-    @Value("${saml.keystore.password}")
-    private String keyStorePassword;
+//    @Value("${saml.keystore.file}")
+//    private String keyStorePath;
+//    @Value("${saml.keystore.alias}")
+//    private String keyAlias;
+//    @Value("${saml.keystore.password}")
+//    private String keyStorePassword;
 
     @Bean(name = "mvcHandlerMappingIntrospector")
     public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
@@ -100,10 +96,10 @@ public class WebSecurityConfig {
     public RelyingPartyRegistrationRepository relyingPartyRegistrationRepository()
         throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, CertificateException {
 
-        final var keyStore = KeyStore.getInstance(keyStoreType);
-        keyStore.load(new FileInputStream(ResourceUtils.getFile(keyStorePath)), keyStorePassword.toCharArray());
-        final var appPrivateKey = (PrivateKey) keyStore.getKey(keyAlias, keyStorePassword.toCharArray());
-        final var appCertificate = (X509Certificate) keyStore.getCertificate(keyAlias);
+//        final var keyStore = KeyStore.getInstance(keyStoreType);
+//        keyStore.load(new FileInputStream(ResourceUtils.getFile(keyStorePath)), keyStorePassword.toCharArray());
+//        final var appPrivateKey = (PrivateKey) keyStore.getKey(keyAlias, keyStorePassword.toCharArray());
+//        final var appCertificate = (X509Certificate) keyStore.getCertificate(keyAlias);
 
         final var registration = RelyingPartyRegistrations
             .fromMetadataLocation(samlIdpMetadataLocation)
@@ -112,11 +108,11 @@ public class WebSecurityConfig {
             .assertionConsumerServiceLocation(assertionConsumerServiceLocation)
             .singleLogoutServiceLocation(singleLogoutServiceLocation)
             .singleLogoutServiceResponseLocation(singleLogoutServiceResponseLocation)
-            .signingX509Credentials(signing ->
-                signing.add(
-                    Saml2X509Credential.signing(appPrivateKey, appCertificate)
-                )
-            )
+//            .signingX509Credentials(signing ->
+//                signing.add(
+//                    Saml2X509Credential.signing(appPrivateKey, appCertificate)
+//                )
+//            )
             .build();
         return new InMemoryRelyingPartyRegistrationRepository(registration);
     }
