@@ -48,6 +48,6 @@ angular.module('privatlakareApp').controller('HeaderController',
        */
       $scope.logout = function() {
           UserModel.logout();
-      }
+      };
     }
 );

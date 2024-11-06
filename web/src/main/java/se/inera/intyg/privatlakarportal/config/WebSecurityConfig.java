@@ -1,7 +1,7 @@
 package se.inera.intyg.privatlakarportal.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-import static se.inera.intyg.privatlakarportal.auth.CgiElegConstants.AUTHN_METHOD;
+import static se.inera.intyg.privatlakarportal.auth.CgiElegConstants.ELEG_AUTHN_CLASSES;
 import static se.inera.intyg.privatlakarportal.auth.CgiElegConstants.FORNAMN_ATTRIBUTE;
 import static se.inera.intyg.privatlakarportal.auth.CgiElegConstants.MELLAN_OCH_EFTERNAMN_ATTRIBUTE;
 import static se.inera.intyg.privatlakarportal.auth.CgiElegConstants.PERSON_ID_ATTRIBUTE;
@@ -118,12 +118,9 @@ public class WebSecurityConfig {
             .assertionConsumerServiceLocation(assertionConsumerServiceLocation)
             .singleLogoutServiceLocation(singleLogoutServiceLocation)
             .singleLogoutServiceResponseLocation(singleLogoutServiceResponseLocation)
-            .signingX509Credentials(signing ->
-                signing.add(
-                    Saml2X509Credential.signing(appPrivateKey, appCertificate)
-                )
-            )
+            .signingX509Credentials(signing -> signing.add(Saml2X509Credential.signing(appPrivateKey, appCertificate)))
             .build();
+
         return new InMemoryRelyingPartyRegistrationRepository(registration);
     }
 
@@ -216,8 +213,12 @@ public class WebSecurityConfig {
             final var personId = getAttribute(authentication, PERSON_ID_ATTRIBUTE);
             final var firstName = getAttribute(authentication, FORNAMN_ATTRIBUTE);
             final var lastName = getAttribute(authentication, MELLAN_OCH_EFTERNAMN_ATTRIBUTE);
-            final var authMethod = getAttribute(authentication, AUTHN_METHOD);
-            final var principal = elegUserDetailsService.buildUserPrincipal(personId, buildName(firstName, lastName), authMethod);
+            final var securityLevelDescription = getAttribute(authentication, "SecurityLevelDescription");
+            final var authScheme = ELEG_AUTHN_CLASSES.stream()
+                .filter(authClass -> authClass.endsWith(securityLevelDescription))
+                .findFirst()
+                .orElse(securityLevelDescription);
+            final var principal = elegUserDetailsService.buildUserPrincipal(personId, buildName(firstName, lastName), authScheme);
             final var saml2AuthenticationToken = new Saml2AuthenticationToken(principal, authentication);
             saml2AuthenticationToken.setAuthenticated(true);
             return saml2AuthenticationToken;

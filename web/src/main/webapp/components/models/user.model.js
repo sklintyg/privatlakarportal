@@ -84,7 +84,7 @@ angular.module('privatlakareApp').factory('UserModel',
         },
         logout: function() {
           if (data.authenticationScheme === data.fakeSchemeId) {
-            let http = $injector.get('$http');
+            var http = $injector.get('$http');
             http({
               url: '/api/testability/logout',
               method: 'POST'
@@ -103,7 +103,7 @@ angular.module('privatlakareApp').factory('UserModel',
             angular.element(document.body).append(form);
             form[0].submit();
           }
-        },
+        }
       };
     }
 );

@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CustomAuthenticationFailureHandler extends ExceptionMappingAuthenticationFailureHandler {
 
-    private static final String DEFAULT_FAILURE_URL = "/error/login-failed";
+    private static final String DEFAULT_FAILURE_URL = "/error.jsp?reason=login.failed";
 
     private final Map<String, String> failureUrls = Map.of(
         BadCredentialsException.class.getName(), DEFAULT_FAILURE_URL
