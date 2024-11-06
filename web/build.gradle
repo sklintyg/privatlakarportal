@@ -106,16 +106,10 @@ dependencies {
 
     implementation "com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider"
     implementation "com.google.guava:guava:${guavaVersion}"
-    implementation "io.prometheus:simpleclient_servlet"
-    implementation "jakarta.servlet:jakarta.servlet-api"
     implementation "jakarta.ws.rs:jakarta.ws.rs-api"
     implementation "org.apache.cxf:cxf-rt-features-logging:${cxfVersion}"
     implementation "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
     implementation "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
-    implementation "org.springdoc:springdoc-openapi-ui:${springDocVersion}"
-    implementation "org.springdoc:springdoc-openapi-data-rest:${springDocVersion}"
-    implementation "org.springframework.boot:spring-boot:${springbootMavenBomVersion}"
-    implementation "org.springframework.boot:spring-boot-autoconfigure:${springbootMavenBomVersion}"
     implementation 'org.springframework.security:spring-security-saml2-service-provider'
     implementation "org.springframework.security:spring-security-config"
     implementation "org.springframework.security:spring-security-web"

@@ -18,7 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import se.inera.intyg.privatlakarportal.common.model.Registration;
 import se.inera.intyg.privatlakarportal.service.model.HospInformation;
 
@@ -26,16 +25,12 @@ import se.inera.intyg.privatlakarportal.service.model.HospInformation;
  * Created by pebe on 2015-08-06.
  */
 
-@Schema(description = "Response-object för getRegistration")
 public class GetRegistrationResponse {
 
-    @Schema(name = "registration", type = "Registration")
     private Registration registration;
 
-    @Schema(name = "hospInformation", type = "HospInformation")
     private HospInformation hospInformation;
 
-    @Schema(name = "webcertUserTermsApproved", type = "Boolean")
     private boolean webcertUserTermsApproved;
 
     public GetRegistrationResponse(Registration registration, HospInformation hospInformation, boolean webcertUserTermsApproved) {

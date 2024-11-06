@@ -24,7 +24,6 @@ ext {
     jsonSimpleVersion = "1.1.1"
     picocliVersion = "4.7.5"
     stAntlr4Version = "4.3.4"
-    springDocVersion = "1.8.0"
     shedlockSpringVersion = "5.16.0"
 
     nodeJsVersion = "12.22.12"

@@ -18,7 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.web.integration.test;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -47,7 +46,6 @@ import se.inera.intyg.privatlakarportal.web.integration.test.dto.PrivatlakareDto
 /**
  * Created by pebe on 2015-09-02.
  */
-@Tag(name = "/test", description = "Rest-api för test-tjänster.")
 @RestController
 @RequestMapping("/api/test")
 @Profile({"dev", "testability-api"})
