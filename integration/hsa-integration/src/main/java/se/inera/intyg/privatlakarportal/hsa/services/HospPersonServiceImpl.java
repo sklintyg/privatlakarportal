@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.infra.integration.hsatk.model.HCPSpecialityCodes;
@@ -50,10 +49,6 @@ public class HospPersonServiceImpl implements HospPersonService {
 
         HospCredentialsForPerson response = null;
         try {
-            MDC.put("x-trace-id", "id");
-            MDC.put("trace.id", "id");
-            MDC.put("x-session-id", "id");
-            MDC.put("session.id", "id");
             response = authorizationManagementService.getHospCredentialsForPersonResponseType(personId);
         } catch (SOAPFaultException e) {
             LOG.debug("Soap exception", e);
@@ -115,10 +110,6 @@ public class HospPersonServiceImpl implements HospPersonService {
     private boolean handleCertifier(boolean add, String personId, String certifierId, String reason) {
 
         LOG.debug("Calling handleCertifier for certifierId '{}'", certifierId);
-        MDC.put("x-trace-id", "id");
-        MDC.put("trace.id", "id");
-        MDC.put("x-session-id", "id");
-        MDC.put("session.id", "id");
         Result result = authorizationManagementService
             .handleHospCertificationPersonResponseType(certifierId, add ? "add" : "remove", personId, reason);
 
