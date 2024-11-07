@@ -52,7 +52,7 @@ public class CustomAuthenticationFailureHandler extends ExceptionMappingAuthenti
         }
 
         log.error("Authentication failed!", exception);
-
+        
         getRedirectStrategy().sendRedirect(request, response, url);
     }
 }
