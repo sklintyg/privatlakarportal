@@ -43,7 +43,6 @@ import org.springframework.security.saml2.provider.service.web.authentication.Sa
 import org.springframework.security.saml2.provider.service.web.authentication.logout.OpenSaml4LogoutRequestResolver;
 import org.springframework.security.saml2.provider.service.web.authentication.logout.Saml2LogoutRequestResolver;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -54,6 +53,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import se.inera.intyg.infra.security.common.cookie.IneraCookieSerializer;
 import se.inera.intyg.privatlakarportal.auth.CsrfCookieFilter;
+import se.inera.intyg.privatlakarportal.auth.CustomAuthenticationEntrypoint;
 import se.inera.intyg.privatlakarportal.auth.CustomAuthenticationFailureHandler;
 import se.inera.intyg.privatlakarportal.auth.ElegUserDetailsService;
 import se.inera.intyg.privatlakarportal.auth.Saml2AuthenticationToken;
@@ -126,7 +126,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, RelyingPartyRegistrationRepository relyingPartyRegistrationRepository,
-        Saml2LogoutRequestResolver logoutRequestResolver)
+        Saml2LogoutRequestResolver logoutRequestResolver, CustomAuthenticationEntrypoint customAuthenticationEntrypoint)
         throws Exception {
         if (environment.acceptsProfiles(Profiles.of(TESTABILITY_PROFILE))) {
             configureTestability(http);
@@ -168,7 +168,7 @@ public class WebSecurityConfig {
                 )
             )
             .exceptionHandling(exceptionConfigurer -> exceptionConfigurer
-                .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
+                .authenticationEntryPoint(customAuthenticationEntrypoint)
             )
             .csrf(csrfConfigurer -> csrfConfigurer
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
