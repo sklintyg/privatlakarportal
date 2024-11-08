@@ -20,8 +20,8 @@ package se.inera.intyg.privatlakarportal.persistence.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import jakarta.persistence.EntityManagerFactory;
 import java.util.Properties;
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+
 
 public abstract class PersistenceConfigBase {
 
@@ -47,9 +48,6 @@ public abstract class PersistenceConfigBase {
     private String dbPassword;
     @Value("${db.pool.maxSize}")
     private int dbPoolMaxSize;
-
-    @Value("${hibernate.dialect}")
-    private String hibernateDialect;
     @Value("${hibernate.hbm2ddl.auto}")
     private String hibernateHbm2ddl;
     @Value("${hibernate.ejb.naming_strategy}")
@@ -70,7 +68,6 @@ public abstract class PersistenceConfigBase {
 
         final Properties jpaProperties = new Properties();
 
-        jpaProperties.put("hibernate.dialect", hibernateDialect);
         jpaProperties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddl);
         jpaProperties.put("hibernate.ejb.naming_strategy", hibernateNamingStrategy);
         jpaProperties.put("hibernate.show_sql", hibernateShowSql);

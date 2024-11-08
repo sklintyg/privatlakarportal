@@ -28,13 +28,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import jakarta.xml.ws.WebServiceException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.xml.ws.WebServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -124,7 +124,6 @@ public class HospUpdateServiceImplTest {
         list.add(privatlakare3);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
-
         // Om det går fel vid kontakt med hsa ska uppdateringsrutinen ändå fortsätta med nästa i listan.
         when(hospPersonService.getHospPerson(PERSON_ID)).thenThrow(new WebServiceException("Could not send message"));
         HospPerson hospPersonResponse2 = createGetHospPersonResponse();
@@ -167,7 +166,6 @@ public class HospUpdateServiceImplTest {
         ArrayList<Privatlakare> list = new ArrayList<>();
         list.add(privatlakare1);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
-
 
         // privatlakare1 får nu läkarbehörighet men har fått GODKAND_ANVANDARE false innan
         HospPerson hospPersonResponse1 = createGetHospPersonResponse();
@@ -456,7 +454,6 @@ public class HospUpdateServiceImplTest {
         list.add(privatlakare1);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
 
-
         // No hosp-data available for user
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);
 
@@ -487,7 +484,6 @@ public class HospUpdateServiceImplTest {
         ArrayList<Privatlakare> list = new ArrayList<>();
         list.add(privatlakare1);
         when(privatlakareRepository.findNeverHadLakarBehorighet()).thenReturn(list);
-
 
         // No hosp-data available for user
         when(hospPersonService.getHospPerson(PERSON_ID)).thenReturn(null);

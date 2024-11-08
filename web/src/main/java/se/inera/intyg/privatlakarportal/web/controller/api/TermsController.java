@@ -18,8 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +28,6 @@ import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetTermsResponse;
 /**
  * Created by pebe on 2015-08-21.
  */
-@Tag(name = "/terms", description = "REST API för term-service")
 @RestController
 @RequestMapping("/api/terms")
 public class TermsController {
@@ -45,13 +42,11 @@ public class TermsController {
     }
 
     @RequestMapping(value = "/webcert", method = RequestMethod.GET)
-    @Operation(summary = "getWebcertTerms")
     public GetTermsResponse getWebcertTerms() {
         return new GetTermsResponse(webcertTermsService.getTerms());
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    @Operation(summary = "getTerms")
     public GetTermsResponse getTerms() {
         return new GetTermsResponse(termsService.getTerms());
     }

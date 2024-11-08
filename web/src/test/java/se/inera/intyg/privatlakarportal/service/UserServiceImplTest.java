@@ -23,9 +23,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import jakarta.xml.ws.WebServiceException;
 import java.io.IOException;
 import java.util.Collection;
-import javax.xml.ws.WebServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -227,7 +227,7 @@ public class UserServiceImplTest {
 
     // Create a fake SecurityContext for a user
     private SecurityContext getSecurityContext(final String personId, final String name) {
-        final PrivatlakarUser user = new PrivatlakarUser(personId, name);
+        final PrivatlakarUser user = new PrivatlakarUser(personId, name, "authScheme");
         return new SecurityContext() {
             @Override
             public void setAuthentication(Authentication authentication) {

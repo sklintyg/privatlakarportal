@@ -18,16 +18,13 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import se.inera.intyg.privatlakarportal.integration.terms.services.dto.Terms;
 
 /**
  * Created by pebe on 2015-08-25.
  */
-@Schema(description = "Response-object för Terms")
 public class GetTermsResponse {
 
-    @Schema(name = "terms", type = "Terms")
     private Terms terms;
 
     public GetTermsResponse(Terms terms) {

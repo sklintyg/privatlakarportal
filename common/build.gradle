@@ -2,7 +2,7 @@ dependencies {
     implementation project(":privatlakarportal-persistence")
 
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
-    implementation "com.sun.mail:jakarta.mail"
+    implementation "com.sun.mail:jakarta.mail:${jakartaMail}"
     implementation "commons-io:commons-io:${commonsIOVersion}"
     implementation "org.apache.commons:commons-lang3"
     implementation "org.springframework.data:spring-data-redis"

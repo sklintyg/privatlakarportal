@@ -18,16 +18,13 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import se.inera.intyg.privatlakarportal.service.model.User;
 
 /**
  * Created by pebe on 2015-08-21.
  */
-@Schema(description = "Response-obect för GetUser")
 public class GetUserResponse {
 
-    @Schema(name = "user", type = "User")
     private User user;
 
     public GetUserResponse(User user) {

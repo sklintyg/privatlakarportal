@@ -18,28 +18,21 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Map;
 
 /**
  * Created by pebe on 2015-08-28.
  */
-@Schema(description = "Response-object för config-tjänst")
 public class GetConfigResponse {
 
-    @Schema(name = "webcertUrl", type = "String")
     private String webcertUrl;
 
-    @Schema(name = "webcertStartUrl", type = "String")
     private String webcertStartUrl;
 
-    @Schema(name = "befattningar", type = "Map<String, String>")
     private Map<String, String> befattningar;
 
-    @Schema(name = "vardformer", type = "Map<String, String>")
     private Map<String, String> vardformer;
 
-    @Schema(name = "verksamhetstyper", type = "Map<String, String>")
     private Map<String, String> verksamhetstyper;
 
     public GetConfigResponse(String webcertUrl, String webcertStartUrl, Map<String, String> befattningar,

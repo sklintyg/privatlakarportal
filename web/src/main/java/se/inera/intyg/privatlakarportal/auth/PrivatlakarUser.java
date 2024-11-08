@@ -18,23 +18,27 @@
  */
 package se.inera.intyg.privatlakarportal.auth;
 
+import static se.inera.intyg.privatlakarportal.auth.CgiElegConstants.RELYING_PARTY_REGISTRATION_ID;
+
 import java.io.Serializable;
+import org.springframework.security.saml2.provider.service.authentication.Saml2AuthenticatedPrincipal;
 
 /**
  * Created by pebe on 2015-08-11.
  */
-public class PrivatlakarUser implements Serializable {
+public class PrivatlakarUser implements Serializable, Saml2AuthenticatedPrincipal {
 
     private static final long serialVersionUID = 8711015219408194075L;
     private static final int THIRTYONE = 31;
 
-    private String personalIdentityNumber;
+    private final String personalIdentityNumber;
     private String name;
-    private String authenticationScheme;
+    private final String authenticationScheme;
     private boolean nameFromPuService;
 
-    public PrivatlakarUser(String personalIdentityNumber, String name) {
+    public PrivatlakarUser(String personalIdentityNumber, String name, String authenticationScheme) {
         this.personalIdentityNumber = personalIdentityNumber;
+        this.authenticationScheme = authenticationScheme;
         this.name = name;
         nameFromPuService = false;
     }
@@ -49,10 +53,6 @@ public class PrivatlakarUser implements Serializable {
 
     public String getAuthenticationScheme() {
         return authenticationScheme;
-    }
-
-    public void setAuthenticationScheme(String authenticationScheme) {
-        this.authenticationScheme = authenticationScheme;
     }
 
     public boolean isNameFromPuService() {
@@ -96,5 +96,10 @@ public class PrivatlakarUser implements Serializable {
         result = THIRTYONE * result + authenticationScheme.hashCode();
         result = THIRTYONE * result + (nameFromPuService ? 1 : 0);
         return result;
+    }
+
+    @Override
+    public String getRelyingPartyRegistrationId() {
+        return RELYING_PARTY_REGISTRATION_ID;
     }
 }

@@ -6,23 +6,16 @@ sourceSets.main.java {
 
 clean.doLast { ant.delete(dir: generatedJavaDir.parent) }
 
-if (project.hasProperty("codeQuality")) {
-    license {
-        exclude "**/*.java" // This excludes too many files, but "generatedSource/**/*.java" does not work for some reason.
-    }
-}
-
 dependencies {
     implementation project(":privatlakarportal-common")
     implementation project(":privatlakarportal-persistence")
 
-    implementation "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider"
+    implementation "com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider"
     implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
     implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
     implementation "org.springframework:spring-context-support"
     implementation "org.springframework.data:spring-data-jpa"
     implementation "se.inera.intyg.infra:hsa-integration-api:${infraVersion}"
-    implementation "se.inera.intyg.infra:hsatk-integration:${infraVersion}"
     implementation "se.inera.intyg.infra:monitoring:${infraVersion}"
     implementation "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
 

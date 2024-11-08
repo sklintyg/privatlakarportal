@@ -19,11 +19,13 @@
 package se.inera.intyg.privatlakarportal.hsa.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 @ComponentScan({"se.inera.intyg.privatlakarportal.common.config"})
-@ImportResource("classpath:hsatk-stub-context.xml")
 @Profile({"dev", "hsa-stub"})
 public class HsaStubConfiguration {
 

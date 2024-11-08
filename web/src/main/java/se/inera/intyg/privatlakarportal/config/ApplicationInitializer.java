@@ -18,11 +18,10 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
-import io.prometheus.client.exporter.MetricsServlet;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import jakarta.servlet.FilterRegistration;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRegistration;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.WebApplicationInitializer;
@@ -33,8 +32,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
-import se.inera.intyg.infra.monitoring.logging.LogbackConfiguratorContextListener;
 import se.inera.intyg.infra.monitoring.MonitoringConfiguration;
+import se.inera.intyg.infra.monitoring.logging.LogbackConfiguratorContextListener;
 import se.inera.intyg.infra.security.filter.RequestContextHolderUpdateFilter;
 import se.inera.intyg.infra.security.filter.SecurityHeadersFilter;
 import se.inera.intyg.privatlakarportal.common.config.MailServiceConfig;
@@ -53,32 +52,32 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servletContext.addListener(new LogbackConfiguratorContextListener());
 
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.register(ApplicationConfig.class, PersistenceConfigDev.class, MailServiceConfig.class,
-            HsaConfiguration.class, JobConfiguration.class, PuConfiguration.class, CacheConfigurationFromInfra.class,
-            WcIntegrationConfiguration.class, ServiceConfig.class, DynamicLinkConfig.class, PostnummerserviceConfig.class,
-            PersistenceConfig.class, PersistenceConfigDev.class, MonitoringConfiguration.class, SwaggerConfig.class);
+        appContext.register(WebSecurityConfig.class, ApplicationConfig.class,
+            PersistenceConfigDev.class, MailServiceConfig.class,
+            HsaConfiguration.class, JobConfiguration.class, PuConfiguration.class,
+            CacheConfigurationFromInfra.class,
+            WcIntegrationConfiguration.class, ServiceConfig.class, DynamicLinkConfig.class,
+            PostnummerserviceConfig.class,
+            PersistenceConfig.class, PersistenceConfigDev.class, MonitoringConfiguration.class);
 
         servletContext.addListener(new ContextLoaderListener(appContext));
 
         AnnotationConfigWebApplicationContext webConfig = new AnnotationConfigWebApplicationContext();
         webConfig.register(WebConfig.class);
-        webConfig.register(this.getClass(), org.springdoc.webmvc.ui.SwaggerConfig.class,
-            org.springdoc.core.SwaggerUiConfigProperties.class, org.springdoc.core.SwaggerUiOAuthProperties.class,
-            org.springdoc.webmvc.core.SpringDocWebMvcConfiguration.class,
-            org.springdoc.webmvc.core.MultipleOpenApiSupportConfiguration.class,
-            org.springdoc.core.SpringDocConfiguration.class, org.springdoc.core.SpringDocConfigProperties.class,
-            org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class);
-        ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(webConfig));
+        ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher",
+            new DispatcherServlet(webConfig));
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
 
         // Spring session filter
-        FilterRegistration.Dynamic springSessionRepositoryFilter = servletContext.addFilter("springSessionRepositoryFilter",
+        FilterRegistration.Dynamic springSessionRepositoryFilter = servletContext.addFilter(
+            "springSessionRepositoryFilter",
             DelegatingFilterProxy.class);
         springSessionRepositoryFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // Update RequestContext with spring session
-        FilterRegistration.Dynamic requestContextHolderUpdateFilter = servletContext.addFilter("requestContextHolderUpdateFilter",
+        FilterRegistration.Dynamic requestContextHolderUpdateFilter = servletContext.addFilter(
+            "requestContextHolderUpdateFilter",
             RequestContextHolderUpdateFilter.class);
         requestContextHolderUpdateFilter.addMappingForUrlPatterns(null, false, "/*");
 
@@ -88,7 +87,8 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         logMdcFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // Spring security filter
-        FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain",
+        FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter(
+            "springSecurityFilterChain",
             DelegatingFilterProxy.class);
         springSecurityFilterChain.addMappingForUrlPatterns(null, false, "/*");
 
@@ -98,13 +98,15 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         internalApiFilter.addMappingForUrlPatterns(null, false, "/internalapi/*");
 
         // principalUpdatedFilter filter
-        FilterRegistration.Dynamic principalUpdatedFilter = servletContext.addFilter("principalUpdatedFilter",
+        FilterRegistration.Dynamic principalUpdatedFilter = servletContext.addFilter(
+            "principalUpdatedFilter",
             DelegatingFilterProxy.class);
         principalUpdatedFilter.setInitParameter("targetFilterLifecycle", "true");
         principalUpdatedFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // Hidden method filter.
-        FilterRegistration.Dynamic hiddenHttpMethodFilter = servletContext.addFilter("hiddenHttpMethodFilter",
+        FilterRegistration.Dynamic hiddenHttpMethodFilter = servletContext.addFilter(
+            "hiddenHttpMethodFilter",
             HiddenHttpMethodFilter.class);
         hiddenHttpMethodFilter.addMappingForUrlPatterns(null, false, "/*");
 
@@ -113,14 +115,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         registerSecurityHeadersFilter(servletContext);
 
         // CXF services filter
-        ServletRegistration.Dynamic cxfServlet = servletContext.addServlet("services", new CXFServlet());
+        ServletRegistration.Dynamic cxfServlet = servletContext.addServlet("services",
+            new CXFServlet());
         cxfServlet.setLoadOnStartup(1);
         cxfServlet.addMapping("/services/*");
-
-        // Prometheus filter
-        ServletRegistration.Dynamic prometheusServlet = servletContext.addServlet("prometheus", new MetricsServlet());
-        prometheusServlet.setLoadOnStartup(1);
-        prometheusServlet.addMapping("/metrics/*");
 
         // Listeners for session audit logging
         servletContext.addListener(new HttpSessionEventPublisher());
@@ -136,7 +134,8 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
     private void registerSecurityHeadersFilter(ServletContext servletContext) {
         SecurityHeadersFilter filter = new SecurityHeadersFilter();
-        servletContext.addFilter("securityHeadersFilter", filter).addMappingForUrlPatterns(null, true, "/*");
+        servletContext.addFilter("securityHeadersFilter", filter)
+            .addMappingForUrlPatterns(null, true, "/*");
     }
 
 }

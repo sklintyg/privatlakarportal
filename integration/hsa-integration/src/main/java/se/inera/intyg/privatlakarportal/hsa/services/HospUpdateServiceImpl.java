@@ -20,14 +20,14 @@ package se.inera.intyg.privatlakarportal.hsa.services;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.xml.ws.WebServiceException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.annotation.PostConstruct;
-import javax.xml.ws.WebServiceException;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

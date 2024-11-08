@@ -18,16 +18,13 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import se.inera.intyg.privatlakarportal.service.model.HospInformation;
 
 /**
  * Created by pebe on 2015-08-13.
  */
-@Schema(description = "Response-object för getHospInformation")
 public class GetHospInformationResponse {
 
-    @Schema(name = "hospInformation", type = "HospInformation")
     private HospInformation hospInformation;
 
     public GetHospInformationResponse(HospInformation hospInformation) {

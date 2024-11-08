@@ -1,64 +1,66 @@
-import se.inera.intyg.IntygPluginKt
-
-import java.nio.file.Files
-import java.nio.file.Paths
-
 plugins {
-    id "se.inera.intyg.plugin.common" version "3.3.3" apply false
-    id "io.spring.dependency-management" version "1.1.3" apply false
+    id "io.spring.dependency-management" version "1.1.6" apply false
+    id "org.gretty" version "4.1.5" apply false
     id "com.netflix.nebula.node" version "3.0.0" apply false
-    id "org.gretty" version "3.0.9" apply false
     id 'test-report-aggregation'
+    id 'org.sonarqube' version '5.1.0.4882'
+    id "org.owasp.dependencycheck" version "10.0.4"
+    id 'jacoco'
 }
 
 ext {
-    infraVersion = System.properties['infraVersion'] ?: '3.21.0-SNAPSHOT'
+    infraVersion = System.properties['infraVersion'] ?: '4.0.0-SNAPSHOT'
 
-    ppSchemasVersion = "1.0.5.1"
-    ppTermsSchemasVersion = "1.0.5.1"
-    rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5.1"
-    schemasContractVersion = "2.1.8.1"
+    ppSchemasVersion = "1.0.5.2"
+    ppTermsSchemasVersion = "1.0.5.2"
+    rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5.2"
+    schemasContractVersion = "2.1.8.2"
 
     commonsIOVersion = "2.14.0"
-    cxfVersion = "3.6.2"
-    geronimoJmsVersion = "1.1.1"
-    guavaVersion = "32.1.3-jre"
-    jadiraUserTypeVersion = "6.0.1.GA"
-    jakartaJwsApiVersion = "2.1.0" // version 3.0.0 -> warning: "class file for javax.jws.soap.SOAPBinding$ParameterStyle not found"
-    jaxb2Version = "0.13.1"
+    cxfVersion = "4.0.5"
+    guavaVersion = "33.3.1-jre"
+    jakartaJwsApiVersion = "3.0.0"
+    jakartaMail = "2.0.1"
     jsonSimpleVersion = "1.1.1"
     picocliVersion = "4.7.5"
-    springSecurityExtensionsVersion = "1.0.3.RELEASE"
     stAntlr4Version = "4.3.4"
-    springDocVersion = "1.7.0"
-    shedlockSpringVersion = "4.46.0"
+    shedlockSpringVersion = "5.16.0"
 
     nodeJsVersion = "12.22.12"
     npmVersion = "6.14.16"
 
-    springbootMavenBomVersion = "2.7.17"
+    springbootMavenBomVersion = "3.3.4"
+
+    nvdMirror = 'https://vulnz-nvd-mirror-devtest.intyg.nordicmedtest.se'
 }
 
 allprojects {
-    apply plugin: 'se.inera.intyg.plugin.common'
     apply plugin: "io.spring.dependency-management"
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'idea'
 
     group = 'se.inera.privatlakarportal'
     version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 21
+    targetCompatibility = 21
 
     dependencyManagement {
         imports { mavenBom "org.springframework.boot:spring-boot-dependencies:${springbootMavenBomVersion}" }
     }
 
+    compileJava {
+        options.encoding = "UTF-8"
+        options.compilerArgs.add("-parameters")
+    }
+
+    compileJava.dependsOn processResources
+
     dependencies {
         implementation "ch.qos.logback:logback-classic"
-        implementation "javax.annotation:javax.annotation-api"
+        implementation "jakarta.annotation:jakarta.annotation-api"
         implementation "jakarta.jws:jakarta.jws-api:${jakartaJwsApiVersion}"
         implementation "jakarta.xml.ws:jakarta.xml.ws-api"
-
-        runtimeOnly "com.sun.xml.messaging.saaj:saaj-impl"
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
@@ -77,31 +79,12 @@ allprojects {
         testRuntimeOnly "org.junit.vintage:junit-vintage-engine"
     }
 
-    tasks.register('createVersionPropertyFile', VersionPropertyFileTask)
-
-    if (project.hasProperty('codeQuality')) {
-        tasks.register('spotbugsIncludesAndExcludes') {
-            dependsOn ":unzipBuildTools"
-            def spotbugsToolDir = "${rootProject.layout.buildDirectory.get().asFile}/build-tools/spotbugs"
-            spotbugsMain {
-                includeFilter.set(file("${spotbugsToolDir}/spotbugsIncludeFilter.xml"))
-                excludeFilter.set(file("${spotbugsToolDir}/spotbugsExcludeFilter.xml"))
-            }
-        }
-
-        checkstyleMain.dependsOn createVersionPropertyFile
-        jacocoTestReport.mustRunAfter createVersionPropertyFile
-        spotbugsMain.dependsOn('spotbugsIncludesAndExcludes')
-        spotbugsTest.enabled(false)
-        dependencies { spotbugsSlf4j "org.slf4j:slf4j-simple" }
-    }
-
-    compileTestJava.dependsOn createVersionPropertyFile
     test { useJUnitPlatform() }
 
     repositories {
         mavenLocal()
         maven { url "https://nexus.drift.inera.se/repository/it-public/" }
+        maven { url 'https://build.shibboleth.net/nexus/content/repositories/releases/' }
         mavenCentral {
             content {
                 excludeGroupByRegex "se\\.inera.*"
@@ -109,36 +92,43 @@ allprojects {
         }
     }
 
-    // Errorprone has no mechanism (yet) for excluding generated code. We therefore disable it for hsa-integration.
-    ext.errorproneExclude = "privatlakarportal-hsa-integration"
-}
 
-subprojects.collect {subproject -> subproject.name }.each { subprojectName ->
-    dependencies { testReportAggregation project(":${subprojectName}") }
-}
+    jacocoTestReport {
+        dependsOn test
 
-tasks.register('tagRelease', TagReleaseTask)
+        reports {
+            xml.required = true
+            html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        }
 
-tasks.register('unzipBuildTools', Copy) {
-    into "${rootProject.layout.buildDirectory.get().asFile}/build-tools/"
-    from { zipTree(rootProject.buildscript.configurations.classpath.find { it.name.contains("se.inera.intyg.plugin.common") })
-            .matching { include "/spotbugs/**", "/git_hooks/**" }
+        afterEvaluate {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: [
+                        "**/testability/**",
+                        "**/integrationtest/**"
+                ])
+            }))
+        }
     }
 }
 
-tasks.register('applyGitHooks') {
-    dependsOn unzipBuildTools
-    doLast {
-        def repository = IntygPluginKt.findGitRepository(project.rootProject.projectDir)
-        def gitHooksDir = "${rootProject.layout.buildDirectory.get().asFile}/build-tools/git_hooks"
-        def commitMsg = file("${gitHooksDir}/commit-msg")
-        def preCommit = file("${gitHooksDir}/pre-commit")
-        def toDir = Paths.get(repository.directory.path, "hooks")
-
-        if (!Files.exists(toDir)) { Files.createDirectory(toDir) }
-        IntygPluginKt.copyFile(commitMsg, toDir)
-        IntygPluginKt.copyFile(preCommit, toDir)
+reporting {
+    subprojects.collect { subproject -> subproject.name }.each { subprojectName ->
+        dependencies { testReportAggregation project(":${subprojectName}") }
     }
 }
 
-createVersionPropertyFile.dependsOn(applyGitHooks)
+sonar {
+    properties {
+        property "sonar.projectKey", "intyg-statistik"
+        property "sonar.projectName", "intyg-statistik"
+        property "sonar.dependencyCheck.jsonReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.json" as String
+        property "sonar.dependencyCheck.htmlReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.html" as String
+    }
+}
+
+dependencyCheck {
+    formats = List.of("HTML", "JSON")
+    nvd.setDatafeedUrl(nvdMirror)
+    analyzers.setAssemblyEnabled(false)
+}

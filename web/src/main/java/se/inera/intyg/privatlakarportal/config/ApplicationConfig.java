@@ -18,13 +18,14 @@
  */
 package se.inera.intyg.privatlakarportal.config;
 
+import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javax.annotation.PostConstruct;
 import org.apache.cxf.Bus;
 import org.apache.cxf.ext.logging.LoggingFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
@@ -40,7 +41,8 @@ import se.inera.intyg.infra.security.filter.PrincipalUpdatedFilter;
 @EnableTransactionManagement
 @PropertySource(ignoreResourceNotFound = true,
     value = {"classpath:application.properties", "file:${dev.config.file}", "classpath:version.properties"})
-@ImportResource({"classpath:META-INF/cxf/cxf.xml", "classpath:securityContext.xml"})
+@ImportResource({"classpath:META-INF/cxf/cxf.xml"})
+@ComponentScan({"se.inera.intyg.infra.integration.intygproxyservice"})
 public class ApplicationConfig {
 
     @Autowired

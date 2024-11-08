@@ -31,11 +31,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import jakarta.xml.ws.WebServiceException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
-import javax.xml.ws.WebServiceException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -162,7 +162,7 @@ public class RegisterServiceImplTest {
 
     @Before
     public void setup() {
-        PrivatlakarUser privatlakarUser = new PrivatlakarUser(PERSON_ID, "Test User");
+        PrivatlakarUser privatlakarUser = new PrivatlakarUser(PERSON_ID, "Test User", "authScheme");
         privatlakarUser.updateNameFromPuService("Test User");
         when(userService.getUser()).thenReturn(privatlakarUser);
 
@@ -341,14 +341,15 @@ public class RegisterServiceImplTest {
     @Test
     public void testCreateRegistrationEjIPUService() {
 
-        when(userService.getUser()).thenReturn(new PrivatlakarUser(PERSON_ID, "Test User"));
+        when(userService.getUser()).thenReturn(new PrivatlakarUser(PERSON_ID, "Test User", "authScheme"));
 
         Registration registration = createValidRegistration();
         PrivatlakarportalServiceException exception = assertThrows(PrivatlakarportalServiceException.class, () -> registerService
             .createRegistration(registration, 1L));
         assertEquals(PrivatlakarportalErrorCodeEnum.UNKNOWN_INTERNAL_PROBLEM, exception.getErrorCode());
 
-        verify(privatlakareRepository).findByPersonId(new PrivatlakarUser(PERSON_ID, "Test User").getPersonalIdentityNumber());
+        verify(privatlakareRepository).findByPersonId(
+            new PrivatlakarUser(PERSON_ID, "Test User", "authScheme").getPersonalIdentityNumber());
         verifyNoMoreInteractions(privatlakareRepository);
         verifyNoMoreInteractions(hospUpdateService);
     }

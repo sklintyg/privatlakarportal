@@ -18,8 +18,6 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -36,7 +34,6 @@ import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetConfigResponse
 /**
  * Created by pebe on 2015-08-28.
  */
-@Tag(name = "/config", description = "Config-api för Privatläkarportalen")
 @RestController
 @RequestMapping("/api/config")
 public class ConfigController {
@@ -48,7 +45,6 @@ public class ConfigController {
     private DynamicLinkService dynamicLinkService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    @Operation(summary = "getConfig")
     public GetConfigResponse getConfig() {
         return new GetConfigResponse(
             env.getProperty("webcert.host.url"),
@@ -59,7 +55,6 @@ public class ConfigController {
     }
 
     @RequestMapping(value = "/links", method = RequestMethod.GET, produces = "application/json")
-    @Operation(summary = "/links")
     public Map<String, DynamicLink> getLinks() {
         return dynamicLinkService.getAllAsMap();
     }

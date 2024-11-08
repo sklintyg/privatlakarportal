@@ -18,13 +18,10 @@
  */
 package se.inera.intyg.privatlakarportal.web.controller.api.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 
-@Schema(description = "Response-objekt för registration-tjänst")
 public class CreateRegistrationResponse {
 
-    @Schema(name = "STATUS", type = "RegistrationStatus")
     private RegistrationStatus status;
 
     public CreateRegistrationResponse(RegistrationStatus status) {

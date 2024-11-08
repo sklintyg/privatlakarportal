@@ -18,7 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.hsa.services.exception;
 
-import javax.xml.ws.WebServiceException;
+import jakarta.xml.ws.WebServiceException;
 
 /**
  * Created by pebe on 2015-09-28.

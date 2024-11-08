@@ -19,7 +19,7 @@
 package se.inera.intyg.privatlakarportal.integration.terms.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
