@@ -110,17 +110,6 @@ allprojects {
             }))
         }
     }
-
-    configurations {
-        // Remove these due to conflict with Spring SAML which uses bcprov-jdk15.
-        implementation.exclude group: "org.bouncycastle", module: "bcpkix-jdk15on"
-        implementation.exclude group: "org.bouncycastle", module: "bcprov-jdk15on"
-        implementation.exclude group: "org.bouncycastle", module: "bcprov-jdk15"
-    }
-}
-
-subprojects.collect { subproject -> subproject.name }.each { subprojectName ->
-    dependencies { testReportAggregation project(":${subprojectName}") }
 }
 
 reporting {
