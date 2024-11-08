@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerRequest;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
 import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
+import se.inera.intyg.privatlakarportal.logging.MdcLogConstants;
+import se.inera.intyg.privatlakarportal.logging.PerformanceLogging;
 import se.inera.intyg.privatlakarportal.service.EraseService;
 import se.inera.intyg.privatlakarportal.service.PrivatePractitionerService;
 import se.inera.intyg.privatlakarportal.service.model.PrivatePractitioner;
@@ -55,6 +57,7 @@ public class PrivatePractitionerController {
     }
 
     @GetMapping("")
+    @PerformanceLogging(eventAction = "get-private-practitioner", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     public ResponseEntity<PrivatePractitionerDto> getPrivatePractitioner(@RequestParam String personOrHsaId) {
         PrivatePractitioner privatePractitioner = privatePractitionerService.getPrivatePractitioner(personOrHsaId);
 
@@ -66,6 +69,7 @@ public class PrivatePractitionerController {
     }
 
     @GetMapping("/all")
+    @PerformanceLogging(eventAction = "get-private-practitioners", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     public ResponseEntity<List<PrivatePractitionerDto>> getPrivatePractitioners() {
         List<PrivatePractitioner> privatePractitioners = privatePractitionerService.getPrivatePractitioners();
 
@@ -73,6 +77,7 @@ public class PrivatePractitionerController {
     }
 
     @PostMapping("/validate")
+    @PerformanceLogging(eventAction = "validate-private-practitioner", eventType = MdcLogConstants.EVENT_TYPE_INFO)
     public ResponseEntity<ValidatePrivatePractitionerResponse> validatePrivatePractitioner(
         @RequestBody ValidatePrivatePractitionerRequest request) {
         final var response = integrationService.validatePrivatePractitionerByPersonId(request.getPersonalIdentityNumber());
@@ -80,6 +85,7 @@ public class PrivatePractitionerController {
     }
 
     @DeleteMapping("/erase/{id}")
+    @PerformanceLogging(eventAction = "erase-private-practitioner", eventType = MdcLogConstants.EVENT_TYPE_DELETION)
     public void erasePrivatePractitioner(@PathVariable("id") String careProviderId) {
         eraseService.erasePrivatePractitioner(careProviderId);
     }

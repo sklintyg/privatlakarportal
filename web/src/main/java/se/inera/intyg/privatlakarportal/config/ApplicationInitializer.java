@@ -82,7 +82,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         requestContextHolderUpdateFilter.addMappingForUrlPatterns(null, false, "/*");
 
         // LogMDCServletFilter
-        FilterRegistration.Dynamic logMdcFilter = servletContext.addFilter("logMDCServletFilter",
+        FilterRegistration.Dynamic logMdcFilter = servletContext.addFilter("mdcServletFilter",
             DelegatingFilterProxy.class);
         logMdcFilter.addMappingForUrlPatterns(null, false, "/*");
 

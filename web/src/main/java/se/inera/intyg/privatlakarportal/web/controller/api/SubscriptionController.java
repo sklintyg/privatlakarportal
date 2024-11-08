@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import se.inera.intyg.privatlakarportal.logging.MdcLogConstants;
+import se.inera.intyg.privatlakarportal.logging.PerformanceLogging;
 import se.inera.intyg.privatlakarportal.service.SubscriptionService;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.SubscriptionResponse;
 
@@ -33,6 +35,7 @@ public class SubscriptionController {
     private SubscriptionService subscriptionService;
 
     @GetMapping("/state")
+    @PerformanceLogging(eventAction = "get-subscription-state", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     public SubscriptionResponse getSubscriptionState() {
         return new SubscriptionResponse(subscriptionService.isSubscriptionInUse());
     }

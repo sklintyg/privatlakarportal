@@ -34,6 +34,8 @@ import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
 import se.inera.intyg.privatlakarportal.integration.privatepractitioner.services.IntegrationService;
+import se.inera.intyg.privatlakarportal.logging.MdcLogConstants;
+import se.inera.intyg.privatlakarportal.logging.PerformanceLogging;
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.HospUppdateringRepository;
@@ -78,18 +80,21 @@ public class TestController {
 
     @RequestMapping(value = "/registration/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @PerformanceLogging(eventAction = "test-api-get-private-practitioner", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     public PrivatlakareDto getPrivatlakare(@PathVariable("id") String personId) {
         return registerService.getPrivatlakare(personId);
     }
 
     @RequestMapping(value = "/registration/remove/{id}", method = RequestMethod.DELETE)
     @ResponseBody
+    @PerformanceLogging(eventAction = "test-api-remove-private-practitioner", eventType = MdcLogConstants.EVENT_TYPE_DELETION)
     public boolean removePrivatlakare(@PathVariable("id") String personId) {
         return registerService.removePrivatlakare(personId);
     }
 
     @RequestMapping(value = "/registration/setname/{id}", method = RequestMethod.POST)
     @Transactional(transactionManager = "transactionManager")
+    @PerformanceLogging(eventAction = "test-api-set-name-private-practitioner", eventType = MdcLogConstants.EVENT_TYPE_CHANGE)
     public boolean setNamePrivatlakare(@PathVariable("id") String personId, @RequestBody String name) {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(personId);
         if (privatlakare == null) {
@@ -103,6 +108,7 @@ public class TestController {
 
     @RequestMapping(value = "/registration/setregistrationdate/{id}", method = RequestMethod.POST)
     @Transactional(transactionManager = "transactionManager")
+    @PerformanceLogging(eventAction = "test-api-set-registration-date-private-practitioner", eventType = MdcLogConstants.EVENT_TYPE_CHANGE)
     public boolean setRegistrationDatePrivatlakare(@PathVariable("id") String personId, @RequestBody String date) {
         Privatlakare privatlakare = privatlakareRepository.findByPersonId(personId);
         if (privatlakare == null) {
@@ -116,17 +122,20 @@ public class TestController {
 
     @Profile("hsa-stub")
     @RequestMapping(value = "/hosp/add", method = RequestMethod.POST)
+    @PerformanceLogging(eventAction = "test-api-add-hosp-person", eventType = MdcLogConstants.EVENT_TYPE_CHANGE)
     public void addHospPerson(@RequestBody HsaPerson hsaPerson) {
         hsaServiceStub.addHsaPerson(hsaPerson);
     }
 
     @Profile("hsa-stub")
     @RequestMapping(value = "/hosp/remove/{id}", method = RequestMethod.DELETE)
+    @PerformanceLogging(eventAction = "test-api-remove-hosp-person", eventType = MdcLogConstants.EVENT_TYPE_DELETION)
     public void removeHospPerson(@PathVariable("id") String id) {
         hsaServiceStub.deleteHsaPerson(id);
     }
 
     @RequestMapping(value = "/hosp/update", method = RequestMethod.POST)
+    @PerformanceLogging(eventAction = "test-api-update-hosp-information", eventType = MdcLogConstants.EVENT_TYPE_CHANGE)
     @Transactional(transactionManager = "transactionManager")
     public void updateHospInformation() {
         if (hsaServiceStub != null) {
@@ -146,12 +155,14 @@ public class TestController {
     }
 
     @Profile("hsa-stub")
+    @PerformanceLogging(eventAction = "test-api-reset-hosp-update-timers", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     @RequestMapping(value = "/hosp/reset", method = RequestMethod.GET)
     public void resetHospUpdateTimers() {
         hsaServiceStub.resetHospLastUpdate();
     }
 
     @RequestMapping(value = "/webcert/validatePrivatePractitioner/{id}", method = RequestMethod.POST)
+    @PerformanceLogging(eventAction = "test-api-validate-private-practitioner", eventType = MdcLogConstants.EVENT_TYPE_INFO)
     public ValidatePrivatePractitionerResponse validatePrivatePractitioner(@PathVariable("id") String id) {
         return integrationService.validatePrivatePractitionerByPersonId(id);
     }
