@@ -23,6 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -47,6 +48,7 @@ import se.inera.intyg.privatlakarportal.common.service.MailService;
 import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
 import se.inera.intyg.privatlakarportal.hsa.monitoring.MonitoringLogService;
 import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
+import se.inera.intyg.privatlakarportal.logging.MdcHelper;
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
@@ -64,6 +66,8 @@ public class HospUpdateServiceImplTest {
     private static final String PERSONAL_PRESCRIPTION_CODE = "7654321";
     private static final String PERSON_ID2 = "PERSON_ID2";
     private static final String PERSON_ID3 = "PERSON_ID3";
+    @Mock
+    private MdcHelper mdcHelper;
 
     @Mock
     private HospPersonService hospPersonService;
@@ -87,6 +91,8 @@ public class HospUpdateServiceImplTest {
     public void setup() {
         ReflectionTestUtils.setField(hospUpdateService, "mailInterval", 14400);
         ReflectionTestUtils.setField(hospUpdateService, "numberOfEmails", 3);
+        doReturn("traceId").when(mdcHelper).traceId();
+        doReturn("spanId").when(mdcHelper).spanId();
     }
 
     @Test

@@ -19,6 +19,8 @@
 package se.inera.intyg.privatlakarportal.hsa.services;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.SPAN_ID_KEY;
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.TRACE_ID_KEY;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.xml.ws.WebServiceException;
@@ -45,6 +47,10 @@ import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.intyg.privatlakarportal.hsa.model.HospPerson;
 import se.inera.intyg.privatlakarportal.hsa.monitoring.MonitoringLogService;
 import se.inera.intyg.privatlakarportal.hsa.services.exception.HospUpdateFailedToContactHsaException;
+import se.inera.intyg.privatlakarportal.logging.MdcCloseableMap;
+import se.inera.intyg.privatlakarportal.logging.MdcHelper;
+import se.inera.intyg.privatlakarportal.logging.MdcLogConstants;
+import se.inera.intyg.privatlakarportal.logging.PerformanceLogging;
 import se.inera.intyg.privatlakarportal.persistence.model.HospUppdatering;
 import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
@@ -85,6 +91,9 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     @Qualifier("hsaMonitoringLogService")
     private MonitoringLogService monitoringService;
 
+    @Autowired
+    private MdcHelper mdcHelper;
+
     private LocalDateTime lastUpdate;
 
     @PostConstruct
@@ -96,14 +105,22 @@ public class HospUpdateServiceImpl implements HospUpdateService {
     @Scheduled(cron = "${privatlakarportal.hospupdate.cron}")
     @SchedulerLock(name = JOB_NAME)
     @Transactional
+    @PerformanceLogging(eventAction = "scheduled-update-hosp-information", eventType = MdcLogConstants.EVENT_TYPE_INFO)
     public void scheduledUpdateHospInformation() {
-        String skipUpdate = System.getProperty("scheduled.update.skip", "false");
-        LOG.debug("scheduled.update.skip = " + skipUpdate);
-        if ("true".equalsIgnoreCase(skipUpdate)) {
-            LOG.info("Skipping scheduled updateHospInformation");
-        } else {
-            LOG.info("Starting scheduled updateHospInformation");
-            updateHospInformation();
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(TRACE_ID_KEY, mdcHelper.traceId())
+                .put(SPAN_ID_KEY, mdcHelper.spanId())
+                .build()
+        ) {
+            String skipUpdate = System.getProperty("scheduled.update.skip", "false");
+            LOG.debug("scheduled.update.skip = " + skipUpdate);
+            if ("true".equalsIgnoreCase(skipUpdate)) {
+                LOG.info("Skipping scheduled updateHospInformation");
+            } else {
+                LOG.info("Starting scheduled updateHospInformation");
+                updateHospInformation();
+            }
         }
     }
 
