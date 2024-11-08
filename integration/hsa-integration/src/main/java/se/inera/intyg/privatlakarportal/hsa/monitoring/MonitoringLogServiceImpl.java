@@ -19,11 +19,14 @@
 package se.inera.intyg.privatlakarportal.hsa.monitoring;
 
 
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_USER_ID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.infra.monitoring.logging.LogMarkers;
-import se.inera.intyg.schemas.contract.util.HashUtility;
+import se.inera.intyg.privatlakarportal.logging.HashUtility;
+import se.inera.intyg.privatlakarportal.logging.MdcCloseableMap;
 
 
 @Service("hsaMonitoringLogService")
@@ -34,22 +37,50 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void logHospWaiting(String id) {
-        logEvent(MonitoringEvent.HOSP_WAITING, HashUtility.hash(id));
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_ID, hashedPersonId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.HOSP_WAITING, hashedPersonId);
+        }
     }
 
     @Override
     public void logUserAuthorizedInHosp(String id) {
-        logEvent(MonitoringEvent.HOSP_AUTHORIZED, HashUtility.hash(id));
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_ID, hashedPersonId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.HOSP_AUTHORIZED, hashedPersonId);
+        }
     }
 
     @Override
     public void logUserNotAuthorizedInHosp(String id) {
-        logEvent(MonitoringEvent.HOSP_NOT_AUTHORIZED, HashUtility.hash(id));
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_ID, hashedPersonId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.HOSP_NOT_AUTHORIZED, hashedPersonId);
+        }
     }
 
     @Override
     public void logRegistrationRemoved(String id) {
-        logEvent(MonitoringEvent.REGISTRATION_REMOVED, HashUtility.hash(id));
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_ID, hashedPersonId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.REGISTRATION_REMOVED, hashedPersonId);
+        }
     }
 
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {

@@ -19,12 +19,17 @@
 package se.inera.intyg.privatlakarportal.service.monitoring;
 
 
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_AUTHENTICATION_SCHEME;
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_USER_HSA_ID;
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_USER_ID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.infra.monitoring.logging.LogMarkers;
-import se.inera.intyg.schemas.contract.util.HashUtility;
+import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.logging.HashUtility;
+import se.inera.intyg.privatlakarportal.logging.MdcCloseableMap;
 
 @Service("webMonitoringLogService")
 public class MonitoringLogServiceImpl implements MonitoringLogService {
@@ -34,32 +39,76 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void logUserRegistered(String id, Long consentVersion, String hsaId, RegistrationStatus registrationStatus) {
-        logEvent(MonitoringEvent.USER_REGISTERED, HashUtility.hash(id), consentVersion, hsaId, registrationStatus);
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_ID, hashedPersonId)
+                .put(EVENT_USER_HSA_ID, hsaId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.USER_REGISTERED, hashedPersonId, consentVersion, hsaId, registrationStatus);
+        }
     }
 
     @Override
     public void logUserDeleted(String id) {
-        logEvent(MonitoringEvent.USER_DELETED, HashUtility.hash(id));
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_ID, hashedPersonId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.USER_DELETED, hashedPersonId);
+        }
     }
 
     @Override
     public void logUserErased(String hsaId) {
-        logEvent(MonitoringEvent.USER_DELETED, hsaId);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_HSA_ID, hsaId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.USER_DELETED, hsaId);
+        }
     }
 
     @Override
     public void logUserLogin(String id, String authenticationScheme) {
-        logEvent(MonitoringEvent.USER_LOGIN, HashUtility.hash(id), authenticationScheme);
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_ID, hashedPersonId)
+                .put(EVENT_AUTHENTICATION_SCHEME, authenticationScheme)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.USER_LOGIN, hashedPersonId, authenticationScheme);
+        }
     }
 
     @Override
     public void logUserLogout(String id, String authenticationScheme) {
-        logEvent(MonitoringEvent.USER_LOGOUT, HashUtility.hash(id), authenticationScheme);
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_ID, hashedPersonId)
+                .put(EVENT_AUTHENTICATION_SCHEME, authenticationScheme)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.USER_LOGOUT, hashedPersonId, authenticationScheme);
+        }
     }
 
     @Override
     public void logUserDetailsChanged(String id) {
-        logEvent(MonitoringEvent.USER_DETAILS_CHANGED, HashUtility.hash(id));
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_USER_ID, hashedPersonId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.USER_DETAILS_CHANGED, hashedPersonId);
+        }
     }
 
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {

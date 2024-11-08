@@ -32,14 +32,14 @@ public class MdcLogConstants {
     public static final String EVENT_START = "event.start";
     public static final String EVENT_END = "event.end";
     public static final String EVENT_DURATION = "event.duration";
-    public static final String EVENT_USER_CARE_PROVIDER_ID = "event.user.care_provider.id";
     public static final String EVENT_CLASS = "event.class";
-    public static final String EVENT_LOGIN_METHOD = "event.login.method";
     public static final String EVENT_METHOD = "event.method";
     public static final String EVENT_OUTCOME = "event.outcome";
+    public static final String EVENT_AUTHENTICATION_SCHEME = "event.authentication.scheme";
     public static final String EVENT_OUTCOME_FAILURE = "failure";
     public static final String EVENT_OUTCOME_SUCCESS = "success";
-    public static final String USER_ID = "user.id";
+    public static final String EVENT_USER_HSA_ID = "event.user.hsa.id";
+    public static final String EVENT_USER_ID = "user.id";
     public static final String SESSION_ID_KEY = "session.id";
     public static final String SPAN_ID_KEY = "span.id";
     public static final String TRACE_ID_KEY = "trace.id";
