@@ -8,9 +8,8 @@ pluginManagement {
 
 rootProject.name = 'privatlakarportal'
 
-include ':web', ':integration/hsa-integration', ':integration/wc-integration', ':persistence', ':common'
+include ':web', ':integration/hsa-integration', ':integration/wc-integration', ':persistence', ':common', ':logging'
 include ':tools/liquibase-runner'
-include ':logging'
 
 project(':web').name = 'privatlakarportal-web'
 project(':integration/hsa-integration').name = 'privatlakarportal-hsa-integration'

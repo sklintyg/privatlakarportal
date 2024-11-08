@@ -27,7 +27,7 @@ gretty {
     jvmArgs = [
             "-Dcatalina.base=${buildDirectory}/catalina.base",
             "-Dspring.profiles.active=dev,caching-enabled,hsa-integration-intyg-proxy-service,testability",
-            "-Dlogback.file=${applicationDir}/config/logback-dev.xml",
+            "-Dlogback.file=${applicationDir}/config/logback-spring.xml",
             "-Djava.awt.headless=true",
             "-Dfile.encoding=UTF-8",
             "-Dapplication.dir=${applicationDir}",
@@ -91,6 +91,8 @@ dependencies {
     implementation project(":privatlakarportal-persistence")
     implementation project(":privatlakarportal-wc-integration")
     implementation project(":privatlakarportal-logging")
+
+    implementation "co.elastic.logging:logback-ecs-encoder:${logbackEcsEncoderVersion}"
 
     implementation "se.inera.intyg.infrastructure.directory.privatepractitioner.terms:intyg-infrastructure-directory-privatepractitioner-terms-schemas:${ppTermsSchemasVersion}"
     implementation "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
