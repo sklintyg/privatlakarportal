@@ -120,8 +120,8 @@ reporting {
 
 sonar {
     properties {
-        property "sonar.projectKey", "intyg-statistik"
-        property "sonar.projectName", "intyg-statistik"
+        property "sonar.projectKey", "intyg-privatlakarportal"
+        property "sonar.projectName", "intyg-privatlakarportal"
         property "sonar.dependencyCheck.jsonReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.json" as String
         property "sonar.dependencyCheck.htmlReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.html" as String
     }
