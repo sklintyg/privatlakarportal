@@ -39,7 +39,7 @@ public class MdcLogConstants {
     public static final String EVENT_OUTCOME_FAILURE = "failure";
     public static final String EVENT_OUTCOME_SUCCESS = "success";
     public static final String EVENT_USER_HSA_ID = "event.user.hsa.id";
-    public static final String EVENT_USER_ID = "user.id";
+    public static final String EVENT_USER_ID = "event.user.id";
     public static final String SESSION_ID_KEY = "session.id";
     public static final String SPAN_ID_KEY = "span.id";
     public static final String TRACE_ID_KEY = "trace.id";
