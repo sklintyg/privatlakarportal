@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -50,7 +51,17 @@ class MdcHelperTest {
         }
 
         @Test
-        void shouldReturnEmptySessionIdIfNotPresentInHeader() {
+        void shouldReturnSessionIdFromCookie() {
+            final var expectedValue = "sessionId";
+            final var httpServletRequest = mock(HttpServletRequest.class);
+            when(httpServletRequest.getCookies()).thenReturn(
+                new Cookie[]{new Cookie("SESSION", expectedValue)});
+            final var result = mdcHelper.sessionId(httpServletRequest);
+            assertEquals(expectedValue, result);
+        }
+
+        @Test
+        void shouldReturnEmptySessionIdIfNotPresentInHeaderOrCookie() {
             final var expectedValue = "-";
             final var httpServletRequest = mock(HttpServletRequest.class);
             final var result = mdcHelper.sessionId(httpServletRequest);
