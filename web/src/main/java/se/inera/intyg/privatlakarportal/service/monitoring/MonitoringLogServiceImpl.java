@@ -20,8 +20,8 @@ package se.inera.intyg.privatlakarportal.service.monitoring;
 
 
 import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_AUTHENTICATION_SCHEME;
-import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_USER_HSA_ID;
-import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_USER_ID;
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.ORGANIZATION_ID;
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.USER_ID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +42,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         final var hashedPersonId = HashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
-                .put(EVENT_USER_ID, hashedPersonId)
-                .put(EVENT_USER_HSA_ID, hsaId)
+                .put(USER_ID, hashedPersonId)
+                .put(ORGANIZATION_ID, hsaId)
                 .build()
         ) {
             logEvent(MonitoringEvent.USER_REGISTERED, hashedPersonId, consentVersion, hsaId, registrationStatus);
@@ -55,7 +55,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         final var hashedPersonId = HashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
-                .put(EVENT_USER_ID, hashedPersonId)
+                .put(USER_ID, hashedPersonId)
                 .build()
         ) {
             logEvent(MonitoringEvent.USER_DELETED, hashedPersonId);
@@ -66,7 +66,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     public void logUserErased(String hsaId) {
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
-                .put(EVENT_USER_HSA_ID, hsaId)
+                .put(ORGANIZATION_ID, hsaId)
                 .build()
         ) {
             logEvent(MonitoringEvent.USER_DELETED, hsaId);
@@ -78,7 +78,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         final var hashedPersonId = HashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
-                .put(EVENT_USER_ID, hashedPersonId)
+                .put(USER_ID, hashedPersonId)
                 .put(EVENT_AUTHENTICATION_SCHEME, authenticationScheme)
                 .build()
         ) {
@@ -91,7 +91,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         final var hashedPersonId = HashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
-                .put(EVENT_USER_ID, hashedPersonId)
+                .put(USER_ID, hashedPersonId)
                 .put(EVENT_AUTHENTICATION_SCHEME, authenticationScheme)
                 .build()
         ) {
@@ -104,7 +104,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         final var hashedPersonId = HashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
-                .put(EVENT_USER_ID, hashedPersonId)
+                .put(USER_ID, hashedPersonId)
                 .build()
         ) {
             logEvent(MonitoringEvent.USER_DETAILS_CHANGED, hashedPersonId);
