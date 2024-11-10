@@ -20,6 +20,7 @@ package se.inera.intyg.privatlakarportal.service.monitoring;
 
 
 import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_AUTHENTICATION_SCHEME;
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_PRIVATE_PRACTITIONER_ID;
 import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.ORGANIZATION_ID;
 import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.USER_ID;
 
@@ -51,11 +52,12 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     @Override
-    public void logUserDeleted(String id) {
+    public void logUserDeleted(String id, String hsaId) {
         final var hashedPersonId = HashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
                 .put(USER_ID, hashedPersonId)
+                .put(ORGANIZATION_ID, hsaId)
                 .build()
         ) {
             logEvent(MonitoringEvent.USER_DELETED, hashedPersonId);
@@ -63,13 +65,15 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     @Override
-    public void logUserErased(String hsaId) {
+    public void logUserErased(String id, String careProviderId) {
+        final var hashedPersonId = HashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
-                .put(ORGANIZATION_ID, hsaId)
+                .put(EVENT_PRIVATE_PRACTITIONER_ID, hashedPersonId)
+                .put(ORGANIZATION_ID, careProviderId)
                 .build()
         ) {
-            logEvent(MonitoringEvent.USER_DELETED, hsaId);
+            logEvent(MonitoringEvent.USER_DELETED, careProviderId);
         }
     }
 
@@ -100,11 +104,12 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     @Override
-    public void logUserDetailsChanged(String id) {
+    public void logUserDetailsChanged(String id, String hsaId) {
         final var hashedPersonId = HashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
                 .put(USER_ID, hashedPersonId)
+                .put(ORGANIZATION_ID, hsaId)
                 .build()
         ) {
             logEvent(MonitoringEvent.USER_DETAILS_CHANGED, hashedPersonId);

@@ -27,13 +27,13 @@ public interface MonitoringLogService {
 
     void logUserRegistered(String id, Long consentVersion, String hsaId, RegistrationStatus registrationStatus);
 
-    void logUserDeleted(String id);
+    void logUserDeleted(String id, String hsaId);
 
-    void logUserErased(String id);
+    void logUserErased(String id, String careProviderId);
 
     void logUserLogin(String id, String authenticationScheme);
 
     void logUserLogout(String id, String authenticationScheme);
 
-    void logUserDetailsChanged(String id);
+    void logUserDetailsChanged(String id, String hsaId);
 }

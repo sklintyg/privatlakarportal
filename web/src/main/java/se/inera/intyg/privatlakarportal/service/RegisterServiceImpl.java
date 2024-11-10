@@ -275,7 +275,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         privatlakareRepository.save(privatlakare);
 
-        monitoringService.logUserDetailsChanged(privatlakare.getPersonId());
+        monitoringService.logUserDetailsChanged(privatlakare.getPersonId(), privatlakare.getHsaId());
 
         return SaveRegistrationResponseStatus.OK;
     }
@@ -291,7 +291,7 @@ public class RegisterServiceImpl implements RegisterService {
         privatlakareRepository.delete(toDelete);
         LOG.info("Deleted Privatlakare with id {}", personId);
 
-        monitoringService.logUserDeleted(personId);
+        monitoringService.logUserDeleted(personId, toDelete.getHsaId());
 
         return true;
     }

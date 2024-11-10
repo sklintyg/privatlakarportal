@@ -524,7 +524,7 @@ public class HospUpdateServiceImplTest {
         hospUpdateService.scheduledUpdateHospInformation();
 
         verify(mailService).sendRegistrationRemovedEmail(privatlakare1);
-        verify(monitoringLogService).logRegistrationRemoved(privatlakare1.getPersonId());
+        verify(monitoringLogService).logRegistrationRemoved(privatlakare1.getPersonId(), privatlakare1.getHsaId());
         verify(privatlakareRepository).delete(privatlakare1);
         verify(hospPersonService).removeFromCertifier(eq(PERSON_ID), nullable(String.class), anyString());
     }

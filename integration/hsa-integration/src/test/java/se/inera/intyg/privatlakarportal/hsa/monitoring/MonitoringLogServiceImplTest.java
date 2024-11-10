@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 public class MonitoringLogServiceImplTest {
 
     private static final String USER_ID = "USER_ID";
+    private static final String HSA_ID = "HSA_ID";
 
     @Mock
     private Appender<ILoggingEvent> mockAppender;
@@ -64,20 +65,20 @@ public class MonitoringLogServiceImplTest {
 
     @Test
     public void shouldLogHospWaiting() {
-        logService.logHospWaiting(USER_ID);
+        logService.logHospWaiting(USER_ID, HSA_ID);
         verifyLog(Level.INFO, "HOSP_WAITING User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' is waiting for HOSP");
     }
 
     @Test
     public void shouldLogUserAuthorizedInHosp() {
-        logService.logUserAuthorizedInHosp(USER_ID);
+        logService.logUserAuthorizedInHosp(USER_ID, HSA_ID);
         verifyLog(Level.INFO,
             "HOSP_AUTHORIZED User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' is authorized doctor in HOSP");
     }
 
     @Test
     public void shouldLogUserNotAuthorizedInHosp() {
-        logService.logUserNotAuthorizedInHosp(USER_ID);
+        logService.logUserNotAuthorizedInHosp(USER_ID, HSA_ID);
         verifyLog(Level.INFO,
             "HOSP_NOT_AUTHORIZED User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' is not authorized doctor in HOSP");
     }

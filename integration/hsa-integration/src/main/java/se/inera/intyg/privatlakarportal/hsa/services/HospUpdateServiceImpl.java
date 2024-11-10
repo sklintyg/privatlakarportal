@@ -211,7 +211,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             }
             privatlakare.setForskrivarKod(null);
 
-            monitoringService.logHospWaiting(privatlakare.getPersonId());
+            monitoringService.logHospWaiting(privatlakare.getPersonId(), privatlakare.getHsaId());
             return RegistrationStatus.WAITING_FOR_HOSP;
         } else {
 
@@ -233,13 +233,13 @@ public class HospUpdateServiceImpl implements HospUpdateService {
             privatlakare.setForskrivarKod(hospPersonResponse.getPersonalPrescriptionCode());
 
             if (PrivatlakareUtils.hasLakareLegitimation(privatlakare)) {
-                monitoringService.logUserAuthorizedInHosp(privatlakare.getPersonId());
+                monitoringService.logUserAuthorizedInHosp(privatlakare.getPersonId(), privatlakare.getHsaId());
                 if (!privatlakare.isGodkandAnvandare()) {
                     return RegistrationStatus.NOT_AUTHORIZED;
                 }
                 return RegistrationStatus.AUTHORIZED;
             } else {
-                monitoringService.logUserNotAuthorizedInHosp(privatlakare.getPersonId());
+                monitoringService.logUserNotAuthorizedInHosp(privatlakare.getPersonId(), privatlakare.getHsaId());
                 return RegistrationStatus.NOT_AUTHORIZED;
             }
         }
@@ -285,7 +285,7 @@ public class HospUpdateServiceImpl implements HospUpdateService {
                 LOG.info("Removing {} from registration repo", privatlakare.getPersonId());
                 privatlakareRepository.delete(privatlakare);
                 mailService.sendRegistrationRemovedEmail(privatlakare);
-                monitoringService.logRegistrationRemoved(privatlakare.getPersonId());
+                monitoringService.logRegistrationRemoved(privatlakare.getPersonId(), privatlakare.getHsaId());
             } else {
                 // Try again later and only remove privatlakare if they are removed in HSA as well
                 LOG.warn("Could not contact HSA to remove privatlakare from certifier");

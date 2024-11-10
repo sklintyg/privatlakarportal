@@ -24,11 +24,11 @@ package se.inera.intyg.privatlakarportal.hsa.monitoring;
  */
 public interface MonitoringLogService {
 
-    void logHospWaiting(String id);
+    void logHospWaiting(String id, String hsaId);
 
-    void logUserAuthorizedInHosp(String id);
+    void logUserAuthorizedInHosp(String id, String hsaId);
 
-    void logUserNotAuthorizedInHosp(String id);
+    void logUserNotAuthorizedInHosp(String id, String hsaId);
 
-    void logRegistrationRemoved(String id);
+    void logRegistrationRemoved(String id, String hsaId);
 }
