@@ -75,7 +75,7 @@ public class MonitoringLogServiceImplTest {
 
     @Test
     public void shouldLogUserDeleted() {
-        logService.logUserDeleted(USER_ID);
+        logService.logUserDeleted(USER_ID, HSA_ID);
         verifyLog(Level.INFO, "USER_DELETED User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' deleted");
     }
 
@@ -95,7 +95,7 @@ public class MonitoringLogServiceImplTest {
 
     @Test
     public void shouldLogUserDetailsChanged() {
-        logService.logUserDetailsChanged(USER_ID);
+        logService.logUserDetailsChanged(USER_ID, HSA_ID);
         verifyLog(Level.INFO,
             "USER_DETAILS_CHANGED Details for user 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' changed");
     }

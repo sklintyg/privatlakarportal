@@ -70,7 +70,7 @@ class EraseServiceImplTest {
 
         eraseService.erasePrivatePractitioner(HSA_ID);
 
-        verify(monitoringLogService).logUserErased(HSA_ID);
+        verify(monitoringLogService).logUserErased(PERSON_ID, HSA_ID);
     }
 
     @Test

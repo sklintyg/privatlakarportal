@@ -8,7 +8,7 @@ pluginManagement {
 
 rootProject.name = 'privatlakarportal'
 
-include ':web', ':integration/hsa-integration', ':integration/wc-integration', ':persistence', ':common'
+include ':web', ':integration/hsa-integration', ':integration/wc-integration', ':persistence', ':common', ':logging'
 include ':tools/liquibase-runner'
 
 project(':web').name = 'privatlakarportal-web'
@@ -18,3 +18,4 @@ project(':persistence').name = 'privatlakarportal-persistence'
 project(':tools/liquibase-runner').name = 'privatlakarportal-liquibase-runner'
 project(':privatlakarportal-liquibase-runner').projectDir = "$rootDir/tools/liquibase-runner" as File
 project(':common').name = 'privatlakarportal-common'
+project(':logging').name = 'privatlakarportal-logging'

@@ -19,37 +19,78 @@
 package se.inera.intyg.privatlakarportal.hsa.monitoring;
 
 
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_ACTION;
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_PRIVATE_PRACTITIONER_ID;
+import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.ORGANIZATION_ID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.infra.monitoring.logging.LogMarkers;
-import se.inera.intyg.schemas.contract.util.HashUtility;
+import se.inera.intyg.privatlakarportal.logging.HashUtility;
+import se.inera.intyg.privatlakarportal.logging.MdcCloseableMap;
 
 
 @Service("hsaMonitoringLogService")
 public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     private static final Object SPACE = " ";
-    private static final Logger LOG = LoggerFactory.getLogger(MonitoringLogService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MonitoringLogServiceImpl.class);
 
     @Override
-    public void logHospWaiting(String id) {
-        logEvent(MonitoringEvent.HOSP_WAITING, HashUtility.hash(id));
+    public void logHospWaiting(String id, String hsaId) {
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_ACTION, toEventType(MonitoringEvent.HOSP_WAITING))
+                .put(EVENT_PRIVATE_PRACTITIONER_ID, hashedPersonId)
+                .put(ORGANIZATION_ID, hsaId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.HOSP_WAITING, hashedPersonId);
+        }
     }
 
     @Override
-    public void logUserAuthorizedInHosp(String id) {
-        logEvent(MonitoringEvent.HOSP_AUTHORIZED, HashUtility.hash(id));
+    public void logUserAuthorizedInHosp(String id, String hsaId) {
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_ACTION, toEventType(MonitoringEvent.HOSP_AUTHORIZED))
+                .put(EVENT_PRIVATE_PRACTITIONER_ID, hashedPersonId)
+                .put(ORGANIZATION_ID, hsaId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.HOSP_AUTHORIZED, hashedPersonId);
+        }
     }
 
     @Override
-    public void logUserNotAuthorizedInHosp(String id) {
-        logEvent(MonitoringEvent.HOSP_NOT_AUTHORIZED, HashUtility.hash(id));
+    public void logUserNotAuthorizedInHosp(String id, String hsaId) {
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_ACTION, toEventType(MonitoringEvent.HOSP_NOT_AUTHORIZED))
+                .put(EVENT_PRIVATE_PRACTITIONER_ID, hashedPersonId)
+                .put(ORGANIZATION_ID, hsaId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.HOSP_NOT_AUTHORIZED, hashedPersonId);
+        }
     }
 
     @Override
-    public void logRegistrationRemoved(String id) {
-        logEvent(MonitoringEvent.REGISTRATION_REMOVED, HashUtility.hash(id));
+    public void logRegistrationRemoved(String id, String hsaId) {
+        final var hashedPersonId = HashUtility.hash(id);
+        try (MdcCloseableMap mdc =
+            MdcCloseableMap.builder()
+                .put(EVENT_ACTION, toEventType(MonitoringEvent.REGISTRATION_REMOVED))
+                .put(EVENT_PRIVATE_PRACTITIONER_ID, hashedPersonId)
+                .put(ORGANIZATION_ID, hsaId)
+                .build()
+        ) {
+            logEvent(MonitoringEvent.REGISTRATION_REMOVED, hashedPersonId);
+        }
     }
 
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {
@@ -77,5 +118,9 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         public String getMessage() {
             return message;
         }
+    }
+
+    private String toEventType(MonitoringEvent monitoringEvent) {
+        return monitoringEvent.name().toLowerCase().replace("_", "-");
     }
 }

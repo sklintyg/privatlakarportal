@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Inera AB (http://www.inera.se)
+ * Copyright (C) 2024 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,19 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.hsa.monitoring;
+package se.inera.intyg.privatlakarportal.logging;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-/**
- * Interface used when logging to monitoring file. Used to ensure that the log entries are uniform and easy to parse.
- */
-public interface MonitoringLogService {
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface PerformanceLogging {
 
-    void logHospWaiting(String id, String hsaId);
+    String eventType();
 
-    void logUserAuthorizedInHosp(String id, String hsaId);
+    String eventAction();
 
-    void logUserNotAuthorizedInHosp(String id, String hsaId);
+    String eventCategory() default MdcLogConstants.EVENT_CATEGORY_API;
 
-    void logRegistrationRemoved(String id, String hsaId);
+    boolean isActive() default true;
+
 }

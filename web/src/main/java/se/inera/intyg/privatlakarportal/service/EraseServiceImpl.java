@@ -66,9 +66,8 @@ public class EraseServiceImpl implements EraseService {
 
         if (hospPersonService.removeFromCertifier(privatePractitioner.getPersonId(), null, "Avslutat konto i Webcert.")) {
             privatlakareRepository.delete(privatePractitioner);
-            monitoringLogService.logUserErased(careProviderId);
+            monitoringLogService.logUserErased(privatePractitioner.getPersonId(), careProviderId);
             LOG.info("Erased private practitioner with hsa-id {}.", careProviderId);
-
         } else {
             LOG.error("Failure unregistering private practitioner {} in certifier branch.", privatePractitioner.getHsaId());
             throw new PrivatlakarportalServiceException(PrivatlakarportalErrorCodeEnum.EXTERNAL_ERROR,

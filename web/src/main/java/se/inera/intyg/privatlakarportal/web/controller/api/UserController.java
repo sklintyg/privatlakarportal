@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import se.inera.intyg.privatlakarportal.logging.MdcLogConstants;
+import se.inera.intyg.privatlakarportal.logging.PerformanceLogging;
 import se.inera.intyg.privatlakarportal.service.UserService;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetUserResponse;
 
@@ -36,6 +38,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
+    @PerformanceLogging(eventAction = "get-user", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     public GetUserResponse getUser() {
         return new GetUserResponse(userService.getUserWithStatus());
     }

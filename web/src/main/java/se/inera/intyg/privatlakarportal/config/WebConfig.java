@@ -23,6 +23,7 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
@@ -39,6 +40,7 @@ import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapp
 
 @EnableWebMvc
 @Configuration
+@EnableAspectJAutoProxy
 @ComponentScan({"se.inera.intyg.privatlakarportal.web", "se.inera.intyg.privatlakarportal.common.service.stub"})
 public class WebConfig implements WebMvcConfigurer {
 

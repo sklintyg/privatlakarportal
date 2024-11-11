@@ -29,6 +29,8 @@ import se.inera.intyg.infra.dynamiclink.service.DynamicLinkService;
 import se.inera.intyg.privatlakarportal.common.integration.kodverk.Befattningar;
 import se.inera.intyg.privatlakarportal.common.integration.kodverk.Vardformer;
 import se.inera.intyg.privatlakarportal.common.integration.kodverk.Verksamhetstyper;
+import se.inera.intyg.privatlakarportal.logging.MdcLogConstants;
+import se.inera.intyg.privatlakarportal.logging.PerformanceLogging;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetConfigResponse;
 
 /**
@@ -45,6 +47,7 @@ public class ConfigController {
     private DynamicLinkService dynamicLinkService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
+    @PerformanceLogging(eventAction = "get-config", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     public GetConfigResponse getConfig() {
         return new GetConfigResponse(
             env.getProperty("webcert.host.url"),
@@ -55,6 +58,7 @@ public class ConfigController {
     }
 
     @RequestMapping(value = "/links", method = RequestMethod.GET, produces = "application/json")
+    @PerformanceLogging(eventAction = "get-links", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     public Map<String, DynamicLink> getLinks() {
         return dynamicLinkService.getAllAsMap();
     }

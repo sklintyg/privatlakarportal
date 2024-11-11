@@ -16,24 +16,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.privatlakarportal.service.monitoring;
+package se.inera.intyg.privatlakarportal.logging;
 
-import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import com.google.common.base.Strings;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+import com.google.common.io.BaseEncoding;
+import java.nio.charset.StandardCharsets;
 
-/**
- * Interface used when logging to monitoring file. Used to ensure that the log entries are uniform and easy to parse.
- */
-public interface MonitoringLogService {
+public final class HashUtility {
 
-    void logUserRegistered(String id, Long consentVersion, String hsaId, RegistrationStatus registrationStatus);
+    public static final String EMPTY = "EMPTY";
 
-    void logUserDeleted(String id, String hsaId);
+    private static final HashFunction hf = Hashing.sha256();
 
-    void logUserErased(String id, String careProviderId);
+    private HashUtility() {
+    }
 
-    void logUserLogin(String id, String authenticationScheme);
-
-    void logUserLogout(String id, String authenticationScheme);
-
-    void logUserDetailsChanged(String id, String hsaId);
+    public static String hash(final String payload) {
+        if (Strings.isNullOrEmpty(payload)) {
+            return EMPTY;
+        }
+        final byte[] digest = hf.hashString(payload, StandardCharsets.UTF_8).asBytes();
+        return BaseEncoding.base16().lowerCase().encode(digest);
+    }
 }

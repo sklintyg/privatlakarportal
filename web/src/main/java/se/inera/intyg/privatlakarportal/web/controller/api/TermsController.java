@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.privatlakarportal.integration.terms.services.WebcertTermsService;
+import se.inera.intyg.privatlakarportal.logging.MdcLogConstants;
+import se.inera.intyg.privatlakarportal.logging.PerformanceLogging;
 import se.inera.intyg.privatlakarportal.service.TermsService;
 import se.inera.intyg.privatlakarportal.web.controller.api.dto.GetTermsResponse;
 
@@ -42,11 +44,13 @@ public class TermsController {
     }
 
     @RequestMapping(value = "/webcert", method = RequestMethod.GET)
+    @PerformanceLogging(eventAction = "get-webcert-terms", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     public GetTermsResponse getWebcertTerms() {
         return new GetTermsResponse(webcertTermsService.getTerms());
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
+    @PerformanceLogging(eventAction = "get-terms", eventType = MdcLogConstants.EVENT_TYPE_ACCESSED)
     public GetTermsResponse getTerms() {
         return new GetTermsResponse(termsService.getTerms());
     }
