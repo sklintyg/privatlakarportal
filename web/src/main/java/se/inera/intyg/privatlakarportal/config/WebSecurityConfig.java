@@ -175,7 +175,8 @@ public class WebSecurityConfig {
                 .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
                 .ignoringRequestMatchers(
                     TESTABILITY_API,
-                    "/services/**"
+                    "/services/**",
+                    "/internalapi/**"
                 )
             )
             .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
