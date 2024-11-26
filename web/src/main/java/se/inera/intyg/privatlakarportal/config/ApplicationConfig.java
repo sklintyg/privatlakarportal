@@ -42,7 +42,8 @@ import se.inera.intyg.infra.security.filter.PrincipalUpdatedFilter;
 @PropertySource(ignoreResourceNotFound = true,
     value = {"classpath:application.properties", "file:${dev.config.file}", "classpath:version.properties"})
 @ImportResource({"classpath:META-INF/cxf/cxf.xml"})
-@ComponentScan({"se.inera.intyg.infra.integration.intygproxyservice", "se.inera.intyg.privatlakarportal.logging"})
+@ComponentScan({"se.inera.intyg.infra.integration.intygproxyservice", "se.inera.intyg.privatlakarportal.logging",
+    "se.inera.intyg.infra.pu.integration.intygproxyservice"})
 public class ApplicationConfig {
 
     @Autowired

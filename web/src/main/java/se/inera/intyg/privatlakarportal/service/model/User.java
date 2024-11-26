@@ -18,7 +18,7 @@
  */
 package se.inera.intyg.privatlakarportal.service.model;
 
-import se.inera.intyg.infra.integration.pu.model.PersonSvar;
+import se.inera.intyg.infra.pu.integration.api.model.PersonSvar;
 import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 
