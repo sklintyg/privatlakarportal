@@ -25,8 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.inera.intyg.infra.integration.pu.model.PersonSvar;
-import se.inera.intyg.infra.integration.pu.services.PUService;
+import se.inera.intyg.infra.pu.integration.api.model.PersonSvar;
+import se.inera.intyg.infra.pu.integration.api.services.PUService;
 import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalErrorCodeEnum;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
                 personSvarStatus = personSvar.getStatus();
 
                 if (personSvar.getStatus() == PersonSvar.Status.FOUND && personSvar.getPerson() != null) {
-                    String name = personSvar.getPerson().getFornamn() + " " + personSvar.getPerson().getEfternamn();
+                    String name = personSvar.getPerson().fornamn() + " " + personSvar.getPerson().efternamn();
                     privatlakarUser.updateNameFromPuService(name);
 
                     // Check if name has changed and update in database

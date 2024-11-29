@@ -26,7 +26,7 @@ gretty {
 
     jvmArgs = [
             "-Dcatalina.base=${buildDirectory}/catalina.base",
-            "-Dspring.profiles.active=dev,caching-enabled,hsa-integration-intyg-proxy-service,testability",
+            "-Dspring.profiles.active=dev,caching-enabled,testability,pu-integration-intyg-proxy-service",
             "-Dlogback.file=${applicationDir}/config/logback-spring.xml",
             "-Djava.awt.headless=true",
             "-Dfile.encoding=UTF-8",
@@ -101,6 +101,7 @@ dependencies {
     implementation "se.inera.intyg.infra:dynamiclink:${infraVersion}"
     implementation "se.inera.intyg.infra:monitoring:${infraVersion}"
     implementation "se.inera.intyg.infra:pu-integration:${infraVersion}"
+    implementation "se.inera.intyg.infra:pu-integration-api:${infraVersion}"
     implementation "se.inera.intyg.infra:postnummerservice-integration:${infraVersion}"
     implementation "se.inera.intyg.infra:privatepractitioner:${infraVersion}"
     implementation "se.inera.intyg.infra:security-filter:${infraVersion}"
@@ -130,6 +131,7 @@ dependencies {
 
     runtimeOnly "com.mysql:mysql-connector-j"
     runtimeOnly "se.inera.intyg.infra:hsa-integration-intyg-proxy-service:${infraVersion}"
+    runtimeOnly "se.inera.intyg.infra:pu-integration-intyg-proxy-service:${infraVersion}"
 
     testImplementation "com.googlecode.json-simple:json-simple:${jsonSimpleVersion}"
     testImplementation "org.assertj:assertj-core"
