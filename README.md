@@ -34,7 +34,7 @@ Gör så här för att testa att WC kan anropa och hämta information från PP i
 6. Nu valideras användaren gentemot lokal PP på localhost:8060
 
 ## Licens
-Copyright (C) 2021 Inera AB (http://www.inera.se)
+Copyright (C) 2025 Inera AB (http://www.inera.se)
 
 Privatläkarportal is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
