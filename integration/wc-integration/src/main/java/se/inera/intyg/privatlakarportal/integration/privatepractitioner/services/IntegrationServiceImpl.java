@@ -30,6 +30,7 @@ import se.inera.intyg.privatlakarportal.common.integration.kodverk.Verksamhetsty
 import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
 import se.inera.intyg.privatlakarportal.common.utils.PrivatlakareUtils;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.intyg.privatlakarportal.logging.HashUtility;
 import se.inera.intyg.privatlakarportal.persistence.model.Befattning;
 import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
@@ -65,17 +66,17 @@ public class IntegrationServiceImpl implements IntegrationService {
         "Private practitioner with personal identity number: %s is not authorized to use webcert.";
 
     private final PrivatlakareRepository privatlakareRepository;
-
     private final HospUpdateService hospUpdateService;
-
     private final DateHelperService dateHelperService;
+    private final HashUtility hashUtility;
 
     @Autowired
     public IntegrationServiceImpl(PrivatlakareRepository privatlakareRepository,
-        HospUpdateService hospUpdateService, DateHelperService dateHelperService) {
+        HospUpdateService hospUpdateService, DateHelperService dateHelperService, HashUtility hashUtility) {
         this.privatlakareRepository = privatlakareRepository;
         this.hospUpdateService = hospUpdateService;
         this.dateHelperService = dateHelperService;
+        this.hashUtility = hashUtility;
     }
 
     @Override
@@ -305,8 +306,7 @@ public class IntegrationServiceImpl implements IntegrationService {
     }
 
     private String getPersonalIdentityNumberHash(String personalIdentityNumber) {
-        return Personnummer.getPersonnummerHashSafe(
-            Personnummer.createPersonnummer(personalIdentityNumber).orElse(null)
-        );
+        final var personalId = Personnummer.createPersonnummer(personalIdentityNumber);
+        return hashUtility.hash(personalId.map(Personnummer::getPersonnummer).orElse(null));
     }
 }

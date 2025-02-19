@@ -55,6 +55,7 @@ allprojects {
     }
 
     compileJava.dependsOn processResources
+    jar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     dependencies {
         implementation "ch.qos.logback:logback-classic"

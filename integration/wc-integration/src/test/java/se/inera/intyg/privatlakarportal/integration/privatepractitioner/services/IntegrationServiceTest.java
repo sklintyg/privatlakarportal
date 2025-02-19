@@ -36,14 +36,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResponse;
 import se.inera.intyg.privatepractitioner.dto.ValidatePrivatePractitionerResultCode;
 import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
 import se.inera.intyg.privatlakarportal.common.service.DateHelperService;
 import se.inera.intyg.privatlakarportal.hsa.services.HospUpdateService;
+import se.inera.intyg.privatlakarportal.logging.HashUtility;
 import se.inera.intyg.privatlakarportal.persistence.model.LegitimeradYrkesgrupp;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
@@ -66,6 +69,9 @@ public class IntegrationServiceTest {
     @Mock
     private DateHelperService dateHelperService;
 
+    @Spy
+    private HashUtility hashUtility;
+
     @InjectMocks
     private IntegrationServiceImpl integrationService;
 
@@ -81,6 +87,7 @@ public class IntegrationServiceTest {
 
     @Before
     public void setup() throws IOException {
+        ReflectionTestUtils.setField(hashUtility, "salt", "salt");
         ObjectMapper objectMapper = new CustomObjectMapper();
 
         Resource res = new ClassPathResource("IntegrationServiceTest/test_Privatlakare.json");

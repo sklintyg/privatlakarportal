@@ -44,14 +44,12 @@ import se.inera.intyg.privatlakarportal.auth.PrivatlakarUser;
 import se.inera.intyg.privatlakarportal.common.exception.PrivatlakarportalServiceException;
 import se.inera.intyg.privatlakarportal.common.integration.json.CustomObjectMapper;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
+import se.inera.intyg.privatlakarportal.logging.HashUtility;
 import se.inera.intyg.privatlakarportal.persistence.model.Privatlakare;
 import se.inera.intyg.privatlakarportal.persistence.repository.PrivatlakareRepository;
 import se.inera.intyg.privatlakarportal.service.model.User;
 import se.inera.intyg.schemas.contract.Personnummer;
 
-/**
- * Created by pebe on 2015-09-11.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
 
@@ -65,6 +63,9 @@ public class UserServiceImplTest {
 
     @Mock
     private PUService puService;
+
+    @Mock
+    private HashUtility hashUtility;
 
     @InjectMocks
     private UserServiceImpl userService;
