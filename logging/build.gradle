@@ -3,4 +3,6 @@ dependencies {
     implementation "org.aspectj:aspectjweaver"
     implementation "org.springframework:spring-webmvc"
     implementation "com.google.guava:guava:${guavaVersion}"
+
+    testImplementation "org.springframework:spring-test"
 }
