@@ -33,9 +33,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.util.ReflectionTestUtils;
+import se.inera.intyg.privatlakarportal.logging.HashUtility;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MonitoringLogServiceImplTest {
@@ -46,13 +50,18 @@ public class MonitoringLogServiceImplTest {
     @Mock
     private Appender<ILoggingEvent> mockAppender;
 
+    @Spy
+    private HashUtility hashUtility;
+
     @Captor
     private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
 
-    MonitoringLogService logService = new MonitoringLogServiceImpl();
+    @InjectMocks
+    private MonitoringLogServiceImpl logService;
 
     @Before
     public void setup() {
+        ReflectionTestUtils.setField(hashUtility, "salt", "salt");
         final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         logger.addAppender(mockAppender);
     }
@@ -66,21 +75,21 @@ public class MonitoringLogServiceImplTest {
     @Test
     public void shouldLogHospWaiting() {
         logService.logHospWaiting(USER_ID, HSA_ID);
-        verifyLog(Level.INFO, "HOSP_WAITING User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' is waiting for HOSP");
+        verifyLog(Level.INFO, "HOSP_WAITING User '" + hashUtility.hash(USER_ID) + "' is waiting for HOSP");
     }
 
     @Test
     public void shouldLogUserAuthorizedInHosp() {
         logService.logUserAuthorizedInHosp(USER_ID, HSA_ID);
         verifyLog(Level.INFO,
-            "HOSP_AUTHORIZED User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' is authorized doctor in HOSP");
+            "HOSP_AUTHORIZED User '" + hashUtility.hash(USER_ID) + "' is authorized doctor in HOSP");
     }
 
     @Test
     public void shouldLogUserNotAuthorizedInHosp() {
         logService.logUserNotAuthorizedInHosp(USER_ID, HSA_ID);
         verifyLog(Level.INFO,
-            "HOSP_NOT_AUTHORIZED User 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' is not authorized doctor in HOSP");
+            "HOSP_NOT_AUTHORIZED User '" + hashUtility.hash(USER_ID) + "' is not authorized doctor in HOSP");
     }
 
     private void verifyLog(Level logLevel, String logMessage) {

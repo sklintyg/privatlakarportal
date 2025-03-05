@@ -25,23 +25,25 @@ import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.EVENT_PRI
 import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.ORGANIZATION_ID;
 import static se.inera.intyg.privatlakarportal.logging.MdcLogConstants.USER_ID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.infra.monitoring.logging.LogMarkers;
 import se.inera.intyg.privatlakarportal.common.model.RegistrationStatus;
 import se.inera.intyg.privatlakarportal.logging.HashUtility;
 import se.inera.intyg.privatlakarportal.logging.MdcCloseableMap;
 
+@Slf4j
 @Service("webMonitoringLogService")
+@RequiredArgsConstructor
 public class MonitoringLogServiceImpl implements MonitoringLogService {
 
+    private final HashUtility hashUtility;
     private static final Object SPACE = " ";
-    private static final Logger LOG = LoggerFactory.getLogger(MonitoringLogServiceImpl.class);
 
     @Override
     public void logUserRegistered(String id, Long consentVersion, String hsaId, RegistrationStatus registrationStatus) {
-        final var hashedPersonId = HashUtility.hash(id);
+        final var hashedPersonId = hashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
                 .put(EVENT_ACTION, toEventType(MonitoringEvent.USER_REGISTERED))
@@ -55,7 +57,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void logUserDeleted(String id, String hsaId) {
-        final var hashedPersonId = HashUtility.hash(id);
+        final var hashedPersonId = hashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
                 .put(EVENT_ACTION, toEventType(MonitoringEvent.USER_DELETED))
@@ -69,7 +71,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void logUserErased(String id, String hsaId) {
-        final var hashedPersonId = HashUtility.hash(id);
+        final var hashedPersonId = hashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
                 .put(EVENT_ACTION, toEventType(MonitoringEvent.USER_DELETED))
@@ -83,7 +85,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void logUserLogin(String id, String authenticationScheme) {
-        final var hashedPersonId = HashUtility.hash(id);
+        final var hashedPersonId = hashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
                 .put(EVENT_ACTION, toEventType(MonitoringEvent.USER_LOGIN))
@@ -97,7 +99,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void logUserLogout(String id, String authenticationScheme) {
-        final var hashedPersonId = HashUtility.hash(id);
+        final var hashedPersonId = hashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
                 .put(EVENT_ACTION, toEventType(MonitoringEvent.USER_LOGOUT))
@@ -111,7 +113,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void logUserDetailsChanged(String id, String hsaId) {
-        final var hashedPersonId = HashUtility.hash(id);
+        final var hashedPersonId = hashUtility.hash(id);
         try (MdcCloseableMap mdc =
             MdcCloseableMap.builder()
                 .put(EVENT_ACTION, toEventType(MonitoringEvent.USER_DETAILS_CHANGED))
@@ -124,7 +126,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {
-        LOG.info(LogMarkers.MONITORING, buildMessage(logEvent), logMsgArgs);
+        log.info(LogMarkers.MONITORING, buildMessage(logEvent), logMsgArgs);
     }
 
     private String buildMessage(MonitoringEvent logEvent) {
