@@ -28,6 +28,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -127,7 +128,12 @@ public class Privatlakare {
     @OrderBy("namn ASC")
     private List<Specialitet> specialiteter;
 
-    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "privatlakareId")
+    private List<Restriktion> restriktioner = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "privatlakareId")
+    private List<Epost> epostList = new ArrayList<>();
+
     @OneToMany(mappedBy = "privatlakare", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Verksamhetstyp> verksamhetstyper;
 
