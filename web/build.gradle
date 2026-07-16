@@ -1,7 +1,13 @@
 apply plugin: 'org.gretty'
 apply plugin: 'com.netflix.nebula.grunt'
+apply plugin: 'org.cyclonedx.bom'
 apply plugin: 'idea'
 apply plugin: 'war'
+
+tasks.named('cyclonedxBom') {
+    jsonOutput.set(file("build/reports/cyclonedx/bom.json"))
+    xmlOutput.set(file("build/reports/cyclonedx/bom.xml"))
+}
 
 def buildDirectory = project.layout.buildDirectory.get().asFile
 
