@@ -4,7 +4,7 @@ plugins {
     id "com.netflix.nebula.node" version "3.0.0" apply false
     id 'test-report-aggregation'
     id 'org.sonarqube' version '6.3.1.5724'
-    id "org.owasp.dependencycheck" version "12.1.6"
+    id 'org.cyclonedx.bom' version '3.2.4'
     id 'jacoco'
 }
 
@@ -30,8 +30,6 @@ ext {
     npmVersion = "6.14.16"
 
     springbootMavenBomVersion = "3.3.4"
-
-    nvdMirror = 'https://vulnz-nvd-mirror-devtest.intyg.nordicmedtest.se'
 }
 
 allprojects {
@@ -113,6 +111,14 @@ allprojects {
     }
 }
 
+subprojects {
+    pluginManager.withPlugin('org.cyclonedx.bom') {
+        tasks.named('cyclonedxDirectBom').configure { t ->
+            t.includeConfigs = ['^runtimeClasspath$']
+        }
+    }
+}
+
 reporting {
     subprojects.collect { subproject -> subproject.name }.each { subprojectName ->
         dependencies { testReportAggregation project(":${subprojectName}") }
@@ -123,16 +129,5 @@ sonar {
     properties {
         property "sonar.projectKey", "intyg-privatlakarportal"
         property "sonar.projectName", "intyg-privatlakarportal"
-        property "sonar.dependencyCheck.jsonReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.json" as String
-        property "sonar.dependencyCheck.htmlReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.html" as String
     }
-}
-
-dependencyCheck {
-    formats = ['HTML', 'JSON']
-    nvd.setDatafeedUrl(nvdMirror)
-    analyzers.setAssemblyEnabled(false)
-    analyzers.setCentralEnabled(false)
-    analyzers.ossIndex.setUsername(project.properties.get('ossIndexUsername') as String)
-    analyzers.ossIndex.setPassword(project.properties.get('ossIndexPassword') as String)
 }
